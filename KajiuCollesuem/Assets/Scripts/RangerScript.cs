@@ -2,47 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangerScript : MonoBehaviour
-{
-    public int health;
-    public int maxHealth = 100;
-
+public class RangerScript : AI
+{ 
     public int damage = 30;
 
-    public float attackTimer;
-    public float attackTimerMax = 4f;
+    private float attackTimer = 0;
+    public float attackTimerMax;
+    public float fieldOfVision;
 
     public bool playerInRange = false;
 
     public GameObject Player;
+    public GameObject Bullet;
 
-    // Start is called before the first frame update
-    void Start()
+    protected override void RangerAI()
     {
-        attackTimer = 0;
-    }
+        if (Vector3.Distance(transform.position, Player.transform.position) < fieldOfVision)
+        {
+            playerInRange = true;
+        }
+        else
+        {
+            playerInRange = false;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (health <= 0) Destroy(this);
         if (playerInRange)
         {
-            attackTimer += 0.01f;
+            agent.isStopped = true;
+            attackTimer = attackTimer + 0.01f;
             if (attackTimer >= attackTimerMax) Fire();
         }
+        else
+        {
+            agent.isStopped = false;
+        }
     }
-
-    public void TakeDamage(int amount)
-    {
-        health -= amount;
-    }
-
     public void Fire()
     {
-        Player.GetComponent<PlayerAttributes>().takeDamage(damage);
+        Instantiate(Bullet);
         attackTimer = 0;
     }
+    /*
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player") playerInRange = true;
@@ -50,5 +50,5 @@ public class RangerScript : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Player") playerInRange = false;
-    }
+    }*/
 }

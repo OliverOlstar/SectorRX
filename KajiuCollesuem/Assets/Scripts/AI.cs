@@ -10,7 +10,7 @@ public class AI : MonoBehaviour
     public float moveSpeed = 5.0f;
     public float searchZone = 10.0f;
 
-    NavMeshAgent agent;
+    protected NavMeshAgent agent;
     float height = 0.155f;
 
     Vector3 startingPosition;
@@ -84,10 +84,15 @@ public class AI : MonoBehaviour
 
         }
 
-
+        RangerAI();
         // Enable / Disable search mode
         if (searchTime > 0) searchingForPlayer = true;
         else searchingForPlayer = false;
+    }
+
+    virtual protected void RangerAI()
+    {
+        
     }
 
     void OnGuard()
