@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7922664716660925373}
   - component: {fileID: 308313177714532269}
-  - component: {fileID: 7429549337445834007}
   m_Layer: 5
   m_Name: HealthUI
   m_TagString: Untagged
@@ -88,21 +87,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &7429549337445834007
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1202306543838310321}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 393b74cfde6369748a78f22d8c3ee9aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 100
-  currentHealth: 100
-  healthSlider: {fileID: 308313177714532269}
 --- !u!1 &6271478758180260293
 GameObject:
   m_ObjectHideFlags: 0
