@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class AI : MonoBehaviour
 {
+    // Danish's variables
+    [SerializeField] float moveSpeed = 5.0f;
+    [SerializeField] float searchZone = 10.0f;
+    Rigidbody rb;
+    [SerializeField] Transform EnemyTransform;
+    [SerializeField] Transform raycastPoint;
+    RaycastHit hit;
+
+    Vector3 rotator = new Vector3(0, 1);
+
+    // Dylan's Variables
     public GameObject player; // The player character
     Vector3 playerLastKnownPosition; // Store last known position of player - used for search mode
 
@@ -17,6 +28,9 @@ public class AI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rb = gameObject.GetComponent<Rigidbody>(); // connect to the Rigidbody on the enemy
+
+
         if (searchTimeMax <= 0)
         {
             Debug.Log("Search time not set on " + this + ". Defaulting to 60.");
@@ -45,7 +59,7 @@ public class AI : MonoBehaviour
                 // Enemy is guarding
                 else
                 {
-
+                    OnGuard();
 
 
 
@@ -76,6 +90,35 @@ public class AI : MonoBehaviour
         else searchingForPlayer = false;
     }
 
+    void OnGuard()
+    {
+        RaycastHit hit;
+        Vector3 mover = new Vector3(0, 0, moveSpeed * Time.deltaTime);
+
+        Debug.DrawRay(raycastPoint.position, raycastPoint.TransformDirection(Vector3.forward) * searchZone, Color.red);
+
+        if (Physics.Raycast(raycastPoint.position, raycastPoint.TransformDirection(Vector3.forward), out hit, searchZone))
+        {
+            Debug.Log("HIT");
+            //player.TransformDirection(Vector3.forward * moveSpeed);
+            //rb.AddForce(mover * moveSpeed);
+            EnemyTransform.Translate(mover, Space.Self);
+        }
+        else
+        {
+            EnemyTransform.Rotate(rotator);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            // TODO change to something more applicable for the game
+            collision.gameObject.SetActive(false);
+        }
+    }
+
     void OnTriggerEnter(Collider c)
     {
         // If player enters enemy field of view, attack
@@ -91,4 +134,6 @@ public class AI : MonoBehaviour
         // Store players position as they leave - used for searching.
         playerLastKnownPosition = player.transform.position;
     }
+
+    
 }
