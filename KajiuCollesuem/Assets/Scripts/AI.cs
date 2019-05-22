@@ -7,15 +7,16 @@ public class AI : MonoBehaviour
     // Danish's variables
     [SerializeField] float moveSpeed = 5.0f;
     [SerializeField] float searchZone = 10.0f;
-    Rigidbody rb;
-    [SerializeField] Transform EnemyTransform;
-    [SerializeField] Transform raycastPoint;
-    RaycastHit hit;
 
-    Vector3 rotator = new Vector3(0, 1);
+    Rigidbody rb;
+
+
+
+
+
 
     // Dylan's Variables
-    public GameObject player; // The player character
+    private GameObject player; // The player character
     Vector3 playerLastKnownPosition; // Store last known position of player - used for search mode
 
     public bool isPatrolling; // if false enemy will stand guard
@@ -30,6 +31,8 @@ public class AI : MonoBehaviour
     {
         rb = gameObject.GetComponent<Rigidbody>(); // connect to the Rigidbody on the enemy
 
+
+        player = GameObject.FindGameObjectWithTag("Player");
 
         if (searchTimeMax <= 0)
         {
@@ -92,31 +95,17 @@ public class AI : MonoBehaviour
 
     void OnGuard()
     {
-        RaycastHit hit;
+        
         Vector3 mover = new Vector3(0, 0, moveSpeed * Time.deltaTime);
 
-        Debug.DrawRay(raycastPoint.position, raycastPoint.TransformDirection(Vector3.forward) * searchZone, Color.red);
 
-        if (Physics.Raycast(raycastPoint.position, raycastPoint.TransformDirection(Vector3.forward), out hit, searchZone))
-        {
-            Debug.Log("HIT");
-            //player.TransformDirection(Vector3.forward * moveSpeed);
-            //rb.AddForce(mover * moveSpeed);
-            EnemyTransform.Translate(mover, Space.Self);
-        }
-        else
-        {
-            EnemyTransform.Rotate(rotator);
-        }
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Player")
+        if(Vector3.Distance(transform.position, player.transform.position) < searchZone)
         {
-            // TODO change to something more applicable for the game
-            collision.gameObject.SetActive(false);
+            transform.LookAt(player.transform.position);
+            transform.Translate(mover, Space.Self);
         }
+
     }
 
     void OnTriggerEnter(Collider c)
