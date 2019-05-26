@@ -15,6 +15,8 @@ public class PlayerAttributes : MonoBehaviour
     private int powerGuage;
 
     public Slider healthSlider;
+    public Slider shieldSlider;
+    public Slider powerSlider;
 
     // Start is called before the first frame update
     void Start()
@@ -53,9 +55,10 @@ public class PlayerAttributes : MonoBehaviour
         else
         {
             health += x;
-            healthSlider.value = health;
             Debug.Log("Health Gained " + x + ", New Health: " + health);
         }
+
+        healthSlider.value = health;
     }
 
     //lose health
@@ -69,9 +72,10 @@ public class PlayerAttributes : MonoBehaviour
         else
         {
             health -= x;
-            healthSlider.value = health;
             Debug.Log("Damage Taken: " + x + ", New Health: " + health);
-        }       
+        }
+
+        healthSlider.value = health;
     }
         
 
@@ -87,6 +91,8 @@ public class PlayerAttributes : MonoBehaviour
             shield += x;
             Debug.Log("Shield Gained: " + x + ", New Shield: " + health);
         }
+
+        shieldSlider.value = shield;
     }
 
     //reduce shield
@@ -101,6 +107,8 @@ public class PlayerAttributes : MonoBehaviour
             shield -= x;
             Debug.Log("Shield Lost: " + x + ", New Shield: " + health);
         }
+
+        shieldSlider.value = shield;
     }
 
     public void gainPowerGuage(int x)
@@ -114,6 +122,8 @@ public class PlayerAttributes : MonoBehaviour
             powerGuage += x;
             Debug.Log("Power Guage Gained: " + x + ", New Power Guage: " + health);
         }
+
+        powerSlider.value = powerGuage;
     }
 
     public void losePowerGuage(int x)
@@ -127,5 +137,7 @@ public class PlayerAttributes : MonoBehaviour
             powerGuage -= x;
             Debug.Log("Powe Guage Lost: " + x + ", New Power Guage: " + health);
         }
+
+        powerSlider.value = powerGuage;
     }
 }
