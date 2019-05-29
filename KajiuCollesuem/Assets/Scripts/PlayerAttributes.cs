@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerAttributes : MonoBehaviour
 {
-    private readonly int maxHealth = 100;
-    private int health;
+    private readonly float maxHealth = 100;
+    private float health;
 
     private readonly int maxShield = 100;
     private int shield;
@@ -28,7 +28,7 @@ public class PlayerAttributes : MonoBehaviour
 
     //GET SET
     //get current variables
-    public int getHealth()
+    public float getHealth()
     {
         return health;
     }
@@ -45,7 +45,7 @@ public class PlayerAttributes : MonoBehaviour
 
     //METHODS
     //gain health
-    public void gainHealth(int x)
+    public void gainHealth(float x)
     {
         //make sure can't gain more health than max
         if (health + x >= maxHealth)
@@ -62,7 +62,7 @@ public class PlayerAttributes : MonoBehaviour
     }
 
     //lose health
-    public void takeDamage(int x)
+    public void takeDamage(float x)
     {
         if(health - x <= 0)
         {

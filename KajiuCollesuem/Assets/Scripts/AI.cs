@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 public class AI : MonoBehaviour
 {
@@ -9,7 +10,10 @@ public class AI : MonoBehaviour
     public float moveSpeed = 5.0f;
     public float searchZone = 10.0f;
 
-    Rigidbody rb;
+    NavMeshAgent agent;
+    float height = 0.155f;
+
+    Vector3 startingPosition;
 
     // Dylan's Variables
     private GameObject player; // The player character
@@ -27,9 +31,11 @@ public class AI : MonoBehaviour
     {
         GetComponent<EnemyAttributes>().enemyHealthUI.SetActive(false);
 
-        rb = gameObject.GetComponent<Rigidbody>(); // connect to the Rigidbody on the enemy
+        agent = gameObject.GetComponent<NavMeshAgent>(); // connect to the NavMeshAgent on the enemy
 
         player = GameObject.FindGameObjectWithTag("Player");
+
+        startingPosition = transform.position;
 
         if (searchTimeMax <= 0)
         {
@@ -91,13 +97,14 @@ public class AI : MonoBehaviour
 
         if(Vector3.Distance(transform.position, player.transform.position) <= searchZone)
         {
-            transform.LookAt(player.transform.position);
-            transform.Translate(mover, Space.Self);
+            
+            agent.destination = player.transform.position;
             GetComponent<EnemyAttributes>().enemyHealthUI.SetActive(true);
         }
         else
         {
             GetComponent<EnemyAttributes>().StartCoroutine("HealthVanish");
+            agent.destination = startingPosition;
         }
     }
 
