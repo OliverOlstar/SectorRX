@@ -1,19 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AI : MonoBehaviour
 {
     // Danish's variables
-    [SerializeField] float moveSpeed = 5.0f;
-    [SerializeField] float searchZone = 10.0f;
+    public float moveSpeed = 5.0f;
+    public float searchZone = 10.0f;
 
     Rigidbody rb;
-
-
-
-
-
 
     // Dylan's Variables
     private GameObject player; // The player character
@@ -29,8 +25,9 @@ public class AI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = gameObject.GetComponent<Rigidbody>(); // connect to the Rigidbody on the enemy
+        GetComponent<EnemyAttributes>().enemyHealthUI.SetActive(false);
 
+        rb = gameObject.GetComponent<Rigidbody>(); // connect to the Rigidbody on the enemy
 
         player = GameObject.FindGameObjectWithTag("Player");
 
@@ -39,7 +36,7 @@ public class AI : MonoBehaviour
             Debug.Log("Search time not set on " + this + ". Defaulting to 60.");
             searchTimeMax = 60f;
         }
-        if (!player) Debug.Log("player not set on " + this + ". Script relies on player gameobject to function.");
+        if (!player) Debug.Log("player not set on " + this + ". Script relies on player gameobject to function.");         
     }
 
     // Update is called once per frame
@@ -55,16 +52,11 @@ public class AI : MonoBehaviour
                 if (isPatrolling)
                 {
 
-
-
-
                 }
                 // Enemy is guarding
                 else
                 {
                     OnGuard();
-
-
 
                 }
             }
@@ -72,7 +64,6 @@ public class AI : MonoBehaviour
             // Enemy is searching for player
             else
             {
-
                 searchTime -= 0.01f;
             }
         }
@@ -98,14 +89,16 @@ public class AI : MonoBehaviour
         
         Vector3 mover = new Vector3(0, 0, moveSpeed * Time.deltaTime);
 
-
-
-        if(Vector3.Distance(transform.position, player.transform.position) < searchZone)
+        if(Vector3.Distance(transform.position, player.transform.position) <= searchZone)
         {
             transform.LookAt(player.transform.position);
             transform.Translate(mover, Space.Self);
+            GetComponent<EnemyAttributes>().enemyHealthUI.SetActive(true);
         }
-
+        else
+        {
+            GetComponent<EnemyAttributes>().StartCoroutine("HealthVanish");
+        }
     }
 
     void OnTriggerEnter(Collider c)
@@ -123,6 +116,4 @@ public class AI : MonoBehaviour
         // Store players position as they leave - used for searching.
         playerLastKnownPosition = player.transform.position;
     }
-
-    
 }
