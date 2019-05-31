@@ -23,16 +23,19 @@ public class PlayerLockOnScript : MonoBehaviour
             if (cameraScript.lockOnTarget == null)
             {
                 cameraScript.lockOnTarget= pickNewTarget();
-            } else
+            } else 
             {
                 cameraScript.lockOnTarget = null;
             }
+        } else if (Input.GetAxis("MouseX") > 0.1f)
+        {
+            cameraScript.lockOnTarget = pickNewTarget();
         }
     }
 
     Transform pickNewTarget()
     {
-        Collider[] possibleTargets = Physics.OverlapSphere(transform.position, lockOnRange, enemiesLayer);
+        Collider[] possibleTargets = Physics.OverlapSphere(transform.position, lockOnRange/*, enemiesLayer*/);
         Debug.Log(possibleTargets);
 
         if (possibleTargets.Length == 0)
@@ -40,11 +43,19 @@ public class PlayerLockOnScript : MonoBehaviour
             Debug.Log("Returned NULL");
             return null;
         }
-
-        Debug.Log("Returned Success");
-
+        
         // TODO Check for what is the optimal thing to LockOnTo
         // TODO If already locked onto get second most optimal
-        return possibleTargets[0].gameObject.transform;
+        for (int i = 0; i < possibleTargets.Length; i++)
+        {
+            if (possibleTargets[i].gameObject.layer == enemiesLayer)
+            {
+                Debug.Log("Returned Success");
+                return possibleTargets[i].gameObject.transform;
+            }
+        }
+
+        Debug.Log("Returned NULL 2");
+        return null;
     }
 }
