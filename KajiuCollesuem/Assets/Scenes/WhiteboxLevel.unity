@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.45133346, g: 0.50025403, b: 0.5692878, a: 1}
+  m_IndirectSpecularColor: {r: 0.4513334, g: 0.50025296, b: 0.5692871, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1823,6 +1823,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcda2261fec406040857171286c641b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &806430457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806430448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9abbbd8f192f4914a8769326c3b47a35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lockOnRange: 10
 --- !u!1001 &823053976
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2188,10 +2201,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1464548932}
     m_Modifications:
-    - target: {fileID: 100000, guid: ab33e6080ae416b4d899f39fa8951b98, type: 3}
-      propertyPath: m_Name
-      value: BlockPrototype04x04x04
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ab33e6080ae416b4d899f39fa8951b98, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.524
@@ -2247,6 +2256,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: ab33e6080ae416b4d899f39fa8951b98, type: 3}
       propertyPath: m_LocalScale.z
       value: 1.0906
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ab33e6080ae416b4d899f39fa8951b98, type: 3}
+      propertyPath: m_Name
+      value: BlockPrototype04x04x04
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: ab33e6080ae416b4d899f39fa8951b98, type: 3}
       propertyPath: m_Materials.Array.data[0]
