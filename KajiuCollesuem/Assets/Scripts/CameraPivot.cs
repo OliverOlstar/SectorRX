@@ -5,7 +5,6 @@ using UnityEngine;
 public class CameraPivot : MonoBehaviour
 {
     public GameObject target;
-    //public GameObject lockOnTarget;
     private PlayerCamera _camera;
     public float offSetUp = 0.6f;
 

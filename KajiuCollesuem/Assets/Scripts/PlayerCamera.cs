@@ -8,6 +8,8 @@ public class PlayerCamera : MonoBehaviour
     private Transform _ParentTransform;
     private Vector3 _LocalRotation;
 
+    public Transform lockOnTarget;
+
     public float MouseSensitivity = 4f;
     public float TurnDampening = 10f;
     [SerializeField] private float OffSetLeft = 0f;
@@ -50,19 +52,30 @@ public class PlayerCamera : MonoBehaviour
         //Getting Mouse Movement
         if (!CameraDisabled)
         {
-            //Rotation of the camera based on mouse movement
-            if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0) {
-                _LocalRotation.x += Input.GetAxis("Mouse X") * MouseSensitivity;
-                _LocalRotation.y -= Input.GetAxis("Mouse Y") * MouseSensitivity;
-
-                //Clamping the y rotation to horizon and not flipping over at the top
-                if (_LocalRotation.y < CameraMinHeight) {
-                    _LocalRotation.y = CameraMinHeight;
-                }
-                else if (_LocalRotation.y > CameraMaxHeight)
+            if (lockOnTarget == null)
+            {
+                //Rotation of the camera based on mouse movement
+                if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
                 {
-                    _LocalRotation.y = CameraMaxHeight;
+                    _LocalRotation.x += Input.GetAxis("Mouse X") * MouseSensitivity;
+                    _LocalRotation.y -= Input.GetAxis("Mouse Y") * MouseSensitivity;
+
+                    //Clamping the y rotation to horizon and not flipping over at the top
+                    if (_LocalRotation.y < CameraMinHeight)
+                    {
+                        _LocalRotation.y = CameraMinHeight;
+                    }
+                    else if (_LocalRotation.y > CameraMaxHeight)
+                    {
+                        _LocalRotation.y = CameraMaxHeight;
+                    }
                 }
+            } else
+            {
+                //Locking Onto Target
+                Vector2 direction = new Vector2(lockOnTarget.position.z, lockOnTarget.position.x) - new Vector2(_ParentTransform.position.z, _ParentTransform.position.x);
+                _LocalRotation.x = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                _LocalRotation.y = (_ParentTransform.position.y - lockOnTarget.position.y * 10) + 20;
             }
         }
 
