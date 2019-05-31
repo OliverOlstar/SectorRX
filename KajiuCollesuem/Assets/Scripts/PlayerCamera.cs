@@ -10,13 +10,13 @@ public class PlayerCamera : MonoBehaviour
 
     public float MouseSensitivity = 4f;
     public float TurnDampening = 10f;
+    [SerializeField] private float OffSetLeft = 0f;
     [SerializeField] private float CameraDistance = 6f;
     [SerializeField] private float CameraMinHeight = -20f;
     [SerializeField] private float CameraMaxHeight = 90f;
 
     [SerializeField] private bool CameraDisabled = false;
-
-
+    
     void Start()
     {
         //Getting Transforms
@@ -31,7 +31,7 @@ public class PlayerCamera : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         //Setting camera distance
-        _CameraTansform.localPosition = new Vector3(0f, 0f, CameraDistance * -1f);
+        _CameraTansform.localPosition = new Vector3(-OffSetLeft, 0f, CameraDistance * -1f);
     }
 
 
@@ -71,16 +71,16 @@ public class PlayerCamera : MonoBehaviour
         _ParentTransform.rotation = Quaternion.Lerp(_ParentTransform.rotation, TargetQ, Time.deltaTime * TurnDampening);
     }
 
-    public void ChangePlayerCamera(float pMouseSensitivity, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
+    public void ChangePlayerCamera(float pOffSetLeft, float pMouseSensitivity, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
     {
         StopCoroutine("OtherCameraVarsTransition");
-        StartCoroutine(OtherCameraVarsTransition(pMouseSensitivity, pTurnDampening, pCameraDistance, pCameraMinHeight, pCameraMaxHeight, pTransitionSpeed));
+        StartCoroutine(OtherCameraVarsTransition(pOffSetLeft, pMouseSensitivity, pTurnDampening, pCameraDistance, pCameraMinHeight, pCameraMaxHeight, pTransitionSpeed));
     }
 
-    public IEnumerator OtherCameraVarsTransition(float pMouseSensitivity, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
+    public IEnumerator OtherCameraVarsTransition(float pOffSetLeft, float pMouseSensitivity, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
     {
         while (MouseSensitivity != pMouseSensitivity || TurnDampening != pTurnDampening || CameraDistance != pCameraDistance
-                || CameraMinHeight != pCameraMinHeight || CameraMaxHeight != pCameraMaxHeight)
+                || CameraMinHeight != pCameraMinHeight || CameraMaxHeight != pCameraMaxHeight || OffSetLeft != pOffSetLeft)
         {
             //Lerping all of the values
             MouseSensitivity = Mathf.Lerp(MouseSensitivity, pMouseSensitivity, pTransitionSpeed * Time.deltaTime);
@@ -103,8 +103,12 @@ public class PlayerCamera : MonoBehaviour
             if (Mathf.Abs(CameraMaxHeight - pCameraMaxHeight) <= 0.01f)
                 CameraMaxHeight = pCameraMaxHeight;
 
+            OffSetLeft = Mathf.Lerp(OffSetLeft, pOffSetLeft, pTransitionSpeed * Time.deltaTime);
+            if (Mathf.Abs(OffSetLeft - pOffSetLeft) <= 0.01f)
+                OffSetLeft = pOffSetLeft;
+
             //Setting camera distance
-            _CameraTansform.localPosition = new Vector3(0f, 0f, CameraDistance * -1f);
+            _CameraTansform.localPosition = new Vector3(-OffSetLeft, 0f, CameraDistance * -1f);
 
             yield return null;
         }

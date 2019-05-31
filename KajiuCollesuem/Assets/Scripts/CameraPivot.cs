@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class CameraPivot : MonoBehaviour
 {
-    public GameObject Target;
+    public GameObject target;
+    //public GameObject lockOnTarget;
     private PlayerCamera _camera;
-    public Vector3 offSet = new Vector3(0, 1, 0);
+    public float offSetUp = 0.6f;
 
     public bool runFunc = false;
-    public Vector3 DemoVector;
-    public float DemoVar1;
-    public float DemoVar2;
-    public float DemoVar3;
-    public float DemoVar4;
-    public float DemoVar5;
-    public float DemoVar6;
+    public float DemoVarOffup = 0.6f;
+    public float DemoVarOffleft = 0;
+    public float DemoVarSensi = 3;
+    public float DemoVarDamp = 20;
+    public float DemoVarDis = 6;
+    public float DemoVarMiny = -8;
+    public float DemoVarMaxy = 70;
+    public float DemoVarTrnsSpd = 1;
 
     void Start()
     {
@@ -26,29 +28,29 @@ public class CameraPivot : MonoBehaviour
     void Update()
     {
         //Position the camera pivot on the player
-        transform.position = Target.transform.position + offSet;
+        transform.position = target.transform.position + (Vector3.up * offSetUp);
 
         if (runFunc)
         {
-            ChangePlayerCamera(DemoVector, DemoVar1, DemoVar2, DemoVar3, DemoVar4, DemoVar5, DemoVar6);
+            ChangePlayerCamera(DemoVarOffup, DemoVarOffleft, DemoVarSensi, DemoVarDamp, DemoVarDis, DemoVarMiny, DemoVarMaxy, DemoVarTrnsSpd);
             runFunc = false;
         }
     }
 
-    public void ChangePlayerCamera(Vector3 pOffSet, float pMouseSensitivity, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
+    public void ChangePlayerCamera(float pOffSetUp, float pOffSetLeft, float pMouseSensitivity, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
     {
         StopCoroutine("CameraOffSetTransition");
-        StartCoroutine(CameraOffSetTransition(pOffSet, pTransitionSpeed));
-        _camera.ChangePlayerCamera(pMouseSensitivity, pTurnDampening, pCameraDistance, pCameraMinHeight, pCameraMaxHeight, pTransitionSpeed);
+        StartCoroutine(CameraOffSetTransition(pOffSetUp, pTransitionSpeed));
+        _camera.ChangePlayerCamera(pOffSetLeft, pMouseSensitivity, pTurnDampening, pCameraDistance, pCameraMinHeight, pCameraMaxHeight, pTransitionSpeed);
     }
 
-    private IEnumerator CameraOffSetTransition(Vector3 pOffSet, float pTransitionSpeed)
+    private IEnumerator CameraOffSetTransition(float pOffSetUp, float pTransitionSpeed)
     {
-        while (offSet != pOffSet)
+        while (offSetUp != pOffSetUp)
         {
-            offSet = Vector3.Lerp(offSet, pOffSet, pTransitionSpeed * Time.deltaTime);
-            if (Vector3.Distance(offSet, pOffSet) <= 0.01f)
-                offSet = pOffSet;
+            offSetUp = Mathf.Lerp(offSetUp, pOffSetUp, pTransitionSpeed * Time.deltaTime);
+            if (Mathf.Abs(offSetUp - pOffSetUp) <= 0.01f)
+                offSetUp = pOffSetUp;
 
             yield return null;
         }
