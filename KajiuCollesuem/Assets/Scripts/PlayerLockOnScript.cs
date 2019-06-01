@@ -22,40 +22,47 @@ public class PlayerLockOnScript : MonoBehaviour
         {
             if (cameraScript.lockOnTarget == null)
             {
-                cameraScript.lockOnTarget= pickNewTarget();
+                cameraScript.lockOnTarget = pickNewTarget();
             } else 
             {
                 cameraScript.lockOnTarget = null;
             }
-        } else if (Input.GetAxis("MouseX") > 0.1f)
-        {
-            cameraScript.lockOnTarget = pickNewTarget();
+        //} else if (Mathf.Abs(Input.GetAxis("Mouse X")) > 0.05f && cameraScript.lockOnTarget != null)
+        //{
+            //cameraScript.lockOnTarget = pickNewTarget();
         }
     }
 
     Transform pickNewTarget()
     {
-        Collider[] possibleTargets = Physics.OverlapSphere(transform.position, lockOnRange/*, enemiesLayer*/);
-        Debug.Log(possibleTargets);
+        Collider[] possibleTargets = Physics.OverlapSphere(transform.position, lockOnRange, 1<<enemiesLayer);
 
         if (possibleTargets.Length == 0)
-        {
-            Debug.Log("Returned NULL");
             return null;
-        }
-        
-        // TODO Check for what is the optimal thing to LockOnTo
-        // TODO If already locked onto get second most optimal
+
+        int currentClosest = 0;
+        int secondClosest = 0;
+
+        //Finds the two closest options
         for (int i = 0; i < possibleTargets.Length; i++)
         {
-            if (possibleTargets[i].gameObject.layer == enemiesLayer)
+
+            float view = Camera.main.WorldToViewportPoint(possibleTargets[i].transform.position).x;
+            float bestView = Camera.main.WorldToViewportPoint(possibleTargets[currentClosest].transform.position).x;
+
+            if (Mathf.Abs(view - 0.5f) < Mathf.Abs(bestView - 0.5f))
             {
-                Debug.Log("Returned Success");
-                return possibleTargets[i].gameObject.transform;
+                if (Vector3.Distance(transform.forward * 5, possibleTargets[i].transform.position) < Vector3.Distance(transform.forward * 5, possibleTargets[currentClosest].transform.position))
+                secondClosest = currentClosest;
+                currentClosest = i;
             }
         }
+        
+        if (cameraScript.lockOnTarget == possibleTargets[currentClosest].gameObject)
+        {
+            return possibleTargets[secondClosest].gameObject.transform;
+        }
 
-        Debug.Log("Returned NULL 2");
-        return null;
+        return possibleTargets[currentClosest].gameObject.transform;
     }
 }
