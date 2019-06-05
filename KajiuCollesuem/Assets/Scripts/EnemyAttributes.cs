@@ -7,7 +7,7 @@ public class EnemyAttributes : MonoBehaviour
 {
     public int startHealth = 100;
     public int currentHealth;
-    public Slider healthSlider;
+    private Slider healthSlider;
 
     AI enemyhealthUI;
     public GameObject enemyHealthUI;
@@ -29,6 +29,8 @@ public class EnemyAttributes : MonoBehaviour
         anim = GetComponent<Animator>();
         currentHealth = startHealth;
 
+        healthSlider = GetComponentInChildren<Slider>();
+
         enemyHealthUI.SetActive(false);
         cam = Camera.main;
     }
@@ -40,11 +42,12 @@ public class EnemyAttributes : MonoBehaviour
         healthBar.rotation = cam.transform.rotation;
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(int pAmount)
     {
         damaged = true;
-        currentHealth -= amount;
+        currentHealth -= pAmount;
         healthSlider.value = currentHealth;
+
         if (currentHealth <= 0 && !isDead)
         {
             Death();

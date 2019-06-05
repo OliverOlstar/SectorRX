@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController_V1 : MonoBehaviour
 {
     // Rigidbody
-    private Rigidbody rb;
+    private Rigidbody _Rb;
     private Transform _Camera;
 
     // Movement Variables
@@ -15,27 +15,25 @@ public class PlayerController_V1 : MonoBehaviour
     // Jump Variables
     public bool regJump;
     public int jumpForce = 5;
-    private int jumpLayer = 10;
-    private bool isGrounded;
+    private int jumpLayer = 11;
+    public bool isGrounded;
 
     void Start()
     {
         // rb as Rigidbody
-        rb = GetComponent<Rigidbody>();
+        _Rb = GetComponent<Rigidbody>();
         _Camera = Camera.main.transform;
     }
 
     void Update()
     {
         // Enable/Disable Movement
-        if (!disableMove)
-        {
-            PlayerMove();
-        }
         if (disableMove)
         {
             return;
         }
+
+        PlayerMove();
 
         // Jump Update
         if (Input.GetButtonDown("Jump"))
@@ -56,7 +54,7 @@ public class PlayerController_V1 : MonoBehaviour
         if (isGrounded)
         {
             // Adding jump force to the rigidbody
-            rb.AddForce(0, jumpForce, 0, ForceMode.Impulse);
+            _Rb.AddForce(0, jumpForce, 0, ForceMode.Impulse);
         }
     }
 
@@ -70,7 +68,9 @@ public class PlayerController_V1 : MonoBehaviour
             jumpVector = jumpVector.normalized * jumpForce;
 
             jumpVector.y = jumpForce;
-            rb.AddForce(jumpVector, ForceMode.Impulse);
+            _Rb.AddForce(jumpVector, ForceMode.Impulse);
+            
+            StartCoroutine("disablePlayerControls");
         }
     }   
 
@@ -96,10 +96,6 @@ public class PlayerController_V1 : MonoBehaviour
         if (collider.gameObject.layer == jumpLayer)
         {
             isGrounded = true;
-            if (!regJump)
-            {
-                disableMove = false;
-            }
         }
     }
 
@@ -109,10 +105,17 @@ public class PlayerController_V1 : MonoBehaviour
         if (collider.gameObject.layer == jumpLayer)
         {
             isGrounded = false;
-            if (!regJump)
-            {
-                disableMove = true;
-            }
         }
+    }
+
+    private IEnumerator disablePlayerControls()
+    {
+        do
+        {
+            disableMove = true;
+            yield return new WaitForSeconds(0.1f);
+        } while (!isGrounded);
+
+        disableMove = false;
     }
 }
