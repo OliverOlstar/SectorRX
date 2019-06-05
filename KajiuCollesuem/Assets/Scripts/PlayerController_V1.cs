@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerController_V1 : MonoBehaviour
 {
     // Rigidbody
-    public Rigidbody rb;
+    private Rigidbody rb;
+    private Transform _Camera;
 
     // Movement Variables
     public float moveSpeed = 1.0f;
@@ -13,7 +14,6 @@ public class PlayerController_V1 : MonoBehaviour
 
     // Jump Variables
     public bool regJump;
-    public bool archJump;
     public int jumpForce = 5;
     private int jumpLayer = 10;
     private bool isGrounded;
@@ -22,6 +22,7 @@ public class PlayerController_V1 : MonoBehaviour
     {
         // rb as Rigidbody
         rb = GetComponent<Rigidbody>();
+        _Camera = Camera.main.transform;
     }
 
     void Update()
@@ -37,13 +38,16 @@ public class PlayerController_V1 : MonoBehaviour
         }
 
         // Jump Update
-        if (Input.GetButtonDown("Jump") && regJump)
+        if (Input.GetButtonDown("Jump"))
         {
-            RegularJump();
-        }
-        if (Input.GetButtonDown("Jump") && archJump)
-        {
-            ArchJump();
+            if (regJump)
+            {
+                RegularJump();
+            }
+            else
+            {
+                ArchJump();
+            }
         }
     }
 
@@ -61,7 +65,12 @@ public class PlayerController_V1 : MonoBehaviour
         if (isGrounded)
         {
             // Disabling player movement & adding jump forward & upward force
-            rb.AddForce(0, jumpForce, jumpForce, ForceMode.Impulse);
+            Vector3 jumpVector = _Camera.parent.TransformDirection(Vector3.forward * jumpForce);
+            jumpVector.y = 0;
+            jumpVector = jumpVector.normalized * jumpForce;
+
+            jumpVector.y = jumpForce;
+            rb.AddForce(jumpVector, ForceMode.Impulse);
         }
     }   
 
@@ -73,7 +82,7 @@ public class PlayerController_V1 : MonoBehaviour
 
         //Move Vector
         Vector3 move = new Vector3(straffe, 0, translation);
-        move = Camera.main.transform.TransformDirection(move);
+        move = _Camera.TransformDirection(move);
         move = new Vector3(move.x, 0, move.z);
         move = move.normalized * Time.deltaTime * moveSpeed;
 
@@ -87,7 +96,7 @@ public class PlayerController_V1 : MonoBehaviour
         if (collider.gameObject.layer == jumpLayer)
         {
             isGrounded = true;
-            if (archJump)
+            if (!regJump)
             {
                 disableMove = false;
             }
@@ -100,7 +109,7 @@ public class PlayerController_V1 : MonoBehaviour
         if (collider.gameObject.layer == jumpLayer)
         {
             isGrounded = false;
-            if (archJump)
+            if (!regJump)
             {
                 disableMove = true;
             }
