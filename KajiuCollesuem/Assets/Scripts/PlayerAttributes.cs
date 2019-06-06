@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerAttributes : MonoBehaviour
 {
-    private readonly int maxHealth = 100;
-    private int health;
+    private readonly float maxHealth = 100;
+    private float health;
 
     private readonly int maxShield = 100;
     private int shield;
@@ -15,6 +15,8 @@ public class PlayerAttributes : MonoBehaviour
     private int powerGuage;
 
     public Slider healthSlider;
+    public Slider shieldSlider;
+    public Slider powerSlider;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +28,7 @@ public class PlayerAttributes : MonoBehaviour
 
     //GET SET
     //get current variables
-    public int getHealth()
+    public float getHealth()
     {
         return health;
     }
@@ -43,7 +45,7 @@ public class PlayerAttributes : MonoBehaviour
 
     //METHODS
     //gain health
-    public void gainHealth(int x)
+    public void gainHealth(float x)
     {
         //make sure can't gain more health than max
         if (health + x >= maxHealth)
@@ -53,13 +55,14 @@ public class PlayerAttributes : MonoBehaviour
         else
         {
             health += x;
-            healthSlider.value = health;
             Debug.Log("Health Gained " + x + ", New Health: " + health);
         }
+
+        healthSlider.value = health;
     }
 
     //lose health
-    public void takeDamage(int x)
+    public void takeDamage(float x)
     {
         if(health - x <= 0)
         {
@@ -69,9 +72,10 @@ public class PlayerAttributes : MonoBehaviour
         else
         {
             health -= x;
-            healthSlider.value = health;
             Debug.Log("Damage Taken: " + x + ", New Health: " + health);
-        }       
+        }
+
+        healthSlider.value = health;
     }
         
 
@@ -87,6 +91,8 @@ public class PlayerAttributes : MonoBehaviour
             shield += x;
             Debug.Log("Shield Gained: " + x + ", New Shield: " + health);
         }
+
+        shieldSlider.value = shield;
     }
 
     //reduce shield
@@ -101,6 +107,8 @@ public class PlayerAttributes : MonoBehaviour
             shield -= x;
             Debug.Log("Shield Lost: " + x + ", New Shield: " + health);
         }
+
+        shieldSlider.value = shield;
     }
 
     public void gainPowerGuage(int x)
@@ -114,6 +122,8 @@ public class PlayerAttributes : MonoBehaviour
             powerGuage += x;
             Debug.Log("Power Guage Gained: " + x + ", New Power Guage: " + health);
         }
+
+        powerSlider.value = powerGuage;
     }
 
     public void losePowerGuage(int x)
@@ -127,5 +137,7 @@ public class PlayerAttributes : MonoBehaviour
             powerGuage -= x;
             Debug.Log("Powe Guage Lost: " + x + ", New Power Guage: " + health);
         }
+
+        powerSlider.value = powerGuage;
     }
 }

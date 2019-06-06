@@ -1,19 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.AI;
 
 public class AI : MonoBehaviour
 {
     // Danish's variables
-    [SerializeField] float moveSpeed = 5.0f;
-    [SerializeField] float searchZone = 10.0f;
+    public float moveSpeed = 5.0f;
+    public float searchZone = 10.0f;
 
-    Rigidbody rb;
+    NavMeshAgent agent;
+    float height = 0.155f;
 
-
-
-
-
+    Vector3 startingPosition;
 
     // Dylan's Variables
     private GameObject player; // The player character
@@ -29,17 +29,20 @@ public class AI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = gameObject.GetComponent<Rigidbody>(); // connect to the Rigidbody on the enemy
+        GetComponent<EnemyAttributes>().enemyHealthUI.SetActive(false);
 
+        agent = gameObject.GetComponent<NavMeshAgent>(); // connect to the NavMeshAgent on the enemy
 
         player = GameObject.FindGameObjectWithTag("Player");
+
+        startingPosition = transform.position;
 
         if (searchTimeMax <= 0)
         {
             Debug.Log("Search time not set on " + this + ". Defaulting to 60.");
             searchTimeMax = 60f;
         }
-        if (!player) Debug.Log("player not set on " + this + ". Script relies on player gameobject to function.");
+        if (!player) Debug.Log("player not set on " + this + ". Script relies on player gameobject to function.");         
     }
 
     // Update is called once per frame
@@ -55,16 +58,11 @@ public class AI : MonoBehaviour
                 if (isPatrolling)
                 {
 
-
-
-
                 }
                 // Enemy is guarding
                 else
                 {
                     OnGuard();
-
-
 
                 }
             }
@@ -72,7 +70,6 @@ public class AI : MonoBehaviour
             // Enemy is searching for player
             else
             {
-
                 searchTime -= 0.01f;
             }
         }
@@ -98,14 +95,17 @@ public class AI : MonoBehaviour
         
         Vector3 mover = new Vector3(0, 0, moveSpeed * Time.deltaTime);
 
-
-
-        if(Vector3.Distance(transform.position, player.transform.position) < searchZone)
+        if(Vector3.Distance(transform.position, player.transform.position) <= searchZone)
         {
-            transform.LookAt(player.transform.position);
-            transform.Translate(mover, Space.Self);
+            
+            agent.destination = player.transform.position;
+            GetComponent<EnemyAttributes>().enemyHealthUI.SetActive(true);
         }
-
+        else
+        {
+            GetComponent<EnemyAttributes>().StartCoroutine("HealthVanish");
+            agent.destination = startingPosition;
+        }
     }
 
     void OnTriggerEnter(Collider c)
@@ -123,6 +123,4 @@ public class AI : MonoBehaviour
         // Store players position as they leave - used for searching.
         playerLastKnownPosition = player.transform.position;
     }
-
-    
 }
