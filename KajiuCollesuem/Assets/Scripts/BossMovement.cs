@@ -20,6 +20,8 @@ public class BossMovement : MonoBehaviour
     public float xComponent;
     public float zComponent;
 
+    public bool bossAgro;
+
     public Vector3 x;
     public Vector3 z;
 
@@ -29,6 +31,7 @@ public class BossMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        bossAgro = false;
         boss = GetComponent<NavMeshAgent>();
     }
 
