@@ -20,7 +20,7 @@ public class BossMovement : MonoBehaviour
     public float xComponent;
     public float zComponent;
 
-    public bool bossAgro;
+    public bool bossAgro = false;
 
     public Vector3 x;
     public Vector3 z;
@@ -31,7 +31,6 @@ public class BossMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bossAgro = false;
         boss = GetComponent<NavMeshAgent>();
     }
 
@@ -43,10 +42,10 @@ public class BossMovement : MonoBehaviour
 
 
         //if no destination for straffe, then set
-        if(!boss.hasPath)
+        if(!boss.hasPath && bossAgro)
         {
             Straffe_1();
-        }        
+        }
     }
 
     //doesn't work
