@@ -14,6 +14,8 @@ public class PlayerAttributes : MonoBehaviour
     private readonly int maxPowerGuage = 10;
     private int powerGuage;
 
+    const int BAR_HEIGHT = 20;
+
     public Slider healthSlider;
     public Slider shieldSlider;
     public Slider powerSlider;
@@ -24,6 +26,10 @@ public class PlayerAttributes : MonoBehaviour
         health = maxHealth;
         shield = maxShield;
         powerGuage = 0;
+
+        modifyMaxHealth(maxHealth);
+        modifyMaxDefense(maxShield);
+        modifyMaxPower(maxPowerGuage);
     }
 
     //GET SET
@@ -139,5 +145,26 @@ public class PlayerAttributes : MonoBehaviour
         }
 
         powerSlider.value = powerGuage;
+    }
+
+    public void modifyMaxHealth(float maxHealth)
+    {
+        //health.sizeDelta.Set(healthVal, BAR_HEIGHT);
+        RectTransform healthRect = healthSlider.gameObject.GetComponent<RectTransform>();
+        healthRect.sizeDelta = new Vector2(maxHealth, BAR_HEIGHT);
+    }
+
+    public void modifyMaxDefense(int maxShield)
+    {
+        //defense.sizeDelta.Set(defenseVal, BAR_HEIGHT);
+        RectTransform shieldRect = shieldSlider.gameObject.GetComponent<RectTransform>();
+        shieldRect.sizeDelta = new Vector2(maxShield, BAR_HEIGHT);
+    }
+
+    public void modifyMaxPower(int maxPowerGuage)
+    {
+        //power.sizeDelta.Set(powerVal, BAR_HEIGHT);
+        RectTransform powerRect = powerSlider.gameObject.GetComponent<RectTransform>();
+        powerRect.sizeDelta = new Vector2(maxPowerGuage, BAR_HEIGHT);
     }
 }
