@@ -29,6 +29,12 @@ public class PlayerAttributes : MonoBehaviour
         shield = maxShield;
         powerGuage = 0;
 
+        RectTransform powerRect = powerSlider.gameObject.GetComponent<RectTransform>();
+        //X: 1039.6, Y: 58.9, Z: 0.0
+        Debug.Log(powerRect.transform.position);
+        powerRect.position = new Vector3(1040, 59.4f, 0);
+        Debug.Log(powerRect.position);
+
         setBarsLength();
     }
 
