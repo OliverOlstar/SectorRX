@@ -9,7 +9,7 @@ public class playerPowers : MonoBehaviour
     public static event Action OnPower2Used;
     public static event Action OnPower3Used;
     public static event Action OnPower4Used;
-    public int _currentPower = 0;
+    public int _currentPower = 1;
     public int _collectedPowers = 0;
 
     [SerializeField]

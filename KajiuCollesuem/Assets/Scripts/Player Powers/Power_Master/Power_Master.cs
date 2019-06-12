@@ -5,15 +5,11 @@ using UnityEngine;
 public class Power_Master : MonoBehaviour
 {
     private playerPowers _PlayerPowersComp;
-    private PlayerController_V1 _PlayerControllerComp;
-    private PlayerAttributes _PlayerAttributesComp;
     private int _SlotImIn;
 
     // Start is called before the first frame update
     void Start()
     {
-        _PlayerAttributesComp = GetComponent<PlayerAttributes>();
-        _PlayerControllerComp = GetComponent<PlayerController_V1>();
         _PlayerPowersComp = GetComponent<playerPowers>();
 
         _SlotImIn = _PlayerPowersComp.PowerAdded();
