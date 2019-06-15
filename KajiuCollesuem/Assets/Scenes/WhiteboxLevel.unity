@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.45133346, g: 0.50025403, b: 0.5692878, a: 1}
+  m_IndirectSpecularColor: {r: 0.45133293, g: 0.50025326, b: 0.56928694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1818,6 +1818,23 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 999111214}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &806430458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806430448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecc1ae22d4d96e4d946eff88f4f98df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashforce: 25
+  dashDuration: 0.2
+  dashCooldown: 1
+  newDashTime: 0
+  dashBonus: 1
 --- !u!1001 &823053976
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2686,6 +2703,11 @@ PrefabInstance:
       propertyPath: powerSlider
       value: 
       objectReference: {fileID: 1107366915}
+    - target: {fileID: 1635927648668633823, guid: 8e7d410007ab955488e1c836a456382a,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e7d410007ab955488e1c836a456382a, type: 3}
 --- !u!1 &1004371178
