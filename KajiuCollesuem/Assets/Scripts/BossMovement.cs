@@ -1,82 +1,114 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class BossMovement : MonoBehaviour
 {
-    private NavMeshAgent boss;
-    public GameObject player;
+    [SerializeField] private GameObject player;
+    [SerializeField] private float speed = 1.0f;
+    
+    private Vector3 distance;
+    private float innerAngle;
+    private float outerAngle;
+    
+    private float angleRadiansComponent;
+    private float rightComponent;
+    private float forwardComponent;
+    private Vector3 move = Vector3.zero;
+    
+    public bool clockwise = false;
 
-    public Vector3 radius;
-    public float radiusMagnitude;
-    public float centerAngle = 0.0f;
-    public float innerAngle = 0.0f;
-    public float innerAngeleRadians = 0.0f;
-    public float movementAngle = 0.0f;
+    public int count = 0;
 
-    public float outsideLength = 0.0f;
+    public bool bossAggro = false;
 
-    public float xComponent;
-    public float zComponent;
-
-    public bool bossAgro = false;
-
-    public Vector3 x;
-    public Vector3 z;
-
-    public Vector3 destination;
-       
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        boss = GetComponent<NavMeshAgent>();
+        transform.LookAt(player.transform);
+        StartCoroutine(SwitchDirection());
     }
-
     // Update is called once per frame
     void Update()
-    {
-        //ensure rotation is  towards player???
-        transform.LookAt(player.transform.position);
-
-
-        //if no destination for straffe, then set
-        if(!boss.hasPath && bossAgro)
+    {       
+        if(bossAggro)
         {
-            Straffe_1();
-        }
+            transform.LookAt(player.transform);
+            CalculateDirection();
+            Straffe();
+        }      
     }
 
-    //doesn't work
-    void Straffe_1()
+
+    
+    private void CalculateDirection()
+    {        
+        //get vector between boss and player
+        distance = player.transform.position - transform.position;            
+
+        //get angle to move, adjustable
+        innerAngle = 90 * (1 / (distance.magnitude * 1.0f));
+
+        //determine and to use trig on
+        outerAngle = (180 - innerAngle) / 2;
+
+        //trig it up to find new vector        
+        angleRadiansComponent = (90 - (180 - innerAngle) / 2) * (Mathf.PI / 180);
+
+        //multiplying by 1 like getting normalized vector
+        rightComponent = 1 * Mathf.Cos(angleRadiansComponent);
+        forwardComponent = 1 * Mathf.Sin(angleRadiansComponent);
+
+        if(clockwise)
+        {
+            move = (transform.forward * forwardComponent) + -1 * (transform.right * rightComponent);
+        }
+        else
+        {
+            move = (transform.forward * forwardComponent) + (transform.right * rightComponent);
+        }
+            
+        //get normal vector
+        //move = move.normalized;
+    }
+
+    private void Straffe()
     {
-        //get vector between player boss
-        radius = player.transform.position - transform.position;
-        radiusMagnitude = radius.magnitude;
+        transform.position += move * speed * Time.deltaTime;
+    }
 
-        // 1 divided by magnitude of vector gives center angle
-        centerAngle = (1 / radiusMagnitude) * 90;
-        // isoceles means outside angles are equal
-        innerAngle = (180 - centerAngle) / 2;
-        innerAngeleRadians = (innerAngle * Mathf.PI) / 180.0f;
-        movementAngle = 90 - innerAngle;
 
-        //determine magnitude of outside length
-        outsideLength = 2 * radiusMagnitude * Mathf.Cos(innerAngeleRadians);
+    //random direction change
+    IEnumerator SwitchDirection()
+    {
+        while(true)
+        {
+            //repeat every 3 seconds
+            yield return new WaitForSecondsRealtime(3.0f);
 
-        //double outsideLength for full isosceles triangle
-        //outsideLength = outsideLength * 2;
+            //get random number 0 or 1
+            int x = Random.Range(0, 2);
+            Debug.Log(x);
 
-        //determine the components
-        xComponent = outsideLength * Mathf.Cos(90 - innerAngle);
-        zComponent = outsideLength * Mathf.Sin(90 - innerAngle);
+            //on 0 switch boss direction
+            if (x == 1)
+            {
+                clockwise = !clockwise;
+            }
+        }        
+    }
 
-        //x = new Vector3(xComponent, 0, 0);
-        //z = new Vector3(0, 0, zComponent);
 
-        destination = transform.position + (-transform.right * xComponent) + (transform.forward * zComponent);
 
-        boss.SetDestination(destination);
-    }   
+    private void OnCollisionEnter(Collision collision)
+    {        
+        //all the shit
+        if(collision.gameObject.layer == 10 ||
+            collision.gameObject.layer == 11 ||
+            collision.gameObject.layer == 12 ||
+            collision.gameObject.layer == 13)
+        {            
+            //reverse clockwise state
+            clockwise = !clockwise;            
+        }
+    }
 }
