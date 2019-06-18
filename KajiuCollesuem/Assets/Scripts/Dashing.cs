@@ -16,8 +16,10 @@ public class Dashing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Cooldown
         if (Time.time > newDashTime)
         {
+
             if (Input.GetKey(KeyCode.C))
             {
                 if (dashBonus < 2.0f)
@@ -26,7 +28,7 @@ public class Dashing : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyUp(KeyCode.C))
+            if (Input.GetKeyUp(KeyCode.C) || dashBonus >= 2f)
             {
                 StartCoroutine(Cast());
             }
