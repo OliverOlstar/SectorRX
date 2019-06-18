@@ -31,7 +31,8 @@ public class BossTriggers : MonoBehaviour
         if (other.tag == "Player")
         {
             playerInBossRoom = true;
-            FinalBoss.GetComponent<BossMovement>().bossAgro = true;
+            FinalBoss.GetComponent<BossMovement>().bossAggro = true;
+            FinalBoss.GetComponent<BossMovement>().StartCoroutine("SwitchDirection");
         }
     }
 
