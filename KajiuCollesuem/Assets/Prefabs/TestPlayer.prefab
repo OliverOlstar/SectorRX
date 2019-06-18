@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 5397536735001967586}
   - component: {fileID: 806430456}
   - component: {fileID: 806430457}
+  - component: {fileID: 2210706412271624635}
   - component: {fileID: 806430458}
   m_Layer: 9
   m_Name: TestPlayer
@@ -143,6 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee92f20ca394cc4ea8aefa00433d0d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  barLengthMultiplier: 1.5
   healthSlider: {fileID: 0}
   shieldSlider: {fileID: 0}
   powerSlider: {fileID: 0}
@@ -171,6 +173,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockOnRange: 10
+--- !u!114 &2210706412271624635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8582934654442581043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecc1ae22d4d96e4d946eff88f4f98df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashforce: 1
+  dashDuration: 1
+  dashCooldown: 0
+  newDashTime: 0
+  dashBonus: 1
 --- !u!114 &806430458
 MonoBehaviour:
   m_ObjectHideFlags: 0
