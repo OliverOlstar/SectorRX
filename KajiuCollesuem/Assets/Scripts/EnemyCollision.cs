@@ -51,7 +51,7 @@ public class EnemyCollision : MonoBehaviour
 
         if(distance < 5)
         {
-            playerVars.takeDamage(0.01f);
+            //playerVars.takeDamage(0.01f);
         }
     }
 }
