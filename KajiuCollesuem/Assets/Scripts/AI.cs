@@ -10,13 +10,13 @@ public class AI : MonoBehaviour
     public float moveSpeed = 5.0f;
     public float searchZone = 10.0f;
 
-    NavMeshAgent agent;
+    protected NavMeshAgent agent;
     float height = 0.155f;
 
     Vector3 startingPosition;
 
     // Dylan's Variables
-    private GameObject player; // The player character
+    protected GameObject player; // The player character
     Vector3 playerLastKnownPosition; // Store last known position of player - used for search mode
 
     public bool isPatrolling; // if false enemy will stand guard
@@ -28,6 +28,11 @@ public class AI : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
+    {
+        InheritStart();  
+    }
+
+    protected void InheritStart()
     {
         GetComponent<EnemyAttributes>().enemyHealthUI.SetActive(false);
 
@@ -42,11 +47,16 @@ public class AI : MonoBehaviour
             Debug.Log("Search time not set on " + this + ". Defaulting to 60.");
             searchTimeMax = 60f;
         }
-        if (!player) Debug.Log("player not set on " + this + ". Script relies on player gameobject to function.");         
+        if (!player) Debug.Log("player not set on " + this + ". Script relies on player gameobject to function.");
     }
 
     // Update is called once per frame
     void Update()
+    {
+        InheritUpdate();
+    }
+
+    protected void InheritUpdate()
     {
         // When player is not in sight
         if (!playerInSight)
@@ -78,7 +88,7 @@ public class AI : MonoBehaviour
         // When player is in sight
         else
         {
-            
+
 
 
 
@@ -97,14 +107,16 @@ public class AI : MonoBehaviour
 
         if(Vector3.Distance(transform.position, player.transform.position) <= searchZone)
         {
-            
-            agent.destination = player.transform.position;
+            if (agent.isActiveAndEnabled)   
+                agent.destination = player.transform.position;
             GetComponent<EnemyAttributes>().enemyHealthUI.SetActive(true);
         }
         else
         {
             GetComponent<EnemyAttributes>().StartCoroutine("HealthVanish");
-            agent.destination = startingPosition;
+
+            if (agent.isActiveAndEnabled)
+                agent.destination = startingPosition;
         }
     }
 
