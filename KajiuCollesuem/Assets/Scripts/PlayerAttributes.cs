@@ -26,6 +26,12 @@ public class PlayerAttributes : MonoBehaviour
         powerGuage = 0;
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+            takeDamage(10);
+    }
+
     //GET SET
     //get current variables
     public float getHealth()
@@ -61,20 +67,31 @@ public class PlayerAttributes : MonoBehaviour
         healthSlider.value = health;
     }
 
-    //lose health
-    public void takeDamage(float x)
+    //lose Shield
+    public void takeDamage(int x)
     {
-        if(health - x <= 0)
+        if(shield > 0)
         {
-            //call death function
-            Debug.Log("Player Died");
+            if((shield - x) >= 0)
+            {
+                shield = shield - x;
+            }
+            else
+            {
+                int shieldOverflow = shield - x;
+                shield = 0;
+                health -= shieldOverflow;
+                
+            }
+            //Start to take away player health
+            Debug.Log("Player Health");
         }
         else
         {
             health -= x;
             Debug.Log("Damage Taken: " + x + ", New Health: " + health);
         }
-
+        shieldSlider.value = shield;
         healthSlider.value = health;
     }
         
@@ -94,7 +111,29 @@ public class PlayerAttributes : MonoBehaviour
 
         shieldSlider.value = shield;
     }
+    //shield over time
+    private int curShipShield = 100;
 
+    void update()
+    {
+        StartCoroutine(addShield());
+    }
+
+    IEnumerator addShield()
+    {
+        while (true)
+        { // loops forever
+            if (curShipShield < 100)
+            { // if Shield < 100
+                curShipShield += 1; // increase shield and wait the specified time
+                yield return new WaitForSeconds(1);
+            }
+            else
+            { // if Shield >= 100, just yield 
+                yield return null;
+            }
+        }
+    }
     //reduce shield
     public void loseShield(int x)
     {
