@@ -94,15 +94,10 @@ public class AI : MonoBehaviour
 
         }
 
-        RangerAI();
+
         // Enable / Disable search mode
         if (searchTime > 0) searchingForPlayer = true;
         else searchingForPlayer = false;
-    }
-
-    virtual protected void RangerAI()
-    {
-        
     }
 
     void OnGuard()
