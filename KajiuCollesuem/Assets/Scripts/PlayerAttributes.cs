@@ -132,7 +132,7 @@ public class PlayerAttributes : MonoBehaviour
         powerSlider.value = powerGuage;
     }
 
-    public void losePowerGuage(int x)
+    public void losePowerGuage(int x, int j)
     {
         if(powerGuage - x < 0)
         {
@@ -140,8 +140,15 @@ public class PlayerAttributes : MonoBehaviour
         }
         else
         {
-            powerGuage -= x;
-            Debug.Log("Powe Guage Lost: " + x + ", New Power Guage: " + health);
+            if (Input.GetButtonDown("Fire1"))
+            {
+                while (powerGuage > 0)
+                {
+                    StartCoroutine(powerLoss(x, j));
+                }
+                StartCoroutine(powerRestore(x, j));
+            }
+            Debug.Log("" + "Power Guage Lost: " + x + ", New Power Guage: " + health);
         }
 
         powerSlider.value = powerGuage;
@@ -185,5 +192,20 @@ public class PlayerAttributes : MonoBehaviour
 
         RectTransform healthRect = healthSlider.gameObject.GetComponent<RectTransform>();
         healthRect.sizeDelta = new Vector2(maxHealth * barLengthMultiplier, BAR_HEIGHT);
+    }
+
+    IEnumerator powerLoss(int x, int j)
+    {
+        StopCoroutine(powerRestore(x, j));
+        yield return new WaitForSeconds(1);
+        powerGuage -= x;
+        yield return new WaitForSeconds(1);
+    }
+
+    IEnumerator powerRestore(int x, int j)
+    {
+        StopCoroutine(powerLoss(x, j));
+        yield return new WaitForSeconds(10);
+        powerGuage += j;
     }
 }
