@@ -5,139 +5,150 @@ using UnityEngine.UI;
 
 public class PlayerAttributes : MonoBehaviour
 {
-    private readonly float maxHealth = 100;
-    private float health;
+    [Header("Maxes")]
+    [SerializeField] private int _maxHealth = 100;
+    [SerializeField] private int _maxShield = 100;
+    [SerializeField] private int _maxPower = 10;
 
-    private readonly int maxShield = 100;
-    private int shield;
+    private int _health;
+    private int _shield;
+    private int _power;
 
-    private readonly int maxPowerGuage = 10;
-    private int powerGuage;
+    [Header("Regen & Loss over time")]
+    [SerializeField] private float _shieldRegenStartDelaySeconds = 6f;
+    [SerializeField] private float _shieldRegenDelaySeconds = 1f;
+    [SerializeField] private int _shieldRegenAmount = 4;
+    
+    [SerializeField] private float _powerLossStartDelaySeconds = 8f;
+    [SerializeField] private float _powerLossDelaySeconds = 0.3f;
+    [SerializeField] private int _powerLossAmount = 1;
 
-    public Slider healthSlider;
-    public Slider shieldSlider;
-    public Slider powerSlider;
+    [Header("HUD")]
+    [SerializeField] private Slider _healthSlider;
+    [SerializeField] private Slider _shieldSlider;
+    [SerializeField] private Slider _powerSlider;
 
     // Start is called before the first frame update
     void Start()
     {
-        health = maxHealth;
-        shield = maxShield;
-        powerGuage = 0;
+        _health = _maxHealth;
+        _shield = _maxShield;
+        _power = _maxPower;
+
+        StartCoroutine("powerLoss");
     }
 
-    //GET SET
-    //get current variables
-    public float getHealth()
+    //GET
+    public int getHealth() { return _health; }
+    public int getShield() { return _shield; }
+    public int getPower() { return _power; }
+
+    //SET
+    public void setHealth(int pHealth) { _health = pHealth; }
+    public void setShield(int pShield) { _shield = pShield; }
+    public void setPower(int pPower) { _power = pPower; }
+
+    //MODIFYS
+    public void modifyHealth(int x)
     {
-        return health;
+        //Changing Value
+        _health += x;
+        _health = Mathf.Clamp(_health, 0, _maxHealth);
+
+        //Changing Visuals
+        _healthSlider.value = _health;
+    }        
+    
+    public void modifyShield(int x)
+    {
+        _shield += x;
+        _shield = Mathf.Clamp(_shield, 0, _maxShield);
+
+        //Changing Visuals
+        _shieldSlider.value = _shield;
     }
 
-    public int getShield()
+    public void modifyPower(int x)
     {
-        return shield;
+        //Changing Value
+        _power += x;
+        _power = Mathf.Clamp(_power, 0, _maxPower);
+
+        //Changing Visuals
+        _powerSlider.value = _power;
     }
 
-    public int getPowerGuage()
+    //GENERAL FUNCTIONS
+    public void damage(int x)
     {
-        return powerGuage;
-    }
+        Debug.Log("Damaging Player " + x);
 
-    //METHODS
-    //gain health
-    public void gainHealth(float x)
-    {
-        //make sure can't gain more health than max
-        if (health + x >= maxHealth)
+        if (_shield >= x)
         {
-            health = maxHealth;
+            //Changing only Shield
+            modifyShield(-x);
         }
         else
         {
-            health += x;
-            Debug.Log("Health Gained " + x + ", New Health: " + health);
+            //Changing Shield and getting the remainder
+            x -= _shield;
+            modifyShield(-_shield);
+
+            //Changing Health by remainder
+            modifyHealth(-x);
         }
 
-        healthSlider.value = health;
+        //Restarting Shield Regening
+        if (_shield < _maxShield)
+        {
+            StopCoroutine("shieldRegen");
+            StopCoroutine("shieldRegenStartDelay");
+            StartCoroutine("shieldRegenStartDelay");
+        }
+
+        //Restarting Power Loss over time
+        //if (_power > 0)
+        //{
+        //    StopCoroutine("powerLoss");
+        //    StopCoroutine("powerLossStartDelay");
+        //    StartCoroutine("powerLossStartDelay");
+        //}
     }
 
-    //lose health
-    public void takeDamage(float x)
+    //COROUTINES
+    //Shield
+    private IEnumerator shieldRegenStartDelay()
     {
-        if(health - x <= 0)
-        {
-            //call death function
-            Debug.Log("Player Died");
-        }
-        else
-        {
-            health -= x;
-            Debug.Log("Damage Taken: " + x + ", New Health: " + health);
-        }
-
-        healthSlider.value = health;
-    }
-        
-
-    //gain shield
-    public void gainShield(int x)
-    {
-        if(shield + x >= maxShield)
-        {
-            shield = maxShield;
-        }
-        else
-        {
-            shield += x;
-            Debug.Log("Shield Gained: " + x + ", New Shield: " + health);
-        }
-
-        shieldSlider.value = shield;
+        Debug.Log("Shield Regen Delayed");
+        yield return new WaitForSeconds(_shieldRegenStartDelaySeconds);
+        StartCoroutine("shieldRegen");
     }
 
-    //reduce shield
-    public void loseShield(int x)
+    private IEnumerator shieldRegen()
     {
-        if(shield - x < 0)
+        while (_shield < _maxShield)
         {
-            shield = 0;
+            modifyShield(_shieldRegenAmount);
+            Debug.Log("Shield Regened");
+            yield return new WaitForSeconds(_shieldRegenDelaySeconds);
         }
-        else
-        {
-            shield -= x;
-            Debug.Log("Shield Lost: " + x + ", New Shield: " + health);
-        }
-
-        shieldSlider.value = shield;
     }
 
-    public void gainPowerGuage(int x)
+    //Power
+    private IEnumerator powerLossStartDelay()
     {
-        if(powerGuage + x > maxPowerGuage)
-        {
-            powerGuage = maxPowerGuage;
-        }
-        else
-        {
-            powerGuage += x;
-            Debug.Log("Power Guage Gained: " + x + ", New Power Guage: " + health);
-        }
-
-        powerSlider.value = powerGuage;
+        Debug.Log("Power Loss Delayed");
+        yield return new WaitForSeconds(_powerLossStartDelaySeconds);
+        StartCoroutine("powerLoss");
     }
 
-    public void losePowerGuage(int x)
+    private IEnumerator powerLoss()
     {
-        if(powerGuage - x < 0)
+        while (_power > 0)
         {
-            powerGuage = 0;
+            modifyPower(-_powerLossAmount);
+            Debug.Log("Power lost: " + _power);
+            yield return new WaitForSeconds(_powerLossDelaySeconds);
         }
-        else
-        {
-            powerGuage -= x;
-            Debug.Log("Powe Guage Lost: " + x + ", New Power Guage: " + health);
-        }
-
-        powerSlider.value = powerGuage;
     }
 }
