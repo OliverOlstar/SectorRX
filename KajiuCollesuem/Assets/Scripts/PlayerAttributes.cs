@@ -5,14 +5,18 @@ using UnityEngine.UI;
 
 public class PlayerAttributes : MonoBehaviour
 {
-    private readonly float maxHealth = 100;
+    private int maxHealth = 100;
     private float health;
 
-    private readonly int maxShield = 100;
+    private int maxShield = 100;
     private int shield;
 
-    private readonly int maxPowerGuage = 10;
+    private int maxPowerGuage = 20;
     private int powerGuage;
+
+    const int BAR_HEIGHT = 20;
+
+    public float barLengthMultiplier = 1.5f;
 
     public Slider healthSlider;
     public Slider shieldSlider;
@@ -24,6 +28,8 @@ public class PlayerAttributes : MonoBehaviour
         health = maxHealth;
         shield = maxShield;
         powerGuage = 0;
+
+        setBarsLength();
     }
 
     //GET SET
@@ -126,7 +132,7 @@ public class PlayerAttributes : MonoBehaviour
         powerSlider.value = powerGuage;
     }
 
-    public void losePowerGuage(int x)
+    public void losePowerGuage(int x, int j)
     {
         if(powerGuage - x < 0)
         {
@@ -134,10 +140,72 @@ public class PlayerAttributes : MonoBehaviour
         }
         else
         {
-            powerGuage -= x;
-            Debug.Log("Powe Guage Lost: " + x + ", New Power Guage: " + health);
+            if (Input.GetButtonDown("Fire1"))
+            {
+                while (powerGuage > 0)
+                {
+                    StartCoroutine(powerLoss(x, j));
+                }
+                StartCoroutine(powerRestore(x, j));
+            }
+            Debug.Log("" + "Power Guage Lost: " + x + ", New Power Guage: " + health);
         }
 
         powerSlider.value = powerGuage;
+    }
+
+    public void modifyMaxHealth(int pMaxHealth)
+    {
+        maxHealth += pMaxHealth;
+
+        //health.sizeDelta.Set(healthVal, BAR_HEIGHT);
+        RectTransform healthRect = healthSlider.gameObject.GetComponent<RectTransform>();
+        healthRect.sizeDelta = new Vector2(maxHealth * barLengthMultiplier, BAR_HEIGHT);
+    }
+
+    public void modifyMaxDefense(int pMaxShield)
+    {
+        maxShield += pMaxShield;
+
+        //defense.sizeDelta.Set(defenseVal, BAR_HEIGHT);
+        RectTransform shieldRect = shieldSlider.gameObject.GetComponent<RectTransform>();
+        shieldRect.sizeDelta = new Vector2(maxShield * barLengthMultiplier, BAR_HEIGHT);
+    }
+
+    public void modifyMaxPower(int pMaxPowerGuage)
+    {
+        maxPowerGuage += pMaxPowerGuage;
+
+        //power.sizeDelta.Set(powerVal, BAR_HEIGHT);
+        RectTransform powerRect = powerSlider.gameObject.GetComponent<RectTransform>();
+        powerRect.sizeDelta = new Vector2(maxPowerGuage * barLengthMultiplier, BAR_HEIGHT);
+    }
+
+    private void setBarsLength()
+    {
+        //Used to set the length of the bars (most for at start)
+        RectTransform powerRect = powerSlider.gameObject.GetComponent<RectTransform>();
+        powerRect.sizeDelta = new Vector2(maxPowerGuage * barLengthMultiplier, BAR_HEIGHT);
+
+        RectTransform shieldRect = shieldSlider.gameObject.GetComponent<RectTransform>();
+        shieldRect.sizeDelta = new Vector2(maxShield * barLengthMultiplier, BAR_HEIGHT);
+
+        RectTransform healthRect = healthSlider.gameObject.GetComponent<RectTransform>();
+        healthRect.sizeDelta = new Vector2(maxHealth * barLengthMultiplier, BAR_HEIGHT);
+    }
+
+    IEnumerator powerLoss(int x, int j)
+    {
+        StopCoroutine(powerRestore(x, j));
+        yield return new WaitForSeconds(1);
+        powerGuage -= x;
+        yield return new WaitForSeconds(1);
+    }
+
+    IEnumerator powerRestore(int x, int j)
+    {
+        StopCoroutine(powerLoss(x, j));
+        yield return new WaitForSeconds(10);
+        powerGuage += j;
     }
 }

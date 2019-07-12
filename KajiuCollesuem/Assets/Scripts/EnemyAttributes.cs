@@ -67,6 +67,12 @@ public class EnemyAttributes : MonoBehaviour
         {
             TakeDamage(playerDamage);
         }
+
+        // Destroy enemy if they pass through boss wall
+        if(collision.gameObject.tag == "BossWall")
+        {
+            Destroy(this);
+        }
     }
 
     void EnemyDead()
