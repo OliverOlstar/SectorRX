@@ -427,10 +427,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee92f20ca394cc4ea8aefa00433d0d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxHealth: 100
+  _maxShield: 100
+  _maxPower: 10
+  _shieldRegenStartDelaySeconds: 6
+  _shieldRegenDelaySeconds: 1
+  _shieldRegenAmount: 4
+  _powerLossStartDelaySeconds: 8
+  _powerLossDelaySeconds: 0.3
+  _powerLossAmount: 1
+  _healthSlider: {fileID: 0}
+  _shieldSlider: {fileID: 0}
+  _powerSlider: {fileID: 0}
   barLengthMultiplier: 1.5
-  healthSlider: {fileID: 0}
-  shieldSlider: {fileID: 0}
-  powerSlider: {fileID: 0}
 --- !u!114 &4086892133307703399
 MonoBehaviour:
   m_ObjectHideFlags: 0

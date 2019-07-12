@@ -21,12 +21,7 @@ public class BossMovement : MonoBehaviour
     public int count = 0;
 
     public bool bossAggro = false;
-
-    private void Start()
-    {
-        transform.LookAt(player.transform);
-        StartCoroutine(SwitchDirection());
-    }
+    
     // Update is called once per frame
     void Update()
     {       
@@ -37,8 +32,6 @@ public class BossMovement : MonoBehaviour
             Straffe();
         }      
     }
-
-
     
     private void CalculateDirection()
     {        
@@ -75,8 +68,7 @@ public class BossMovement : MonoBehaviour
     {
         transform.position += move * speed * Time.deltaTime;
     }
-
-
+    
     //random direction change
     IEnumerator SwitchDirection()
     {
@@ -96,9 +88,7 @@ public class BossMovement : MonoBehaviour
             }
         }        
     }
-
-
-
+    
     private void OnCollisionEnter(Collision collision)
     {        
         //all the shit

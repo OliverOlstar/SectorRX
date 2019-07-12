@@ -5,207 +5,194 @@ using UnityEngine.UI;
 
 public class PlayerAttributes : MonoBehaviour
 {
-    private int maxHealth = 100;
-    private float health;
+    [Header("Maxes")]
+    [SerializeField] private int _maxHealth = 100;
+    [SerializeField] private int _maxShield = 100;
+    [SerializeField] private int _maxPower = 10;
 
-    private int maxShield = 100;
-    private int shield;
+    private int _health;
+    private int _shield;
+    private int _power;
 
-    private int maxPowerGuage = 20;
-    private int powerGuage;
+    [Header("Regen & Loss over time")]
+    [SerializeField] private float _shieldRegenStartDelaySeconds = 6f;
+    [SerializeField] private float _shieldRegenDelaySeconds = 1f;
+    [SerializeField] private int _shieldRegenAmount = 4;
+
+    [SerializeField] private float _powerLossStartDelaySeconds = 8f;
+    [SerializeField] private float _powerLossDelaySeconds = 0.3f;
+    [SerializeField] private int _powerLossAmount = 1;
+
+    [Header("HUD")]
+    [SerializeField] private Slider _healthSlider;
+    [SerializeField] private Slider _shieldSlider;
+    [SerializeField] private Slider _powerSlider;
+
+    private RectTransform healthRect;
+    private RectTransform shieldRect;
+    private RectTransform powerRect;
 
     const int BAR_HEIGHT = 20;
-
     public float barLengthMultiplier = 1.5f;
-
-    public Slider healthSlider;
-    public Slider shieldSlider;
-    public Slider powerSlider;
 
     // Start is called before the first frame update
     void Start()
     {
-        health = maxHealth;
-        shield = maxShield;
-        powerGuage = 0;
+        _health = _maxHealth;
+        _shield = _maxShield;
+        _power = 0;
+        modifyPower(0);
 
-        setBarsLength();
-    }
+        //Set the length of the bars to their respective maxes
+        healthRect = _healthSlider.gameObject.GetComponent<RectTransform>();
+        healthRect.sizeDelta = new Vector2(_maxHealth * barLengthMultiplier, BAR_HEIGHT);
 
-    //GET SET
-    //get current variables
-    public float getHealth()
-    {
-        return health;
-    }
-
-    public int getShield()
-    {
-        return shield;
-    }
-
-    public int getPowerGuage()
-    {
-        return powerGuage;
-    }
-
-    //METHODS
-    //gain health
-    public void gainHealth(float x)
-    {
-        //make sure can't gain more health than max
-        if (health + x >= maxHealth)
-        {
-            health = maxHealth;
-        }
-        else
-        {
-            health += x;
-            Debug.Log("Health Gained " + x + ", New Health: " + health);
-        }
-
-        healthSlider.value = health;
-    }
-
-    //lose health
-    public void takeDamage(float x)
-    {
-        if(health - x <= 0)
-        {
-            //call death function
-            Debug.Log("Player Died");
-        }
-        else
-        {
-            health -= x;
-            Debug.Log("Damage Taken: " + x + ", New Health: " + health);
-        }
-
-        healthSlider.value = health;
-    }
+        shieldRect = _shieldSlider.gameObject.GetComponent<RectTransform>();
+        shieldRect.sizeDelta = new Vector2(_maxShield * barLengthMultiplier, BAR_HEIGHT);
         
-
-    //gain shield
-    public void gainShield(int x)
-    {
-        if(shield + x >= maxShield)
-        {
-            shield = maxShield;
-        }
-        else
-        {
-            shield += x;
-            Debug.Log("Shield Gained: " + x + ", New Shield: " + health);
-        }
-
-        shieldSlider.value = shield;
+        powerRect = _powerSlider.gameObject.GetComponent<RectTransform>();
+        powerRect.sizeDelta = new Vector2(_maxPower * barLengthMultiplier, BAR_HEIGHT);
     }
 
-    //reduce shield
-    public void loseShield(int x)
-    {
-        if(shield - x < 0)
-        {
-            shield = 0;
-        }
-        else
-        {
-            shield -= x;
-            Debug.Log("Shield Lost: " + x + ", New Shield: " + health);
-        }
+    //GET
+    public int getHealth() { return _health; }
+    public int getShield() { return _shield; }
+    public int getPower() { return _power; }
 
-        shieldSlider.value = shield;
+    //SET
+    public void setHealth(int pHealth) { _health = pHealth; }
+    public void setShield(int pShield) { _shield = pShield; }
+    public void setPower(int pPower) { _power = pPower; }
+
+    //MODIFY VARS
+    public void modifyHealth(int x)
+    {
+        //Changing Value
+        _health += x;
+        _health = Mathf.Clamp(_health, 0, _maxHealth);
+
+        //Changing Visuals
+        _healthSlider.value = _health;
     }
 
-    public void gainPowerGuage(int x)
+    public void modifyShield(int x)
     {
-        if(powerGuage + x > maxPowerGuage)
-        {
-            powerGuage = maxPowerGuage;
-        }
-        else
-        {
-            powerGuage += x;
-            Debug.Log("Power Guage Gained: " + x + ", New Power Guage: " + health);
-        }
+        _shield += x;
+        _shield = Mathf.Clamp(_shield, 0, _maxShield);
 
-        powerSlider.value = powerGuage;
+        //Changing Visuals
+        _shieldSlider.value = _shield;
     }
 
-    public void losePowerGuage(int x, int j)
+    public void modifyPower(int x)
     {
-        if(powerGuage - x < 0)
-        {
-            powerGuage = 0;
-        }
-        else
-        {
-            if (Input.GetButtonDown("Fire1"))
-            {
-                while (powerGuage > 0)
-                {
-                    StartCoroutine(powerLoss(x, j));
-                }
-                StartCoroutine(powerRestore(x, j));
-            }
-            Debug.Log("" + "Power Guage Lost: " + x + ", New Power Guage: " + health);
-        }
+        //Changing Value
+        _power += x;
+        _power = Mathf.Clamp(_power, 0, _maxPower);
 
-        powerSlider.value = powerGuage;
+        //Changing Visuals
+        _powerSlider.value = _power;
     }
 
+    //MODIFY MAXES
     public void modifyMaxHealth(int pMaxHealth)
     {
-        maxHealth += pMaxHealth;
+        //Change Value
+        _maxHealth += pMaxHealth;
 
-        //health.sizeDelta.Set(healthVal, BAR_HEIGHT);
-        RectTransform healthRect = healthSlider.gameObject.GetComponent<RectTransform>();
-        healthRect.sizeDelta = new Vector2(maxHealth * barLengthMultiplier, BAR_HEIGHT);
+        //Change respective bar length
+        healthRect.sizeDelta = new Vector2(_maxHealth * barLengthMultiplier, BAR_HEIGHT);
     }
 
     public void modifyMaxDefense(int pMaxShield)
     {
-        maxShield += pMaxShield;
+        //Change Value
+        _maxShield += pMaxShield;
 
-        //defense.sizeDelta.Set(defenseVal, BAR_HEIGHT);
-        RectTransform shieldRect = shieldSlider.gameObject.GetComponent<RectTransform>();
-        shieldRect.sizeDelta = new Vector2(maxShield * barLengthMultiplier, BAR_HEIGHT);
+        //Change respective bar length
+        shieldRect.sizeDelta = new Vector2(_maxShield * barLengthMultiplier, BAR_HEIGHT);
     }
 
     public void modifyMaxPower(int pMaxPowerGuage)
     {
-        maxPowerGuage += pMaxPowerGuage;
+        //Change Value
+        _maxPower += pMaxPowerGuage;
 
-        //power.sizeDelta.Set(powerVal, BAR_HEIGHT);
-        RectTransform powerRect = powerSlider.gameObject.GetComponent<RectTransform>();
-        powerRect.sizeDelta = new Vector2(maxPowerGuage * barLengthMultiplier, BAR_HEIGHT);
+        //Change respective bar length
+        powerRect.sizeDelta = new Vector2(_maxPower * barLengthMultiplier, BAR_HEIGHT);
     }
 
-    private void setBarsLength()
+    //GENERAL FUNCTIONS
+    public void damage(int x)
     {
-        //Used to set the length of the bars (most for at start)
-        RectTransform powerRect = powerSlider.gameObject.GetComponent<RectTransform>();
-        powerRect.sizeDelta = new Vector2(maxPowerGuage * barLengthMultiplier, BAR_HEIGHT);
+        Debug.Log("Damaging Player " + x);
 
-        RectTransform shieldRect = shieldSlider.gameObject.GetComponent<RectTransform>();
-        shieldRect.sizeDelta = new Vector2(maxShield * barLengthMultiplier, BAR_HEIGHT);
+        if (_shield >= x)
+        {
+            //Changing only Shield
+            modifyShield(-x);
+        }
+        else
+        {
+            //Changing Shield and getting the remainder
+            x -= _shield;
+            modifyShield(-_shield);
 
-        RectTransform healthRect = healthSlider.gameObject.GetComponent<RectTransform>();
-        healthRect.sizeDelta = new Vector2(maxHealth * barLengthMultiplier, BAR_HEIGHT);
+            //Changing Health by remainder
+            modifyHealth(-x);
+        }
+
+        //Restarting Shield Regening
+        if (_shield < _maxShield)
+        {
+            StopCoroutine("shieldRegen");
+            StopCoroutine("shieldRegenStartDelay");
+            StartCoroutine("shieldRegenStartDelay");
+        }
+
+        //Restarting Power Loss over time
+        //if (_power > 0)
+        //{
+        //    StopCoroutine("powerLoss");
+        //    StopCoroutine("powerLossStartDelay");
+        //    StartCoroutine("powerLossStartDelay");
+        //}
     }
 
-    IEnumerator powerLoss(int x, int j)
+    //COROUTINES
+    //Shield
+    private IEnumerator shieldRegenStartDelay()
     {
-        StopCoroutine(powerRestore(x, j));
-        yield return new WaitForSeconds(1);
-        powerGuage -= x;
-        yield return new WaitForSeconds(1);
+        Debug.Log("Shield Regen Delayed");
+        yield return new WaitForSeconds(_shieldRegenStartDelaySeconds);
+        StartCoroutine("shieldRegen");
     }
 
-    IEnumerator powerRestore(int x, int j)
+    private IEnumerator shieldRegen()
     {
-        StopCoroutine(powerLoss(x, j));
-        yield return new WaitForSeconds(10);
-        powerGuage += j;
+        while (_shield < _maxShield)
+        {
+            modifyShield(_shieldRegenAmount);
+            Debug.Log("Shield Regened");
+            yield return new WaitForSeconds(_shieldRegenDelaySeconds);
+        }
+    }
+
+    //Power
+    private IEnumerator powerLossStartDelay()
+    {
+        Debug.Log("Power Loss Delayed");
+        yield return new WaitForSeconds(_powerLossStartDelaySeconds);
+        StartCoroutine("powerLoss");
+    }
+
+    private IEnumerator powerLoss()
+    {
+        while (_power > 0)
+        {
+            modifyPower(-_powerLossAmount);
+            Debug.Log("Power lost: " + _power);
+            yield return new WaitForSeconds(_powerLossDelaySeconds);
+        }
     }
 }
