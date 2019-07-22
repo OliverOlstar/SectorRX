@@ -14,6 +14,13 @@ public class PlayerInputHandler : MonoBehaviour
     float dodge_Timer;
 
     bool jump_Input;
+    bool lockon_Input;
+    bool power1;
+    bool power2;
+    bool power3;
+
+    bool pause;
+    bool map;
 
 
 
@@ -25,6 +32,22 @@ public class PlayerInputHandler : MonoBehaviour
     private void Awake()
     {
         stateController = GetComponent<PlayerStateController>();
+    }
+
+
+    private void Update()
+    {
+        delta = Time.deltaTime;
+
+        GetInput();
+    }
+
+    void GetInput()
+    {
+        vertical = Input.GetAxis("Vertical");
+        horizontal = Input.GetAxis("Horizontal");
+
+        attack_Input = Input.GetMouseButtonDown(0);
     }
 
 
