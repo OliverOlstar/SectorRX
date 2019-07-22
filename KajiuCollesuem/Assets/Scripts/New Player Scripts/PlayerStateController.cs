@@ -62,15 +62,15 @@ public class PlayerStateController : MonoBehaviour
             //Normal
             case (int) States.Normal:
 
-                //Temperary
-                if (Input.GetButtonDown("Jump"))
-                    jumpInput = true;
+                ////Temperary
+                //if (Input.GetButtonDown("Jump"))
+                //    jumpInput = true;
 
-                if (Input.GetKeyDown(KeyCode.C))
-                    shortDodgeInput = true;
+                //if (Input.GetKeyDown(KeyCode.C))
+                //    shortDodgeInput = true;
 
-                horizontalInput = Input.GetAxis("Horizontal");
-                verticalInput = Input.GetAxis("Vertical");
+                //horizontalInput = Input.GetAxis("Horizontal");
+                //verticalInput = Input.GetAxis("Vertical");
 
 
                 //Sending Inputs
