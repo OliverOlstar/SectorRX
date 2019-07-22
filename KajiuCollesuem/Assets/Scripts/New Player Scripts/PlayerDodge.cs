@@ -7,8 +7,10 @@ public class PlayerDodge : MonoBehaviour
     public float dashCooldown = 1.0f;
     private float _dashDelay = 0.0f;
 
-    [SerializeField] private float dashDuration;
-    [SerializeField] private float dashDuration;
+    private float dodgeDuration;
+
+    [SerializeField] private float longDodgeDuration;
+    [SerializeField] private float shortDodgeDuration;
 
     [SerializeField] private float longDodgeDistance = 1.0f;
     [SerializeField] private float shortDodgeDistance = 0.6f;
@@ -18,6 +20,16 @@ public class PlayerDodge : MonoBehaviour
         //Cooldown
         if (Time.time > _dashDelay)
         {
+            if (pShortDodge)
+            {
+                
+            }
+            else
+            {
+
+            }
+
+
             StartCoroutine(DodgeRoutine());
         }
     }
