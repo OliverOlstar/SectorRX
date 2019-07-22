@@ -294,6 +294,7 @@ GameObject:
   - component: {fileID: 8582934654442581037}
   - component: {fileID: 540441563311311888}
   - component: {fileID: 1635927648668633823}
+  - component: {fileID: 4489995641700635053}
   - component: {fileID: 8844467493756483741}
   - component: {fileID: 1010789244785054995}
   - component: {fileID: 806430450}
@@ -399,6 +400,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &4489995641700635053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8582934654442581043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2930a53d93b9fce48b39800a9f25e525, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dodge_holdMax: 0.3
+  dodge_timeToLong: 0.2
 --- !u!114 &8844467493756483741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,6 +431,14 @@ MonoBehaviour:
   jumpInput: 0
   longDodgeInput: 0
   shortDodgeInput: 0
+  quickAttack: 0
+  heavyAtatck: 0
+  lockOn: 0
+  power1: 0
+  power2: 0
+  power3: 0
+  pause: 0
+  map: 0
   state: 0
 --- !u!114 &1010789244785054995
 MonoBehaviour:
@@ -430,10 +453,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  disableMovement: 0
   inputInfluence: 1
   inputInfluenceGrounded: 1
-  inputInfluenceInAir: 0.2
-  disableMovement: 0
+  inputInfluenceInAir: 0.4
   regJump: 0
   jumpForceForward: 5
   jumpForceUp: 4
@@ -455,7 +478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doneDodge: 0
-  dashCooldown: 1
+  dashCooldown: 0.5
   shortDodgeDistance: 6
   shortDodgeDuration: 0.2
   longDodgeDistance: 12
@@ -474,7 +497,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _maxShield: 100
-  _maxPower: 10
+  _maxPower: 40
   _shieldRegenStartDelaySeconds: 6
   _shieldRegenDelaySeconds: 1
   _shieldRegenAmount: 4

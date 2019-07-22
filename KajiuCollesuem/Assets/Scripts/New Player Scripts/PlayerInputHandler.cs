@@ -6,50 +6,52 @@ public class PlayerInputHandler : MonoBehaviour
 {
     // THIS IS THE INPUT HANDLER - Danish
 
-        /*
-        This script is to get keyboard and controller input 
-        and then send through to the State Manager
-        */
+    /*
+    This script is to get keyboard and gamepad input 
+    and then send through to the State Manager
+    */
 
-
+    [Header("Dodge Input Settings")]
+    [SerializeField] private float dodge_holdMax = 0.4f;
+    [SerializeField] private float dodge_timeToLong = 0.3f;
+    
     [Header("Inputs")]
     // Movement Inputs
-    float vertical;
-    float horizontal;
+    private float vertical;
+    private float horizontal;
 
     // Attack Inputs and Timer
-    bool attack_Input;
-    float attack_Timer;
-    bool lockon_Input;
+    private bool attack_Input;
+    private float attack_Timer;
+    private bool lockon_Input;
 
     // Dodge Input and Timer
-    bool dodge_Input;
-    float dodge_Timer;
-    bool jump_Input;
+    private bool dodge_Input;
+    private bool dodge_release_Input;
+    private bool dodge_Input_WaitingForRelease;
+    private float dodge_Timer;
+    private bool jump_Input;
 
 
     // Power Use Inputs
-    bool power1_Input;
-    bool power2_Input;
-    bool power3_Input;
+    private bool power1_Input;
+    private bool power2_Input;
+    private bool power3_Input;
 
     // Menu Inputs
-    bool pause;
-    bool map;
+    private bool pause;
+    private bool map;
 
 
+    private PlayerStateController _stateController;
 
-
-    PlayerStateController stateController;
-
-    float delta;
+    private float delta;
 
     private void Awake()
     {
-        stateController = GetComponent<PlayerStateController>();
+        _stateController = GetComponent<PlayerStateController>();
     }
-
-
+    
     private void Update()
     {
         delta = Time.deltaTime;
@@ -65,7 +67,23 @@ public class PlayerInputHandler : MonoBehaviour
         horizontal = Input.GetAxis("Horizontal");
 
         attack_Input = Input.GetMouseButton(0);
-        dodge_Input = Input.GetKey(KeyCode.Z);
+        
+        dodge_release_Input = Input.GetKeyUp(KeyCode.Z);
+
+        //Only Listening to dodge if player has released the key between dodges
+        if (dodge_Input_WaitingForRelease == false)
+        {
+            dodge_Input = Input.GetKey(KeyCode.Z);
+        }
+        else if (dodge_Input_WaitingForRelease & dodge_release_Input)
+        {
+            dodge_Input_WaitingForRelease = false;
+            dodge_release_Input = false;
+        }
+        else
+        {
+            dodge_Input = false;
+        }
 
         lockon_Input = Input.GetKeyDown(KeyCode.X);
         jump_Input = Input.GetButtonDown("Jump");
@@ -87,43 +105,54 @@ public class PlayerInputHandler : MonoBehaviour
 
     void UpdateStates()
     {
-        stateController.horizontalInput = horizontal;
-        stateController.verticalInput = vertical;
+        //Movement Input
+        _stateController.horizontalInput = horizontal;
+        _stateController.verticalInput = vertical;
 
-
+        //Attacking Input
         if(attack_Input && attack_Timer > 0.3f)
         {
-            stateController.heavyAtatck = true;
+            _stateController.heavyAtatck = true;
         }
         else if(attack_Input && attack_Timer <= 0.3f)
         {
-            stateController.quickAttack = true;
+            _stateController.quickAttack = true;
         }
 
-
-        if(dodge_Input && dodge_Timer > 0.3f)
+        //Dodging Input
+        if (dodge_release_Input && dodge_Timer > dodge_timeToLong)
         {
-            stateController.longDodgeInput = true;
+            _stateController.longDodgeInput = true;
+            dodge_Timer = 0;
         }
-        else if(dodge_Input && dodge_Timer <= 0.3f)
+        else if (dodge_release_Input && dodge_Timer <= dodge_timeToLong)
         {
-            stateController.shortDodgeInput = true;
+            _stateController.shortDodgeInput = true;
+            dodge_Timer = 0;
+        }
+        //Dodge if held for max time
+        else if (dodge_Timer > dodge_holdMax)
+        {
+            dodge_Input_WaitingForRelease = true;
+            _stateController.longDodgeInput = true;
+            dodge_Timer = 0;
         }
 
+        //LockOn Input
         if (lockon_Input)
         {
-            stateController.lockOn = !stateController.lockOn;
+            _stateController.lockOn = !_stateController.lockOn;
         }
 
-        stateController.jumpInput = jump_Input;
+        //Jump Input
+        _stateController.jumpInput = jump_Input;
 
-        stateController.power1 = power1_Input;
-        stateController.power2 = power2_Input;
-        stateController.power3 = power3_Input;
+        //Powers Input
+        _stateController.power1 = power1_Input;
+        _stateController.power2 = power2_Input;
+        _stateController.power3 = power3_Input;
     }
-
-
-
+    
     void ResetInputAndTimers()
     {
         if (!attack_Input)
@@ -131,12 +160,9 @@ public class PlayerInputHandler : MonoBehaviour
             attack_Timer = 0;
         }
 
-        if (!dodge_Input)
-        {
-            dodge_Timer = 0;
-        }
+        //if (!dodge_Input)
+        //{
+        //    dodge_Timer = 0;
+        //}
     }
-
-
-
 }

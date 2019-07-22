@@ -13,35 +13,28 @@ public class PlayerStateController : MonoBehaviour
 
 
     [Header("Inputs")]
+    // Movement variables
     [HideInInspector] public float horizontalInput = 0;
     [HideInInspector] public float verticalInput = 0;
 
+    // Movement Variables
     [HideInInspector] public bool jumpInput = false;
     [HideInInspector] public bool longDodgeInput = false;
     [HideInInspector] public bool shortDodgeInput = false;
 
-    // Movement variables
-    public float horizontalInput = 0;
-    public float verticalInput = 0;
-
     // Attack Varaibles
-    public bool quickAttack = false;
-    public bool heavyAtatck = false;
-    public bool lockOn = false;
-
-    // Spontaneous Movement Variables
-    public bool jumpInput = false;
-    public bool longDodgeInput = false;
-    public bool shortDodgeInput = false;
+    [HideInInspector] public bool quickAttack = false;
+    [HideInInspector] public bool heavyAtatck = false;
+    [HideInInspector] public bool lockOn = false;
 
     // Power Use Inputs
-    public bool power1 = false;
-    public bool power2 = false;
-    public bool power3 = false;
+    [HideInInspector] public bool power1 = false;
+    [HideInInspector] public bool power2 = false;
+    [HideInInspector] public bool power3 = false;
 
     // Menu Inputs
-    public bool pause = false;
-    public bool map = false;
+    [HideInInspector] public bool pause = false;
+    [HideInInspector] public bool map = false;
 
     [Header("State Components")]
     private PlayerMovement _movementComponent;
@@ -68,18 +61,6 @@ public class PlayerStateController : MonoBehaviour
         {
             //Normal
             case (int) States.Normal:
-
-                ////Temperary
-                //if (Input.GetButtonDown("Jump"))
-                //    jumpInput = true;
-
-                //if (Input.GetKeyDown(KeyCode.C))
-                //    shortDodgeInput = true;
-
-                //horizontalInput = Input.GetAxis("Horizontal");
-                //verticalInput = Input.GetAxis("Vertical");
-
-
                 //Sending Inputs
                 if (jumpInput)
                 {
@@ -89,7 +70,6 @@ public class PlayerStateController : MonoBehaviour
                 
                 _movementComponent.horizontalInput = horizontalInput;
                 _movementComponent.verticalInput = verticalInput;
-
 
                 //Swtich States
                 if (shortDodgeInput || longDodgeInput)
@@ -143,42 +123,44 @@ public class PlayerStateController : MonoBehaviour
     private void SwitchStates(int pState)
     {
         //SWITCHING OFF OF ////////////////////////////////////////////////////
-        switch (state)
+        if (state != pState)
         {
-            //Normal
-            case (int)States.Normal:
+            switch (state)
+            {
+                //Normal
+                case (int)States.Normal:
 
-                _movementComponent.enabled = false;
+                    _movementComponent.enabled = false;
 
-                break;
+                    break;
 
-            //Dodge
-            case (int)States.Dodging:
+                //Dodge
+                case (int)States.Dodging:
 
-                break;
+                    break;
 
-            //Locked On
-            case (int)States.LockedOn:
+                //Locked On
+                case (int)States.LockedOn:
 
-                break;
+                    break;
 
-            //Attacking
-            case (int)States.Attacking:
+                //Attacking
+                case (int)States.Attacking:
 
-                break;
+                    break;
 
-            //Stunned
-            case (int)States.Stunned:
+                //Stunned
+                case (int)States.Stunned:
 
-                break;
+                    break;
 
-            //Dead
-            case (int)States.Dead:
+                //Dead
+                case (int)States.Dead:
 
-                break;
-
-
+                    break;
+            }
         }
+
 
         //SWITCHING ON TO ////////////////////////////////////////////////////
         switch (pState)
@@ -216,8 +198,6 @@ public class PlayerStateController : MonoBehaviour
             case (int)States.Dead:
 
                 break;
-
-
         }
         
         //Change State Variable
