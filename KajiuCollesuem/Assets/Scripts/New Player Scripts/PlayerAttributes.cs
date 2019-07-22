@@ -163,7 +163,6 @@ public class PlayerAttributes : MonoBehaviour
     //Shield
     private IEnumerator shieldRegenStartDelay()
     {
-        Debug.Log("Shield Regen Delayed");
         yield return new WaitForSeconds(_shieldRegenStartDelaySeconds);
         StartCoroutine("shieldRegen");
     }
@@ -173,7 +172,6 @@ public class PlayerAttributes : MonoBehaviour
         while (_shield < _maxShield)
         {
             modifyShield(_shieldRegenAmount);
-            Debug.Log("Shield Regened");
             yield return new WaitForSeconds(_shieldRegenDelaySeconds);
         }
     }
@@ -181,7 +179,6 @@ public class PlayerAttributes : MonoBehaviour
     //Power
     private IEnumerator powerLossStartDelay()
     {
-        Debug.Log("Power Loss Delayed");
         yield return new WaitForSeconds(_powerLossStartDelaySeconds);
         StartCoroutine("powerLoss");
     }
