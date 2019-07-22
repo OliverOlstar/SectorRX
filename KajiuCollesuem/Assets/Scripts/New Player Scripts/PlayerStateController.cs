@@ -50,6 +50,9 @@ public class PlayerStateController : MonoBehaviour
             gameObject.AddComponent<PlayerMovement>();
 
 
+        _dodgeComponent = GetComponent<PlayerDodge>();
+        if (!_dodgeComponent)
+            gameObject.AddComponent<PlayerDodge>();
     }
     
     void Update()
@@ -63,7 +66,7 @@ public class PlayerStateController : MonoBehaviour
                 if (Input.GetButtonDown("Jump"))
                     jumpInput = true;
 
-                if (Input.GetKeyDown(KeyCode.LeftShift))
+                if (Input.GetKeyDown(KeyCode.C))
                     shortDodgeInput = true;
 
                 horizontalInput = Input.GetAxis("Horizontal");
@@ -82,7 +85,7 @@ public class PlayerStateController : MonoBehaviour
 
 
                 //Swtich States
-                if (shortDodgeInput)
+                if (shortDodgeInput || longDodgeInput)
                 {
                     SwitchStates((int)States.Dodging);
                 }
