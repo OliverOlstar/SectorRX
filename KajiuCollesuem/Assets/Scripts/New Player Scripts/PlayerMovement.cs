@@ -10,24 +10,27 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     public float moveSpeed = 1.0f;
+    public bool disableMovement = false;
+
+    [Space]
     public float inputInfluence = 1.0f;
     public float inputInfluenceGrounded = 1.0f;
     public float inputInfluenceInAir = 0.2f;
-    public bool disableMovement = false;
 
     [Header("Jump")]
     public bool regJump;
     public float jumpForceForward = 5;
     public float jumpForceUp = 4;
 
+    [Space]
     public bool isGrounded;
     public float isGroundedCheckDistance = 1.0f;
 
     [Header("Inputs")]
-    public float horizontalInput = 0;
-    public float verticalInput = 0;
+    [HideInInspector] public float horizontalInput = 0;
+    [HideInInspector] public float verticalInput = 0;
 
-    public bool jumpInput = false;
+    [HideInInspector] public bool jumpInput = false;
 
     // Start is called before the first frame update
     void Start()

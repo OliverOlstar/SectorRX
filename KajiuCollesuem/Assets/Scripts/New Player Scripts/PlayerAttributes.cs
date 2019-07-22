@@ -19,6 +19,7 @@ public class PlayerAttributes : MonoBehaviour
     [SerializeField] private float _shieldRegenDelaySeconds = 1f;
     [SerializeField] private int _shieldRegenAmount = 4;
 
+    [Space]
     [SerializeField] private float _powerLossStartDelaySeconds = 8f;
     [SerializeField] private float _powerLossDelaySeconds = 0.3f;
     [SerializeField] private int _powerLossAmount = 1;

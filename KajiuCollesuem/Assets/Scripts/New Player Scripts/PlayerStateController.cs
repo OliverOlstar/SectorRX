@@ -6,19 +6,19 @@ public class PlayerStateController : MonoBehaviour
 {
     //THIS IS THE STATE MANAGER - Oliver
     [Header("Inputs")]
-    public float horizontalInput = 0;
-    public float verticalInput = 0;
+    [HideInInspector] public float horizontalInput = 0;
+    [HideInInspector] public float verticalInput = 0;
 
-    public bool jumpInput = false;
-    public bool longDodgeInput = false;
-    public bool shortDodgeInput = false;
+    [HideInInspector] public bool jumpInput = false;
+    [HideInInspector] public bool longDodgeInput = false;
+    [HideInInspector] public bool shortDodgeInput = false;
 
     [Header("State Components")]
     private PlayerMovement _movementComponent;
     private PlayerDodge _dodgeComponent;
 
     enum States { Normal, LockedOn, Dodging, Attacking, Stunned, Dead };
-    public int state = (int) States.Normal;
+    [SerializeField] private int state = (int) States.Normal;
     
     void Start()
     {
@@ -65,6 +65,7 @@ public class PlayerStateController : MonoBehaviour
                 if (shortDodgeInput || longDodgeInput)
                 {
                     SwitchStates((int)States.Dodging);
+                    shortDodgeInput = false; longDodgeInput = false;
                 }
 
                 break;

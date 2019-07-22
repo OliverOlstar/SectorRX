@@ -4,16 +4,25 @@ using UnityEngine;
 
 public class PlayerDodge : MonoBehaviour
 {
-    public bool doneDodge = false;
+    [HideInInspector] public bool doneDodge = false;
 
     public float dashCooldown = 1.0f;
     private float _dashDelay = 0.0f;
 
-    [SerializeField] private float longDodgeDuration = 2f;
-    [SerializeField] private float shortDodgeDuration = 1f;
+    [Space]
+    [SerializeField] private float shortDodgeDistance = 6.0f;
+    [SerializeField] private float shortDodgeDuration = 0.2f;
 
-    [SerializeField] private float longDodgeDistance = 5.0f;
-    [SerializeField] private float shortDodgeDistance = 3.5f;
+    [Space]
+    [SerializeField] private float longDodgeDistance = 12.0f;
+    [SerializeField] private float longDodgeDuration = 0.3f;
+
+    private Rigidbody _rb;
+
+    void Start()
+    {
+        _rb = GetComponent<Rigidbody>();
+    }
 
     public void Dodge(bool pShortDodge)
     {
@@ -22,12 +31,21 @@ public class PlayerDodge : MonoBehaviour
         {
             if (pShortDodge)
             {
+                //Short Dodge
+                Debug.Log("Short");
                 StartCoroutine(DodgeRoutine(shortDodgeDistance, shortDodgeDuration));
             }
             else
             {
+                //Long Dodge
+                Debug.Log("Long");
                 StartCoroutine(DodgeRoutine(longDodgeDistance, longDodgeDuration));
             }
+        }
+        else
+        {
+            Debug.Log("On Cooldown");
+            doneDodge = true;
         }
     }
 
@@ -35,12 +53,18 @@ public class PlayerDodge : MonoBehaviour
     {
         //Setting Delay
         _dashDelay = Time.time + dashCooldown + pDuration;
-        
-        //Running Dodge
-        GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * (pDistance/ pDuration), ForceMode.VelocityChange);
-        yield return new WaitForSeconds(pDuration);
-        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        float dodgeEndTime = Time.time + pDuration;
 
+        //Run Dodge Force
+        while (Time.time <= dodgeEndTime)
+        {
+            //_rb.AddForce(Camera.main.transform.forward * (pDistance / pDuration), ForceMode.VelocityChange);
+            _rb.velocity = Camera.main.transform.forward * (pDistance / pDuration);
+            yield return null;
+        }
+
+        //Stop player
+        _rb.velocity = Vector3.zero;
         doneDodge = true;
     }
 }
