@@ -4,14 +4,37 @@ using UnityEngine;
 
 public class PlayerStateController : MonoBehaviour
 {
-    //THIS IS THE STATE MANAGER - Oliver
+    //THIS IS THE STATE MANAGER - Oliver, Danish
+
+         /*
+         This script is to change the player's active state 
+         depending on the inputs received. 
+         */
+
+
     [Header("Inputs")]
+    // Movement variables
     public float horizontalInput = 0;
     public float verticalInput = 0;
 
+    // Attack Varaibles
+    public bool quickAttack = false;
+    public bool heavyAtatck = false;
+    public bool lockOn = false;
+
+    // Spontaneous Movement Variables
     public bool jumpInput = false;
     public bool longDodgeInput = false;
     public bool shortDodgeInput = false;
+
+    // Power Use Inputs
+    public bool power1 = false;
+    public bool power2 = false;
+    public bool power3 = false;
+
+    // Menu Inputs
+    public bool pause = false;
+    public bool map = false;
 
     [Header("State Components")]
     private PlayerMovement _movementComponent;
