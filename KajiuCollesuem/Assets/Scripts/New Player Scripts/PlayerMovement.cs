@@ -10,15 +10,24 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     public float moveSpeed = 1.0f;
-    public bool disableMovement = false;
     public float inputInfluence = 1.0f;
+    public float inputInfluenceGrounded = 1.0f;
+    public float inputInfluenceInAir = 0.2f;
+    public bool disableMovement = false;
 
     [Header("Jump")]
     public bool regJump;
-    public int jumpForce = 5;
+    public float jumpForceForward = 5;
+    public float jumpForceUp = 4;
 
     public bool isGrounded;
-    public float isGroundedCheckDistance = 3;
+    public float isGroundedCheckDistance = 1.0f;
+
+    [Header("Inputs")]
+    public float horizontalInput = 0;
+    public float verticalInput = 0;
+
+    public bool jumpInput = false;
 
     // Start is called before the first frame update
     void Start()
@@ -45,14 +54,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckGrounded()
     {
-        Debug.DrawRay(transform.position, Vector3.down, Color.red, 0.1f, true);
+        //Debug.DrawRay(transform.position, Vector3.down, Color.red, 0.1f, false);
 
+        //Raycast to check for if grounded
         if (Physics.Raycast(transform.position, Vector3.down, isGroundedCheckDistance))
         {
+            inputInfluence = inputInfluenceGrounded;
             isGrounded = true;
         }
         else
         {
+            inputInfluence = inputInfluenceInAir;
             isGrounded = false;
         }
     }
@@ -60,47 +72,51 @@ public class PlayerMovement : MonoBehaviour
     private void RegularJump()
     {
 
-        if (Input.GetButtonDown("Jump"))
+        if (jumpInput)
         {
             if (isGrounded)
             {
                 // Adding jump force to the rigidbody
-                _Rb.AddForce(0, jumpForce, 0, ForceMode.Impulse);
+                _Rb.AddForce(0, jumpForceUp, 0, ForceMode.Impulse);
             }
+
+            jumpInput = false;
         }
     }
 
     private void ArchJump()
     {
-
-        if (Input.GetButtonDown("Jump"))
+        if (jumpInput)
         {
             if (isGrounded)
             {
-                // Disabling player movement & adding jump forward & upward force
-                Vector3 jumpVector = _Camera.parent.TransformDirection(Vector3.forward * jumpForce);
+                //Getting Jump direction
+                Vector3 jumpVector = _Camera.parent.TransformDirection(Vector3.forward);
+
+                //Setting Force forward and up
                 jumpVector.y = 0;
-                jumpVector = jumpVector.normalized * jumpForce;
+                jumpVector = jumpVector.normalized * jumpForceForward;
+                jumpVector.y = jumpForceUp;
 
-                jumpVector.y = jumpForce;
+                //Add force
                 _Rb.AddForce(jumpVector, ForceMode.Impulse);
-
-                StartCoroutine("disablePlayerControls");
             }
+
+            jumpInput = false;
         }
     }
 
     private void PlayerMove()
     {
         //Getting Input
-        float translation = Input.GetAxis("Vertical");
-        float straffe = Input.GetAxis("Horizontal");
+        float translation = verticalInput;
+        float straffe = horizontalInput;
 
         //Move Vector
         Vector3 move = new Vector3(straffe, 0, translation);
         move = _Camera.TransformDirection(move);
         move = new Vector3(move.x, 0, move.z);
-        move = move.normalized * Time.deltaTime * moveSpeed;
+        move = move.normalized * Time.deltaTime * moveSpeed * inputInfluence;
 
         //Moving the player
         transform.Translate(move);

@@ -293,6 +293,7 @@ GameObject:
   - component: {fileID: 8582934654442581036}
   - component: {fileID: 8582934654442581037}
   - component: {fileID: 540441563311311888}
+  - component: {fileID: 8844467493756483741}
   - component: {fileID: 1010789244785054995}
   - component: {fileID: 1635927648668633823}
   - component: {fileID: 5397536735001967586}
@@ -382,6 +383,22 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8844467493756483741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8582934654442581043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3541b123ee62be43a97e97031ee7855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  horizontalInput: 0
+  verticalInput: 0
+  jumpInput: 0
+  state: 0
 --- !u!114 &1010789244785054995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,12 +412,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  disableMovement: 0
   inputInfluence: 1
+  disableMovement: 0
   regJump: 0
-  jumpForce: 5
+  jumpForceForward: 5
+  jumpForceUp: 4
   isGrounded: 1
   isGroundedCheckDistance: 2
+  horizontalInput: 0
+  verticalInput: 0
+  jumpInput: 0
 --- !u!54 &1635927648668633823
 Rigidbody:
   m_ObjectHideFlags: 0

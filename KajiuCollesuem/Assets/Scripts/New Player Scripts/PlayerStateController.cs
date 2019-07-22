@@ -4,18 +4,29 @@ using UnityEngine;
 
 public class PlayerStateController : MonoBehaviour
 {
-    public int state;
-    /*
-    0 - Normal
-    1 - Locked On
-    2 - Attacking
-    3 - Stunned
-    4 - Dead
-    */
+    //THIS IS THE STATE MANAGER - Oliver
+    [Header("Inputs")]
+    public float horizontalInput = 0;
+    public float verticalInput = 0;
+
+    public bool jumpInput = false;
+    public bool longDodgeInput = false;
+    public bool shortDodgeInput = false;
+
+    [Header("State Components")]
+    private PlayerMovement _movementComponent;
+    private PlayerDodge _dodgeComponent;
+
+    enum States { Normal, LockedOn, Dodging, Attacking, Stunned, Dead };
+    public int state = (int) States.Normal;
     
     void Start()
     {
-        
+        _movementComponent = GetComponent<PlayerMovement>();
+        if (!_movementComponent)
+            gameObject.AddComponent<PlayerMovement>();
+
+
     }
     
     void Update()
@@ -23,31 +34,149 @@ public class PlayerStateController : MonoBehaviour
         switch(state)
         {
             //Normal
-            case 0:
+            case (int) States.Normal:
+
+                //Temperary
+                if (Input.GetButtonDown("Jump"))
+                    jumpInput = true;
+
+                if (Input.GetKeyDown(KeyCode.LeftShift))
+                    shortDodgeInput = true;
+
+                horizontalInput = Input.GetAxis("Horizontal");
+                verticalInput = Input.GetAxis("Vertical");
+
+
+                //Sending Inputs
+                if (jumpInput)
+                {
+                    _movementComponent.jumpInput = true;
+                    jumpInput = false;
+                }
+                
+                _movementComponent.horizontalInput = horizontalInput;
+                _movementComponent.verticalInput = verticalInput;
+
+
+                //Swtich States
+                if (shortDodgeInput)
+                {
+                    SwitchStates((int)States.Dodging);
+                }
+
+                break;
+
+            //Dodge
+            case (int)States.Dodging:
 
                 break;
 
             //Locked On
-            case 1:
+            case (int) States.LockedOn:
 
                 break;
 
             //Attacking
-            case 2:
+            case (int) States.Attacking:
 
                 break;
 
             //Stunned
-            case 3:
+            case (int) States.Stunned:
 
                 break;
 
             //Dead
-            case 4:
+            case (int) States.Dead:
 
                 break;
 
 
         }
+    }
+
+    //SWITCH STATES
+    private void SwitchStates(int pState)
+    {
+        //SWITCHING OFF OF ////////////////////////////////////////////////////
+        switch (state)
+        {
+            //Normal
+            case (int)States.Normal:
+
+                _movementComponent.enabled = false;
+
+                break;
+
+            //Dodge
+            case (int)States.Dodging:
+
+                break;
+
+            //Locked On
+            case (int)States.LockedOn:
+
+                break;
+
+            //Attacking
+            case (int)States.Attacking:
+
+                break;
+
+            //Stunned
+            case (int)States.Stunned:
+
+                break;
+
+            //Dead
+            case (int)States.Dead:
+
+                break;
+
+
+        }
+
+        //SWITCHING ON TO ////////////////////////////////////////////////////
+        switch (pState)
+        {
+            //Normal
+            case (int)States.Normal:
+
+                _movementComponent.enabled = true;
+
+                break;
+
+            //Dodge
+            case (int)States.Dodging:
+
+                _dodgeComponent.Dodge(shortDodgeInput);
+
+                break;
+
+            //Locked On
+            case (int)States.LockedOn:
+
+                break;
+
+            //Attacking
+            case (int)States.Attacking:
+
+                break;
+
+            //Stunned
+            case (int)States.Stunned:
+
+                break;
+
+            //Dead
+            case (int)States.Dead:
+
+                break;
+
+
+        }
+        
+        //Change State Variable
+        state = pState;
     }
 }
