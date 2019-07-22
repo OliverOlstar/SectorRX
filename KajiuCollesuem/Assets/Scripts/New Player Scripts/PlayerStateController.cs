@@ -70,7 +70,17 @@ public class PlayerStateController : MonoBehaviour
                 break;
 
             //Dodge
-            case (int)States.Dodging:
+            case (int) States.Dodging:
+
+
+
+
+                //Swtich States
+                if (_dodgeComponent.doneDodge)
+                {
+                    _dodgeComponent.doneDodge = false;
+                    SwitchStates((int)States.Normal);
+                }
 
                 break;
 

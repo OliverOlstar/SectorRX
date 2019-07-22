@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class PlayerDodge : MonoBehaviour
 {
+    public bool doneDodge = false;
+
     public float dashCooldown = 1.0f;
     private float _dashDelay = 0.0f;
 
-    [SerializeField] private float longDodgeDuration;
-    [SerializeField] private float shortDodgeDuration;
+    [SerializeField] private float longDodgeDuration = 2f;
+    [SerializeField] private float shortDodgeDuration = 1f;
 
-    [SerializeField] private float longDodgeDistance = 1.0f;
-    [SerializeField] private float shortDodgeDistance = 0.6f;
+    [SerializeField] private float longDodgeDistance = 5.0f;
+    [SerializeField] private float shortDodgeDistance = 3.5f;
 
     public void Dodge(bool pShortDodge)
     {
@@ -38,5 +40,7 @@ public class PlayerDodge : MonoBehaviour
         GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * (pDistance/ pDuration), ForceMode.VelocityChange);
         yield return new WaitForSeconds(pDuration);
         GetComponent<Rigidbody>().velocity = Vector3.zero;
+
+        doneDodge = true;
     }
 }
