@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class PlayerStateController : MonoBehaviour
 {
-    //THIS IS THE STATE MANAGER - Oliver
+    //THIS IS THE STATE MANAGER - Oliver, Danish
+
+         /*
+         This script is to change the player's active state 
+         depending on the inputs received. 
+         */
+
+
     [Header("Inputs")]
     [HideInInspector] public float horizontalInput = 0;
     [HideInInspector] public float verticalInput = 0;
@@ -12,6 +19,29 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public bool jumpInput = false;
     [HideInInspector] public bool longDodgeInput = false;
     [HideInInspector] public bool shortDodgeInput = false;
+
+    // Movement variables
+    public float horizontalInput = 0;
+    public float verticalInput = 0;
+
+    // Attack Varaibles
+    public bool quickAttack = false;
+    public bool heavyAtatck = false;
+    public bool lockOn = false;
+
+    // Spontaneous Movement Variables
+    public bool jumpInput = false;
+    public bool longDodgeInput = false;
+    public bool shortDodgeInput = false;
+
+    // Power Use Inputs
+    public bool power1 = false;
+    public bool power2 = false;
+    public bool power3 = false;
+
+    // Menu Inputs
+    public bool pause = false;
+    public bool map = false;
 
     [Header("State Components")]
     private PlayerMovement _movementComponent;
@@ -39,15 +69,15 @@ public class PlayerStateController : MonoBehaviour
             //Normal
             case (int) States.Normal:
 
-                //Temperary
-                if (Input.GetButtonDown("Jump"))
-                    jumpInput = true;
+                ////Temperary
+                //if (Input.GetButtonDown("Jump"))
+                //    jumpInput = true;
 
-                if (Input.GetKeyDown(KeyCode.C))
-                    shortDodgeInput = true;
+                //if (Input.GetKeyDown(KeyCode.C))
+                //    shortDodgeInput = true;
 
-                horizontalInput = Input.GetAxis("Horizontal");
-                verticalInput = Input.GetAxis("Vertical");
+                //horizontalInput = Input.GetAxis("Horizontal");
+                //verticalInput = Input.GetAxis("Vertical");
 
 
                 //Sending Inputs
