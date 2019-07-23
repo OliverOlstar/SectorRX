@@ -39,7 +39,7 @@ public class PlayerCollectibles : MonoBehaviour
     }
 
     //If player collides with either collectible
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
         Vector3 cellOriginalPos = cellUI.transform.position;
         Vector3 coreOriginalPos = coreUI.transform.position;
