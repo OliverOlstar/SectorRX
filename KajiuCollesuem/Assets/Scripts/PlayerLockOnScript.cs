@@ -52,7 +52,7 @@ public class PlayerLockOnScript : MonoBehaviour
 
             if (Mathf.Abs(view - 0.5f) < Mathf.Abs(bestView - 0.5f))
             {
-                if (Vector3.Distance(transform.forward * 5, possibleTargets[i].transform.position) < Vector3.Distance(transform.forward * 5, possibleTargets[currentClosest].transform.position))
+                //if (Vector3.Distance(transform.forward * 5, possibleTargets[i].transform.position) < Vector3.Distance(transform.forward * 5, possibleTargets[currentClosest].transform.position))
                 secondClosest = currentClosest;
                 currentClosest = i;
             }
