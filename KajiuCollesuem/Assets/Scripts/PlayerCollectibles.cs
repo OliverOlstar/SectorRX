@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerCollectibles : MonoBehaviour
 {
+    //Scotts
+
     //Variables to keep track of Cells and Cores
     private int cellCounter;
     private int coreCounter;

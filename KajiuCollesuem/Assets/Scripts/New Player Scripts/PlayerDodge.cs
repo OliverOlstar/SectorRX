@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerDodge : MonoBehaviour
 {
+    //Oliver
+
     [HideInInspector] public bool doneDodge = false;
 
     public float dashCooldown = 1.0f;
@@ -32,19 +34,17 @@ public class PlayerDodge : MonoBehaviour
             if (pShortDodge)
             {
                 //Short Dodge
-                Debug.Log("Short");
                 StartCoroutine(DodgeRoutine(shortDodgeDistance, shortDodgeDuration));
             }
             else
             {
                 //Long Dodge
-                Debug.Log("Long");
                 StartCoroutine(DodgeRoutine(longDodgeDistance, longDodgeDuration));
             }
         }
         else
         {
-            Debug.Log("On Cooldown");
+            Debug.Log("Dodge on Cooldown");
             doneDodge = true;
         }
     }

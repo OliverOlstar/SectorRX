@@ -5,47 +5,39 @@ using System;
 
 public class playerPowers : MonoBehaviour
 {
+    public enum powers { MagmaErupter,  }
+
     public static event Action OnPower1Used;
     public static event Action OnPower2Used;
     public static event Action OnPower3Used;
-    public static event Action OnPower4Used;
+
+    public bool power1Input;
+    public bool power2Input;
+    public bool power3Input;
+
     public int _currentPower = 1;
     public int _collectedPowers = 0;
 
     [SerializeField]
     private void UsingPower()
     {
-        switch (_currentPower)
+        if (power1Input)
         {
-            case 1:
-                if (OnPower1Used != null)
-                    OnPower1Used();
-
-                break;
-
-
-            case 2:
-                if (OnPower2Used != null)
-                    OnPower2Used();
-
-                break;
-
-
-            case 3:
-                if (OnPower3Used != null)
-                    OnPower3Used();
-
-                break;
-
-
-            case 4:
-                if (OnPower4Used != null)
-                    OnPower4Used();
-
-                break;
+            if (OnPower1Used != null)
+                OnPower1Used();
+        }
+        else if (power2Input)
+        {
+            if (OnPower2Used != null)
+                OnPower2Used();
+        }
+        else if (power3Input)
+        {
+            if (OnPower3Used != null)
+                OnPower3Used();
         }
     }
-    
+
     void Start()
     {
 
@@ -53,10 +45,7 @@ public class playerPowers : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire2"))
-        {
-            UsingPower();
-        }
+        UsingPower();
     }
 
     public void AddPower(string pString)
