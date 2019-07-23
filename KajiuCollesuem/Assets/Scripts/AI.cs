@@ -10,6 +10,12 @@ public class AI : MonoBehaviour
     public float moveSpeed = 5.0f;
     public float searchZone = 10.0f;
 
+    //Mugie's variables
+    public float maxSpeed = 10; //AI run speed
+    DirectedGraph enemyPatrol; //Used for enemy patrol
+    public GameObject patrolPath;
+    GameObject currentPatrolDest;
+
     protected NavMeshAgent agent;
     float height = 0.155f;
 
@@ -34,9 +40,28 @@ public class AI : MonoBehaviour
 
     protected void InheritStart()
     {
+        enemyPatrol = new DirectedGraph();
         GetComponent<EnemyAttributes>().enemyHealthUI.SetActive(false);
 
+        List<GameObject> patrolPoints = new List<GameObject>();
+
+        for (int i = 0; i < patrolPath.transform.childCount; ++i)
+        {
+            enemyPatrol.AddNode(patrolPath.transform.GetChild(i).gameObject);
+        }
+
+        enemyPatrol.AddEdge(patrolPath.transform.GetChild(3).gameObject, patrolPath.transform.GetChild(0).gameObject);
+
+        for (int i = 0; i < 3; ++i)
+        {
+            enemyPatrol.AddEdge(patrolPath.transform.GetChild(i).gameObject, patrolPath.transform.GetChild(i + 1).gameObject);
+        }
+        currentPatrolDest = enemyPatrol.GetNodes()[0].GetData();
+
         agent = gameObject.GetComponent<NavMeshAgent>(); // connect to the NavMeshAgent on the enemy
+        agent.speed = moveSpeed;
+
+        isPatrolling = true;
 
         player = GameObject.FindGameObjectWithTag("Player");
 
@@ -67,7 +92,7 @@ public class AI : MonoBehaviour
                 // Enemy is patrolling
                 if (isPatrolling)
                 {
-
+                    OnPatrol();
                 }
                 // Enemy is guarding
                 else
@@ -81,6 +106,7 @@ public class AI : MonoBehaviour
             else
             {
                 searchTime -= 0.01f;
+                Debug.Log(searchTime);
             }
         }
 
@@ -89,8 +115,7 @@ public class AI : MonoBehaviour
         else
         {
 
-
-
+            
 
         }
 
@@ -99,16 +124,32 @@ public class AI : MonoBehaviour
         if (searchTime > 0) searchingForPlayer = true;
         else searchingForPlayer = false;
     }
+    
+    void OnPatrol()
+    {
+
+        if (transform.position != currentPatrolDest.transform.position)
+            agent.SetDestination(currentPatrolDest.transform.position);
+
+        else
+        {
+            currentPatrolDest = enemyPatrol.FindNode(currentPatrolDest).GetOutgoing()[0].GetData();
+        }
+    }
 
     void OnGuard()
     {
         
-        Vector3 mover = new Vector3(0, 0, moveSpeed * Time.deltaTime);
+        //Vector3 mover = new Vector3(0, 0, moveSpeed * Time.deltaTime);
 
+        //Calculates distance between enemy and player, and runs towards the player
         if(Vector3.Distance(transform.position, player.transform.position) <= searchZone)
         {
-            if (agent.isActiveAndEnabled)   
+            if (agent.isActiveAndEnabled)
+            {
                 agent.destination = player.transform.position;
+                agent.speed = maxSpeed;
+            }
             GetComponent<EnemyAttributes>().enemyHealthUI.SetActive(true);
         }
         else
@@ -116,7 +157,10 @@ public class AI : MonoBehaviour
             GetComponent<EnemyAttributes>().StartCoroutine("HealthVanish");
 
             if (agent.isActiveAndEnabled)
+            {
                 agent.destination = startingPosition;
+                agent.speed = moveSpeed;
+            }
         }
     }
 
@@ -124,6 +168,9 @@ public class AI : MonoBehaviour
     {
         // If player enters enemy field of view, attack
         if (c.tag == "Player") playerInSight = true;
+
+        // If player enters enemy field view, stop patrolling
+        //isPatrolling = false;
     }
 
     void OnTriggerExit(Collider c)
@@ -134,5 +181,8 @@ public class AI : MonoBehaviour
 
         // Store players position as they leave - used for searching.
         playerLastKnownPosition = player.transform.position;
+
+        //If player leaves enemy field view, start patrolling
+        //isPatrolling = true;
     }
 }
