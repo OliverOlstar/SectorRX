@@ -8,6 +8,7 @@ public class PatrolPath : MonoBehaviour
     public GameObject patrolPath;
     GameObject currentPatrolDest;
     AI ai;
+    //float time = 5;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +34,7 @@ public class PatrolPath : MonoBehaviour
     {
         if (ai.isPatrolling)
         {
-            if (!transform.position.Equals(currentPatrolDest.transform.position))
+            if (Vector3.Distance(transform.position, currentPatrolDest.transform.position) > 1)
             {
                 ai.GetAgent().SetDestination(currentPatrolDest.transform.position);
             }
@@ -41,7 +42,23 @@ public class PatrolPath : MonoBehaviour
             else
             {
                 currentPatrolDest = enemyPatrol.FindNode(currentPatrolDest).GetOutgoing()[0].GetData();
+                ai.isPatrolling = false;
+                //time = 5;
             }
+        }
+
+        else
+        {
+            /*time -= Time.deltaTime;
+            Debug.Log(time);*/
+
+            if (/*(int)time < 1 &&*/ !ai.playerInSight)
+            {
+                ai.isPatrolling = true;
+            }
+
+            /*else if ((int)time < 1)
+                time = 5;*/
         }
     }
 }

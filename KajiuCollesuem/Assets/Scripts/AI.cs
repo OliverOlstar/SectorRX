@@ -23,7 +23,7 @@ public class AI : MonoBehaviour
     Vector3 playerLastKnownPosition; // Store last known position of player - used for search mode
 
     public bool isPatrolling; // if false enemy will stand guard
-    bool playerInSight = false; // True when player is in field of view. False otherwise
+    public bool playerInSight = false; // True when player is in field of view. False otherwise
     bool searchingForPlayer = false; // True after player leaves field of vision. False 
 
     public float searchTimeMax = 60f; // How long enemy will search for player
