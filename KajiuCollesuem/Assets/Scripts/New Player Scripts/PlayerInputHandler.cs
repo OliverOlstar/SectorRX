@@ -129,11 +129,11 @@ public class PlayerInputHandler : MonoBehaviour
         //Attacking Input
         if(attack_Input && attack_Timer > 0.3f)
         {
-            _stateController.heavyAtatck = true;
+            _stateController.heavyAtatckInput = true;
         }
         else if(attack_Input && attack_Timer <= 0.3f)
         {
-            _stateController.quickAttack = true;
+            _stateController.quickAttackInput = true;
         }
 
         //Dodging Input
@@ -166,9 +166,9 @@ public class PlayerInputHandler : MonoBehaviour
         _stateController.jumpInput = jump_Input;
 
         //Powers Input
-        _stateController.power1 = power1_Input;
-        _stateController.power2 = power2_Input;
-        _stateController.power3 = power3_Input;
+        _stateController.power1Input = power1_Input;
+        _stateController.power2Input = power2_Input;
+        _stateController.power3Input = power3_Input;
     }
     
     void ResetInputAndTimers()
