@@ -40,7 +40,7 @@ public class PlayerStateController : MonoBehaviour
     private PlayerMovement _movementComponent;
     private PlayerDodge _dodgeComponent;
     private PlayerLockOnScript _lockOnComponent;
-    private playerPowers _powerComponent;
+    private PlayerPowerHandler _powerComponent;
 
     enum States { Normal, LockedOn, Dodging, Attacking, Stunned, Dead };
     [SerializeField] private int state = (int) States.Normal;
@@ -50,7 +50,7 @@ public class PlayerStateController : MonoBehaviour
         _movementComponent = GetComponent<PlayerMovement>();
         _dodgeComponent = GetComponent<PlayerDodge>();
         _lockOnComponent = GetComponent<PlayerLockOnScript>();
-        _powerComponent = GetComponent<playerPowers>();
+        _powerComponent = GetComponent<PlayerPowerHandler>();
     }
     
     void Update()

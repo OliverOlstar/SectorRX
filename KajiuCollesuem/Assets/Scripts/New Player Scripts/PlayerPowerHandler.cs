@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-public class playerPowers : MonoBehaviour
+public class PlayerPowerHandler : MonoBehaviour
 {
     public enum powers { MagmaErupter, Fireball }
 
@@ -12,7 +11,7 @@ public class playerPowers : MonoBehaviour
     public void UsingPower(int pPowerInput)
     {
         if (pPowerInput > 0 && pPowerInput <= _collectedPowers.Count)
-            _collectedPowers[pPowerInput -1].UsingMe();
+            _collectedPowers[pPowerInput - 1].UsingMe();
     }
 
     public void AddPower(int pWhichPower)
@@ -22,7 +21,7 @@ public class playerPowers : MonoBehaviour
             case (int)powers.Fireball:
                 gameObject.AddComponent<Power_Fireball>();
                 break;
-                
+
             case (int)powers.MagmaErupter:
                 gameObject.AddComponent<Power_Lightning>();
                 break;
