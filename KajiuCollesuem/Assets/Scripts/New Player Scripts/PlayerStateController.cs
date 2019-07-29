@@ -25,7 +25,9 @@ public class PlayerStateController : MonoBehaviour
     // Attack Varaibles
     [HideInInspector] public bool quickAttack = false;
     [HideInInspector] public bool heavyAtatck = false;
-    [HideInInspector] public bool lockOn = false;
+
+    //Camera
+    [HideInInspector] public bool lockOnInput = false;
 
     // Power Use Inputs
     [HideInInspector] public bool power1 = false;
@@ -39,6 +41,7 @@ public class PlayerStateController : MonoBehaviour
     [Header("State Components")]
     private PlayerMovement _movementComponent;
     private PlayerDodge _dodgeComponent;
+    private PlayerLockOnScript _lockOnComponent;
 
     enum States { Normal, LockedOn, Dodging, Attacking, Stunned, Dead };
     [SerializeField] private int state = (int) States.Normal;
@@ -46,13 +49,8 @@ public class PlayerStateController : MonoBehaviour
     void Start()
     {
         _movementComponent = GetComponent<PlayerMovement>();
-        if (!_movementComponent)
-            gameObject.AddComponent<PlayerMovement>();
-
-
         _dodgeComponent = GetComponent<PlayerDodge>();
-        if (!_dodgeComponent)
-            gameObject.AddComponent<PlayerDodge>();
+        _lockOnComponent = GetComponent<PlayerLockOnScript>();
     }
     
     void Update()
@@ -70,6 +68,14 @@ public class PlayerStateController : MonoBehaviour
                 
                 _movementComponent.horizontalInput = horizontalInput;
                 _movementComponent.verticalInput = verticalInput;
+
+                //Lock On
+                if (lockOnInput)
+                {
+                    _lockOnComponent.lockOnInput = true;
+                    lockOnInput = false;
+                }
+
 
                 //Swtich States
                 if (shortDodgeInput || longDodgeInput)
@@ -142,6 +148,8 @@ public class PlayerStateController : MonoBehaviour
                 //Locked On
                 case (int)States.LockedOn:
 
+                    _movementComponent.enabled = false;
+
                     break;
 
                 //Attacking
@@ -181,6 +189,8 @@ public class PlayerStateController : MonoBehaviour
 
             //Locked On
             case (int)States.LockedOn:
+
+                _movementComponent.enabled = true;
 
                 break;
 
