@@ -18,15 +18,12 @@ public class WolfieMovement : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
         anim = GetComponent<Animator>();
-
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (Vector3.Distance(player.position, this.transform.position) < 15.0f)
         {
             Vector3 direction = player.position - this.transform.position;
@@ -35,45 +32,38 @@ public class WolfieMovement : MonoBehaviour
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation,
                 Quaternion.LookRotation(direction), 0.1f);
 
-
-
             if (Time.time > newFireballTime)
             {
                 if (direction.magnitude < 10.0f)
                 {
                     this.transform.Translate(0, 0, 0.1f);
-                    // anim.SetBool("isRunning", true);
+                    anim.SetBool("FiringRange", true);
                     // anim.SetBool("isPunching", false);
                 }
 
                 else
                 {
-
-                    // anim.SetBool("isRunning", false);
                     // anim.SetBool("isPunching", true);
                     StartCoroutine(fireCast());
-
                 }
             }
 
         }
-        /*else
+        else
         {
-            //anim.SetBool("isIdle", true);
-            //anim.SetBool("isRunning", false);
-            //anim.SetBool("isPunching", false);
+            anim.SetBool("FiringRange", false);
+            StopCoroutine(fireCast());
 
             Rigidbody FireballInstance;
 
             FireballInstance = Instantiate(fireballPrefab, FBSpawnpoint.position, FBSpawnpoint.rotation) as Rigidbody;
             FireballInstance.AddForce(FBSpawnpoint.forward * 1000);
-        }*/
+        }
 
     }
 
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.gameObject.tag == "Fireball")
         {
             Destroy(gameObject, 0.0f);
@@ -82,11 +72,7 @@ public class WolfieMovement : MonoBehaviour
 
     IEnumerator fireCast()
     {
-        
-anim.SetTrigger("SummonComplete");
-        //anim.SetBool("isIdle", false);
-        //anim.SetBool("IsRunning", false);
-
+        anim.SetTrigger("PlayerInRange");
         Rigidbody FireballInstance;
 
         FireballInstance = Instantiate(fireballPrefab, FBSpawnpoint.position, FBSpawnpoint.rotation) as Rigidbody;
