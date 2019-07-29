@@ -13,11 +13,12 @@ public class PlayerAttributes : MonoBehaviour
 
     private int maxPowerGuage = 20;
     private int powerGuage;
-
+    
     const int BAR_HEIGHT = 20;
 
     public float barLengthMultiplier = 1.5f;
-
+    
+    //Variables for Player Meters
     public Slider healthSlider;
     public Slider shieldSlider;
     public Slider powerSlider;
