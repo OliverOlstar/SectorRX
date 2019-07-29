@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Power_Master : MonoBehaviour, IPower
 {
-    public PowerData requiredPower;
-
     private PlayerPowerHandler _PlayerPowersComp;
+
+    protected int requiredPower = 0;
+    protected int damage = 0;
 
     // Start is called before the first frame update
     void Start()
