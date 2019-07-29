@@ -45,9 +45,7 @@ public class PlayerInputHandler : MonoBehaviour
     [SerializeField] private KeyCode KCjump_Input = KeyCode.LeftShift;
     
     [Header("Powers")]
-    private bool power1_Input;
-    private bool power2_Input;
-    private bool power3_Input;
+    private int power_Input;
     [SerializeField] private KeyCode KCpower1_Input = KeyCode.Q;
     [SerializeField] private KeyCode KCpower2_Input = KeyCode.E;
     [SerializeField] private KeyCode KCpower3_Input = KeyCode.F;
@@ -102,10 +100,19 @@ public class PlayerInputHandler : MonoBehaviour
 
         lockon_Input = Input.GetKeyDown(KClockon_Input);
         jump_Input = Input.GetKeyDown(KCjump_Input);
-
-        power1_Input = Input.GetKeyDown(KCpower1_Input);
-        power2_Input = Input.GetKeyDown(KCpower2_Input);
-        power3_Input = Input.GetKeyDown(KCpower3_Input);
+        
+        if (Input.GetKeyDown(KCpower1_Input))
+        {
+            power_Input = 1;
+        }
+        else if (Input.GetKeyDown(KCpower2_Input))
+        {
+            power_Input = 2;
+        }
+        else if (Input.GetKeyDown(KCpower3_Input))
+        {
+            power_Input = 3;
+        }
 
         if (attack_Input)
         {
@@ -166,9 +173,11 @@ public class PlayerInputHandler : MonoBehaviour
         _stateController.jumpInput = jump_Input;
 
         //Powers Input
-        _stateController.power1Input = power1_Input;
-        _stateController.power2Input = power2_Input;
-        _stateController.power3Input = power3_Input;
+        if (power_Input > 0)
+        {
+            _stateController.powerInput = power_Input;
+            power_Input = 0;
+        }
     }
     
     void ResetInputAndTimers()

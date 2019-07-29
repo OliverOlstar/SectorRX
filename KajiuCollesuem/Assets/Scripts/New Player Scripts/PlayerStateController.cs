@@ -30,9 +30,7 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public bool lockOnInput = false;
 
     // Power Use Inputs
-    [HideInInspector] public bool power1Input = false;
-    [HideInInspector] public bool power2Input = false;
-    [HideInInspector] public bool power3Input = false;
+    [HideInInspector] public int powerInput = 0;
 
     // Menu Inputs
     [HideInInspector] public bool pauseInput = false;
@@ -42,6 +40,7 @@ public class PlayerStateController : MonoBehaviour
     private PlayerMovement _movementComponent;
     private PlayerDodge _dodgeComponent;
     private PlayerLockOnScript _lockOnComponent;
+    private playerPowers _powerComponent;
 
     enum States { Normal, LockedOn, Dodging, Attacking, Stunned, Dead };
     [SerializeField] private int state = (int) States.Normal;
@@ -51,6 +50,7 @@ public class PlayerStateController : MonoBehaviour
         _movementComponent = GetComponent<PlayerMovement>();
         _dodgeComponent = GetComponent<PlayerDodge>();
         _lockOnComponent = GetComponent<PlayerLockOnScript>();
+        _powerComponent = GetComponent<playerPowers>();
     }
     
     void Update()
@@ -68,6 +68,12 @@ public class PlayerStateController : MonoBehaviour
                 
                 _movementComponent.horizontalInput = horizontalInput;
                 _movementComponent.verticalInput = verticalInput;
+
+                if (powerInput > 0)
+                {
+                    _powerComponent.UsingPower(powerInput);
+                    powerInput = 0;
+                }
 
                 //Lock On
                 if (lockOnInput)
