@@ -15,16 +15,43 @@ public class WolfieMovement : MonoBehaviour
     public Rigidbody fireballPrefab;
     public Transform FBSpawnpoint;
 
+    public float waitBetweenShots;
+    private float shotCounter;
+
+    [SerializeField]
+    private float torpedoDuration;
+    public float torpedoCooldown = 1.0f;
+    public float newTorpedoTime = 0.0f;
+
+    public float waitBetweenTorpedo;
+    private float torpedoCounter;
+
+    [SerializeField]
+    private float biteDuration;
+    public float biteCooldown = 1.0f;
+    public float newBiteTime = 0.0f;
+
+    public float waitBetweenBite;
+    private float biteCounter;
+
     // Use this for initialization
     void Start()
     {
         anim = GetComponent<Animator>();
+
+        shotCounter = waitBetweenShots;
+        torpedoCounter = waitBetweenTorpedo;
+        biteCounter = waitBetweenBite;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(player.position, this.transform.position) < 15.0f)
+        shotCounter -= Time.deltaTime;
+        torpedoCounter -= Time.deltaTime;
+        biteCounter -= Time.deltaTime;
+
+        if (Vector3.Distance(player.position, this.transform.position) < 20.0f)
         {
             Vector3 direction = player.position - this.transform.position;
             direction.y = 0;
@@ -32,32 +59,64 @@ public class WolfieMovement : MonoBehaviour
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation,
                 Quaternion.LookRotation(direction), 0.1f);
 
+
+
             if (Time.time > newFireballTime)
+            {
+                if (direction.magnitude < 15.0f)
+                {
+                    this.transform.Translate(0, 0, 0.1f);
+                    anim.SetBool("PlayerInRange", true);
+                }
+
+                else if (shotCounter < 0)
+                {;
+                    anim.SetBool("PlayerInRange", false);
+                    StartCoroutine(fireCast());
+                    shotCounter = waitBetweenShots;
+                }
+            }
+
+            else if (Time.time > newTorpedoTime)
             {
                 if (direction.magnitude < 10.0f)
                 {
                     this.transform.Translate(0, 0, 0.1f);
-                    anim.SetBool("FiringRange", true);
-                    // anim.SetBool("isPunching", false);
+                    anim.SetBool("PlayerInRange", true);
+                    
                 }
 
-                else
+                else if (torpedoCounter < 0)
                 {
-                    // anim.SetBool("isPunching", true);
-                    StartCoroutine(fireCast());
+                    anim.SetBool("PlayerInRange", false);
+                    StartCoroutine(torpedoCast());
+                    torpedoCounter = waitBetweenTorpedo;
                 }
+
+            }
+
+            else if (Time.time > newBiteTime)
+            {
+                if (direction.magnitude < 5.0f)
+                {
+                    this.transform.Translate(0, 0, 0.1f);
+                    anim.SetBool("PlayerInRange", true);
+
+                }
+
+                else if (biteCounter < 0)
+                {
+                    anim.SetBool("PlayerInRange", false);
+                    StartCoroutine(biteCast());
+                    biteCounter = waitBetweenBite;
+                }
+
             }
 
         }
         else
         {
-            anim.SetBool("FiringRange", false);
-            StopCoroutine(fireCast());
-
-            Rigidbody FireballInstance;
-
-            FireballInstance = Instantiate(fireballPrefab, FBSpawnpoint.position, FBSpawnpoint.rotation) as Rigidbody;
-            FireballInstance.AddForce(FBSpawnpoint.forward * 1000);
+            anim.SetBool("PlayerInRange", false);
         }
 
     }
@@ -72,7 +131,7 @@ public class WolfieMovement : MonoBehaviour
 
     IEnumerator fireCast()
     {
-        anim.SetTrigger("PlayerInRange");
+        anim.SetTrigger("FiringRange");
         Rigidbody FireballInstance;
 
         FireballInstance = Instantiate(fireballPrefab, FBSpawnpoint.position, FBSpawnpoint.rotation) as Rigidbody;
@@ -83,5 +142,27 @@ public class WolfieMovement : MonoBehaviour
         GetComponent<Rigidbody>().velocity = Vector3.zero;
 
         newFireballTime = Time.time + fireballCooldown;
+    }
+
+    IEnumerator torpedoCast()
+    {
+        anim.SetTrigger("TargetLongRange");
+
+        yield return new WaitForSeconds(torpedoDuration);
+
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+
+        newTorpedoTime = Time.time + torpedoCooldown;
+    }
+
+    IEnumerator biteCast()
+    {
+        anim.SetTrigger("TargetCloseRange");
+
+        yield return new WaitForSeconds(biteDuration);
+
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+
+        newBiteTime = Time.time + biteCooldown;
     }
 }
