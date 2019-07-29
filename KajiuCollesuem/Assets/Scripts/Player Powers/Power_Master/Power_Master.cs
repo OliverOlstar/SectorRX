@@ -28,10 +28,6 @@ public class Power_Master : MonoBehaviour
             case 3:
                 playerPowers.OnPower3Used += UsingMe;
                 break;
-
-            case 4:
-                playerPowers.OnPower4Used += UsingMe;
-                break;
         }
     }
 
@@ -50,10 +46,6 @@ public class Power_Master : MonoBehaviour
 
             case 3:
                 playerPowers.OnPower3Used -= UsingMe;
-                break;
-
-            case 4:
-                playerPowers.OnPower4Used -= UsingMe;
                 break;
         }
     }
