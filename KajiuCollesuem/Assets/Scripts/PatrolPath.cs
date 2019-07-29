@@ -32,7 +32,7 @@ public class PatrolPath : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ai.isPatrolling)
+        /*if (ai.isPatrolling)
         {
             if (Vector3.Distance(transform.position, currentPatrolDest.transform.position) > 1)
             {
@@ -49,16 +49,31 @@ public class PatrolPath : MonoBehaviour
 
         else
         {
-            /*time -= Time.deltaTime;
-            Debug.Log(time);*/
+            time -= Time.deltaTime;
+            Debug.Log(time);
 
-            if (/*(int)time < 1 &&*/ !ai.playerInSight)
+            if ((int)time < 1 && !ai.playerInSight)
             {
                 ai.isPatrolling = true;
             }
 
-            /*else if ((int)time < 1)
-                time = 5;*/
+            else if ((int)time < 1)
+                time = 5;
+        }*/
+    }
+
+    public void OnPatrol()
+    {
+        if (Vector3.Distance(transform.position, currentPatrolDest.transform.position) > 1)
+        {
+            ai.GetAgent().SetDestination(currentPatrolDest.transform.position);
+        }
+
+        else
+        {
+            currentPatrolDest = enemyPatrol.FindNode(currentPatrolDest).GetOutgoing()[0].GetData();
+            //ai.isPatrolling = false;
+            //time = 5;
         }
     }
 }

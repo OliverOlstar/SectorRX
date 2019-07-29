@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class WolfieMovement : MonoBehaviour
 {
@@ -15,10 +16,30 @@ public class WolfieMovement : MonoBehaviour
     public Rigidbody fireballPrefab;
     public Transform FBSpawnpoint;
 
+    //Mugie's vars
+    NavMeshAgent agent;
+    DirectedGraph enemyPatrol = new DirectedGraph();
+    public GameObject patrolPath;
+    GameObject currentPatrolDest;
+
     // Use this for initialization
     void Start()
     {
         anim = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
+
+        for (int i = 0; i < patrolPath.transform.childCount; ++i)
+        {
+            enemyPatrol.AddNode(patrolPath.transform.GetChild(i).gameObject);
+        }
+
+        enemyPatrol.AddEdge(patrolPath.transform.GetChild(3).gameObject, patrolPath.transform.GetChild(0).gameObject);
+
+        for (int i = 0; i < 3; ++i)
+        {
+            enemyPatrol.AddEdge(patrolPath.transform.GetChild(i).gameObject, patrolPath.transform.GetChild(i + 1).gameObject);
+        }
+        currentPatrolDest = enemyPatrol.GetNodes()[0].GetData();
     }
 
     // Update is called once per frame
@@ -26,6 +47,8 @@ public class WolfieMovement : MonoBehaviour
     {
         if (Vector3.Distance(player.position, this.transform.position) < 15.0f)
         {
+            agent.isStopped = true;
+            anim.SetBool("FiringRange", false);
             Vector3 direction = player.position - this.transform.position;
             direction.y = 0;
 
@@ -51,13 +74,25 @@ public class WolfieMovement : MonoBehaviour
         }
         else
         {
-            anim.SetBool("FiringRange", false);
-            StopCoroutine(fireCast());
+            agent.isStopped = false;
+            anim.SetBool("FiringRange", true);
+            /*StopCoroutine(fireCast());
 
             Rigidbody FireballInstance;
 
             FireballInstance = Instantiate(fireballPrefab, FBSpawnpoint.position, FBSpawnpoint.rotation) as Rigidbody;
-            FireballInstance.AddForce(FBSpawnpoint.forward * 1000);
+            FireballInstance.AddForce(FBSpawnpoint.forward * 1000);*/
+
+            if (Vector3.Distance(transform.position, currentPatrolDest.transform.position) > 2)
+            {
+                agent.SetDestination(currentPatrolDest.transform.position);
+                Debug.Log(Vector3.Distance(transform.position, currentPatrolDest.transform.position));
+            }
+
+            else
+            {
+                currentPatrolDest = enemyPatrol.FindNode(currentPatrolDest).GetOutgoing()[0].GetData();
+            }
         }
 
     }
