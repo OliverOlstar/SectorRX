@@ -12,9 +12,6 @@ public class AI : MonoBehaviour
 
     //Mugie's variables
     public float maxSpeed = 10; //AI run speed
-    DirectedGraph enemyPatrol; //Used for enemy patrol
-    public GameObject patrolPath;
-    GameObject currentPatrolDest;
 
     protected NavMeshAgent agent;
     float height = 0.155f;
@@ -40,28 +37,12 @@ public class AI : MonoBehaviour
 
     protected void InheritStart()
     {
-        enemyPatrol = new DirectedGraph();
         GetComponent<EnemyAttributes>().enemyHealthUI.SetActive(false);
 
         List<GameObject> patrolPoints = new List<GameObject>();
 
-        for (int i = 0; i < patrolPath.transform.childCount; ++i)
-        {
-            enemyPatrol.AddNode(patrolPath.transform.GetChild(i).gameObject);
-        }
-
-        enemyPatrol.AddEdge(patrolPath.transform.GetChild(3).gameObject, patrolPath.transform.GetChild(0).gameObject);
-
-        for (int i = 0; i < 3; ++i)
-        {
-            enemyPatrol.AddEdge(patrolPath.transform.GetChild(i).gameObject, patrolPath.transform.GetChild(i + 1).gameObject);
-        }
-        currentPatrolDest = enemyPatrol.GetNodes()[0].GetData();
-
         agent = gameObject.GetComponent<NavMeshAgent>(); // connect to the NavMeshAgent on the enemy
         agent.speed = moveSpeed;
-
-        isPatrolling = true;
 
         player = GameObject.FindGameObjectWithTag("Player");
 
@@ -128,13 +109,7 @@ public class AI : MonoBehaviour
     void OnPatrol()
     {
 
-        if (transform.position != currentPatrolDest.transform.position)
-            agent.SetDestination(currentPatrolDest.transform.position);
-
-        else
-        {
-            currentPatrolDest = enemyPatrol.FindNode(currentPatrolDest).GetOutgoing()[0].GetData();
-        }
+        
     }
 
     void OnGuard()
@@ -184,5 +159,10 @@ public class AI : MonoBehaviour
 
         //If player leaves enemy field view, start patrolling
         //isPatrolling = true;
+    }
+
+    public NavMeshAgent GetAgent()
+    {
+        return agent;
     }
 }
