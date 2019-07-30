@@ -16,6 +16,8 @@ public class PlayerStateController : MonoBehaviour
     // Movement variables
     [HideInInspector] public float horizontalInput = 0;
     [HideInInspector] public float verticalInput = 0;
+    [HideInInspector] public Vector3 movementDir;
+    [HideInInspector] public float moveAmount = 0;
 
     // Movement Variables
     [HideInInspector] public bool jumpInput = false;
@@ -37,11 +39,25 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public bool map = false;
 
     [Header("State Components")]
-    private PlayerMovement _movementComponent;
-    private PlayerDodge _dodgeComponent;
+    private PlayerMovement _movementComponent; // Player's movement component, access this to move and jump
+    // TODO LockOn Component // Player's lockon component changes player's movement aanimations
+    private PlayerDodge _dodgeComponent; // Player's dodge component, access this to 
 
-    enum States { Normal, LockedOn, Dodging, Attacking, Stunned, Dead };
+    enum States
+    {
+        Normal, // Player's default state, able to move and can initiate attack
+        LockedOn, // Payer is locked on to an enemy and can transition into any other state
+        Dodging, // Player is currently in a dodge aninmation and cannot move or initiate an attack
+        Attacking, // Player is currently in a attack animation, cannot move and cannot initiate another attack
+        Stunned, // Player is stunned and cannot move
+        Dead // Player doesn't receive anymore input
+    };
+
     [SerializeField] private int state = (int) States.Normal;
+
+
+    // Temporary Utility variables
+    public bool OnGround = false;
     
     void Start()
     {
@@ -54,6 +70,17 @@ public class PlayerStateController : MonoBehaviour
         if (!_dodgeComponent)
             gameObject.AddComponent<PlayerDodge>();
     }
+
+
+    public void FixedTick()
+    {
+
+    }
+
+    public void Tick()
+    {
+        OnGround = CheckIfOnGround();
+    }
     
     void Update()
     {
@@ -61,23 +88,26 @@ public class PlayerStateController : MonoBehaviour
         {
             //Normal
             case (int) States.Normal:
-                //Sending Inputs
-                if (jumpInput)
+
+                if (OnGround)
                 {
-                    _movementComponent.jumpInput = true;
-                    jumpInput = false;
-                }
+                    //Sending Inputs
+                    if (jumpInput)
+                    {
+                        _movementComponent.jumpInput = true;
+                        jumpInput = false;
+                    }
                 
-                _movementComponent.horizontalInput = horizontalInput;
-                _movementComponent.verticalInput = verticalInput;
+                    _movementComponent.horizontalInput = horizontalInput;
+                    _movementComponent.verticalInput = verticalInput;
 
-                //Swtich States
-                if (shortDodgeInput || longDodgeInput)
-                {
-                    SwitchStates((int)States.Dodging);
-                    shortDodgeInput = false; longDodgeInput = false;
+                    //Swtich States
+                    if (shortDodgeInput || longDodgeInput)
+                    {
+                        SwitchStates((int)States.Dodging);
+                        shortDodgeInput = false; longDodgeInput = false;
+                    }
                 }
-
                 break;
 
             //Dodge
@@ -202,5 +232,26 @@ public class PlayerStateController : MonoBehaviour
         
         //Change State Variable
         state = pState;
+    }
+
+
+    // Temporary Utility function to perform a raycast and determine if the player is moving on the ground
+    bool CheckIfOnGround()
+    {
+        bool r = false;
+        Vector3 origin = transform.position + (Vector3.up * 0.5f);
+        Vector3 dir = -Vector3.up;
+        float dist = 0.8f;
+        RaycastHit hit;
+
+        if(Physics.Raycast(origin, dir, out hit, dist, ~(1 << 11)))
+        {
+            r = true;
+            Vector3 targetPos = hit.point;
+            transform.position = targetPos;
+        }
+
+
+        return r;
     }
 }

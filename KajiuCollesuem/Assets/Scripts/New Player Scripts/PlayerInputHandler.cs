@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    // THIS IS THE INPUT HANDLER - Danish
+    // THIS IS THE INPUT HANDLER - Danish, Oliver
 
     /*
     This script is to get keyboard and gamepad input 
@@ -122,6 +122,15 @@ public class PlayerInputHandler : MonoBehaviour
         //Movement Input
         _stateController.horizontalInput = horizontal;
         _stateController.verticalInput = vertical;
+
+        Vector3 v = vertical * transform.forward;
+        Vector3 h = horizontal * transform.right;
+        _stateController.movementDir = (v + h).normalized;
+
+        float m = Mathf.Abs(vertical) + Mathf.Abs(horizontal);
+        _stateController.moveAmount = Mathf.Clamp01(m);
+
+
 
         //Attacking Input
         if(attack_Input && attack_Timer > 0.3f)
