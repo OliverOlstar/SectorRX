@@ -58,7 +58,7 @@ public class PlayerDodge : MonoBehaviour
         //Run Dodge Force
         while (Time.time <= dodgeEndTime)
         {
-            //_rb.AddForce(Camera.main.transform.forward * (pDistance / pDuration), ForceMode.VelocityChange);
+            // TODO Make dodge direction based on player movement direction rather than camera forward
             _rb.velocity = Camera.main.transform.forward * (pDistance / pDuration);
             yield return null;
         }

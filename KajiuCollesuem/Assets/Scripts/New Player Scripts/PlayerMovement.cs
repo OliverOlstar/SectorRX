@@ -120,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
         move = _Camera.TransformDirection(move);
         move = new Vector3(move.x, 0, move.z);
         move = move.normalized * Time.deltaTime * moveSpeed * inputInfluence;
-
+        
         //Moving the player
         transform.Translate(move);
     }
