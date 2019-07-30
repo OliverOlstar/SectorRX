@@ -19,43 +19,42 @@ public class PlayerInputHandler : MonoBehaviour
     // Movement Inputs
     private float vertical;
     private float horizontal;
-    [SerializeField] private KeyCode KDverticalUp = KeyCode.W;
-    [SerializeField] private KeyCode KDverticalDown = KeyCode.S;
-    [SerializeField] private KeyCode KDhorizontalLeft = KeyCode.A;
-    [SerializeField] private KeyCode KDhorizontalRight = KeyCode.D;
+    [SerializeField] private KeyCode KCverticalUp = KeyCode.W;
+    [SerializeField] private KeyCode KCverticalDown = KeyCode.S;
+    [SerializeField] private KeyCode KChorizontalLeft = KeyCode.A;
+    [SerializeField] private KeyCode KChorizontalRight = KeyCode.D;
 
     [Header("Attack")]
     private bool attack_Input;
     private float attack_Timer;
+    [SerializeField] private KeyCode KCattack_Input = KeyCode.Mouse0;
+
+    [Header("Camera")]
     private bool lockon_Input;
-    [SerializeField] private KeyCode KDattack_Input = KeyCode.Mouse0;
-    [SerializeField] private KeyCode KDlockon_Input = KeyCode.Mouse1;
+    [SerializeField] private KeyCode KClockon_Input = KeyCode.Mouse1;
 
     [Header("Dodge")]
     private bool dodge_Input;
     private bool dodge_release_Input;
     private bool dodge_Input_WaitingForRelease;
     private float dodge_Timer;
-    [SerializeField] private KeyCode KDdodge_Input = KeyCode.Space;
+    [SerializeField] private KeyCode KCdodge_Input = KeyCode.Space;
 
     [Header("Jump")]
     private bool jump_Input;
-    [SerializeField] private KeyCode KDjump_Input = KeyCode.LeftShift;
+    [SerializeField] private KeyCode KCjump_Input = KeyCode.LeftShift;
     
     [Header("Powers")]
-    private bool power1_Input;
-    private bool power2_Input;
-    private bool power3_Input;
-    [SerializeField] private KeyCode KDpower1_Input = KeyCode.Q;
-    [SerializeField] private KeyCode KDpower2_Input = KeyCode.E;
-    [SerializeField] private KeyCode KDpower3_Input = KeyCode.F;
+    private int power_Input;
+    [SerializeField] private KeyCode KCpower1_Input = KeyCode.Q;
+    [SerializeField] private KeyCode KCpower2_Input = KeyCode.E;
+    [SerializeField] private KeyCode KCpower3_Input = KeyCode.F;
 
     [Header("Menu")]
     private bool pause_Input;
     private bool map_Input;
-    [SerializeField] private KeyCode KDpause_Input = KeyCode.Escape;
-    [SerializeField] private KeyCode KDmap_Input = KeyCode.M;
-    
+    [SerializeField] private KeyCode KCpause_Input = KeyCode.Escape;
+    [SerializeField] private KeyCode KCmap_Input = KeyCode.M;
 
     private PlayerStateController _stateController;
 
@@ -80,14 +79,14 @@ public class PlayerInputHandler : MonoBehaviour
         vertical = Input.GetAxis("Vertical");
         horizontal = Input.GetAxis("Horizontal");
 
-        attack_Input = Input.GetKeyDown(KDattack_Input);
+        attack_Input = Input.GetKeyDown(KCattack_Input);
         
-        dodge_release_Input = Input.GetKeyUp(KDdodge_Input);
+        dodge_release_Input = Input.GetKeyUp(KCdodge_Input);
 
         //Only Listening to dodge if player has released the key between dodges
         if (dodge_Input_WaitingForRelease == false)
         {
-            dodge_Input = Input.GetKey(KDdodge_Input);
+            dodge_Input = Input.GetKey(KCdodge_Input);
         }
         else if (dodge_Input_WaitingForRelease & dodge_release_Input)
         {
@@ -99,12 +98,21 @@ public class PlayerInputHandler : MonoBehaviour
             dodge_Input = false;
         }
 
-        lockon_Input = Input.GetKeyDown(KDlockon_Input);
-        jump_Input = Input.GetKeyDown(KDjump_Input);
-
-        power1_Input = Input.GetKeyDown(KDpower1_Input);
-        power2_Input = Input.GetKeyDown(KDpower2_Input);
-        power3_Input = Input.GetKeyDown(KDpower3_Input);
+        lockon_Input = Input.GetKeyDown(KClockon_Input);
+        jump_Input = Input.GetKeyDown(KCjump_Input);
+        
+        if (Input.GetKeyDown(KCpower1_Input))
+        {
+            power_Input = 1;
+        }
+        else if (Input.GetKeyDown(KCpower2_Input))
+        {
+            power_Input = 2;
+        }
+        else if (Input.GetKeyDown(KCpower3_Input))
+        {
+            power_Input = 3;
+        }
 
         if (attack_Input)
         {
@@ -115,6 +123,8 @@ public class PlayerInputHandler : MonoBehaviour
         {
             dodge_Timer += delta;
         }
+
+        lockon_Input = Input.GetKeyDown(KClockon_Input);
     }
 
     void UpdateStates()
@@ -135,11 +145,11 @@ public class PlayerInputHandler : MonoBehaviour
         //Attacking Input
         if(attack_Input && attack_Timer > 0.3f)
         {
-            _stateController.heavyAtatck = true;
+            _stateController.heavyAtatckInput = true;
         }
         else if(attack_Input && attack_Timer <= 0.3f)
         {
-            _stateController.quickAttack = true;
+            _stateController.quickAttackInput = true;
         }
 
         //Dodging Input
@@ -164,16 +174,19 @@ public class PlayerInputHandler : MonoBehaviour
         //LockOn Input
         if (lockon_Input)
         {
-            _stateController.lockOn = !_stateController.lockOn;
+            _stateController.lockOnInput = true;
+            lockon_Input = false;
         }
 
         //Jump Input
         _stateController.jumpInput = jump_Input;
 
         //Powers Input
-        _stateController.power1 = power1_Input;
-        _stateController.power2 = power2_Input;
-        _stateController.power3 = power3_Input;
+        if (power_Input > 0)
+        {
+            _stateController.powerInput = power_Input;
+            power_Input = 0;
+        }
     }
     
     void ResetInputAndTimers()

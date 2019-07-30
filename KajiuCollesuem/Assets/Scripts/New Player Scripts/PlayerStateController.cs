@@ -25,18 +25,18 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public bool shortDodgeInput = false;
 
     // Attack Varaibles
-    [HideInInspector] public bool quickAttack = false;
-    [HideInInspector] public bool heavyAtatck = false;
-    [HideInInspector] public bool lockOn = false;
+    [HideInInspector] public bool quickAttackInput = false;
+    [HideInInspector] public bool heavyAtatckInput = false;
+
+    //Camera
+    [HideInInspector] public bool lockOnInput = false;
 
     // Power Use Inputs
-    [HideInInspector] public bool power1 = false;
-    [HideInInspector] public bool power2 = false;
-    [HideInInspector] public bool power3 = false;
+    [HideInInspector] public int powerInput = 0;
 
     // Menu Inputs
-    [HideInInspector] public bool pause = false;
-    [HideInInspector] public bool map = false;
+    [HideInInspector] public bool pauseInput = false;
+    [HideInInspector] public bool mapInput = false;
 
     [Header("State Components")]
     private PlayerMovement _movementComponent; // Player's movement component, access this to move and jump
@@ -53,6 +53,11 @@ public class PlayerStateController : MonoBehaviour
         Dead // Player doesn't receive anymore input
     };
 
+    private PlayerMovement _movementComponent;
+    private PlayerDodge _dodgeComponent;
+    private PlayerLockOnScript _lockOnComponent;
+    private PlayerPowerHandler _powerComponent;
+
     [SerializeField] private int state = (int) States.Normal;
 
 
@@ -62,13 +67,9 @@ public class PlayerStateController : MonoBehaviour
     void Start()
     {
         _movementComponent = GetComponent<PlayerMovement>();
-        if (!_movementComponent)
-            gameObject.AddComponent<PlayerMovement>();
-
-
         _dodgeComponent = GetComponent<PlayerDodge>();
-        if (!_dodgeComponent)
-            gameObject.AddComponent<PlayerDodge>();
+        _lockOnComponent = GetComponent<PlayerLockOnScript>();
+        _powerComponent = GetComponent<PlayerPowerHandler>();
     }
 
 
@@ -88,8 +89,22 @@ public class PlayerStateController : MonoBehaviour
         {
             //Normal
             case (int) States.Normal:
+                if (powerInput > 0)
+                {
+                    _powerComponent.UsingPower(powerInput);
+                    powerInput = 0;
+                }
 
-                if (OnGround)
+                //Lock On
+                if (lockOnInput)
+                {
+                    _lockOnComponent.lockOnInput = true;
+                    lockOnInput = false;
+                }
+
+
+                //Swtich States
+                if (shortDodgeInput || longDodgeInput)
                 {
                     //Sending Inputs
                     if (jumpInput)
@@ -172,6 +187,8 @@ public class PlayerStateController : MonoBehaviour
                 //Locked On
                 case (int)States.LockedOn:
 
+                    _movementComponent.enabled = false;
+
                     break;
 
                 //Attacking
@@ -211,6 +228,8 @@ public class PlayerStateController : MonoBehaviour
 
             //Locked On
             case (int)States.LockedOn:
+
+                _movementComponent.enabled = true;
 
                 break;
 

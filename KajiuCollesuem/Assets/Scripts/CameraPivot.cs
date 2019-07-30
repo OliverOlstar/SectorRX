@@ -29,12 +29,19 @@ public class CameraPivot : MonoBehaviour
         //Position the camera pivot on the player
         transform.position = target.transform.position + (Vector3.up * offSetUp);
 
+        //Call Camera Transition
         if (runFunc)
         {
             ChangePlayerCamera(DemoVarOffup, DemoVarOffleft, DemoVarSensi, DemoVarDamp, DemoVarDis, DemoVarMiny, DemoVarMaxy, DemoVarTrnsSpd);
             runFunc = false;
         }
     }
+
+
+    
+
+
+    // Camera Transition //////////////
 
     public void ChangePlayerCamera(float pOffSetUp, float pOffSetLeft, float pMouseSensitivity, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
     {
