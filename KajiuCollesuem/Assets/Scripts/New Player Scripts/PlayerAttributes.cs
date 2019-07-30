@@ -15,7 +15,7 @@ public class PlayerAttributes : MonoBehaviour
     private int _power;
 
     [Header("Regen & Loss over time")]
-    [SerializeField] private float shieldRegenStartDelaySeconds = 6f;
+    [SerializeField] private float shieldRegenStartDelaySeconds = 10f;
     [SerializeField] private float shieldRegenDelaySeconds = 1f;
     [SerializeField] private int shieldRegenAmount = 4;
 
