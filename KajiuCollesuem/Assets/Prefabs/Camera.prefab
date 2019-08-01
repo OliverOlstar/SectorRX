@@ -44,8 +44,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 640f5e2c293f649499d743e5f0691339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 0}
-  offSet: {x: 0, y: 0.6, z: 0}
+  target: {fileID: 8582934654442581043, guid: 8e7d410007ab955488e1c836a456382a, type: 3}
+  offSetUp: 0.6
+  runFunc: 0
+  DemoVarOffup: 0.6
+  DemoVarOffleft: 0
+  DemoVarSensi: 3
+  DemoVarDamp: 20
+  DemoVarDis: 6
+  DemoVarMiny: -8
+  DemoVarMaxy: 70
+  DemoVarTrnsSpd: 1
 --- !u!1 &5688443931472006255
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,9 +150,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b60d3a0c3e72974f90c65fe0e878dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraDistance: 6
+  lockOnTarget: {fileID: 0}
   MouseSensitivity: 5
   TurnDampening: 20
+  OffSetLeft: 0
+  CameraDistance: 6
   CameraMinHeight: -8
   CameraMaxHeight: 70
   CameraDisabled: 0
