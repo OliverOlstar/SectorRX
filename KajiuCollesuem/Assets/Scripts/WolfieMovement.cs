@@ -70,7 +70,7 @@ public class WolfieMovement : MonoBehaviour
                 }
 
                 else if (shotCounter < 0)
-                {;
+                {
                     anim.SetBool("PlayerInRange", false);
                     StartCoroutine(fireCast());
                     shotCounter = waitBetweenShots;
@@ -79,7 +79,7 @@ public class WolfieMovement : MonoBehaviour
 
             else if (Time.time > newTorpedoTime)
             {
-                if (direction.magnitude < 10.0f)
+                if (direction.magnitude < 7.0f)
                 {
                     this.transform.Translate(0, 0, 0.1f);
                     anim.SetBool("PlayerInRange", true);
@@ -97,7 +97,7 @@ public class WolfieMovement : MonoBehaviour
 
             else if (Time.time > newBiteTime)
             {
-                if (direction.magnitude < 5.0f)
+                if (direction.magnitude < 2.0f)
                 {
                     this.transform.Translate(0, 0, 0.1f);
                     anim.SetBool("PlayerInRange", true);
@@ -141,7 +141,12 @@ public class WolfieMovement : MonoBehaviour
 
         GetComponent<Rigidbody>().velocity = Vector3.zero;
 
+        this.transform.Translate(0, 0, 0.1f);
+        anim.SetBool("PlayerInRange", true);
+
+
         newFireballTime = Time.time + fireballCooldown;
+
     }
 
     IEnumerator torpedoCast()
@@ -151,6 +156,7 @@ public class WolfieMovement : MonoBehaviour
         yield return new WaitForSeconds(torpedoDuration);
 
         GetComponent<Rigidbody>().velocity = Vector3.zero;
+
 
         newTorpedoTime = Time.time + torpedoCooldown;
     }
