@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerAttributes : MonoBehaviour
+public class PlayerAttributes : MonoBehaviour, IAttributes
 {
     [Header("Maxes")]
     [SerializeField] private int _maxHealth = 100;
@@ -65,7 +65,7 @@ public class PlayerAttributes : MonoBehaviour
     public void setShield(int pShield) { _shield = pShield; }
     public void setPower(int pPower) { _power = pPower; }
 
-    //MODIFY VARS
+    //MODIFY VARS ///////////////////////////////////////////////////////////////////////////////////////////
     public void modifyHealth(int x)
     {
         //Changing Value
@@ -123,24 +123,24 @@ public class PlayerAttributes : MonoBehaviour
         powerRect.sizeDelta = new Vector2(_maxPower * barLengthMultiplier, BAR_HEIGHT);
     }
 
-    //GENERAL FUNCTIONS
-    public void damage(int x)
+    //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
+    public void TakeDamage(int pAmount)
     {
-        Debug.Log("Damaging Player " + x);
+        Debug.Log("Damaging Player " + pAmount);
 
-        if (_shield >= x)
+        if (_shield >= pAmount)
         {
             //Changing only Shield
-            modifyShield(-x);
+            modifyShield(-pAmount);
         }
         else
         {
             //Changing Shield and getting the remainder
-            x -= _shield;
+            pAmount -= _shield;
             modifyShield(-_shield);
 
             //Changing Health by remainder
-            modifyHealth(-x);
+            modifyHealth(-pAmount);
         }
 
         //Restarting Shield Regening
@@ -160,7 +160,7 @@ public class PlayerAttributes : MonoBehaviour
         //}
     }
 
-    //COROUTINES
+    //COROUTINES ///////////////////////////////////////////////////////////////////////////////////////////
     //Shield
     private IEnumerator shieldRegenStartDelay()
     {

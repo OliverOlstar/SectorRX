@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyAttributes : MonoBehaviour
+public class EnemyAttributes : MonoBehaviour, IAttributes
 {
     public int startHealth = 100;
     public int currentHealth;

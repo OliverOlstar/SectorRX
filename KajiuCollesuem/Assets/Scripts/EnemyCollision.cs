@@ -25,7 +25,7 @@ public class EnemyCollision : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            playerVars.damage(10);
+            playerVars.TakeDamage(10);
         }
     }
 }
