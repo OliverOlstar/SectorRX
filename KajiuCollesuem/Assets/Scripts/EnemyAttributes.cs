@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyAttributes : MonoBehaviour
+public class EnemyAttributes : MonoBehaviour, IAttributes
 {
     public int startHealth = 100;
     public int currentHealth;
@@ -66,6 +66,12 @@ public class EnemyAttributes : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             TakeDamage(playerDamage);
+        }
+
+        // Destroy enemy if they pass through boss wall
+        if(collision.gameObject.tag == "BossWall")
+        {
+            Destroy(this);
         }
     }
 

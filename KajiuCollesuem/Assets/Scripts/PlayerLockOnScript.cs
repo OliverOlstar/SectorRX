@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class PlayerLockOnScript : MonoBehaviour
 {
+    // OLIVER - This script tells the PlayerCamera Script weather to be locked on or not and who to lock on too.
+
     private PlayerCamera cameraScript;
     private LayerMask enemiesLayer;
-    public float lockOnRange = 10;
+    [SerializeField] private float lockOnRange = 10.0f;
+
+    [HideInInspector] public bool lockOnInput = false;
+    [HideInInspector] public bool focusedOnScreen = false;
+    [HideInInspector] public bool unfocusedOnScreen = false;
 
     // Start is called before the first frame update
     void Start()
@@ -18,18 +24,25 @@ public class PlayerLockOnScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire3"))
+        // TODO make work with pause screen
+        CursorLockingAndUnlocking();
+        
+        if (lockOnInput == true)
         {
+            lockOnInput = false;
+
             if (cameraScript.lockOnTarget == null)
             {
                 cameraScript.lockOnTarget = pickNewTarget();
-            } else 
+            }
+            else
             {
                 cameraScript.lockOnTarget = null;
             }
-        //} else if (Mathf.Abs(Input.GetAxis("Mouse X")) > 0.05f && cameraScript.lockOnTarget != null)
-        //{
+            //else if (Mathf.Abs(Input.GetAxis("Mouse X")) > 0.05f && cameraScript.lockOnTarget != null)
+            //{
             //cameraScript.lockOnTarget = pickNewTarget();
+            //}
         }
     }
 
@@ -52,7 +65,7 @@ public class PlayerLockOnScript : MonoBehaviour
 
             if (Mathf.Abs(view - 0.5f) < Mathf.Abs(bestView - 0.5f))
             {
-                if (Vector3.Distance(transform.forward * 5, possibleTargets[i].transform.position) < Vector3.Distance(transform.forward * 5, possibleTargets[currentClosest].transform.position))
+                //if (Vector3.Distance(transform.forward * 5, possibleTargets[i].transform.position) < Vector3.Distance(transform.forward * 5, possibleTargets[currentClosest].transform.position))
                 secondClosest = currentClosest;
                 currentClosest = i;
             }
@@ -64,5 +77,19 @@ public class PlayerLockOnScript : MonoBehaviour
         }
 
         return possibleTargets[currentClosest].gameObject.transform;
+    }
+    
+    void CursorLockingAndUnlocking()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            cameraScript.CameraDisabled = false;
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            cameraScript.CameraDisabled = true;
+        }
     }
 }

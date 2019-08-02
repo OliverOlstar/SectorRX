@@ -17,7 +17,7 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float CameraMinHeight = -20f;
     [SerializeField] private float CameraMaxHeight = 90f;
 
-    [SerializeField] private bool CameraDisabled = false;
+    public bool CameraDisabled = false;
     
     void Start()
     {
@@ -36,46 +36,18 @@ public class PlayerCamera : MonoBehaviour
         _CameraTansform.localPosition = new Vector3(-OffSetLeft, 0f, CameraDistance * -1f);
     }
 
-
     void Update()
     {
-        //Locking and unlocking cursor
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            Cursor.lockState = CursorLockMode.None;
-            CameraDisabled = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.Mouse0)) {
-            Cursor.lockState = CursorLockMode.Locked;
-            CameraDisabled = false;
-        }
-
         //Getting Mouse Movement
         if (!CameraDisabled)
         {
             if (lockOnTarget == null)
             {
-                //Rotation of the camera based on mouse movement
-                if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
-                {
-                    _LocalRotation.x += Input.GetAxis("Mouse X") * MouseSensitivity;
-                    _LocalRotation.y -= Input.GetAxis("Mouse Y") * MouseSensitivity;
-
-                    //Clamping the y rotation to horizon and not flipping over at the top
-                    if (_LocalRotation.y < CameraMinHeight)
-                    {
-                        _LocalRotation.y = CameraMinHeight;
-                    }
-                    else if (_LocalRotation.y > CameraMaxHeight)
-                    {
-                        _LocalRotation.y = CameraMaxHeight;
-                    }
-                }
-            } else
+                DefaultCameraMovement();
+            }
+            else
             {
-                //Locking Onto Target
-                Vector2 direction = new Vector2(lockOnTarget.position.z, lockOnTarget.position.x) - new Vector2(_ParentTransform.position.z, _ParentTransform.position.x);
-                _LocalRotation.x = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                _LocalRotation.y = (_ParentTransform.position.y - lockOnTarget.position.y * 10) + 20;
+                LockOnCameraMovement();
             }
         }
 
@@ -83,6 +55,40 @@ public class PlayerCamera : MonoBehaviour
         Quaternion TargetQ = Quaternion.Euler(_LocalRotation.y, _LocalRotation.x, 0);
         _ParentTransform.rotation = Quaternion.Lerp(_ParentTransform.rotation, TargetQ, Time.deltaTime * TurnDampening);
     }
+
+    void DefaultCameraMovement()
+    {
+        //Rotation of the camera based on mouse movement
+        if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
+        {
+            _LocalRotation.x += Input.GetAxis("Mouse X") * MouseSensitivity;
+            _LocalRotation.y -= Input.GetAxis("Mouse Y") * MouseSensitivity;
+
+            //Clamping the y rotation to horizon and not flipping over at the top
+            if (_LocalRotation.y < CameraMinHeight)
+            {
+                _LocalRotation.y = CameraMinHeight;
+            }
+            else if (_LocalRotation.y > CameraMaxHeight)
+            {
+                _LocalRotation.y = CameraMaxHeight;
+            }
+        }
+    }
+
+    void LockOnCameraMovement()
+    {
+        //Locked onto Target
+        Vector2 direction = new Vector2(lockOnTarget.position.z, lockOnTarget.position.x) - new Vector2(_ParentTransform.position.z, _ParentTransform.position.x);
+        _LocalRotation.x = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        _LocalRotation.y = (_ParentTransform.position.y - lockOnTarget.position.y * 10) + 20;
+    }
+
+
+
+
+
+    // Camera Transition //////////////
 
     public void ChangePlayerCamera(float pOffSetLeft, float pMouseSensitivity, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
     {
