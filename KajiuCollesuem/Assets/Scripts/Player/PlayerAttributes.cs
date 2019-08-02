@@ -73,7 +73,8 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _health = Mathf.Clamp(_health, 0, _maxHealth);
 
         //Changing Visuals
-        _healthSlider.value = _health;
+        if (_healthSlider)
+            _healthSlider.value = _health;
     }
 
     public void modifyShield(int x)
@@ -82,7 +83,8 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _shield = Mathf.Clamp(_shield, 0, _maxShield);
 
         //Changing Visuals
-        _shieldSlider.value = _shield;
+        if (_shieldSlider)
+            _shieldSlider.value = _shield;
     }
 
     public void modifyPower(int x)
@@ -92,7 +94,8 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _power = Mathf.Clamp(_power, 0, _maxPower);
 
         //Changing Visuals
-        _powerSlider.value = _power;
+        if (_powerSlider)
+            _powerSlider.value = _power;
     }
 
     //MODIFY MAXES
