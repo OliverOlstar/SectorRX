@@ -70,7 +70,7 @@ public class WolfieMovement : MonoBehaviour
                 }
 
                 else if (shotCounter < 0)
-                {;
+                {
                     anim.SetBool("PlayerInRange", false);
                     StartCoroutine(fireCast());
                     shotCounter = waitBetweenShots;
@@ -83,7 +83,6 @@ public class WolfieMovement : MonoBehaviour
                 {
                     this.transform.Translate(0, 0, 0.1f);
                     anim.SetBool("PlayerInRange", true);
-                    
                 }
 
                 else if (torpedoCounter < 0)
@@ -92,7 +91,6 @@ public class WolfieMovement : MonoBehaviour
                     StartCoroutine(torpedoCast());
                     torpedoCounter = waitBetweenTorpedo;
                 }
-
             }
 
             else if (Time.time > newBiteTime)
@@ -110,15 +108,12 @@ public class WolfieMovement : MonoBehaviour
                     StartCoroutine(biteCast());
                     biteCounter = waitBetweenBite;
                 }
-
             }
-
         }
         else
         {
             anim.SetBool("PlayerInRange", false);
         }
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -131,13 +126,13 @@ public class WolfieMovement : MonoBehaviour
 
     IEnumerator fireCast()
     {
-        anim.SetTrigger("FiringRange");
         Rigidbody FireballInstance;
 
         FireballInstance = Instantiate(fireballPrefab, FBSpawnpoint.position, FBSpawnpoint.rotation) as Rigidbody;
         FireballInstance.AddForce(FBSpawnpoint.forward * 1000);
 
         yield return new WaitForSeconds(fireballDuration);
+        anim.SetTrigger("FiringRange");
 
         GetComponent<Rigidbody>().velocity = Vector3.zero;
 
@@ -146,9 +141,9 @@ public class WolfieMovement : MonoBehaviour
 
     IEnumerator torpedoCast()
     {
-        anim.SetTrigger("TargetLongRange");
-
+        anim.SetBool("TargetLongRange", true);
         yield return new WaitForSeconds(torpedoDuration);
+        anim.SetBool("TargetLongRange", false);
 
         GetComponent<Rigidbody>().velocity = Vector3.zero;
 
@@ -157,9 +152,9 @@ public class WolfieMovement : MonoBehaviour
 
     IEnumerator biteCast()
     {
-        anim.SetTrigger("TargetCloseRange");
-
+        anim.SetBool("TargetCloseRange", true);
         yield return new WaitForSeconds(biteDuration);
+        anim.SetBool("TargetCloseRange", false);
 
         GetComponent<Rigidbody>().velocity = Vector3.zero;
 
