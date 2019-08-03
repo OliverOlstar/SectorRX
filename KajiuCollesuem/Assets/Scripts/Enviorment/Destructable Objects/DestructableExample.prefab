@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5468838758144627237}
   - component: {fileID: 5468838758144627236}
   - component: {fileID: 5468838758144627239}
-  - component: {fileID: 5468838758144627238}
+  - component: {fileID: 298949586660626583}
   m_Layer: 14
   m_Name: DestructableExample
   m_TagString: Untagged
@@ -92,7 +92,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5468838758144627238
+--- !u!114 &298949586660626583
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,15 +101,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5468838758144627225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f310a6ab4f9e4c49b16ff44fb5db2d9, type: 3}
+  m_Script: {fileID: 11500000, guid: 2de2173df09a39347b025b6f88357c34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _pool: {fileID: 0}
   destroyedPrefab: {fileID: 462964135083521516, guid: 7d7288359862a494c833b83cbf1357c1,
     type: 3}
-  playerLayer:
+  canTriggerDestroyLayers:
     serializedVersion: 2
-    m_Bits: 512
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 16384
+    m_Bits: 1536

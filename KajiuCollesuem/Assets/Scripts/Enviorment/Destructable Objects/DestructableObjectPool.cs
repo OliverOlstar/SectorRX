@@ -1,22 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class DestructableObjectPool : MonoBehaviour
 {
+    private List<GameObject> myChildren = new List<GameObject>();
+    private List<string> myChildrenName = new List<string>();
+
+    void Start()
+    {
+        //Ensuring it is in zero position to prevent errors
+        transform.position = Vector3.zero;
+        transform.eulerAngles = Vector3.zero;
+    }
+
     public void getObjectFromPool(GameObject pPrefab, Transform pTransform)
     {
-        Transform[] children = GetComponentsInChildren<Transform>();
         GameObject destructable = null;
-        
+
         //See if a matchig object already exist that can be used
-        foreach(Transform child in children)
+        for (int i = 0; i < myChildren.Count; i++)
         {
-            if (child.gameObject.name == pPrefab.name + "(Clone)" && child.gameObject.activeSelf == false)
+            if (myChildrenName[i] == pPrefab.name && myChildren[i].activeSelf == false)
             {
-                destructable = child.gameObject;
-                destructable.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                destructable = myChildren[i];
                 destructable.SetActive(true);
+                
+                foreach (DestructablePieces piece in destructable.GetComponentsInChildren<DestructablePieces>())
+                {
+                    piece.ResetTransform();
+                }
+
                 break;
             }
         }
@@ -25,16 +40,19 @@ public class DestructableObjectPool : MonoBehaviour
         if (destructable == null)
         {
             destructable = Instantiate(pPrefab);
-            destructable.transform.SetParent(this.transform);
+            destructable.transform.SetParent(transform);
+
+            myChildren.Add(destructable);
+            myChildrenName.Add(pPrefab.name);
         }
 
-        setObject(destructable);
+        setObject(destructable, pTransform);
     }
 
-    private void setObject(GameObject pObject)
+    private void setObject(GameObject pObject, Transform pTransform)
     {
-        pObject.transform.position = transform.position;
-        pObject.transform.rotation = transform.rotation;
-        pObject.transform.localScale = transform.localScale;
+        pObject.transform.position = pTransform.position;
+        pObject.transform.rotation = pTransform.rotation;
+        pObject.transform.localScale = pTransform.localScale;
     }
 }

@@ -2,32 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Destructible : MonoBehaviour
+public class DestructibleObject : MonoBehaviour
 {
     [SerializeField] private DestructableObjectPool _pool;
 
     [Space]
     [SerializeField] private GameObject destroyedPrefab;
-    [SerializeField] private LayerMask canTriggerDestroyLayers;
+    private int playerLayer;
+    private int enemyLayer;
 
-    private void OnCollisionEnter()
+    void Start()
     {
-        if (destroyedPrefab != null)
-            Instantiate(destroyedPrefab, transform.position, transform.rotation);
-
-        Destroy(gameObject);
+        playerLayer = LayerMask.NameToLayer("Player");
+        enemyLayer = LayerMask.NameToLayer("Enemy");
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.layer == canTriggerDestroyLayers)
+        if (other.gameObject.layer == playerLayer || other.gameObject.layer == enemyLayer)
         {
             if (destroyedPrefab != null)
             {
                 _pool.getObjectFromPool(destroyedPrefab, transform);
             }
-            
-            Destroy(this.gameObject);  
+
+            Destroy(this.gameObject);
         }
     }
 }
