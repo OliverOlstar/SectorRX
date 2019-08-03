@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// OLIVER
+
+/*
+    Script for objects that can be destroyed.
+
+    Watches for collision and ask DestructablePool for an destroyed prefab.
+*/
+
 public class DestructibleObject : MonoBehaviour
 {
     [SerializeField] private DestructableObjectPool _pool;

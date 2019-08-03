@@ -1,7 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+
+// OLIVER
+
+/*
+    Object pool for destructable objects.
+
+    Has a function that is called to get a prefab for a destroyed object. 
+    If one already exist but is deactivated it send back that else if instaniated a new one and adds it to the pool.
+*/
 
 public class DestructableObjectPool : MonoBehaviour
 {
@@ -24,6 +32,7 @@ public class DestructableObjectPool : MonoBehaviour
         {
             if (myChildrenName[i] == pPrefab.name && myChildren[i].activeSelf == false)
             {
+                //If one found set active and reset pieces
                 destructable = myChildren[i];
                 destructable.SetActive(true);
                 
@@ -51,6 +60,7 @@ public class DestructableObjectPool : MonoBehaviour
 
     private void setObject(GameObject pObject, Transform pTransform)
     {
+        //Set transform
         pObject.transform.position = pTransform.position;
         pObject.transform.rotation = pTransform.rotation;
         pObject.transform.localScale = pTransform.localScale;

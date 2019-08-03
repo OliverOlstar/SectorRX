@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// OLIVER
+
+/*
+    Script for destroy prefab pieces.
+
+    Can reset the pieces. Fades out and deactivates pieces after time.
+*/
+
 public class DestructablePieces : MonoBehaviour
 {
     public float surviveTime = 5f;
