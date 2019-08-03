@@ -8,7 +8,7 @@ public class Destructible : MonoBehaviour
 
     [Space]
     [SerializeField] private GameObject destroyedPrefab;
-    [SerializeField] private LayerMask canDestroyMe;
+    [SerializeField] private LayerMask canTriggerDestroyLayers;
 
     private void OnCollisionEnter()
     {
@@ -20,13 +20,13 @@ public class Destructible : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.layer == canDestroyMe)
+        if (other.gameObject.layer == canTriggerDestroyLayers)
         {
             if (destroyedPrefab != null)
             {
                 _pool.getObjectFromPool(destroyedPrefab, transform);
             }
-             
+            
             Destroy(this.gameObject);  
         }
     }

@@ -45,14 +45,23 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         modifyPower(0);
 
         //Set the length of the bars to their respective maxes
-        healthRect = _healthSlider.gameObject.GetComponent<RectTransform>();
-        healthRect.sizeDelta = new Vector2(_maxHealth * barLengthMultiplier, BAR_HEIGHT);
+        if (_healthSlider)
+        {
+            healthRect = _healthSlider.gameObject.GetComponent<RectTransform>();
+            healthRect.sizeDelta = new Vector2(_maxHealth * barLengthMultiplier, BAR_HEIGHT);
+        }
 
-        shieldRect = _shieldSlider.gameObject.GetComponent<RectTransform>();
-        shieldRect.sizeDelta = new Vector2(_maxShield * barLengthMultiplier, BAR_HEIGHT);
-        
-        powerRect = _powerSlider.gameObject.GetComponent<RectTransform>();
-        powerRect.sizeDelta = new Vector2(_maxPower * barLengthMultiplier, BAR_HEIGHT);
+        if (_shieldSlider)
+        {
+            shieldRect = _shieldSlider.gameObject.GetComponent<RectTransform>();
+            shieldRect.sizeDelta = new Vector2(_maxShield * barLengthMultiplier, BAR_HEIGHT);
+        }
+
+        if (_powerSlider)
+        {
+            powerRect = _powerSlider.gameObject.GetComponent<RectTransform>();
+            powerRect.sizeDelta = new Vector2(_maxPower * barLengthMultiplier, BAR_HEIGHT);
+        }
     }
 
     //GET
