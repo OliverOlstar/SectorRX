@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Destructible : MonoBehaviour
 {
-    public GameObject destroyedPrefab;
+    [SerializeField] private DestructableObjectPool _pool;
+
+    [Space]
+    [SerializeField] private GameObject destroyedPrefab;
+    [SerializeField] private LayerMask canDestroyMe;
 
     private void OnCollisionEnter()
     {
@@ -14,5 +18,16 @@ public class Destructible : MonoBehaviour
         Destroy(gameObject);
     }
 
-    
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.layer == canDestroyMe)
+        {
+            if (destroyedPrefab != null)
+            {
+                _pool.getObjectFromPool(destroyedPrefab, transform);
+            }
+             
+            Destroy(this.gameObject);  
+        }
+    }
 }
