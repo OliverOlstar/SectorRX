@@ -19,11 +19,13 @@ public class PlayerDodge : MonoBehaviour
     [SerializeField] private float longDodgeDistance = 12.0f;
     [SerializeField] private float longDodgeDuration = 0.3f;
 
-    private Rigidbody _rb;
+    private Rigidbody _Rb;
+    private Transform _Camera;
 
     void Start()
     {
-        _rb = GetComponent<Rigidbody>();
+        _Rb = GetComponent<Rigidbody>();
+        _Camera = Camera.main.transform;
     }
 
     public void Dodge(bool pShortDodge)
@@ -59,12 +61,16 @@ public class PlayerDodge : MonoBehaviour
         while (Time.time <= dodgeEndTime)
         {
             // TODO Make dodge direction based on player movement direction rather than camera forward
-            _rb.velocity = Camera.main.transform.forward * (pDistance / pDuration);
+            Vector3 forwardDirection = _Camera.forward;
+            forwardDirection.y = 0;
+            forwardDirection.Normalize();
+
+            _Rb.velocity = forwardDirection * (pDistance / pDuration);
             yield return null;
         }
 
         //Stop player
-        _rb.velocity = Vector3.zero;
+        _Rb.velocity = Vector3.zero;
         doneDodge = true;
     }
 }

@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     public float moveSpeed = 1.0f;
+    public float maxSpeed = 4.0f;
     public bool disableMovement = false;
 
     [Space]
@@ -122,6 +123,7 @@ public class PlayerMovement : MonoBehaviour
         move = move.normalized * Time.deltaTime * moveSpeed * inputInfluence;
         
         //Moving the player
-        transform.Translate(move);
+        if (_Rb.velocity.magnitude < maxSpeed * inputInfluence)
+            _Rb.AddForce(move);
     }
 }
