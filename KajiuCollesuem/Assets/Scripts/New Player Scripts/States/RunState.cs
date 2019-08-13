@@ -22,6 +22,21 @@ public class RunState : BaseState
             return typeof(IdleState);
         }
 
+        if(stateController.quickAttackInput || stateController.heavyAtatckInput)
+        {
+
+            return typeof(AttackState);
+        }
+
+        if(stateController.shortDodgeInput || stateController.longDodgeInput)
+        {
+
+            return typeof(DodgeState);
+        }
+
+
+
+
         stateController._rb.velocity = stateController.movementDir * (stateController._movementComponent.moveSpeed * stateController.moveAmount);
 
         return null;
