@@ -21,7 +21,9 @@ public class PlayerStateMachine : MonoBehaviour
 
         if(nextState != null && nextState != CurrentState?.GetType())
         {
+            CurrentState.Exit();
             SwitchToNextState(nextState);
+            CurrentState.Enter();
         }
     }
 

@@ -7,10 +7,24 @@ public class RunState : BaseState
 {
     PlayerStateController stateController;
 
+    
 
     public RunState(PlayerStateController controller) : base(controller.gameObject)
     {
         stateController = controller;
+    }
+
+    public override void Enter()
+    {
+        
+    }
+
+    public override void Exit()
+    {
+        Debug.Log("Dodge");
+
+
+
     }
 
     public override Type Tick()
