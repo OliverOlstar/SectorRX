@@ -23,10 +23,16 @@ public class PlayerCollectibles : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cellUI.SetActive(false);
-        coreUI.SetActive(false);
-        SetCellCount();
-        SetCoreCount();
+        if (cellUI)
+        {
+            cellUI.SetActive(false);
+            SetCellCount();
+        }
+        if (coreUI)
+        {
+            coreUI.SetActive(false);
+            SetCoreCount();
+        }
     }
 
     //Sets count values to text in UI
@@ -43,6 +49,9 @@ public class PlayerCollectibles : MonoBehaviour
     //If player collides with either collectible
     private void OnTriggerEnter(Collider collision)
     {
+        if (!coreUI || !cellUI)
+            return;
+
         Vector3 cellOriginalPos = cellUI.transform.position;
         Vector3 coreOriginalPos = coreUI.transform.position;
 
