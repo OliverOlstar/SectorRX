@@ -16,6 +16,11 @@ public class DodgeState : BaseState
     {
         Debug.Log("Dodge State");
 
+        if (stateController._dodgeComponent.doneDodge)
+        {
+            stateController._dodgeComponent.doneDodge = false;
+            return typeof(RunState);
+        }
 
         return null;
     }

@@ -43,25 +43,24 @@ public class PlayerStateController : MonoBehaviour
     private PlayerStateMachine stateMachine;
     public PlayerMovement _movementComponent { get; private set; } // Player's movement component, access this to move and jump
     // TODO LockOn Component // Player's lockon component changes player's movement aanimations
-    private PlayerDodge _dodgeComponent; // Player's dodge component, access this to 
+    [HideInInspector] public PlayerDodge _dodgeComponent; // Player's dodge component, access this to 
 
-    enum States
-    {
-        Normal, // Player's default state, able to move and can initiate attack
-        LockedOn, // Payer is locked on to an enemy and can transition into any other state
-        Dodging, // Player is currently in a dodge aninmation and cannot move or initiate an attack
-        Attacking, // Player is currently in a attack animation, cannot move and cannot initiate another attack
-        Stunned, // Player is stunned and cannot move
-        Dead // Player doesn't receive anymore input
-    };
-
-    
     private PlayerLockOnScript _lockOnComponent;
     private PlayerPowerHandler _powerComponent;
 
     [HideInInspector] public Rigidbody _rb;
 
-    [SerializeField] private int state = (int) States.Normal;
+    //enum States
+    //{
+    //    Normal, // Player's default state, able to move and can initiate attack
+    //    LockedOn, // Payer is locked on to an enemy and can transition into any other state
+    //    Dodging, // Player is currently in a dodge aninmation and cannot move or initiate an attack
+    //    Attacking, // Player is currently in a attack animation, cannot move and cannot initiate another attack
+    //    Stunned, // Player is stunned and cannot move
+    //    Dead // Player doesn't receive anymore input
+    //};
+    
+    //[SerializeField] private int state = (int) States.Normal;
 
 
     // Temporary Utility variables
@@ -78,14 +77,13 @@ public class PlayerStateController : MonoBehaviour
         InitializeStateMachine();
 
         _rb = GetComponent<Rigidbody>();
-
     }
 
     void InitializeStateMachine()
     {
         var states = new Dictionary<Type, BaseState>()
         {
-            {typeof(IdleState), new IdleState(controller:this) },
+            //{typeof(IdleState), new IdleState(controller:this) },
             {typeof(RunState), new RunState(controller:this) },
             {typeof(DodgeState), new DodgeState(controller:this) },
             {typeof(AttackState), new AttackState(controller:this) },
