@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1635927648668633823}
   - component: {fileID: 4489995641700635053}
   - component: {fileID: 8844467493756483741}
+  - component: {fileID: 7996918551186684739}
   - component: {fileID: 1010789244785054995}
   - component: {fileID: 806430450}
   - component: {fileID: 5397536735001967586}
@@ -158,6 +159,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horizontalInput: 0
   verticalInput: 0
+  movementDir: {x: 0, y: 0, z: 0}
+  moveAmount: 0
   jumpInput: 0
   longDodgeInput: 0
   shortDodgeInput: 0
@@ -167,7 +170,21 @@ MonoBehaviour:
   powerInput: 0
   pauseInput: 0
   mapInput: 0
+  _rb: {fileID: 0}
   state: 0
+  OnGround: 0
+--- !u!114 &7996918551186684739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8582934654442581043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab05a3387d03923429480ddd4ec3abcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1010789244785054995
 MonoBehaviour:
   m_ObjectHideFlags: 0

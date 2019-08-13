@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerStateController : MonoBehaviour
 {
-    //THIS IS THE STATE MANAGER - Oliver, Danish
+    //THIS IS THE STATE MANAGER - Danish
 
          /*
          This script is to change the player's active state 
@@ -59,7 +59,7 @@ public class PlayerStateController : MonoBehaviour
     private PlayerLockOnScript _lockOnComponent;
     private PlayerPowerHandler _powerComponent;
 
-    public Rigidbody _rb;
+    [HideInInspector] public Rigidbody _rb;
 
     [SerializeField] private int state = (int) States.Normal;
 
