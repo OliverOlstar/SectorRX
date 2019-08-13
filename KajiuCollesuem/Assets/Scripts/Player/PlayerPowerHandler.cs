@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class PlayerPowerHandler : MonoBehaviour
 {
-    public enum powers { MagmaErupter, Fireball }
+    public enum powers
+    {
+        MagmaErupter,
+        Fireball
+    }
 
     private List<IPower> _collectedPowers = new List<IPower>();
 
