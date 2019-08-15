@@ -12,6 +12,16 @@ public class LockOnState : BaseState
         stateController = controller;
     }
 
+    public override void Enter()
+    {
+
+    }
+
+    public override void Exit()
+    {
+
+    }
+
     public override Type Tick()
     {
         Debug.Log("Lock On State");

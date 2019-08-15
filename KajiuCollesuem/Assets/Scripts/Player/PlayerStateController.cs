@@ -83,11 +83,11 @@ public class PlayerStateController : MonoBehaviour
     {
         var states = new Dictionary<Type, BaseState>()
         {
-            //{typeof(IdleState), new IdleState(controller:this) },
+            {typeof(IdleState), new IdleState(controller:this) },
             {typeof(RunState), new RunState(controller:this) },
             {typeof(DodgeState), new DodgeState(controller:this) },
-            {typeof(AttackState), new AttackState(controller:this) },
             {typeof(StunnedState), new StunnedState(controller:this) },
+            {typeof(AttackState), new AttackState(controller:this) },
             {typeof(DeathState), new DeathState(controller:this) }
         };
 
