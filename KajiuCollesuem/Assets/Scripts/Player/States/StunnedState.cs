@@ -7,7 +7,7 @@ public class StunnedState : BaseState
 {
     PlayerStateController stateController;
 
-    float timer = 0;
+     private float timer = 0;
 
     public StunnedState(PlayerStateController controller) : base(controller.gameObject)
     {
@@ -29,14 +29,13 @@ public class StunnedState : BaseState
         Debug.Log("Stunned State");
 
         timer += Time.deltaTime;
-        Debug.Log(timer);
+        Debug.Log(10 - timer);
 
-        if(timer > 10)
+        if (timer >= 10)
         {
             timer = 0;
-            return typeof(IdleState);
+            return typeof(MovementState);
         }
-
 
         return null;
     }

@@ -11,21 +11,20 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed = 1.0f;
     public float maxSpeed = 4.0f;
-    public bool disableMovement = false;
+    [HideInInspector] public bool disableMovement = false;
 
     [Space]
-    public float inputInfluence = 1.0f;
     public float inputInfluenceGrounded = 1.0f;
     public float inputInfluenceInAir = 0.2f;
+    private float inputInfluence = 1.0f;
 
     [Header("Jump")]
-    public bool regJump;
     public float jumpForceForward = 5;
     public float jumpForceUp = 4;
 
     [Space]
-    public bool isGrounded;
     public float isGroundedCheckDistance = 1.0f;
+    private bool isGrounded;
 
     [Header("Inputs")]
     [HideInInspector] public float horizontalInput = 0;
@@ -54,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
         PlayerMove();
 
         //Jump
-        if (regJump) { RegularJump(); } else { ArchJump(); }
+        ArchJump();
     }
 
     private void CheckGrounded()
@@ -71,21 +70,6 @@ public class PlayerMovement : MonoBehaviour
         {
             inputInfluence = inputInfluenceInAir;
             isGrounded = false;
-        }
-    }
-
-    private void RegularJump()
-    {
-
-        if (jumpInput)
-        {
-            if (isGrounded)
-            {
-                // Adding jump force to the rigidbody
-                _Rb.AddForce(0, jumpForceUp, 0, ForceMode.Impulse);
-            }
-
-            jumpInput = false;
         }
     }
 

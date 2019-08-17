@@ -14,7 +14,9 @@ public class DodgeState : BaseState
 
     public override void Enter()
     {
-
+        stateController._dodgeComponent.Dodge(stateController.shortDodgeInput);
+        stateController.shortDodgeInput = false;
+        stateController.longDodgeInput = false;
     }
 
     public override void Exit()
@@ -29,7 +31,7 @@ public class DodgeState : BaseState
         if (stateController._dodgeComponent.doneDodge)
         {
             stateController._dodgeComponent.doneDodge = false;
-            return typeof(RunState);
+            return typeof(MovementState);
         }
 
         return null;
