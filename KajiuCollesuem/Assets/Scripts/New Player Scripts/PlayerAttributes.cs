@@ -15,19 +15,19 @@ public class PlayerAttributes : MonoBehaviour
     private int _power;
 
     [Header("Regen & Loss over time")]
-    [SerializeField] private float _shieldRegenStartDelaySeconds = 6f;
-    [SerializeField] private float _shieldRegenDelaySeconds = 1f;
-    [SerializeField] private int _shieldRegenAmount = 4;
+    [SerializeField] private float shieldRegenStartDelaySeconds = 5f;
+    [SerializeField] private float shieldRegenDelaySeconds = 1f;
+    [SerializeField] private int shieldRegenAmount = 4;
 
     [Space]
-    [SerializeField] private float _powerLossStartDelaySeconds = 8f;
-    [SerializeField] private float _powerLossDelaySeconds = 0.3f;
-    [SerializeField] private int _powerLossAmount = 1;
+    [SerializeField] private float powerLossStartDelaySeconds = 8f;
+    [SerializeField] private float powerLossDelaySeconds = 0.3f;
+    [SerializeField] private int powerLossAmount = 1;
 
     [Header("HUD")]
-    [SerializeField] private Slider _healthSlider;
-    [SerializeField] private Slider _shieldSlider;
-    [SerializeField] private Slider _powerSlider;
+    [SerializeField] private Slider healthSlider;
+    [SerializeField] private Slider shieldSlider;
+    [SerializeField] private Slider powerSlider;
 
     private RectTransform healthRect;
     private RectTransform shieldRect;
@@ -45,13 +45,13 @@ public class PlayerAttributes : MonoBehaviour
         modifyPower(0);
 
         //Set the length of the bars to their respective maxes
-        healthRect = _healthSlider.gameObject.GetComponent<RectTransform>();
+        healthRect = healthSlider.gameObject.GetComponent<RectTransform>();
         healthRect.sizeDelta = new Vector2(_maxHealth * barLengthMultiplier, BAR_HEIGHT);
 
-        shieldRect = _shieldSlider.gameObject.GetComponent<RectTransform>();
+        shieldRect = shieldSlider.gameObject.GetComponent<RectTransform>();
         shieldRect.sizeDelta = new Vector2(_maxShield * barLengthMultiplier, BAR_HEIGHT);
         
-        powerRect = _powerSlider.gameObject.GetComponent<RectTransform>();
+        powerRect = powerSlider.gameObject.GetComponent<RectTransform>();
         powerRect.sizeDelta = new Vector2(_maxPower * barLengthMultiplier, BAR_HEIGHT);
     }
 
@@ -73,7 +73,7 @@ public class PlayerAttributes : MonoBehaviour
         _health = Mathf.Clamp(_health, 0, _maxHealth);
 
         //Changing Visuals
-        _healthSlider.value = _health;
+        healthSlider.value = _health;
     }
 
     public void modifyShield(int x)
@@ -82,7 +82,7 @@ public class PlayerAttributes : MonoBehaviour
         _shield = Mathf.Clamp(_shield, 0, _maxShield);
 
         //Changing Visuals
-        _shieldSlider.value = _shield;
+        shieldSlider.value = _shield;
     }
 
     public void modifyPower(int x)
@@ -92,7 +92,7 @@ public class PlayerAttributes : MonoBehaviour
         _power = Mathf.Clamp(_power, 0, _maxPower);
 
         //Changing Visuals
-        _powerSlider.value = _power;
+        powerSlider.value = _power;
     }
 
     //MODIFY MAXES
@@ -164,7 +164,7 @@ public class PlayerAttributes : MonoBehaviour
     //Shield
     private IEnumerator shieldRegenStartDelay()
     {
-        yield return new WaitForSeconds(_shieldRegenStartDelaySeconds);
+        yield return new WaitForSeconds(shieldRegenStartDelaySeconds);
         StartCoroutine("shieldRegen");
     }
 
@@ -172,15 +172,15 @@ public class PlayerAttributes : MonoBehaviour
     {
         while (_shield < _maxShield)
         {
-            modifyShield(_shieldRegenAmount);
-            yield return new WaitForSeconds(_shieldRegenDelaySeconds);
+            modifyShield(shieldRegenAmount);
+            yield return new WaitForSeconds(shieldRegenDelaySeconds);
         }
     }
 
     //Power
     private IEnumerator powerLossStartDelay()
     {
-        yield return new WaitForSeconds(_powerLossStartDelaySeconds);
+        yield return new WaitForSeconds(powerLossStartDelaySeconds);
         StartCoroutine("powerLoss");
     }
 
@@ -188,9 +188,9 @@ public class PlayerAttributes : MonoBehaviour
     {
         while (_power > 0)
         {
-            modifyPower(-_powerLossAmount);
+            modifyPower(-powerLossAmount);
             Debug.Log("Power lost: " + _power);
-            yield return new WaitForSeconds(_powerLossDelaySeconds);
+            yield return new WaitForSeconds(powerLossDelaySeconds);
         }
     }
 }
