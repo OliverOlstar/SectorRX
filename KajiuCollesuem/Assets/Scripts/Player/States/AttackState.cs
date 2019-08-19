@@ -7,8 +7,9 @@ public class AttackState : BaseState
 {
     PlayerStateController stateController;
 
-    float actionDelay = 0.3f;
-    float timer = 0;
+    private float actionDelay = 0.3f;
+    private float timer = 0;
+    private bool noPower = false;
 
     public AttackState(PlayerStateController controller) : base(controller.gameObject)
     {
@@ -34,27 +35,32 @@ public class AttackState : BaseState
         {
             // Start Coroutine to start a timer
             // run code from the attack component
-            stateController._powerComponent.UsingPower(stateController.powerInput);
+            noPower = stateController._powerComponent.UsingPower(stateController.powerInput);
         }
 
         stateController.quickAttackInput = false;
         stateController.heavyAttackInput = false;
+        stateController.powerInput = 0;
+
+        // TODO turn on route motion
     }
 
     public override void Exit()
     {
-
+        // TODO turn off route motion
     }
 
     public override Type Tick()
     {
-        Debug.Log("Attack State");
+        //Debug.Log("Attack State");
 
         timer += Time.deltaTime;
 
-        if (timer >= 5)
+        if (timer >= 1 || noPower)
         {
-            return typeof(St)
+            timer = 0;
+            noPower = false;
+            return typeof(MovementState);
         }
 
         return null;

@@ -26,7 +26,7 @@ public class DodgeState : BaseState
 
     public override Type Tick()
     {
-        Debug.Log("Dodge State");
+        //Debug.Log("Dodge State");
 
         if (stateController._dodgeComponent.doneDodge)
         {

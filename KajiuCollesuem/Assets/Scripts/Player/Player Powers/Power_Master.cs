@@ -10,15 +10,17 @@ public class Power_Master : MonoBehaviour, IPower
     protected int damage = 0;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        Debug.Log("Start");
         _PlayerPowersComp = GetComponent<PlayerPowerHandler>();
-        _PlayerPowersComp.PowerAdded(this);
+        _PlayerPowersComp.AddedPower(this);
     }
 
     private void OnDestroy()
     {
-        _PlayerPowersComp.PowerRemoved(this);
+        if (_PlayerPowersComp)
+            _PlayerPowersComp.PowerRemoved(this);
     }
 
     public void UsingMe()

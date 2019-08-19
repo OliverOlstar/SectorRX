@@ -26,7 +26,7 @@ public class MovementState : BaseState
 
     public override Type Tick()
     {
-        Debug.Log("Run State");
+        //Debug.Log("Run State");
 
         stateController._movementComponent.horizontalInput = stateController.horizontalInput;
         stateController._movementComponent.verticalInput = stateController.verticalInput;
@@ -35,6 +35,11 @@ public class MovementState : BaseState
         if (stateController.longDodgeInput || stateController.shortDodgeInput)
         {
             return typeof(DodgeState);
+        }
+
+        if (stateController.heavyAttackInput || stateController.quickAttackInput || stateController.powerInput > 0)
+        {
+            return typeof(AttackState);
         }
 
         return null;

@@ -12,10 +12,16 @@ public class PlayerPowerHandler : MonoBehaviour
 
     private List<IPower> _collectedPowers = new List<IPower>();
 
-    public void UsingPower(int pPowerInput)
+    public bool UsingPower(int pPowerInput)
     {
         if (pPowerInput > 0 && pPowerInput <= _collectedPowers.Count)
+        {
             _collectedPowers[pPowerInput - 1].UsingMe();
+            return false;
+        }
+
+        //If no power
+        return true;
     }
 
     public void AddPower(int pWhichPower)
@@ -32,13 +38,15 @@ public class PlayerPowerHandler : MonoBehaviour
         }
     }
 
-    public void PowerAdded(IPower pPower)
+    public void AddedPower(IPower pPower)
     {
+        Debug.Log("Power Added");
         _collectedPowers.Add(pPower);
     }
 
     public void PowerRemoved(IPower pPower)
     {
+        Debug.Log("Power Removed");
         if (_collectedPowers.Contains(pPower))
             _collectedPowers.Remove(pPower);
     }
