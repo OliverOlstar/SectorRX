@@ -6,13 +6,11 @@ public class Power_Master : MonoBehaviour, IPower
 {
     private PlayerPowerHandler _PlayerPowersComp;
 
-    protected int requiredPower = 0;
-    protected int damage = 0;
-
-    // Start is called before the first frame update
+    //Select SOPower before play time. When script is selected option to select shows in inspector.
+    [SerializeField] protected SOPowers vars;
+    
     void Awake()
     {
-        Debug.Log("Start");
         _PlayerPowersComp = GetComponent<PlayerPowerHandler>();
         _PlayerPowersComp.AddedPower(this);
     }
