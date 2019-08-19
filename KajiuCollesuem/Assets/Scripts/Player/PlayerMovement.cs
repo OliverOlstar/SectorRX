@@ -26,12 +26,14 @@ public class PlayerMovement : MonoBehaviour
     public float isGroundedCheckDistance = 1.0f;
     private bool isGrounded;
 
+    [SerializeField] private float downForceRate = 1f;
+    private float downForce = 0;
+
     [Header("Inputs")]
     [HideInInspector] public float horizontalInput = 0;
     [HideInInspector] public float verticalInput = 0;
 
     [HideInInspector] public bool jumpInput = false;
-
 
     // Start is called before the first frame update
     void Start()
@@ -65,11 +67,13 @@ public class PlayerMovement : MonoBehaviour
         {
             inputInfluence = inputInfluenceGrounded;
             isGrounded = true;
+            downForce = 0;
         }
         else
         {
             inputInfluence = inputInfluenceInAir;
             isGrounded = false;
+            downForce += downForceRate * Time.deltaTime;
         }
     }
 
@@ -85,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
                 //Setting Force forward and up
                 jumpVector.y = 0;
                 jumpVector = jumpVector.normalized * jumpForceForward;
-                jumpVector.y = jumpForceUp;
+                jumpVector.y = jumpForceUp * _Rb.mass;
 
                 //Add force
                 _Rb.AddForce(jumpVector, ForceMode.Impulse);
@@ -105,10 +109,12 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = new Vector3(straffe, 0, translation);
         move = _Camera.TransformDirection(move);
         move = new Vector3(move.x, 0, move.z);
-        move = move.normalized * Time.deltaTime * moveSpeed * inputInfluence;
+        move = move.normalized * Time.deltaTime * moveSpeed * inputInfluence * _Rb.mass;
         
         //Moving the player
-        if (_Rb.velocity.magnitude < maxSpeed * inputInfluence)
+        if (new Vector3(_Rb.velocity.x, 0, _Rb.velocity.z).magnitude < maxSpeed * inputInfluence)
             _Rb.AddForce(move);
+
+        _Rb.AddForce(Vector3.down * Mathf.Pow(downForce, 2) * _Rb.mass);
     }
 }

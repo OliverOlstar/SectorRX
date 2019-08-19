@@ -70,7 +70,7 @@ public class PlayerDodge : MonoBehaviour
         }
 
         //Stop player
-        _Rb.velocity = Vector3.zero;
+        //_Rb.velocity = _Rb.velocity.normalized;
         doneDodge = true;
     }
 }

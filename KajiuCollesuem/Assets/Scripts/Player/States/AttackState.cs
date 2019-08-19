@@ -17,7 +17,28 @@ public class AttackState : BaseState
 
     public override void Enter()
     {
+        // Stop Coroutine from running
+        if (stateController.quickAttackInput)
+        {
+            // Start coroutine to start a timer
+            // run code from attack component
+        }
 
+        if (stateController.heavyAttackInput)
+        {
+            // Start Coroutine to start a timer
+            // run code from the attack component
+        }
+
+        if (stateController.powerInput > 0)
+        {
+            // Start Coroutine to start a timer
+            // run code from the attack component
+            stateController._powerComponent.UsingPower(stateController.powerInput);
+        }
+
+        stateController.quickAttackInput = false;
+        stateController.heavyAttackInput = false;
     }
 
     public override void Exit()
@@ -28,25 +49,13 @@ public class AttackState : BaseState
     public override Type Tick()
     {
         Debug.Log("Attack State");
-        // Stop Coroutine from running
-        if (stateController.quickAttackInput)
-        {
-            if(timer == 0)
-            {
-                // Start coroutine to start a timer
-                // run code from attack component
-            }
-        }
 
-        if (stateController.heavyAtatckInput)
-        {
-            if(timer == 0)
-            {
-                // Start Coroutine to start a timer
-                // run code from the attack component
-            }
-        }
+        timer += Time.deltaTime;
 
+        if (timer >= 5)
+        {
+
+        }
 
         return null;
     }

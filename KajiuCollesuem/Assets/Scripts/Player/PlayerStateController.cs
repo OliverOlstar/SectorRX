@@ -27,7 +27,7 @@ public class PlayerStateController : MonoBehaviour
 
     // Attack Varaibles
     [HideInInspector] public bool quickAttackInput = false;
-    [HideInInspector] public bool heavyAtatckInput = false;
+    [HideInInspector] public bool heavyAttackInput = false;
 
     //Camera
     [HideInInspector] public bool lockOnInput = false;
@@ -46,7 +46,7 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public PlayerDodge _dodgeComponent; // Player's dodge component, access this to 
 
     private PlayerLockOnScript _lockOnComponent;
-    private PlayerPowerHandler _powerComponent;
+    [HideInInspector] public PlayerPowerHandler _powerComponent;
 
     [HideInInspector] public Rigidbody _rb;
 

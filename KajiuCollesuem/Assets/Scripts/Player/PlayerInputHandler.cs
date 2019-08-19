@@ -145,7 +145,7 @@ public class PlayerInputHandler : MonoBehaviour
         //Attacking Input
         if(attack_Input && attack_Timer > 0.3f)
         {
-            _stateController.heavyAtatckInput = true;
+            _stateController.heavyAttackInput = true;
         }
         else if(attack_Input && attack_Timer <= 0.3f)
         {
