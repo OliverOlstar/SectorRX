@@ -6,6 +6,7 @@ using UnityEngine;
 public class SOPowers : ScriptableObject
 {
     public string dislayName = "Untitled";
+    public string dislayDiscription = "Description";
     public Sprite icon;
     public int powerRequired = 0;
     public int damage = 0;

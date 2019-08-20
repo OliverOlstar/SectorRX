@@ -6,7 +6,7 @@ public class Power_Master : MonoBehaviour, IPower
 {
     private PlayerPowerHandler _PlayerPowersComp;
 
-    //Select SOPower before play time. When script is selected option to select shows in inspector.
+    /* Select SOPower before play time. When script is selected option to select shows in inspector. */
     [SerializeField] protected SOPowers vars;
     
     void Awake()
