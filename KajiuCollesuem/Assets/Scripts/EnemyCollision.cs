@@ -32,7 +32,7 @@ public class EnemyCollision : MonoBehaviour
             playerVars.takeDamage(10);
         }
 
-        if (collision.gameObject.name == "Fireball")
+        if (collision.gameObject.tag == "Fireball")
         {
             StatusEffects.Status("burn");
             playerVars.takeDamage(10);
