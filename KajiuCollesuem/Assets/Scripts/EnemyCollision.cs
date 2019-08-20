@@ -32,6 +32,12 @@ public class EnemyCollision : MonoBehaviour
             playerVars.takeDamage(10);
         }
 
+        if (collision.gameObject.name == "Fireball")
+        {
+            StatusEffects.Status("burn");
+            playerVars.takeDamage(10);
+        }
+
         /*
         else if (collision.gameObject.name.Contains("Player"))
         {

@@ -86,7 +86,7 @@ public class WolfieMovement : MonoBehaviour
             if (Vector3.Distance(transform.position, currentPatrolDest.transform.position) > 2)
             {
                 agent.SetDestination(currentPatrolDest.transform.position);
-                Debug.Log(Vector3.Distance(transform.position, currentPatrolDest.transform.position));
+                //Debug.Log(Vector3.Distance(transform.position, currentPatrolDest.transform.position));
             }
 
             else
@@ -101,6 +101,7 @@ public class WolfieMovement : MonoBehaviour
     {
         if (other.gameObject.tag == "Fireball")
         {
+            Debug.Log("fireball hit");
             Destroy(gameObject, 0.0f);
         }
     }
