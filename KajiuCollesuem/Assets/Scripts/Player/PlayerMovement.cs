@@ -22,12 +22,10 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForceForward = 5;
     public float jumpForceUp = 4;
 
-    [Space]
-    public float isGroundedCheckDistance = 1.0f;
-    private bool isGrounded;
-
     [SerializeField] private float downForceRate = 1f;
     private float downForce = 0;
+
+    [HideInInspector] public bool OnGround;
 
     [Header("Inputs")]
     [HideInInspector] public float horizontalInput = 0;
@@ -48,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
         if (disableMovement == true)
             return;
 
-        //IsGrounded
+        //OnGround
         CheckGrounded();
 
         //Movement
@@ -58,30 +56,11 @@ public class PlayerMovement : MonoBehaviour
         ArchJump();
     }
 
-    private void CheckGrounded()
-    {
-        //Debug.DrawRay(transform.position, Vector3.down, Color.red, 0.1f, false);
-
-        //Raycast to check for if grounded
-        if (Physics.Raycast(transform.position, Vector3.down, isGroundedCheckDistance))
-        {
-            inputInfluence = inputInfluenceGrounded;
-            isGrounded = true;
-            downForce = 0;
-        }
-        else
-        {
-            inputInfluence = inputInfluenceInAir;
-            isGrounded = false;
-            downForce += downForceRate * Time.deltaTime;
-        }
-    }
-
     private void ArchJump()
     {
         if (jumpInput)
         {
-            if (isGrounded)
+            if (OnGround)
             {
                 //Getting Jump direction
                 Vector3 jumpVector = _Camera.parent.TransformDirection(Vector3.forward);
@@ -114,7 +93,21 @@ public class PlayerMovement : MonoBehaviour
         //Moving the player
         if (new Vector3(_Rb.velocity.x, 0, _Rb.velocity.z).magnitude < maxSpeed * inputInfluence)
             _Rb.AddForce(move);
+    }
 
+    private void CheckGrounded()
+    {
+        if (OnGround)
+        {
+            inputInfluence = inputInfluenceGrounded;
+            downForce = 0;
+        }
+        else
+        {
+            inputInfluence = inputInfluenceInAir;
+            downForce += downForceRate * Time.deltaTime;
+        }
+        
         _Rb.AddForce(Vector3.down * Mathf.Pow(downForce, 2) * _Rb.mass);
     }
 }

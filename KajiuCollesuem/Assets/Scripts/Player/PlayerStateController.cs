@@ -39,14 +39,18 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public bool pauseInput = false;
     [HideInInspector] public bool mapInput = false;
 
+    // On Ground
+    [HideInInspector] public bool OnGround = false;
+
     [Header("State Components")]
     private PlayerStateMachine stateMachine;
     public PlayerMovement _movementComponent { get; private set; } // Player's movement component, access this to move and jump
     // TODO LockOn Component // Player's lockon component changes player's movement aanimations
     [HideInInspector] public PlayerDodge _dodgeComponent; // Player's dodge component, access this to 
-
     private PlayerLockOnScript _lockOnComponent;
     [HideInInspector] public PlayerPowerHandler _powerComponent;
+
+    [HideInInspector] public PlayerAttributes _playerAttributes;
 
     [HideInInspector] public Rigidbody _rb;
 
@@ -61,10 +65,6 @@ public class PlayerStateController : MonoBehaviour
     //};
     
     //[SerializeField] private int state = (int) States.Normal;
-
-
-    // Temporary Utility variables
-    public bool OnGround = false;
     
     void Start()
     {
@@ -72,6 +72,7 @@ public class PlayerStateController : MonoBehaviour
         _dodgeComponent = GetComponent<PlayerDodge>();
         _lockOnComponent = GetComponent<PlayerLockOnScript>();
         _powerComponent = GetComponent<PlayerPowerHandler>();
+        _playerAttributes = GetComponent<PlayerAttributes>();
 
         stateMachine = GetComponent<PlayerStateMachine>();
         InitializeStateMachine();

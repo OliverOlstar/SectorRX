@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 806430457}
   - component: {fileID: 4086892133307703399}
   - component: {fileID: 806430449}
+  - component: {fileID: 17874600}
   m_Layer: 9
   m_Name: TestPlayer
   m_TagString: Player
@@ -132,19 +133,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dodge_holdMax: 0.3
   dodge_timeToLong: 0.2
-  KCverticalUp: 119
-  KCverticalDown: 115
-  KChorizontalLeft: 97
-  KChorizontalRight: 100
   KCattack_Input: 323
+  gp_KCattack_Input: 332
   KClockon_Input: 324
+  gp_KClockon_Input: 324
   KCdodge_Input: 32
+  gp_KCdodge_Input: 330
   KCjump_Input: 304
+  gp_KCjump_Input: 331
   KCpower1_Input: 113
   KCpower2_Input: 101
   KCpower3_Input: 102
+  gp_KCpower1_Input: 334
+  gp_KCpower2_Input: 335
+  gp_KCpower3_Input: 336
   KCpause_Input: 27
   KCmap_Input: 109
+  gp_KCpause_Input: 27
+  gp_KCmap_Input: 109
 --- !u!114 &8844467493756483741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,14 +171,15 @@ MonoBehaviour:
   longDodgeInput: 0
   shortDodgeInput: 0
   quickAttackInput: 0
-  heavyAtatckInput: 0
+  heavyAttackInput: 0
   lockOnInput: 0
   powerInput: 0
   pauseInput: 0
   mapInput: 0
-  _dodgeComponent: {fileID: 0}
-  _rb: {fileID: 0}
   OnGround: 0
+  _dodgeComponent: {fileID: 0}
+  _powerComponent: {fileID: 0}
+  _rb: {fileID: 0}
 --- !u!114 &7996918551186684739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,8 +211,8 @@ MonoBehaviour:
   inputInfluenceInAir: 0.7
   jumpForceForward: 20
   jumpForceUp: 8
-  isGroundedCheckDistance: 0.9
   downForceRate: 4.5
+  OnGround: 0
   horizontalInput: 0
   verticalInput: 0
   jumpInput: 0
@@ -299,3 +306,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d84d9a668651854da50ad10f54cef49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &17874600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8582934654442581043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7551da4b8e99c24cbed895d1af7f758, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGroundedCheckDistance: 1
+  isFallingYDifference: 15
+  respawnYOffset: 1

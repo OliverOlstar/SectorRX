@@ -32,6 +32,9 @@ public class MovementState : BaseState
         stateController._movementComponent.verticalInput = stateController.verticalInput;
         stateController._movementComponent.jumpInput = stateController.jumpInput;
 
+        stateController._movementComponent.OnGround = stateController.OnGround;
+
+
         if (stateController.longDodgeInput || stateController.shortDodgeInput)
         {
             return typeof(DodgeState);
