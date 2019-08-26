@@ -179,6 +179,8 @@ MonoBehaviour:
   OnGround: 0
   _dodgeComponent: {fileID: 0}
   _powerComponent: {fileID: 0}
+  _deadComponent: {fileID: 0}
+  _playerAttributes: {fileID: 0}
   _rb: {fileID: 0}
 --- !u!114 &7996918551186684739
 MonoBehaviour:
@@ -321,3 +323,4 @@ MonoBehaviour:
   isGroundedCheckDistance: 1
   isFallingYDifference: 15
   respawnYOffset: 1
+  fallDamage: 30

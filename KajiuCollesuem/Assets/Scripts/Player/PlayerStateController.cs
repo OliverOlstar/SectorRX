@@ -49,6 +49,7 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public PlayerDodge _dodgeComponent; // Player's dodge component, access this to 
     private PlayerLockOnScript _lockOnComponent;
     [HideInInspector] public PlayerPowerHandler _powerComponent;
+    [HideInInspector] public PlayerRespawn _respawnComponent;
 
     [HideInInspector] public PlayerAttributes _playerAttributes;
 
@@ -72,6 +73,7 @@ public class PlayerStateController : MonoBehaviour
         _dodgeComponent = GetComponent<PlayerDodge>();
         _lockOnComponent = GetComponent<PlayerLockOnScript>();
         _powerComponent = GetComponent<PlayerPowerHandler>();
+        _respawnComponent = GetComponent<PlayerRespawn>();
         _playerAttributes = GetComponent<PlayerAttributes>();
 
         stateMachine = GetComponent<PlayerStateMachine>();
@@ -265,25 +267,4 @@ public class PlayerStateController : MonoBehaviour
     //    //Change State Variable
     //    state = pState;
     //}
-
-
-    // Temporary Utility function to perform a raycast and determine if the player is moving on the ground
-    bool CheckIfOnGround()
-    {
-        bool r = false;
-        Vector3 origin = transform.position + (Vector3.up * 0.5f);
-        Vector3 dir = -Vector3.up;
-        float dist = 0.8f;
-        RaycastHit hit;
-
-        if(Physics.Raycast(origin, dir, out hit, dist, ~(1 << 11)))
-        {
-            r = true;
-            Vector3 targetPos = hit.point;
-            transform.position = targetPos;
-        }
-
-
-        return r;
-    }
 }

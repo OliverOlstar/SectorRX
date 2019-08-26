@@ -14,7 +14,7 @@ public class DeathState : BaseState
 
     public override void Enter()
     {
-
+        stateController._respawnComponent.Dead();
     }
 
     public override void Exit()
@@ -24,7 +24,7 @@ public class DeathState : BaseState
 
     public override Type Tick()
     {
-        Debug.Log("Death State");
+        //Debug.Log("Death State");
 
         return null;
     }

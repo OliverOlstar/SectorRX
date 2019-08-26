@@ -51,7 +51,6 @@ public class OnGround : MonoBehaviour
             _rb.velocity = Vector3.zero;
             transform.position = lastPoint + new Vector3(0, respawnYOffset, 0);
             _stateController._playerAttributes.modifyHealth(-fallDamage);
-            _stateController._playerAttributes.TakeDamage(0);
         }
     }
 }

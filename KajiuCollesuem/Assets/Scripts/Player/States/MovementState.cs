@@ -45,6 +45,11 @@ public class MovementState : BaseState
             return typeof(AttackState);
         }
 
+        if (stateController._playerAttributes.getHealth() <= 0)
+        {
+            return typeof(DeathState);
+        }
+
         return null;
     }
 }
