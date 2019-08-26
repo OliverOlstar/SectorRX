@@ -30,7 +30,7 @@ public class PauseMenu : MonoBehaviour
             pauseScreen.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
         }
-        else if (!pause)
+        else if(!pause)
         {
             Time.timeScale = 1;
             pauseScreen.SetActive(false);

@@ -25,7 +25,6 @@ public class PlayerLockOnScript : MonoBehaviour
     void Update()
     {
         // TODO make work with pause screen
-        CursorLockingAndUnlocking();
         
         if (lockOnInput == true)
         {
@@ -77,19 +76,5 @@ public class PlayerLockOnScript : MonoBehaviour
         }
 
         return possibleTargets[currentClosest].gameObject.transform;
-    }
-    
-    void CursorLockingAndUnlocking()
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            cameraScript.CameraDisabled = false;
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Cursor.lockState = CursorLockMode.None;
-            cameraScript.CameraDisabled = true;
-        }
     }
 }

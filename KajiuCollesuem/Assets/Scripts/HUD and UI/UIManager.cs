@@ -10,7 +10,9 @@ public class UIManager : MonoBehaviour
 
     public void Start()
     {
+        Time.timeScale = 1;
         mainMenu.DOAnchorPos(new Vector2(44, 0), 0.4f);
+        BackToMainMenu();
     }
 
     public void BackToMainMenu()

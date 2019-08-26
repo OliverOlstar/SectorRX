@@ -28,7 +28,7 @@ public class WolfieMovement : MonoBehaviour
 
     [SerializeField]
     private float biteDuration;
-    public float biteCooldown = 1.0f;
+    public float biteCooldown = 2.0f;
     public float newBiteTime = 0.0f;
 
     public float waitBetweenBite;

@@ -28,7 +28,7 @@ RectTransform:
   m_GameObject: {fileID: 48440769582981736}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.55, y: 1.55, z: 1.55}
   m_Children:
   - {fileID: 48440770608393400}
   m_Father: {fileID: 48440769720417598}
@@ -115,7 +115,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 48440769582981743}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: BackToPause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &48440769720417593
@@ -303,7 +314,7 @@ RectTransform:
   m_GameObject: {fileID: 48440769913590274}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.55, y: 1.55, z: 1.55}
   m_Children:
   - {fileID: 48440770032400389}
   m_Father: {fileID: 48440769720417598}
@@ -420,7 +431,7 @@ RectTransform:
   m_GameObject: {fileID: 48440770016017333}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.55, y: 1.55, z: 1.55}
   m_Children: []
   m_Father: {fileID: 48440769720417598}
   m_RootOrder: 0
@@ -581,7 +592,7 @@ RectTransform:
   m_GameObject: {fileID: 48440770063453944}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.55, y: 1.55, z: 1.55}
   m_Children:
   - {fileID: 48440769846474162}
   m_Father: {fileID: 48440769720417598}

@@ -179,7 +179,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 38.162003, y: -30.000002, z: 0}
 --- !u!1 &534669902
 GameObject:
@@ -276,24 +276,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b60d3a0c3e72974f90c65fe0e878dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraDistance: 6
+  lockOnTarget: {fileID: 0}
   MouseSensitivity: 5
   TurnDampening: 20
+  OffSetLeft: 0
+  CameraDistance: 6
   CameraMinHeight: -8
   CameraMaxHeight: 90
   CameraDisabled: 0
---- !u!114 &600306171 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 308313177714532269, guid: cc9f41ad548a6de4e91f819105275911,
-    type: 3}
-  m_PrefabInstance: {fileID: 891147711}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &821297090
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,8 +328,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 640f5e2c293f649499d743e5f0691339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 1695176526}
-  offSet: {x: 0, y: 0.6, z: 0}
+  target: {fileID: 0}
+  offSetUp: 0.6
+  runFunc: 0
+  DemoVarOffup: 0.6
+  DemoVarOffleft: 0
+  DemoVarSensi: 3
+  DemoVarDamp: 20
+  DemoVarDis: 6
+  DemoVarMiny: -8
+  DemoVarMaxy: 70
+  DemoVarTrnsSpd: 1
 --- !u!1001 &891147711
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -457,16 +456,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 308313177714532269, guid: cc9f41ad548a6de4e91f819105275911,
-        type: 3}
-      propertyPath: m_MaxValue
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 308313177714532269, guid: cc9f41ad548a6de4e91f819105275911,
-        type: 3}
-      propertyPath: m_Value
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 2971165194795275195, guid: cc9f41ad548a6de4e91f819105275911,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -476,6 +465,46 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 383972717494358941, guid: cc9f41ad548a6de4e91f819105275911,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 383972717494358941, guid: cc9f41ad548a6de4e91f819105275911,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 383972715770982531, guid: cc9f41ad548a6de4e91f819105275911,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 383972715770982531, guid: cc9f41ad548a6de4e91f819105275911,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3201942951398269411, guid: cc9f41ad548a6de4e91f819105275911,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3201942951398269411, guid: cc9f41ad548a6de4e91f819105275911,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 308313177714532269, guid: cc9f41ad548a6de4e91f819105275911,
+        type: 3}
+      propertyPath: m_MaxValue
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 308313177714532269, guid: cc9f41ad548a6de4e91f819105275911,
+        type: 3}
+      propertyPath: m_Value
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc9f41ad548a6de4e91f819105275911, type: 3}
@@ -677,4 +706,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 20
   currentHealth: 0
-  healthSlider: {fileID: 600306171}
+  healthSlider: {fileID: 0}
