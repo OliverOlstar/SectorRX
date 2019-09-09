@@ -29,6 +29,12 @@ public class AI : MonoBehaviour
     public float searchTimeMax = 60f; // How long enemy will search for player
     float searchTime; // Current time spend searching for player
 
+    private enum EnemyState
+    {
+        Idle, SeePlayerInRange, CloseToPlayer, AttackPlayer
+    }
+    private EnemyState state = EnemyState.Idle;
+
     // Start is called before the first frame update
     void Start()
     {
