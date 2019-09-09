@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Components")]
     private Rigidbody _Rb;
     private Transform _Camera;
+    private PlayerStateController _stateMachine;
 
     [Header("Movement")]
     public float moveSpeed = 1.0f;
@@ -24,7 +25,6 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float downForceRate = 1f;
     private float downForce = 0;
-
     [HideInInspector] public bool OnGround;
 
     [Header("Inputs")]
@@ -40,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _Rb = GetComponent<Rigidbody>();
         _Camera = Camera.main.transform;
+        _stateMachine = GetComponent<PlayerStateController>();
     }
 
     void Update()
@@ -73,7 +74,8 @@ public class PlayerMovement : MonoBehaviour
                 jumpVector.y = jumpForceUp * _Rb.mass;
 
                 //Add force
-                _Rb.AddForce(jumpVector, ForceMode.Impulse);
+                //_Rb.AddForce(jumpVector, ForceMode.Impulse);
+                _stateMachine._animHandler.StartJump(moveDirection);
             }
 
             jumpInput = false;

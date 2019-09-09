@@ -15,13 +15,14 @@ public class DodgeState : BaseState
     public override void Enter()
     {
         stateController._dodgeComponent.Dodge(stateController.shortDodgeInput, stateController._movementComponent.moveDirection);
+        stateController._animHandler.StartDodge(stateController._movementComponent.moveDirection);
         stateController.shortDodgeInput = false;
         stateController.longDodgeInput = false;
     }
 
     public override void Exit()
     {
-
+        stateController._animHandler.StopDodge();
     }
 
     public override Type Tick()
