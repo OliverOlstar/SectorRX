@@ -7,8 +7,6 @@ public class MovementState : BaseState
 {
     PlayerStateController stateController;
 
-    
-
     public MovementState(PlayerStateController controller) : base(controller.gameObject)
     {
         stateController = controller;

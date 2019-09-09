@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerStateController : MonoBehaviour
 {
-    //THIS IS THE STATE MANAGER - Danish
+    //THIS IS THE STATE MANAGER - Danish, Oliver
 
          /*
          This script is to change the player's active state 
@@ -46,12 +46,13 @@ public class PlayerStateController : MonoBehaviour
     private PlayerStateMachine stateMachine;
     public PlayerMovement _movementComponent { get; private set; } // Player's movement component, access this to move and jump
     // TODO LockOn Component // Player's lockon component changes player's movement aanimations
-    [HideInInspector] public PlayerDodge _dodgeComponent; // Player's dodge component, access this to 
+    [HideInInspector] public PlayerDodge _dodgeComponent; // Player's dodge component, access this to
     private PlayerLockOnScript _lockOnComponent;
     [HideInInspector] public PlayerPowerHandler _powerComponent;
     [HideInInspector] public PlayerRespawn _respawnComponent;
 
     [HideInInspector] public PlayerAttributes _playerAttributes;
+    [HideInInspector] public AnimHandler _animHandler;
 
     [HideInInspector] public Rigidbody _rb;
 
@@ -73,8 +74,10 @@ public class PlayerStateController : MonoBehaviour
         _dodgeComponent = GetComponent<PlayerDodge>();
         _lockOnComponent = GetComponent<PlayerLockOnScript>();
         _powerComponent = GetComponent<PlayerPowerHandler>();
+
         _respawnComponent = GetComponent<PlayerRespawn>();
         _playerAttributes = GetComponent<PlayerAttributes>();
+        _animHandler = GetComponentInChildren<AnimHandler>();
 
         stateMachine = GetComponent<PlayerStateMachine>();
         InitializeStateMachine();
@@ -95,176 +98,4 @@ public class PlayerStateController : MonoBehaviour
 
         stateMachine.SetStates(states);
     }
-
-
-    
-    //void Update()
-    //{
-    //    switch(state)
-    //    {
-    //        //Normal
-    //        case (int) States.Normal:
-    //            if (powerInput > 0)
-    //            {
-    //                _powerComponent.UsingPower(powerInput);
-    //                powerInput = 0;
-    //            }
-
-    //            //Lock On
-    //            if (lockOnInput)
-    //            {
-    //                _lockOnComponent.lockOnInput = true;
-    //                lockOnInput = false;
-    //            }
-
-
-    //            //Swtich States
-    //            if (shortDodgeInput || longDodgeInput)
-    //            {
-    //                //Sending Inputs
-    //                if (jumpInput)
-    //                {
-    //                    _movementComponent.jumpInput = true;
-    //                    jumpInput = false;
-    //                }
-                
-    //                _movementComponent.horizontalInput = horizontalInput;
-    //                _movementComponent.verticalInput = verticalInput;
-
-    //                //Swtich States
-    //                if (shortDodgeInput || longDodgeInput)
-    //                {
-    //                    SwitchStates((int)States.Dodging);
-    //                    shortDodgeInput = false; longDodgeInput = false;
-    //                }
-    //            }
-    //            break;
-
-    //        //Dodge
-    //        case (int) States.Dodging:
-
-
-
-
-    //            //Swtich States
-    //            if (_dodgeComponent.doneDodge)
-    //            {
-    //                _dodgeComponent.doneDodge = false;
-    //                SwitchStates((int)States.Normal);
-    //            }
-
-    //            break;
-
-    //        //Locked On
-    //        case (int) States.LockedOn:
-
-    //            break;
-
-    //        //Attacking
-    //        case (int) States.Attacking:
-
-    //            break;
-
-    //        //Stunned
-    //        case (int) States.Stunned:
-
-    //            break;
-
-    //        //Dead
-    //        case (int) States.Dead:
-
-    //            break;
-
-
-    //    }
-    //}
-
-    ////SWITCH STATES
-    //private void SwitchStates(int pState)
-    //{
-    //    //SWITCHING OFF OF ////////////////////////////////////////////////////
-    //    if (state != pState)
-    //    {
-    //        switch (state)
-    //        {
-    //            //Normal
-    //            case (int)States.Normal:
-
-    //                _movementComponent.enabled = false;
-
-    //                break;
-
-    //            //Dodge
-    //            case (int)States.Dodging:
-
-    //                break;
-
-    //            //Locked On
-    //            case (int)States.LockedOn:
-
-    //                _movementComponent.enabled = false;
-
-    //                break;
-
-    //            //Attacking
-    //            case (int)States.Attacking:
-
-    //                break;
-
-    //            //Stunned
-    //            case (int)States.Stunned:
-
-    //                break;
-
-    //            //Dead
-    //            case (int)States.Dead:
-
-    //                break;
-    //        }
-    //    }
-
-
-    //    //SWITCHING ON TO ////////////////////////////////////////////////////
-    //    switch (pState)
-    //    {
-    //        //Normal
-    //        case (int)States.Normal:
-
-    //            _movementComponent.enabled = true;
-
-    //            break;
-
-    //        //Dodge
-    //        case (int)States.Dodging:
-
-    //            _dodgeComponent.Dodge(shortDodgeInput);
-
-    //            break;
-
-    //        //Locked On
-    //        case (int)States.LockedOn:
-
-    //            _movementComponent.enabled = true;
-
-    //            break;
-
-    //        //Attacking
-    //        case (int)States.Attacking:
-
-    //            break;
-
-    //        //Stunned
-    //        case (int)States.Stunned:
-
-    //            break;
-
-    //        //Dead
-    //        case (int)States.Dead:
-
-    //            break;
-    //    }
-        
-    //    //Change State Variable
-    //    state = pState;
-    //}
 }

@@ -33,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
 
     [HideInInspector] public bool jumpInput = false;
 
+    [HideInInspector] public Vector3 moveDirection;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,11 +48,11 @@ public class PlayerMovement : MonoBehaviour
         if (disableMovement == true)
             return;
 
-        //OnGround
-        CheckGrounded();
-
         //Movement
         PlayerMove();
+
+        //OnGround
+        CheckGrounded();
 
         //Jump
         ArchJump();
@@ -88,11 +90,17 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = new Vector3(straffe, 0, translation);
         move = _Camera.TransformDirection(move);
         move = new Vector3(move.x, 0, move.z);
-        move = move.normalized * Time.deltaTime * moveSpeed * inputInfluence * _Rb.mass;
-        
-        //Moving the player
-        if (new Vector3(_Rb.velocity.x, 0, _Rb.velocity.z).magnitude < maxSpeed * inputInfluence)
-            _Rb.AddForce(move);
+        move = move.normalized;
+            
+        moveDirection = move;
+
+        //if (disableMovement == false)
+        //{
+            //Moving the player
+            move = move * Time.deltaTime * moveSpeed * inputInfluence * _Rb.mass;
+            if (new Vector3(_Rb.velocity.x, 0, _Rb.velocity.z).magnitude < maxSpeed * inputInfluence)
+                _Rb.AddForce(move);
+        //}
     }
 
     private void CheckGrounded()

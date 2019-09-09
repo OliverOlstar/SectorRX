@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 4086892133307703399}
   - component: {fileID: 806430449}
   - component: {fileID: 17874600}
+  - component: {fileID: 17874601}
   m_Layer: 9
   m_Name: TestPlayer
   m_TagString: Player
@@ -179,7 +180,7 @@ MonoBehaviour:
   OnGround: 0
   _dodgeComponent: {fileID: 0}
   _powerComponent: {fileID: 0}
-  _deadComponent: {fileID: 0}
+  _respawnComponent: {fileID: 0}
   _playerAttributes: {fileID: 0}
   _rb: {fileID: 0}
 --- !u!114 &7996918551186684739
@@ -324,3 +325,16 @@ MonoBehaviour:
   isFallingYDifference: 15
   respawnYOffset: 1
   fallDamage: 30
+--- !u!114 &17874601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8582934654442581043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e59be9c88d714649bf60ad0c32f7d51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathLength: 3
