@@ -21,4 +21,9 @@ public class AnimHandler : MonoBehaviour
             transform.forward = Vector3.Lerp(transform.forward, _stateController._movementComponent.moveDirection, Time.deltaTime * _rotationDampening);
         }
     }
+
+    public void SetFacing(Vector3 pFacing)
+    {
+        transform.forward = pFacing;
+    }
 }

@@ -14,7 +14,7 @@ public class DodgeState : BaseState
 
     public override void Enter()
     {
-        stateController._dodgeComponent.Dodge(stateController.shortDodgeInput);
+        stateController._dodgeComponent.Dodge(stateController.shortDodgeInput, stateController._movementComponent.moveDirection);
         stateController.shortDodgeInput = false;
         stateController.longDodgeInput = false;
     }
