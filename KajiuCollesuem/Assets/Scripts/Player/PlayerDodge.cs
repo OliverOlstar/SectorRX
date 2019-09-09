@@ -28,7 +28,7 @@ public class PlayerDodge : MonoBehaviour
         _Camera = Camera.main.transform;
     }
 
-    public void Dodge(bool pShortDodge)
+    public void Dodge(bool pShortDodge, Vector3 pDirection)
     {
         //Cooldown
         if (Time.time > _dashDelay)
@@ -36,12 +36,12 @@ public class PlayerDodge : MonoBehaviour
             if (pShortDodge)
             {
                 //Short Dodge
-                StartCoroutine(DodgeRoutine(shortDodgeDistance, shortDodgeDuration));
+                StartCoroutine(DodgeRoutine(shortDodgeDistance, shortDodgeDuration, pDirection));
             }
             else
             {
                 //Long Dodge
-                StartCoroutine(DodgeRoutine(longDodgeDistance, longDodgeDuration));
+                StartCoroutine(DodgeRoutine(longDodgeDistance, longDodgeDuration, pDirection));
             }
         }
         else
@@ -51,7 +51,7 @@ public class PlayerDodge : MonoBehaviour
         }
     }
 
-    IEnumerator DodgeRoutine(float pDistance, float pDuration)
+    IEnumerator DodgeRoutine(float pDistance, float pDuration, Vector3 pDirection)
     {
         //Setting Delay
         _dashDelay = Time.time + dashCooldown + pDuration;
@@ -60,17 +60,12 @@ public class PlayerDodge : MonoBehaviour
         //Run Dodge Force
         while (Time.time <= dodgeEndTime)
         {
-            // TODO Make dodge direction based on player movement direction rather than camera forward
-            Vector3 forwardDirection = _Camera.forward;
-            forwardDirection.y = 0;
-            forwardDirection.Normalize();
-
-            _Rb.velocity = forwardDirection * (pDistance / pDuration);
+            _Rb.velocity = pDirection * (pDistance / pDuration);
             yield return null;
         }
 
         //Stop player
-        _Rb.velocity = Vector3.zero;
+        //_Rb.velocity = _Rb.velocity.normalized;
         doneDodge = true;
     }
 }

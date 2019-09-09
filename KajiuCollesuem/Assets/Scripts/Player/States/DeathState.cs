@@ -12,9 +12,19 @@ public class DeathState : BaseState
         stateController = controller;
     }
 
+    public override void Enter()
+    {
+        stateController._respawnComponent.Dead();
+    }
+
+    public override void Exit()
+    {
+
+    }
+
     public override Type Tick()
     {
-        Debug.Log("Death State");
+        //Debug.Log("Death State");
 
         return null;
     }

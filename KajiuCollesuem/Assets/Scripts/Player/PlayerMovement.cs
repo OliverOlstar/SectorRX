@@ -11,21 +11,21 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed = 1.0f;
     public float maxSpeed = 4.0f;
-    public bool disableMovement = false;
+    [HideInInspector] public bool disableMovement = false;
 
     [Space]
-    public float inputInfluence = 1.0f;
     public float inputInfluenceGrounded = 1.0f;
     public float inputInfluenceInAir = 0.2f;
+    private float inputInfluence = 1.0f;
 
     [Header("Jump")]
-    public bool regJump;
     public float jumpForceForward = 5;
     public float jumpForceUp = 4;
 
-    [Space]
-    public bool isGrounded;
-    public float isGroundedCheckDistance = 1.0f;
+    [SerializeField] private float downForceRate = 1f;
+    private float downForce = 0;
+
+    [HideInInspector] public bool OnGround;
 
     [Header("Inputs")]
     [HideInInspector] public float horizontalInput = 0;
@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
     [HideInInspector] public bool jumpInput = false;
 
+    [HideInInspector] public Vector3 moveDirection;
 
     // Start is called before the first frame update
     void Start()
@@ -43,57 +44,25 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        //If controls are disabled
-        if (disableMovement == true)
-            return;
-
-        //IsGrounded
-        CheckGrounded();
-
         //Movement
         PlayerMove();
 
+        //If controls are disabled
+        if (disableMovement == true)
+            return;
+        
+        //OnGround
+        CheckGrounded();
+
         //Jump
-        if (regJump) { RegularJump(); } else { ArchJump(); }
-    }
-
-    private void CheckGrounded()
-    {
-        //Debug.DrawRay(transform.position, Vector3.down, Color.red, 0.1f, false);
-
-        //Raycast to check for if grounded
-        if (Physics.Raycast(transform.position, Vector3.down, isGroundedCheckDistance))
-        {
-            inputInfluence = inputInfluenceGrounded;
-            isGrounded = true;
-        }
-        else
-        {
-            inputInfluence = inputInfluenceInAir;
-            isGrounded = false;
-        }
-    }
-
-    private void RegularJump()
-    {
-
-        if (jumpInput)
-        {
-            if (isGrounded)
-            {
-                // Adding jump force to the rigidbody
-                _Rb.AddForce(0, jumpForceUp, 0, ForceMode.Impulse);
-            }
-
-            jumpInput = false;
-        }
+        ArchJump();
     }
 
     private void ArchJump()
     {
         if (jumpInput)
         {
-            if (isGrounded)
+            if (OnGround)
             {
                 //Getting Jump direction
                 Vector3 jumpVector = _Camera.parent.TransformDirection(Vector3.forward);
@@ -101,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
                 //Setting Force forward and up
                 jumpVector.y = 0;
                 jumpVector = jumpVector.normalized * jumpForceForward;
-                jumpVector.y = jumpForceUp;
+                jumpVector.y = jumpForceUp * _Rb.mass;
 
                 //Add force
                 _Rb.AddForce(jumpVector, ForceMode.Impulse);
@@ -121,10 +90,32 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = new Vector3(straffe, 0, translation);
         move = _Camera.TransformDirection(move);
         move = new Vector3(move.x, 0, move.z);
-        move = move.normalized * Time.deltaTime * moveSpeed * inputInfluence;
+        move = move.normalized;
+            
+        moveDirection = move;
+
+        if (disableMovement == false)
+        {
+            //Moving the player
+            move = move * Time.deltaTime * moveSpeed * inputInfluence * _Rb.mass;
+            if (new Vector3(_Rb.velocity.x, 0, _Rb.velocity.z).magnitude < maxSpeed * inputInfluence)
+                _Rb.AddForce(move);
+        }
+    }
+
+    private void CheckGrounded()
+    {
+        if (OnGround)
+        {
+            inputInfluence = inputInfluenceGrounded;
+            downForce = 0;
+        }
+        else
+        {
+            inputInfluence = inputInfluenceInAir;
+            downForce += downForceRate * Time.deltaTime;
+        }
         
-        //Moving the player
-        if (_Rb.velocity.magnitude < maxSpeed * inputInfluence)
-            _Rb.AddForce(move);
+        _Rb.AddForce(Vector3.down * Mathf.Pow(downForce, 2) * _Rb.mass);
     }
 }

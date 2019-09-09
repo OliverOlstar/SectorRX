@@ -138,7 +138,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
     public void TakeDamage(int pAmount)
     {
-        Debug.Log("Damaging Player " + pAmount);
+        //Debug.Log("Damaging Player " + pAmount);
 
         if (_shield >= pAmount)
         {

@@ -12,7 +12,7 @@ using UnityEngine;
 
 public class DestructibleObject : MonoBehaviour
 {
-    [SerializeField] private DestructableObjectPool _pool;
+    private DestructableObjectPool _pool;
 
     [Space]
     [SerializeField] private GameObject destroyedPrefab;
@@ -23,6 +23,8 @@ public class DestructibleObject : MonoBehaviour
     {
         playerLayer = LayerMask.NameToLayer("Player");
         enemyLayer = LayerMask.NameToLayer("Enemy");
+
+        _pool = FindObjectOfType<DestructableObjectPool>();
     }
 
     private void OnCollisionEnter(Collision other)

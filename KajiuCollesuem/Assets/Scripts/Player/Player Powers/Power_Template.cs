@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class Power_Template : Power_Master, IPower
 {
-    void Start()
-    {
-        requiredPower = 1;
-        damage = 1;
-    }
+    /* Select SOPower before play time. When script is selected option to select shows in inspector. */
 
     new public void UsingMe()
     {
