@@ -44,13 +44,13 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        //If controls are disabled
-        if (disableMovement == true)
-            return;
-
         //Movement
         PlayerMove();
 
+        //If controls are disabled
+        if (disableMovement == true)
+            return;
+        
         //OnGround
         CheckGrounded();
 
@@ -94,13 +94,13 @@ public class PlayerMovement : MonoBehaviour
             
         moveDirection = move;
 
-        //if (disableMovement == false)
-        //{
+        if (disableMovement == false)
+        {
             //Moving the player
             move = move * Time.deltaTime * moveSpeed * inputInfluence * _Rb.mass;
             if (new Vector3(_Rb.velocity.x, 0, _Rb.velocity.z).magnitude < maxSpeed * inputInfluence)
                 _Rb.AddForce(move);
-        //}
+        }
     }
 
     private void CheckGrounded()

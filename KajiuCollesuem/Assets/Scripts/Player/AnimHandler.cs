@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class AnimHandler : MonoBehaviour
 {
-    private PlayerStateController stateController;
-    [SerializeField] private float rotationDampening = 5f;
+    //Animation Handling for the player model - Oliver
+
+    private PlayerStateController _stateController;
+    [SerializeField] private float _rotationDampening = 5f;
 
     void Start()
     {
-        stateController = GetComponentInParent<PlayerStateController>();
+        _stateController = GetComponentInParent<PlayerStateController>();
     }
     
     void Update()
     {
-        if (stateController._movementComponent.moveDirection != Vector3.zero)
+        if (_stateController._movementComponent.moveDirection != Vector3.zero && _stateController._movementComponent.disableMovement == false)
         {
-            transform.forward = Vector3.Lerp(transform.forward, stateController._movementComponent.moveDirection, Time.deltaTime * rotationDampening);
+            transform.forward = Vector3.Lerp(transform.forward, _stateController._movementComponent.moveDirection, Time.deltaTime * _rotationDampening);
         }
-        Debug.Log(stateController._movementComponent.moveDirection);
     }
 }
