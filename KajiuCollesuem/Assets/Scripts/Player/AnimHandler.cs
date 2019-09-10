@@ -12,6 +12,8 @@ public class AnimHandler : MonoBehaviour
     [SerializeField] private float _rotationDampening = 11f;
     [SerializeField] private float _animSpeedDampening = 5f;
 
+    private float offGroundTimer = 0;
+
     void Start()
     {
         _stateController = GetComponentInParent<PlayerStateController>();
@@ -33,7 +35,20 @@ public class AnimHandler : MonoBehaviour
             _anim.SetFloat("Speed", Mathf.Lerp(_anim.GetFloat("Speed"), _stateController._movementComponent.moveDirection.magnitude, Time.deltaTime * _animSpeedDampening));
         }
 
+        //Falling & OnGround
         _anim.SetBool("OnGround", _stateController.OnGround);
+
+        if (_stateController.OnGround)
+        {
+            _anim.SetBool("Falling", false);
+            offGroundTimer = 0;
+        }
+        else
+        {
+            offGroundTimer += Time.deltaTime;
+            if (offGroundTimer >= 0.4f)
+                _anim.SetBool("Falling", true);
+        }
     }
 
     public void StartDodge(Vector3 pFacing)

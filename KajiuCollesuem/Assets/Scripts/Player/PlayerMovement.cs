@@ -74,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
                 jumpVector.y = jumpForceUp * _Rb.mass;
 
                 //Add force
-                //_Rb.AddForce(jumpVector, ForceMode.Impulse);
+                _Rb.AddForce(jumpVector, ForceMode.Impulse);
                 _stateMachine._animHandler.StartJump(moveDirection);
             }
 
