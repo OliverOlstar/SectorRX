@@ -31,7 +31,7 @@ public class AI : MonoBehaviour
 
     private enum EnemyState
     {
-        Idle, SeePlayerInRange, CloseToPlayer, AttackPlayer
+        Idle, Attack, Movement, Death, MechanicalPhase, OrganicPhase
     }
     private EnemyState state = EnemyState.Idle;
 
