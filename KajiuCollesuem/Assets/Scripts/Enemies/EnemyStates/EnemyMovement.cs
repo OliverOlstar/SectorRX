@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDeath : EnemyBaseState
+public class EnemyMovement : BaseState
 {
-    public EnemyDeath(EnemyStateController ESController) : base (ESController.gameObject)
-    {
+    EnemyStateController stateController;
 
+    public EnemyMovement(EnemyStateController controller) : base(controller.gameObject)
+    {
+        stateController = controller;
     }
 
     public override void Enter()
@@ -23,17 +25,5 @@ public class EnemyDeath : EnemyBaseState
     public override Type Tick()
     {
         throw new NotImplementedException();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

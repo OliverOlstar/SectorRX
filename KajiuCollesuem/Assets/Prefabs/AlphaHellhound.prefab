@@ -948,7 +948,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3242999764715861335}
   - component: {fileID: 1463110823149156953}
-  - component: {fileID: 1195800266}
   - component: {fileID: 5692592551555270230}
   - component: {fileID: 1195800268}
   - component: {fileID: 2450664816428999378}
@@ -998,34 +997,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1195800266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5393342818215093326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4877a6c4b29b5824fbc3bcf1b9bdbb19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  fireballDuration: 0.1
-  fireballCooldown: 1
-  newFireballTime: 0
-  fireballPrefab: {fileID: 11974227442048662, guid: 0162725625f37104fb026b70a49b8ae3,
-    type: 3}
-  FBSpawnpoint: {fileID: 626766028464431945}
-  waitBetweenShots: 1
-  torpedoDuration: 1
-  torpedoCooldown: 1
-  newTorpedoTime: 0
-  waitBetweenTorpedo: 1
-  biteDuration: 1
-  biteCooldown: 1
-  newBiteTime: 0
-  waitBetweenBite: 1
 --- !u!114 &5692592551555270230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1044,6 +1015,7 @@ MonoBehaviour:
   gruntHellhound: {fileID: 7175426251968232976, guid: de5e0031b5a349149b181d6583f1f33c,
     type: 3}
   gruntsSummoned: 0
+  anim: {fileID: 0}
 --- !u!54 &1195800268
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -45,7 +45,6 @@ public class PlayerStateController : MonoBehaviour
     [Header("State Components")]
     private PlayerStateMachine stateMachine;
     public PlayerMovement _movementComponent { get; private set; } // Player's movement component, access this to move and jump
-    // TODO LockOn Component // Player's lockon component changes player's movement aanimations
     [HideInInspector] public PlayerDodge _dodgeComponent; // Player's dodge component, access this to
     private PlayerLockOnScript _lockOnComponent;
     [HideInInspector] public PlayerPowerHandler _powerComponent;
@@ -55,18 +54,6 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public AnimHandler _animHandler;
 
     [HideInInspector] public Rigidbody _rb;
-
-    //enum States
-    //{
-    //    Normal, // Player's default state, able to move and can initiate attack
-    //    LockedOn, // Payer is locked on to an enemy and can transition into any other state
-    //    Dodging, // Player is currently in a dodge aninmation and cannot move or initiate an attack
-    //    Attacking, // Player is currently in a attack animation, cannot move and cannot initiate another attack
-    //    Stunned, // Player is stunned and cannot move
-    //    Dead // Player doesn't receive anymore input
-    //};
-    
-    //[SerializeField] private int state = (int) States.Normal;
     
     void Start()
     {

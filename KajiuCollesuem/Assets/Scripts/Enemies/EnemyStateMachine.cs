@@ -6,14 +6,8 @@ using UnityEngine;
 
 public class EnemyStateMachine : MonoBehaviour
 {
-    public Dictionary<Type, EnemyBaseState> _States;
-    public EnemyBaseState CurrentState { get; private set; }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Dictionary<Type, BaseState> _States;
+    public BaseState CurrentState { get; private set; }
 
     // Update is called once per frame
     void Update()
@@ -33,7 +27,7 @@ public class EnemyStateMachine : MonoBehaviour
         }
     }
 
-    public void SetStates(Dictionary<Type, EnemyBaseState> states)
+    public void SetStates(Dictionary<Type, BaseState> states)
     {
         _States = states;
     }
