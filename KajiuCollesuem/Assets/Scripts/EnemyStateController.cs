@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyStateController : MonoBehaviour
 {
-    [HideInInspector] public bool movement, jump, quickAttack, heavyAttack, lockOn, onGround
+    [HideInInspector] public bool movement, jump, quickAttack, heavyAttack, lockOn, onGround;
 
     // Start is called before the first frame update
     void Start()
