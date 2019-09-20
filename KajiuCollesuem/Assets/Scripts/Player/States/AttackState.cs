@@ -7,9 +7,9 @@ public class AttackState : BaseState
 {
     PlayerStateController stateController;
 
-    private float actionDelay = 0.3f;
+    private float attackLength;
+    private bool done = false;
     private float timer = 0;
-    private bool noPower = false;
 
     public AttackState(PlayerStateController controller) : base(controller.gameObject)
     {
@@ -21,45 +21,42 @@ public class AttackState : BaseState
         // Stop Coroutine from running
         if (stateController.quickAttackInput)
         {
-            // Start coroutine to start a timer
+            stateController._animHandler.LightAttack();
+            attackLength = 1f;
             // run code from attack component
         }
 
         if (stateController.heavyAttackInput)
         {
-            // Start Coroutine to start a timer
+            stateController._animHandler.HeavyAttack();
+            attackLength = 2f;
             // run code from the attack component
         }
 
         if (stateController.powerInput > 0)
         {
-            // Start Coroutine to start a timer
+            attackLength = 0.5f;
             // run code from the attack component
-            noPower = stateController._powerComponent.UsingPower(stateController.powerInput);
+            done = stateController._powerComponent.UsingPower(stateController.powerInput);
         }
-
-        stateController.quickAttackInput = false;
-        stateController.heavyAttackInput = false;
-        stateController.powerInput = 0;
-
-        // TODO turn on route motion
     }
 
     public override void Exit()
     {
-        // TODO turn off route motion
+        stateController.quickAttackInput = false;
+        stateController.heavyAttackInput = false;
+        stateController.powerInput = 0;
     }
 
     public override Type Tick()
     {
         //Debug.Log("Attack State");
-
         timer += Time.deltaTime;
-
-        if (timer >= 1 || noPower)
+        
+        if (done || timer >= attackLength)
         {
+            done = false;
             timer = 0;
-            noPower = false;
             return typeof(MovementState);
         }
 

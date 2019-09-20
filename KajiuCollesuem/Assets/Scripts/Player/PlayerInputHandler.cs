@@ -12,8 +12,8 @@ public class PlayerInputHandler : MonoBehaviour
     */
 
     [Header("Dodge Input Settings")]
-    [SerializeField] private float dodge_holdMax = 0.4f;
-    [SerializeField] private float dodge_timeToLong = 0.3f;
+    [SerializeField] private float dodge_MaxHoldTime = 0.4f;
+    [SerializeField] private float dodge_TimeToLong = 0.3f;
 
     [Header("Movement")]
     // Movement Inputs
@@ -25,45 +25,51 @@ public class PlayerInputHandler : MonoBehaviour
     //[SerializeField] private KeyCode KChorizontalRight = KeyCode.D;
 
     [Header("Attack")]
-    private bool attack_Input;
-    private float attack_Timer;
     [SerializeField] private KeyCode KCattack_Input = KeyCode.Mouse0;
     [SerializeField] private KeyCode gp_KCattack_Input = KeyCode.JoystickButton2;
+    private bool attack_Input;
+    private bool attack_Release_Input;
+    private bool attack_Input_WaitingForRelease;
+    private float attack_Timer;
+
+    [Space]
+    [SerializeField] private float attack_TimeToHeavy = 0.3f;
+    [SerializeField] private float attack_MaxHoldTime = 0.6f;
 
     [Header("Camera")]
-    private bool lockon_Input;
     [SerializeField] private KeyCode KClockon_Input = KeyCode.Mouse1;
     [SerializeField] private KeyCode gp_KClockon_Input = KeyCode.JoystickButton3;
+    private bool lockon_Input;
 
     [Header("Dodge")]
+    [SerializeField] private KeyCode KCdodge_Input = KeyCode.Space;
+    [SerializeField] private KeyCode gp_KCdodge_Input = KeyCode.JoystickButton0;
     private bool dodge_Input;
     private bool dodge_release_Input;
     private bool dodge_Input_WaitingForRelease;
     private float dodge_Timer;
-    [SerializeField] private KeyCode KCdodge_Input = KeyCode.Space;
-    [SerializeField] private KeyCode gp_KCdodge_Input = KeyCode.JoystickButton0;
 
     [Header("Jump")]
-    private bool jump_Input;
     [SerializeField] private KeyCode KCjump_Input = KeyCode.LeftShift;
     [SerializeField] private KeyCode gp_KCjump_Input = KeyCode.JoystickButton1;
-    
+    private bool jump_Input;
+
     [Header("Powers")]
-    private int power_Input;
     [SerializeField] private KeyCode KCpower1_Input = KeyCode.Q;
     [SerializeField] private KeyCode KCpower2_Input = KeyCode.E;
     [SerializeField] private KeyCode KCpower3_Input = KeyCode.F;
     [SerializeField] private KeyCode gp_KCpower1_Input = KeyCode.JoystickButton4;
     [SerializeField] private KeyCode gp_KCpower2_Input = KeyCode.JoystickButton5;
     [SerializeField] private KeyCode gp_KCpower3_Input = KeyCode.JoystickButton8;
+    private int power_Input;
 
     [Header("Menu")]
-    private bool pause_Input;
-    private bool map_Input;
     [SerializeField] private KeyCode KCpause_Input = KeyCode.Escape;
     [SerializeField] private KeyCode KCmap_Input = KeyCode.M;
     [SerializeField] private KeyCode gp_KCpause_Input = KeyCode.JoystickButton6;
     [SerializeField] private KeyCode gp_KCmap_Input = KeyCode.JoystickButton7;
+    private bool pause_Input;
+    private bool map_Input;
 
     private PlayerStateController _stateController;
 
@@ -89,10 +95,34 @@ public class PlayerInputHandler : MonoBehaviour
         vertical = Input.GetAxisRaw("Vertical");
         horizontal = Input.GetAxisRaw("Horizontal");
 
-        attack_Input = Input.GetKeyDown(KCattack_Input);
-        if (attack_Input == false)
-            attack_Input = Input.GetKey(gp_KCattack_Input);
+        //ATTACK
+        attack_Release_Input = Input.GetKeyUp(KCattack_Input);
+        if (attack_Release_Input == false)
+            attack_Release_Input = Input.GetKeyUp(gp_KCattack_Input);
 
+        //Only Listening to attack if player has released the key between attacks
+        if (attack_Input_WaitingForRelease == false)
+        {
+            attack_Input = Input.GetKey(KCattack_Input);
+            if (attack_Input == false)
+                attack_Input = Input.GetKey(gp_KCattack_Input);
+        }
+        else if (attack_Input_WaitingForRelease && attack_Release_Input)
+        {
+            attack_Input_WaitingForRelease = false;
+            attack_Release_Input = false;
+        }
+        else
+        {
+            attack_Input = false;
+        }
+
+        if (attack_Input)
+        {
+            attack_Timer += delta;
+        }
+
+        //DODGE
         dodge_release_Input = Input.GetKeyUp(KCdodge_Input);
         if (dodge_release_Input == false)
             dodge_release_Input = Input.GetKeyUp(gp_KCdodge_Input);
@@ -104,7 +134,7 @@ public class PlayerInputHandler : MonoBehaviour
             if (dodge_Input == false)
                 dodge_Input = Input.GetKey(gp_KCdodge_Input);
         }
-        else if (dodge_Input_WaitingForRelease & dodge_release_Input)
+        else if (dodge_Input_WaitingForRelease && dodge_release_Input)
         {
             dodge_Input_WaitingForRelease = false;
             dodge_release_Input = false;
@@ -112,6 +142,11 @@ public class PlayerInputHandler : MonoBehaviour
         else
         {
             dodge_Input = false;
+        }
+
+        if (dodge_Input)
+        {
+            dodge_Timer += delta;
         }
 
         lockon_Input = Input.GetKeyDown(KClockon_Input);
@@ -134,16 +169,6 @@ public class PlayerInputHandler : MonoBehaviour
         {
             power_Input = 3;
         }
-
-        if (attack_Input)
-        {
-            attack_Timer += delta;
-        }
-
-        if (dodge_Input)
-        {
-            dodge_Timer += delta;
-        }
     }
 
     void UpdateStates()
@@ -162,28 +187,36 @@ public class PlayerInputHandler : MonoBehaviour
 
 
         //Attacking Input
-        if(attack_Input && attack_Timer > 0.3f)
+        if(attack_Release_Input && attack_Timer > attack_TimeToHeavy)
         {
             _stateController.heavyAttackInput = true;
+            attack_Timer = 0;
         }
-        else if(attack_Input && attack_Timer <= 0.3f)
+        else if(attack_Release_Input && attack_Timer <= attack_TimeToHeavy)
         {
             _stateController.quickAttackInput = true;
+            attack_Timer = 0;
+        }
+        else if (attack_Timer >= attack_MaxHoldTime)
+        {
+            attack_Input_WaitingForRelease = true;
+            _stateController.heavyAttackInput = true;
+            attack_Timer = 0;
         }
 
         //Dodging Input
-        if (dodge_release_Input && dodge_Timer > dodge_timeToLong)
+        if (dodge_release_Input && dodge_Timer > dodge_TimeToLong)
         {
             _stateController.longDodgeInput = true;
             dodge_Timer = 0;
         }
-        else if (dodge_release_Input && dodge_Timer <= dodge_timeToLong)
+        else if (dodge_release_Input && dodge_Timer <= dodge_TimeToLong)
         {
             _stateController.shortDodgeInput = true;
             dodge_Timer = 0;
         }
         //Dodge if held for max time
-        else if (dodge_Timer > dodge_holdMax)
+        else if (dodge_Timer > dodge_MaxHoldTime)
         {
             dodge_Input_WaitingForRelease = true;
             _stateController.longDodgeInput = true;

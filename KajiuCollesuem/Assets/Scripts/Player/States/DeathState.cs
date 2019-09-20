@@ -15,6 +15,7 @@ public class DeathState : BaseState
     public override void Enter()
     {
         stateController._respawnComponent.Dead();
+        stateController._animHandler.Dead();
     }
 
     public override void Exit()

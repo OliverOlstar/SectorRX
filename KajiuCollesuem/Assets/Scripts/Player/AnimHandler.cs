@@ -74,4 +74,19 @@ public class AnimHandler : MonoBehaviour
     {
         _anim.SetBool("OnGround", pOnGround);
     }
+
+    public void Dead()
+    {
+        _anim.SetTrigger("Dead");
+    }
+
+    public void LightAttack()
+    {
+        _anim.SetTrigger("Light Attack");
+    }
+
+    public void HeavyAttack()
+    {
+        _anim.SetTrigger("Heavy Attack");
+    }
 }
