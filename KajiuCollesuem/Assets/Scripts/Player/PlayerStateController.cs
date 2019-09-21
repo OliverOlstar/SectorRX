@@ -48,8 +48,9 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public PlayerDodge _dodgeComponent; // Player's dodge component, access this to
     private PlayerLockOnScript _lockOnComponent;
     [HideInInspector] public PlayerPowerHandler _powerComponent;
-    [HideInInspector] public PlayerRespawn _respawnComponent;
+    [HideInInspector] public PlayerHitbox _hitboxComponent;
 
+    [HideInInspector] public PlayerRespawn _respawnComponent;
     [HideInInspector] public PlayerAttributes _playerAttributes;
     [HideInInspector] public AnimHandler _animHandler;
 
@@ -61,6 +62,8 @@ public class PlayerStateController : MonoBehaviour
         _dodgeComponent = GetComponent<PlayerDodge>();
         _lockOnComponent = GetComponent<PlayerLockOnScript>();
         _powerComponent = GetComponent<PlayerPowerHandler>();
+        _hitboxComponent = GetComponentInChildren<PlayerHitbox>();
+        _hitboxComponent.gameObject.SetActive(false);
 
         _respawnComponent = GetComponent<PlayerRespawn>();
         _playerAttributes = GetComponent<PlayerAttributes>();

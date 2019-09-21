@@ -43,7 +43,7 @@ public class AI : MonoBehaviour
 
     protected void InheritStart()
     {
-        GetComponent<EnemyAttributes>().enemyHealthUI.SetActive(false);
+        //GetComponent<EnemyAttributes>().enemyHealthUI.SetActive(false);
 
         List<GameObject> patrolPoints = new List<GameObject>();
 
@@ -131,7 +131,7 @@ public class AI : MonoBehaviour
                 agent.destination = player.transform.position;
                 agent.speed = maxSpeed;
             }
-            GetComponent<EnemyAttributes>().enemyHealthUI.SetActive(true);
+            //GetComponent<EnemyAttributes>().enemyHealthUI.SetActive(true);
         }
         else
         {

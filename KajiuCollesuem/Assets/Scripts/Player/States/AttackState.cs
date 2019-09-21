@@ -18,18 +18,20 @@ public class AttackState : BaseState
 
     public override void Enter()
     {
+        stateController._hitboxComponent.gameObject.SetActive(true);
+
         // Stop Coroutine from running
         if (stateController.quickAttackInput)
         {
             stateController._animHandler.LightAttack();
-            attackLength = 1f;
+            attackLength = 1.2f;
             // run code from attack component
         }
 
         if (stateController.heavyAttackInput)
         {
             stateController._animHandler.HeavyAttack();
-            attackLength = 2f;
+            attackLength = 2.4f;
             // run code from the attack component
         }
 
@@ -43,6 +45,7 @@ public class AttackState : BaseState
 
     public override void Exit()
     {
+        stateController._hitboxComponent.gameObject.SetActive(false);
         stateController.quickAttackInput = false;
         stateController.heavyAttackInput = false;
         stateController.powerInput = 0;

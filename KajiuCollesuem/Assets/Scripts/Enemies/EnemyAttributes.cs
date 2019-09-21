@@ -7,82 +7,43 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
 {
     public int startHealth = 100;
     public int currentHealth;
+    
     private Slider healthSlider;
+    public GameObject enemyHealthBar;
 
-    AI enemyhealthUI;
-    public GameObject enemyHealthUI;
-    private GameObject player;
+    private Camera _camera;
+    private Animator _anim;
 
-    public RectTransform healthBar;
-    private Camera cam;
-
-    public int playerDamage = 5;
-
-    Animator anim;
-
-    bool isDead;
-    bool damaged;
+    private bool isDead;
 
     // Use this for initialization
     void Start()
     {
-        anim = GetComponent<Animator>();
+        _anim = GetComponent<Animator>();
         currentHealth = startHealth;
 
-        healthSlider = GetComponentInChildren<Slider>();
+        healthSlider = enemyHealthBar.GetComponentInChildren<Slider>();
 
-        enemyHealthUI.SetActive(false);
-        cam = Camera.main;
-    }
+        //if (enemyHealthBar)
+        //    enemyHealthBar.SetActive(false);
 
-    // Update is called once per frame
-    void Update()
-    {
-        //set rotation of health bar
-        healthBar.rotation = cam.transform.rotation;
+        _camera = Camera.main;
     }
 
     public void TakeDamage(int pAmount)
     {
-        damaged = true;
         currentHealth -= pAmount;
-        healthSlider.value = currentHealth;
+
+        //if (healthSlider)
+            healthSlider.value = (float)currentHealth/startHealth;
 
         if (currentHealth <= 0 && !isDead)
-        {
             Death();
-        }
     }
 
     void Death()
     {
         isDead = true;
-
-        EnemyDead();
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.tag == "Player")
-        {
-            TakeDamage(playerDamage);
-        }
-
-        // Destroy enemy if they pass through boss wall
-        if(collision.gameObject.tag == "BossWall")
-        {
-            Destroy(this);
-        }
-    }
-
-    void EnemyDead()
-    {
         Destroy(gameObject);
-    }
-
-    IEnumerator HealthVanish()
-    {
-        yield return new WaitForSeconds(0.0f);
-        enemyHealthUI.SetActive(false);
     }
 }
