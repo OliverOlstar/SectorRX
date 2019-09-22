@@ -5,40 +5,47 @@ using UnityEngine.UI;
 
 public class EnemyAttributes : MonoBehaviour, IAttributes
 {
-    public int startHealth = 100;
-    public int currentHealth;
+    [SerializeField] private int startHealth = 100;
+    private int currentHealth;
     
-    private Slider healthSlider;
-    public GameObject enemyHealthBar;
+    [SerializeField] private float healthDisplayLength = 2f;
 
-    private Camera _camera;
-    private Animator _anim;
+    private Slider healthSlider;
+    [SerializeField] private GameObject enemyHealthBar;
 
     private bool isDead;
 
     // Use this for initialization
     void Start()
     {
-        _anim = GetComponent<Animator>();
         currentHealth = startHealth;
-
-        healthSlider = enemyHealthBar.GetComponentInChildren<Slider>();
-
-        //if (enemyHealthBar)
-        //    enemyHealthBar.SetActive(false);
-
-        _camera = Camera.main;
+        
+        if (enemyHealthBar)
+        {
+            healthSlider = enemyHealthBar.GetComponentInChildren<Slider>();
+            enemyHealthBar.SetActive(false);
+        }
     }
 
     public void TakeDamage(int pAmount)
     {
         currentHealth -= pAmount;
 
-        //if (healthSlider)
+        if (healthSlider)
             healthSlider.value = (float)currentHealth/startHealth;
 
         if (currentHealth <= 0 && !isDead)
             Death();
+
+        StopCoroutine("ShowHealthbar");
+        StartCoroutine("ShowHealthbar");
+    }
+
+    IEnumerator ShowHealthbar()
+    {
+        enemyHealthBar.SetActive(true);
+        yield return new WaitForSeconds(healthDisplayLength);
+        enemyHealthBar.SetActive(false);
     }
 
     void Death()
