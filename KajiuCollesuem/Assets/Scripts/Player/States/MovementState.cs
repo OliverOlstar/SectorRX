@@ -24,8 +24,6 @@ public class MovementState : BaseState
 
     public override Type Tick()
     {
-        //Debug.Log("Run State");
-
         stateController._movementComponent.horizontalInput = stateController.horizontalInput;
         stateController._movementComponent.verticalInput = stateController.verticalInput;
         stateController._movementComponent.jumpInput = stateController.jumpInput;
@@ -46,6 +44,11 @@ public class MovementState : BaseState
         if (stateController._playerAttributes.getHealth() <= 0)
         {
             return typeof(DeathState);
+        }
+
+        if (stateController.Stunned)
+        {
+            return typeof(StunnedState);
         }
 
         return null;

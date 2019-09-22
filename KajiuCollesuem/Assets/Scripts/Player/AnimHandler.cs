@@ -89,4 +89,13 @@ public class AnimHandler : MonoBehaviour
     {
         _anim.SetTrigger("Heavy Attack");
     }
+
+    public void Stunned(bool pLeft)
+    {
+        if (Mathf.Round(Random.value) == 0)
+            _anim.SetBool("ReactLeft", false);
+        else
+            _anim.SetBool("ReactLeft", true);
+        _anim.SetTrigger("React");
+    }
 }

@@ -41,6 +41,7 @@ public class PlayerStateController : MonoBehaviour
 
     // On Ground
     [HideInInspector] public bool OnGround = false;
+    [HideInInspector] public bool Stunned = false;
 
     [Header("State Components")]
     private PlayerStateMachine stateMachine;
@@ -55,6 +56,7 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public AnimHandler _animHandler;
 
     [HideInInspector] public Rigidbody _rb;
+    [HideInInspector] public Transform _Camera;
     
     void Start()
     {
@@ -73,6 +75,7 @@ public class PlayerStateController : MonoBehaviour
         InitializeStateMachine();
 
         _rb = GetComponent<Rigidbody>();
+        _Camera = Camera.main.transform;
     }
 
     void InitializeStateMachine()

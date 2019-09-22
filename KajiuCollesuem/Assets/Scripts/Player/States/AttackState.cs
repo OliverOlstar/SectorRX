@@ -63,6 +63,11 @@ public class AttackState : BaseState
             return typeof(MovementState);
         }
 
+        if (stateController.Stunned)
+        {
+            return typeof(StunnedState);
+        }
+
         return null;
     }
 }

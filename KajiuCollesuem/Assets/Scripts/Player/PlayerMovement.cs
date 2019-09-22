@@ -6,7 +6,6 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Components")]
     private Rigidbody _Rb;
-    private Transform _Camera;
     private PlayerStateController _stateMachine;
 
     [Header("Movement")]
@@ -39,7 +38,6 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         _Rb = GetComponent<Rigidbody>();
-        _Camera = Camera.main.transform;
         _stateMachine = GetComponent<PlayerStateController>();
     }
 
@@ -66,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
             if (OnGround)
             {
                 //Getting Jump direction
-                Vector3 jumpVector = _Camera.parent.TransformDirection(Vector3.forward);
+                Vector3 jumpVector = _stateMachine._Camera.TransformDirection(_stateMachine.movementDir);
 
                 //Setting Force forward and up
                 jumpVector.y = 0;
@@ -90,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
 
         //Move Vector
         Vector3 move = new Vector3(straffe, 0, translation);
-        move = _Camera.TransformDirection(move);
+        move = _stateMachine._Camera.TransformDirection(move);
         move = new Vector3(move.x, 0, move.z);
         move = move.normalized;
             

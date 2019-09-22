@@ -7,6 +7,7 @@ public class StunnedState : BaseState
 {
     PlayerStateController stateController;
 
+     private float stunnedLength = 0.8f;
      private float timer = 0;
 
     public StunnedState(PlayerStateController controller) : base(controller.gameObject)
@@ -16,24 +17,22 @@ public class StunnedState : BaseState
 
     public override void Enter()
     {
-
+        timer = 0;
+        stateController._animHandler.Stunned(true);
+        stateController.Stunned = false;
     }
 
     public override void Exit()
     {
-
+         
     }
 
     public override Type Tick()
     {
-        Debug.Log("Stunned State");
-
         timer += Time.deltaTime;
-        Debug.Log(10 - timer);
 
-        if (timer >= 10)
+        if (timer >= stunnedLength)
         {
-            timer = 0;
             return typeof(MovementState);
         }
 

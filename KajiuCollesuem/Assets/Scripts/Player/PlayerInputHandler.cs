@@ -177,9 +177,9 @@ public class PlayerInputHandler : MonoBehaviour
         _stateController.horizontalInput = horizontal;
         _stateController.verticalInput = vertical;
 
-        Vector3 v = vertical * transform.forward;
-        Vector3 h = horizontal * transform.right;
-        _stateController.movementDir = (v + h).normalized;
+        Vector3 dir = (vertical * transform.forward + horizontal * transform.right).normalized;
+        if (dir != Vector3.zero)
+            _stateController.movementDir = dir;
 
         float m = Mathf.Abs(vertical) + Mathf.Abs(horizontal);
         _stateController.moveAmount = Mathf.Clamp01(m);
