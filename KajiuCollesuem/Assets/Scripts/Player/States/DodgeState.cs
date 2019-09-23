@@ -14,9 +14,7 @@ public class DodgeState : BaseState
 
     public override void Enter()
     {
-        Vector3 vec = stateController._Camera.TransformDirection(stateController.movementDir);
-        vec.y = 0;
-        vec.Normalize();
+        Vector3 vec = new Vector3(stateController.movementDir.x, 0, stateController.movementDir.z).normalized;
 
         if (stateController._dodgeComponent.Dodge(stateController.shortDodgeInput, vec))
             stateController._animHandler.StartDodge(vec);

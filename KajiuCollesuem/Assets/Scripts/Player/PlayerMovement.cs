@@ -64,16 +64,17 @@ public class PlayerMovement : MonoBehaviour
             if (OnGround)
             {
                 //Getting Jump direction
-                Vector3 jumpVector = _stateMachine._Camera.TransformDirection(_stateMachine.movementDir);
+                Vector3 jumpVector = new Vector3(_stateMachine.movementDir.x, 0, _stateMachine.movementDir.z).normalized;
 
-                //Setting Force forward and up
-                jumpVector.y = 0;
-                jumpVector = jumpVector.normalized * jumpForceForward;
+                //Animation
+                _stateMachine._animHandler.StartJump(jumpVector);
+
+                //Adding force amounts
+                jumpVector *= jumpForceForward;
                 jumpVector.y = jumpForceUp * _Rb.mass;
 
                 //Add force
                 _Rb.AddForce(jumpVector, ForceMode.Impulse);
-                _stateMachine._animHandler.StartJump(moveDirection);
             }
 
             jumpInput = false;

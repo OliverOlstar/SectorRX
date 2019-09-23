@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerAttributes : MonoBehaviour, IAttributes
 {
+    private AnimHandler _anim;
+
     [Header("Maxes")]
     [SerializeField] private int _maxHealth = 100;
     [SerializeField] private int _maxShield = 100;
@@ -39,6 +41,8 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     // Start is called before the first frame update
     void Start()
     {
+        _anim = GetComponentInChildren<AnimHandler>();
+
         _health = _maxHealth;
         _shield = _maxShield;
         _power = 0;
@@ -136,9 +140,9 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     }
 
     //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
-    public void TakeDamage(int pAmount)
+    public void TakeDamage(int pAmount, bool pReact)
     {
-        //Debug.Log("Damaging Player " + pAmount);
+        Debug.Log("Damaging Player " + pAmount);
 
         if (_shield >= pAmount)
         {
@@ -170,6 +174,9 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         //    StopCoroutine("powerLossStartDelay");
         //    StartCoroutine("powerLossStartDelay");
         //}
+
+        if (pReact)
+            _anim.Stunned(Random.value < 0.5f);
     }
 
     //COROUTINES ///////////////////////////////////////////////////////////////////////////////////////////

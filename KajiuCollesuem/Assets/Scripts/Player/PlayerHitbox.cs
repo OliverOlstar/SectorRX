@@ -8,11 +8,11 @@ public class PlayerHitbox : MonoBehaviour
 
     private void OnTriggerEnter (Collider other)
     {
-        EnemyAttributes enemyAttributes = other.GetComponent<EnemyAttributes>();
+        IAttributes otherAttributes = other.GetComponent<IAttributes>();
 
-        if (enemyAttributes != null)
+        if (otherAttributes != null)
         {
-            enemyAttributes.TakeDamage(damage);
+            otherAttributes.TakeDamage(damage, true);
         }
     }
 }

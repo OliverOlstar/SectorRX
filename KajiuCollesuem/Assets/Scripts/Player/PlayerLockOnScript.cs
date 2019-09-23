@@ -13,15 +13,13 @@ public class PlayerLockOnScript : MonoBehaviour
     [HideInInspector] public bool lockOnInput = false;
     [HideInInspector] public bool focusedOnScreen = false;
     [HideInInspector] public bool unfocusedOnScreen = false;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         cameraScript = Camera.main.GetComponent<PlayerCamera>();
-        enemiesLayer = LayerMask.NameToLayer("Enemies");
+        enemiesLayer = LayerMask.NameToLayer("Enemy");
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         // TODO make work with pause screen

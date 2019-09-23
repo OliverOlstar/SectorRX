@@ -34,6 +34,10 @@ public class AnimHandler : MonoBehaviour
 
             _anim.SetFloat("Speed", Mathf.Lerp(_anim.GetFloat("Speed"), _stateController._movementComponent.moveDirection.magnitude, Time.deltaTime * _animSpeedDampening));
         }
+        else
+        {
+            _anim.SetFloat("Speed", Mathf.Lerp(_anim.GetFloat("Speed"), 0.1f, Time.deltaTime * _animSpeedDampening));
+        }
 
         //Falling & OnGround
         _anim.SetBool("OnGround", _stateController.OnGround);
@@ -77,7 +81,8 @@ public class AnimHandler : MonoBehaviour
 
     public void Dead()
     {
-        _anim.SetTrigger("Dead");
+        _anim.SetBool("Dead", true);
+        _anim.SetTrigger("Died");
     }
 
     public void LightAttack()
@@ -92,10 +97,7 @@ public class AnimHandler : MonoBehaviour
 
     public void Stunned(bool pLeft)
     {
-        if (Mathf.Round(Random.value) == 0)
-            _anim.SetBool("ReactLeft", false);
-        else
-            _anim.SetBool("ReactLeft", true);
+        _anim.SetBool("ReactLeft", pLeft);
         _anim.SetTrigger("React");
     }
 }

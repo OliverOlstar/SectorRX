@@ -27,7 +27,7 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         }
     }
 
-    public void TakeDamage(int pAmount)
+    public void TakeDamage(int pAmount, bool pReact)
     {
         currentHealth -= pAmount;
 
