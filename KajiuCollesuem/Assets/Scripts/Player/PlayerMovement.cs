@@ -19,9 +19,11 @@ public class PlayerMovement : MonoBehaviour
     private float inputInfluence = 1.0f;
 
     [Header("Jump")]
-    public float jumpForceForward = 5;
+    public float jumpDistance = 5;
+    public float jumpDuration = 5;
     public float jumpForceUp = 4;
 
+    [Space]
     [SerializeField] private float downForceRate = 1f;
     private float downForce = 0;
     [HideInInspector] public bool OnGround;
@@ -29,12 +31,10 @@ public class PlayerMovement : MonoBehaviour
     [Header("Inputs")]
     [HideInInspector] public float horizontalInput = 0;
     [HideInInspector] public float verticalInput = 0;
-
-    [HideInInspector] public bool jumpInput = false;
-
     [HideInInspector] public Vector3 moveDirection;
 
-    // Start is called before the first frame update
+    [HideInInspector] public bool jumpInput = false;
+    
     void Start()
     {
         _Rb = GetComponent<Rigidbody>();
@@ -54,30 +54,37 @@ public class PlayerMovement : MonoBehaviour
         CheckGrounded();
 
         //Jump
-        ArchJump();
+        Jump();
     }
 
-    private void ArchJump()
+    private void Jump()
     {
         if (jumpInput)
         {
             if (OnGround)
             {
-                //Getting Jump direction
+                //Jump Animation
                 Vector3 jumpVector = new Vector3(_stateMachine.movementDir.x, 0, _stateMachine.movementDir.z).normalized;
-
-                //Animation
                 _stateMachine._animHandler.StartJump(jumpVector);
 
-                //Adding force amounts
-                jumpVector *= jumpForceForward;
-                jumpVector.y = jumpForceUp * _Rb.mass;
-
                 //Add force
-                _Rb.AddForce(jumpVector, ForceMode.Impulse);
+                _Rb.AddForce(jumpForceUp * _Rb.mass * Vector3.up, ForceMode.Impulse);
+                StartCoroutine("JumpRoutine", jumpVector * (jumpDistance / jumpDuration) * _Rb.mass);
             }
 
             jumpInput = false;
+        }
+    }
+
+    IEnumerator JumpRoutine(Vector3 pJumpDir)
+    {
+        float timer = 0;
+
+        while (timer <= jumpDuration && disableMovement == false)
+        {
+            _Rb.velocity = new Vector3(pJumpDir.x, _Rb.velocity.y, pJumpDir.z);
+            yield return null;
+            timer += Time.deltaTime;
         }
     }
 
