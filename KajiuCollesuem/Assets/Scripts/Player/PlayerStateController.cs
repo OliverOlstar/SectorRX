@@ -60,6 +60,8 @@ public class PlayerStateController : MonoBehaviour
     
     void Start()
     {
+        movementDir = transform.forward;
+
         _movementComponent = GetComponent<PlayerMovement>();
         _dodgeComponent = GetComponent<PlayerDodge>();
         _lockOnComponent = GetComponent<PlayerLockOnScript>();
