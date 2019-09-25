@@ -21,6 +21,8 @@ public class WolfieMovement : MonoBehaviour
     DirectedGraph enemyPatrol = new DirectedGraph();
     public GameObject patrolPath;
     GameObject currentPatrolDest;
+    int attackDecision = 0;
+    public int enemySpeed;
 
     private enum WolfieState
     {
@@ -208,10 +210,25 @@ public class WolfieMovement : MonoBehaviour
             this.transform.Translate(0, 0, 0.1f);
             anim.SetBool("FiringRange", true);
 
-            if (Vector3.Distance(player.position, this.transform.position) < 2)
+            if (Vector3.Distance(player.position, this.transform.position) < 5
+                && Vector3.Distance(player.position, this.transform.position) > 3)
+            {
+                attackDecision = Random.Range(0, 2);
+                Debug.Log(attackDecision);
+
+                if (attackDecision == 1)
+                {
+                    anim.SetBool("TargetLongRange", true);
+                }
+            }
+
+            if (attackDecision == 0 && Vector3.Distance(player.position, this.transform.position) < 3
+                    && Vector3.Distance(player.position, this.transform.position) > 1)
             {
                 anim.SetBool("TargetCloseRange", true);
             }
+
+
             // anim.SetBool("isPunching", false);
         }
     }
