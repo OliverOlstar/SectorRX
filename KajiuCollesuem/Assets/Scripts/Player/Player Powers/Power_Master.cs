@@ -25,4 +25,14 @@ public class Power_Master : MonoBehaviour, IPower
     {
         Debug.Log("POWER USED!");
     }
+
+    public int GetAnimIndex()
+    {
+        return vars.animationIndex;
+    }
+
+    public int GetPowerRequired()
+    {
+        return vars.powerRequired;
+    }
 }

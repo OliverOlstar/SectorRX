@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 42228720}
   - component: {fileID: 6248598412436936092}
   - component: {fileID: 411584911}
+  - component: {fileID: 8283390653133887026}
   m_Layer: 10
   m_Name: Enemy
   m_TagString: Enemy
@@ -110,6 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 3
   searchZone: 8
+  maxSpeed: 10
   isPatrolling: 0
   searchTimeMax: 60
 --- !u!114 &6248598412436936092
@@ -126,7 +128,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startHealth: 100
   currentHealth: 0
-  healthSlider: {fileID: 1769329461}
   enemyHealthUI: {fileID: 2095754931}
   healthBar: {fileID: 2095754932}
   playerDamage: 5
@@ -152,6 +153,19 @@ NavMeshAgent:
   m_BaseOffset: 1.0000026
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &8283390653133887026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42228719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e3f797afb91288439fa764ce98361ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patrolPath: {fileID: 0}
 --- !u!1 &246159502
 GameObject:
   m_ObjectHideFlags: 0

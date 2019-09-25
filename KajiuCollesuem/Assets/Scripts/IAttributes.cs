@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IAttributes
 {
-    void TakeDamage(int x);
+    void TakeDamage(int x, bool y);
 }

@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Components")]
     private Rigidbody _Rb;
-    private Transform _Camera;
+    private PlayerStateController _stateMachine;
 
     [Header("Movement")]
     public float moveSpeed = 1.0f;
@@ -19,27 +19,26 @@ public class PlayerMovement : MonoBehaviour
     private float inputInfluence = 1.0f;
 
     [Header("Jump")]
-    public float jumpForceForward = 5;
+    public float jumpDistance = 5;
+    public float jumpDuration = 5;
     public float jumpForceUp = 4;
 
+    [Space]
     [SerializeField] private float downForceRate = 1f;
     private float downForce = 0;
-
     [HideInInspector] public bool OnGround;
 
     [Header("Inputs")]
     [HideInInspector] public float horizontalInput = 0;
     [HideInInspector] public float verticalInput = 0;
-
-    [HideInInspector] public bool jumpInput = false;
-
     [HideInInspector] public Vector3 moveDirection;
 
-    // Start is called before the first frame update
+    [HideInInspector] public bool jumpInput = false;
+    
     void Start()
     {
         _Rb = GetComponent<Rigidbody>();
-        _Camera = Camera.main.transform;
+        _stateMachine = GetComponent<PlayerStateController>();
     }
 
     void Update()
@@ -55,28 +54,37 @@ public class PlayerMovement : MonoBehaviour
         CheckGrounded();
 
         //Jump
-        ArchJump();
+        Jump();
     }
 
-    private void ArchJump()
+    private void Jump()
     {
         if (jumpInput)
         {
             if (OnGround)
             {
-                //Getting Jump direction
-                Vector3 jumpVector = _Camera.parent.TransformDirection(Vector3.forward);
-
-                //Setting Force forward and up
-                jumpVector.y = 0;
-                jumpVector = jumpVector.normalized * jumpForceForward;
-                jumpVector.y = jumpForceUp * _Rb.mass;
+                //Jump Animation
+                Vector3 jumpVector = new Vector3(_stateMachine.movementDir.x, 0, _stateMachine.movementDir.z).normalized;
+                _stateMachine._animHandler.StartJump(jumpVector);
 
                 //Add force
-                _Rb.AddForce(jumpVector, ForceMode.Impulse);
+                _Rb.AddForce(jumpForceUp * _Rb.mass * Vector3.up, ForceMode.Impulse);
+                StartCoroutine("JumpRoutine", jumpVector * (jumpDistance / jumpDuration) * _Rb.mass);
             }
 
             jumpInput = false;
+        }
+    }
+
+    IEnumerator JumpRoutine(Vector3 pJumpDir)
+    {
+        float timer = 0;
+
+        while (timer <= jumpDuration && disableMovement == false)
+        {
+            _Rb.velocity = new Vector3(pJumpDir.x, _Rb.velocity.y, pJumpDir.z);
+            yield return null;
+            timer += Time.deltaTime;
         }
     }
 
@@ -88,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
 
         //Move Vector
         Vector3 move = new Vector3(straffe, 0, translation);
-        move = _Camera.TransformDirection(move);
+        move = _stateMachine._Camera.TransformDirection(move);
         move = new Vector3(move.x, 0, move.z);
         move = move.normalized;
             

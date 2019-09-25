@@ -28,7 +28,7 @@ public class PlayerDodge : MonoBehaviour
         _Camera = Camera.main.transform;
     }
 
-    public void Dodge(bool pShortDodge, Vector3 pDirection)
+    public bool Dodge(bool pShortDodge, Vector3 pDirection)
     {
         //Cooldown
         if (Time.time > _dashDelay)
@@ -43,11 +43,14 @@ public class PlayerDodge : MonoBehaviour
                 //Long Dodge
                 StartCoroutine(DodgeRoutine(longDodgeDistance, longDodgeDuration, pDirection));
             }
+
+            return true;
         }
         else
         {
             Debug.Log("Dodge on Cooldown");
             doneDodge = true;
+            return false;
         }
     }
 
