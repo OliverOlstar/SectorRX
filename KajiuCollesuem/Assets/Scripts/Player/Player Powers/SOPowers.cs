@@ -5,9 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Power ScriptableObject", menuName = "Powers/New Power Vars", order = 0)]
 public class SOPowers : ScriptableObject
 {
-    public string dislayName = "Untitled";
     public Sprite icon;
-    [TextArea] public string dislayDiscription = "Description";
+    public string dislayName = "Untitled";
+    [TextArea] public string dislayDescription = "Description";
+
+    [Space]
+    public int animationIndex = 0;
 
     [Space]
     public int powerRequired = 0;

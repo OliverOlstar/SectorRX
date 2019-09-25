@@ -61,6 +61,7 @@ MonoBehaviour:
   lightAttackDamage_S2: 10
   lightAttackDamage_S3: 15
   heavyAttackDamage: 25
+  powerRecivedOnHit: 20
 --- !u!1 &1184346002
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,9 +151,9 @@ GameObject:
   - component: {fileID: 4489995641700635053}
   - component: {fileID: 8844467493756483741}
   - component: {fileID: 7996918551186684739}
+  - component: {fileID: 5397536735001967586}
   - component: {fileID: 1010789244785054995}
   - component: {fileID: 806430450}
-  - component: {fileID: 5397536735001967586}
   - component: {fileID: 806430457}
   - component: {fileID: 4086892133307703399}
   - component: {fileID: 806430449}
@@ -336,6 +337,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab05a3387d03923429480ddd4ec3abcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5397536735001967586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8582934654442581043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ee92f20ca394cc4ea8aefa00433d0d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 100
+  _maxShield: 100
+  _maxPower: 40
+  _shieldRegenStartDelaySeconds: 6
+  _shieldRegenDelaySeconds: 1
+  _shieldRegenAmount: 4
+  _powerLossStartDelaySeconds: 8
+  _powerLossDelaySeconds: 0.3
+  _powerLossAmount: 1
+  _healthSlider: {fileID: 0}
+  _shieldSlider: {fileID: 0}
+  _powerSlider: {fileID: 0}
+  barLengthMultiplier: 1.5
 --- !u!114 &1010789244785054995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,31 +406,6 @@ MonoBehaviour:
   shortDodgeDuration: 0.2
   longDodgeDistance: 8
   longDodgeDuration: 0.3
---- !u!114 &5397536735001967586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8582934654442581043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ee92f20ca394cc4ea8aefa00433d0d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxHealth: 100
-  _maxShield: 100
-  _maxPower: 40
-  _shieldRegenStartDelaySeconds: 6
-  _shieldRegenDelaySeconds: 1
-  _shieldRegenAmount: 4
-  _powerLossStartDelaySeconds: 8
-  _powerLossDelaySeconds: 0.3
-  _powerLossAmount: 1
-  _healthSlider: {fileID: 0}
-  _shieldSlider: {fileID: 0}
-  _powerSlider: {fileID: 0}
-  barLengthMultiplier: 1.5
 --- !u!114 &806430457
 MonoBehaviour:
   m_ObjectHideFlags: 0

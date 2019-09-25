@@ -97,7 +97,15 @@ public class AnimHandler : MonoBehaviour
         _anim.SetBool("Heavy Attack", pHeavy);
         _anim.SetInteger("Combo", _anim.GetInteger("Combo") + 1);
         attackState = 0;
-        Debug.Log("AnimHandler: StartAttack");
+        //Debug.Log("AnimHandler: StartAttack");
+    }
+
+    public void StartPower(int pPowerIndex)
+    {
+        _anim.SetInteger("WhichPower", pPowerIndex);
+        _anim.SetTrigger("Power");
+        attackState = 0;
+        //Debug.Log("AnimHandler: StartAttack");
     }
 
     public void StopAttacking()
@@ -105,9 +113,14 @@ public class AnimHandler : MonoBehaviour
         if (attackState != 1)
             return;
 
-        attackState = 2;
+        LeaveAttackState();
         _anim.SetInteger("Combo", 0);
-        Debug.Log("AnimHandler: StopAttacking");
+        //Debug.Log("AnimHandler: StopAttacking");
+    }
+
+    public void LeaveAttackState()
+    {
+        attackState = 2;
     }
 
     public int GetCurrentCombo()

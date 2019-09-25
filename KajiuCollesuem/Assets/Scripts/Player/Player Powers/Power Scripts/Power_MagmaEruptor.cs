@@ -8,6 +8,6 @@ public class Power_MagmaEruptor : Power_Master, IPower
 
     new public void UsingMe()
     {
-        Debug.Log("Template Power Used");
+        Debug.Log("Magma Power Used");
     }
 }

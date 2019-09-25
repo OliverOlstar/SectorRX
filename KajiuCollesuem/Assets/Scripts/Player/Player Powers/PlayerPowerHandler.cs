@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerPowerHandler : MonoBehaviour
 {
+    private PlayerAttributes playerAttributes;
+
     public enum powers
     {
         MagmaErupter,
@@ -12,16 +14,29 @@ public class PlayerPowerHandler : MonoBehaviour
 
     private List<IPower> _collectedPowers = new List<IPower>();
 
-    public bool UsingPower(int pPowerInput)
+    private void Start()
+    {
+        playerAttributes = GetComponent<PlayerAttributes>();
+    }
+
+    public int UsingPower(int pPowerInput)
     {
         if (pPowerInput > 0 && pPowerInput <= _collectedPowers.Count)
         {
-            _collectedPowers[pPowerInput - 1].UsingMe();
-            return false;
+            if (playerAttributes.getPower() >= _collectedPowers[pPowerInput - 1].GetPowerRequired())
+            {
+                playerAttributes.modifyPower(-_collectedPowers[pPowerInput - 1].GetPowerRequired());
+                _collectedPowers[pPowerInput - 1].UsingMe();
+                return _collectedPowers[pPowerInput - 1].GetAnimIndex();
+            }
+            else
+            {
+                return -2;
+            }
         }
 
         //If no power
-        return true;
+        return -1;
     }
 
     public void AddPower(int pWhichPower)

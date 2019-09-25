@@ -30,11 +30,16 @@ public class PlayerAnimEventHandler : MonoBehaviour
     public void ListenForAttack()
     {
         animHandler.attackState = 1;
-        Debug.Log("AnimEventHandler: ListenForAttack");
+        //Debug.Log("AnimEventHandler: ListenForAttack");
     }
 
     public void LeaveAttacking()
     {
         animHandler.StopAttacking();
+    }
+
+    public void LeaveAttackState()
+    {
+        animHandler.LeaveAttackState();
     }
 }

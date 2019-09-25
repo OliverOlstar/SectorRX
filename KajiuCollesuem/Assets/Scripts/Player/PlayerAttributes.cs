@@ -53,18 +53,21 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         {
             healthRect = _healthSlider.gameObject.GetComponent<RectTransform>();
             healthRect.sizeDelta = new Vector2(_maxHealth * barLengthMultiplier, BAR_HEIGHT);
+            _healthSlider.maxValue = _maxHealth;
         }
 
         if (_shieldSlider)
         {
             shieldRect = _shieldSlider.gameObject.GetComponent<RectTransform>();
             shieldRect.sizeDelta = new Vector2(_maxShield * barLengthMultiplier, BAR_HEIGHT);
+            _shieldSlider.maxValue = _maxShield;
         }
 
         if (_powerSlider)
         {
             powerRect = _powerSlider.gameObject.GetComponent<RectTransform>();
             powerRect.sizeDelta = new Vector2(_maxPower * barLengthMultiplier, BAR_HEIGHT);
+            _powerSlider.maxValue = _maxPower;
         }
     }
 
@@ -119,6 +122,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
         //Change respective bar length
         healthRect.sizeDelta = new Vector2(_maxHealth * barLengthMultiplier, BAR_HEIGHT);
+        _healthSlider.maxValue = _maxHealth;
     }
 
     public void modifyMaxDefense(int pMaxShield)
@@ -128,6 +132,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
         //Change respective bar length
         shieldRect.sizeDelta = new Vector2(_maxShield * barLengthMultiplier, BAR_HEIGHT);
+        _shieldSlider.maxValue = _maxShield;
     }
 
     public void modifyMaxPower(int pMaxPowerGuage)
@@ -137,6 +142,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
         //Change respective bar length
         powerRect.sizeDelta = new Vector2(_maxPower * barLengthMultiplier, BAR_HEIGHT);
+        _powerSlider.maxValue = _maxPower;
     }
 
     //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
@@ -168,15 +174,29 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         }
 
         //Restarting Power Loss over time
-        //if (_power > 0)
-        //{
-        //    StopCoroutine("powerLoss");
-        //    StopCoroutine("powerLossStartDelay");
-        //    StartCoroutine("powerLossStartDelay");
-        //}
+        if (_power > 0)
+        {
+            StopCoroutine("powerLoss");
+            StopCoroutine("powerLossStartDelay");
+            StartCoroutine("powerLossStartDelay");
+        }
 
         if (pReact)
             _anim.Stunned(Random.value < 0.5f);
+    }
+
+    public void RecivePower(int pPower)
+    {
+        modifyPower(pPower);
+        Debug.Log("Power Recieved: " + pPower + ", " + _power);
+
+        //Restarting Power Loss over time
+        if (_power > 0)
+        {
+            StopCoroutine("powerLoss");
+            StopCoroutine("powerLossStartDelay");
+            StartCoroutine("powerLossStartDelay");
+        }
     }
 
     //COROUTINES ///////////////////////////////////////////////////////////////////////////////////////////

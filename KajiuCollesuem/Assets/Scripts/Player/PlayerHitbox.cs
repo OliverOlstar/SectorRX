@@ -10,6 +10,15 @@ public class PlayerHitbox : MonoBehaviour
     [SerializeField] private int heavyAttackDamage = 2;
     private int damage;
 
+    [SerializeField] private int powerRecivedOnHit = 20;
+
+    private PlayerAttributes playerAttributes;
+
+    private void Start()
+    {
+        playerAttributes = GetComponentInParent<PlayerAttributes>();
+    }
+
     private void OnTriggerEnter (Collider other)
     {
         IAttributes otherAttributes = other.GetComponent<IAttributes>();
@@ -17,6 +26,7 @@ public class PlayerHitbox : MonoBehaviour
         if (otherAttributes != null)
         {
             otherAttributes.TakeDamage(damage, true);
+            playerAttributes.RecivePower(powerRecivedOnHit);
         }
     }
 

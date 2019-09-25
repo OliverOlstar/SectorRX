@@ -18,7 +18,7 @@ public class AttackState : BaseState
     public override void Enter()
     {
         //stateController._hitboxComponent.gameObject.SetActive(true); /* Handled by animation events */
-        Debug.Log("AttackState: Enter");
+        //Debug.Log("AttackState: Enter");
         combo = 0;
         Attack();
     }
@@ -29,7 +29,7 @@ public class AttackState : BaseState
         stateController.quickAttackInput = false;
         stateController.heavyAttackInput = false;
         stateController.powerInput = 0;
-        Debug.Log("AttackState: Exit");
+        //Debug.Log("AttackState: Exit");
     }
 
     public override Type Tick()
@@ -69,7 +69,7 @@ public class AttackState : BaseState
     {
         if (stateController.quickAttackInput && combo < 3)
         {
-            Debug.Log("AttackState: Attack");
+            //Debug.Log("AttackState: Attack");
             combo++;
             ClearAttackInputs();
             stateController._animHandler.StartAttack(false, combo);
@@ -77,7 +77,7 @@ public class AttackState : BaseState
 
         if (stateController.heavyAttackInput && combo < 3)
         {
-            Debug.Log("AttackState: Attack");
+            //Debug.Log("AttackState: Attack");
             combo++;
             ClearAttackInputs();
             stateController._animHandler.StartAttack(true, combo);
@@ -86,7 +86,22 @@ public class AttackState : BaseState
         if (stateController.powerInput > 0)
         {
             // run code from the power component
-            done = stateController._powerComponent.UsingPower(stateController.powerInput);
+            int whichPower = stateController._powerComponent.UsingPower(stateController.powerInput);
+
+            if (whichPower == -1)
+            {
+                done = true;
+                Debug.Log("No Power");
+            }
+            else if (whichPower == -2)
+            {
+                done = true;
+                Debug.Log("Not Enough Power");
+            }
+            else
+            {
+                stateController._animHandler.StartPower(whichPower);
+            }
         }
     }
 
