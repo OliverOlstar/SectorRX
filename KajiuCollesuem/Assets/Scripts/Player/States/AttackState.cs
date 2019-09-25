@@ -6,10 +6,9 @@ using UnityEngine;
 public class AttackState : BaseState
 {
     PlayerStateController stateController;
-
-    private float attackLength;
+    
     private bool done = false;
-    private float timer = 0;
+    private int combo = 0;
 
     public AttackState(PlayerStateController controller) : base(controller.gameObject)
     {
@@ -18,48 +17,43 @@ public class AttackState : BaseState
 
     public override void Enter()
     {
-        //stateController._hitboxComponent.gameObject.SetActive(true); // Handled by animation events
-
-        // Stop Coroutine from running
-        if (stateController.quickAttackInput)
-        {
-            stateController._animHandler.LightAttack();
-            attackLength = 1.35f;
-            // run code from attack component
-        }
-
-        if (stateController.heavyAttackInput)
-        {
-            stateController._animHandler.HeavyAttack();
-            attackLength = 1.7f;
-            // run code from the attack component
-        }
-
-        if (stateController.powerInput > 0)
-        {
-            attackLength = 0.5f;
-            // run code from the attack component
-            done = stateController._powerComponent.UsingPower(stateController.powerInput);
-        }
+        //stateController._hitboxComponent.gameObject.SetActive(true); /* Handled by animation events */
+        Debug.Log("AttackState: Enter");
+        combo = 0;
+        Attack();
     }
 
     public override void Exit()
     {
-        //stateController._hitboxComponent.gameObject.SetActive(false); // Handled by animation events
+        //stateController._hitboxComponent.gameObject.SetActive(false); /* Handled by animation events */
         stateController.quickAttackInput = false;
         stateController.heavyAttackInput = false;
         stateController.powerInput = 0;
+        Debug.Log("AttackState: Exit");
     }
 
     public override Type Tick()
     {
         //Debug.Log("Attack State");
-        timer += Time.deltaTime;
-        
-        if (done || timer >= attackLength)
+        switch (stateController._animHandler.attackState)
+        {
+            case 0:
+                ClearAttackInputs();
+                break;
+
+            case 1:
+                Attack();
+                break;
+
+            case 2:
+                done = true;
+                break;
+        }
+        //}
+
+        if (done)
         {
             done = false;
-            timer = 0;
             return typeof(MovementState);
         }
 
@@ -69,5 +63,37 @@ public class AttackState : BaseState
         }
 
         return null;
+    }
+
+    private void Attack()
+    {
+        if (stateController.quickAttackInput && combo < 3)
+        {
+            Debug.Log("AttackState: Attack");
+            combo++;
+            ClearAttackInputs();
+            stateController._animHandler.StartAttack(false, combo);
+        }
+
+        if (stateController.heavyAttackInput && combo < 3)
+        {
+            Debug.Log("AttackState: Attack");
+            combo++;
+            ClearAttackInputs();
+            stateController._animHandler.StartAttack(true, combo);
+        }
+
+        if (stateController.powerInput > 0)
+        {
+            // run code from the power component
+            done = stateController._powerComponent.UsingPower(stateController.powerInput);
+        }
+    }
+
+    private void ClearAttackInputs()
+    {
+        stateController.quickAttackInput = false;
+        stateController.heavyAttackInput = false;
+        stateController.powerInput = 0;
     }
 }

@@ -9,6 +9,8 @@ public class AnimHandler : MonoBehaviour
     private PlayerStateController _stateController;
     private Animator _anim;
 
+    [HideInInspector] public int attackState = 0;
+
     [SerializeField] private float _rotationDampening = 11f;
     [SerializeField] private float _animSpeedDampening = 5f;
 
@@ -19,7 +21,7 @@ public class AnimHandler : MonoBehaviour
         _stateController = GetComponentInParent<PlayerStateController>();
         _anim = GetComponentInChildren<Animator>();
 
-        //Temp (animation's origins are screwed (my b))
+        //Temp (animation's origins are slightly off (my b))
         transform.GetChild(0).localPosition = new Vector3(0, -1.05f, 0);
     }
     
@@ -29,7 +31,12 @@ public class AnimHandler : MonoBehaviour
         {
             if (_stateController._movementComponent.moveDirection != Vector3.zero)
             {
-                transform.forward = Vector3.Lerp(transform.forward, _stateController._movementComponent.moveDirection, Time.deltaTime * _rotationDampening);
+                Vector3 dir = _stateController._movementComponent.moveDirection;
+
+                if (transform.forward.normalized == -_stateController._movementComponent.moveDirection.normalized)
+                    dir += new Vector3(Random.value / 15f, 0, Random.value / 15f);
+
+                transform.forward = Vector3.Lerp(transform.forward, dir, Time.deltaTime * _rotationDampening);
             }
 
             _anim.SetFloat("Speed", Mathf.Lerp(_anim.GetFloat("Speed"), _stateController._movementComponent.moveDirection.magnitude, Time.deltaTime * _animSpeedDampening));
@@ -85,14 +92,30 @@ public class AnimHandler : MonoBehaviour
         _anim.SetTrigger("Died");
     }
 
-    public void LightAttack()
+    public void StartAttack(bool pHeavy, int pCombo)
     {
-        _anim.SetTrigger("Light Attack");
+        _anim.SetBool("Heavy Attack", pHeavy);
+        _anim.SetInteger("Combo", _anim.GetInteger("Combo") + 1);
+        attackState = 0;
+        Debug.Log("AnimHandler: StartAttack");
     }
 
-    public void HeavyAttack()
+    public void StopAttacking()
     {
-        _anim.SetTrigger("Heavy Attack");
+        if (attackState != 1)
+            return;
+
+        attackState = 2;
+        _anim.SetInteger("Combo", 0);
+        Debug.Log("AnimHandler: StopAttacking");
+    }
+
+    public int GetCurrentCombo()
+    {
+        if (_anim.GetBool("Heavy Attack"))
+            return 4;
+        else
+            return _anim.GetInteger("Combo");
     }
 
     public void Stunned(bool pLeft)
