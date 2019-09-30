@@ -6,32 +6,34 @@ public class StatusEffects : MonoBehaviour
 {
     public enum Statuses { Burn, Shock };
 
+    private IAttributes attributes;
+
     void Start()
     {
-
-    }
-    
-    void Update()
-    {
-        
+        attributes = GetComponent<IAttributes>();
     }
 
     public void Effect(Statuses pStatus, float pSeconds)
     {
-        switch (Statuses)
+        switch (pStatus)
         {
             case Statuses.Burn:
-                StartCoroutine("BurnRoutine", pSeconds);
+                StartCoroutine("BurnRoutine", Mathf.RoundToInt(pSeconds + Time.time));
                 break;
 
             case Statuses.Shock:
-
+                
                 break;
         }
     }
 
-    IEnumerator BurnRoutine(float pTime)
+    IEnumerator BurnRoutine(int pTime)
     {
-        yield return new waitForSeconds(pTime);
+        //Burn the player every second
+        while (Time.time < pTime)
+        {
+            attributes.TakeDamage(3, false);
+            yield return new WaitForSeconds(1);
+        }
     }
 }
