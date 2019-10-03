@@ -318,6 +318,7 @@ MonoBehaviour:
   mapInput: 0
   OnGround: 0
   Stunned: 0
+  AttackStateReturnDelay: 0
   _dodgeComponent: {fileID: 0}
   _powerComponent: {fileID: 0}
   _hitboxComponent: {fileID: 0}
@@ -380,9 +381,9 @@ MonoBehaviour:
   disableMovement: 0
   inputInfluenceGrounded: 1
   inputInfluenceInAir: 0.7
-  jumpDistance: 1.4
-  jumpDuration: 0.8
-  jumpForceUp: 12
+  jumpDistance: 1.7
+  jumpDuration: 1
+  jumpForceUp: 17
   downForceRate: 4.5
   OnGround: 1
   horizontalInput: 0

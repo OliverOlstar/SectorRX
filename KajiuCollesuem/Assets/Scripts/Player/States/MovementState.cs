@@ -38,7 +38,17 @@ public class MovementState : BaseState
 
         if (stateController.heavyAttackInput || stateController.quickAttackInput || stateController.powerInput > 0)
         {
-            return typeof(AttackState);
+            if (stateController.AttackStateReturnDelay <= Time.time)
+            {
+                return typeof(AttackState);
+            }
+            else
+            {
+                //If Inputed attack before they can return to the attack state, remove the input
+                stateController.quickAttackInput = false;
+                stateController.heavyAttackInput = false;
+                stateController.powerInput = 0;
+            }
         }
 
         if (stateController._playerAttributes.getHealth() <= 0)

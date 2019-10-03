@@ -42,6 +42,7 @@ public class PlayerStateController : MonoBehaviour
     // On Ground
     [HideInInspector] public bool OnGround = false;
     [HideInInspector] public bool Stunned = false;
+    [HideInInspector] public float AttackStateReturnDelay = 0;
 
     [Header("State Components")]
     private PlayerStateMachine stateMachine;

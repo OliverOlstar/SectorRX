@@ -9,6 +9,7 @@ public class AttackState : BaseState
     
     private bool done = false;
     private int combo = 0;
+    private float AttackStateReturnDelayLength = 0.9f;
 
     public AttackState(PlayerStateController controller) : base(controller.gameObject)
     {
@@ -29,6 +30,8 @@ public class AttackState : BaseState
         stateController.quickAttackInput = false;
         stateController.heavyAttackInput = false;
         stateController.powerInput = 0;
+
+        stateController.AttackStateReturnDelay = Time.time + AttackStateReturnDelayLength;
         //Debug.Log("AttackState: Exit");
     }
 
