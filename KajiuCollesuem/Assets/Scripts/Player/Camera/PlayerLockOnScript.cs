@@ -6,27 +6,29 @@ public class PlayerLockOnScript : MonoBehaviour
 {
     // OLIVER - This script tells the PlayerCamera Script weather to be locked on or not and who to lock on too.
 
+    private PlayerStateController stateController;
     private PlayerCamera cameraScript;
-    private LayerMask enemiesLayer;
-    [SerializeField] private float lockOnRange = 10.0f;
 
-    [HideInInspector] public bool lockOnInput = false;
+    [SerializeField] private LayerMask enemiesLayer;
+    [SerializeField] private float lockOnRange = 10.0f;
+    
     [HideInInspector] public bool focusedOnScreen = false;
     [HideInInspector] public bool unfocusedOnScreen = false;
     
     void Start()
     {
         cameraScript = Camera.main.GetComponent<PlayerCamera>();
-        enemiesLayer = LayerMask.NameToLayer("Enemy");
+        stateController = GetComponent<PlayerStateController>();
     }
     
     void Update()
     {
         // TODO make work with pause screen
         
-        if (lockOnInput == true)
+        if (stateController.lockOnInput == true)
         {
-            lockOnInput = false;
+            Debug.Log("LockOn");
+            stateController.lockOnInput = false;
 
             if (cameraScript.lockOnTarget == null)
             {
@@ -45,7 +47,7 @@ public class PlayerLockOnScript : MonoBehaviour
 
     Transform pickNewTarget()
     {
-        Collider[] possibleTargets = Physics.OverlapSphere(transform.position, lockOnRange, 1<<enemiesLayer);
+        Collider[] possibleTargets = Physics.OverlapSphere(transform.position, lockOnRange, enemiesLayer);
 
         if (possibleTargets.Length == 0)
             return null;
@@ -56,7 +58,6 @@ public class PlayerLockOnScript : MonoBehaviour
         //Finds the two closest options
         for (int i = 0; i < possibleTargets.Length; i++)
         {
-
             float view = Camera.main.WorldToViewportPoint(possibleTargets[i].transform.position).x;
             float bestView = Camera.main.WorldToViewportPoint(possibleTargets[currentClosest].transform.position).x;
 

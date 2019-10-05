@@ -10,6 +10,9 @@ public class PlayerCamera : MonoBehaviour
     private Vector3 _TargetLocalPosition;
 
     public Transform lockOnTarget;
+    [SerializeField] private float lockOnOffset1 = 0;
+    [SerializeField] private float lockOnOffset2 = 0;
+
 
     [Header("Camera Collision")]
     [SerializeField] private LayerMask cameraCollisionLayers;
@@ -90,9 +93,9 @@ public class PlayerCamera : MonoBehaviour
     void LockOnCameraMovement()
     {
         //Locked onto Target
-        Vector2 direction = new Vector2(lockOnTarget.position.z, lockOnTarget.position.x) - new Vector2(_ParentTransform.position.z, _ParentTransform.position.x);
+        Vector2 direction = new Vector2(lockOnTarget.position.z, lockOnTarget.position.x)  - new Vector2(_ParentTransform.position.z, _ParentTransform.position.x) ;
         _LocalRotation.x = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        _LocalRotation.y = (_ParentTransform.position.y - lockOnTarget.position.y * 10) + 20;
+        _LocalRotation.y = _ParentTransform.position.y - lockOnTarget.position.y;
     }
 
     void CameraCollision()
@@ -103,9 +106,9 @@ public class PlayerCamera : MonoBehaviour
         if (hit.point != Vector3.zero)
         {
             hit.point -= _ParentTransform.position;
+            _CameraTansform.localPosition = Vector3.Lerp(_CameraTansform.localPosition, _TargetLocalPosition * Mathf.Clamp((hit.point.magnitude / _TargetLocalPosition.magnitude), cameraCollisionMinDisPercent, 0.5f), Time.deltaTime * cameraCollisionDampening);
             //Debug.Log(hit.point.magnitude / _TargetLocalPosition.magnitude * 2 * 100 + "%");
             //Debug.DrawLine(_ParentTransform.position, hit.point + _ParentTransform.position, Color.red, 0.1f);
-            _CameraTansform.localPosition = Vector3.Lerp(_CameraTansform.localPosition, _TargetLocalPosition * Mathf.Clamp((hit.point.magnitude / _TargetLocalPosition.magnitude), cameraCollisionMinDisPercent, 0.5f), Time.deltaTime * cameraCollisionDampening);
         }
         else
         {
