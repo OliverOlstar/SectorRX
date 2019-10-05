@@ -131,9 +131,12 @@ public class PlayerCamera : MonoBehaviour
                 || CameraMinHeight != pCameraMinHeight || CameraMaxHeight != pCameraMaxHeight || OffSetLeft != pOffSetLeft)
         {
             //Lerping all of the values
-            MouseSensitivity = Mathf.Lerp(MouseSensitivity, pMouseSensitivity, pTransitionSpeed * Time.deltaTime);
-            if (Mathf.Abs(MouseSensitivity - pMouseSensitivity) <= 0.01f)
-                MouseSensitivity = pMouseSensitivity;
+            if (pMouseSensitivity > 0)
+            {
+                MouseSensitivity = Mathf.Lerp(MouseSensitivity, pMouseSensitivity, pTransitionSpeed * Time.deltaTime);
+                if (Mathf.Abs(MouseSensitivity - pMouseSensitivity) <= 0.01f)
+                    MouseSensitivity = pMouseSensitivity;
+            }
 
             TurnDampening = Mathf.Lerp(TurnDampening, pTurnDampening, pTransitionSpeed * Time.deltaTime);
             if (Mathf.Abs(TurnDampening - pTurnDampening) <= 0.01f)
