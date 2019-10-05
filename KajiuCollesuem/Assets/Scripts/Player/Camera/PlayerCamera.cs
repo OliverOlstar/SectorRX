@@ -7,9 +7,16 @@ public class PlayerCamera : MonoBehaviour
     private Transform _CameraTansform;
     private Transform _ParentTransform;
     private Vector3 _LocalRotation;
+    private Vector3 _TargetLocalPosition;
 
     public Transform lockOnTarget;
 
+    [Header("Camera Collision")]
+    [SerializeField] private LayerMask cameraCollisionLayers;
+    [SerializeField] private float cameraCollisionDampening = 20;
+    [SerializeField] [Range(0, 1)] private float cameraCollisionMinDisPercent = 0.1f;
+
+    [Space]
     public float MouseSensitivity = 4f;
     public float TurnDampening = 10f;
     [SerializeField] private float OffSetLeft = 0f;
@@ -33,7 +40,8 @@ public class PlayerCamera : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         //Setting camera distance
-        _CameraTansform.localPosition = new Vector3(-OffSetLeft, 0f, CameraDistance * -1f);
+        _TargetLocalPosition = new Vector3(-OffSetLeft, 0f, CameraDistance * -1f);
+        _CameraTansform.localPosition = _TargetLocalPosition;
     }
 
     void Update()
@@ -54,6 +62,22 @@ public class PlayerCamera : MonoBehaviour
         //Actual Camera Transformations
         Quaternion TargetQ = Quaternion.Euler(_LocalRotation.y, _LocalRotation.x, 0);
         _ParentTransform.rotation = Quaternion.Lerp(_ParentTransform.rotation, TargetQ, Time.deltaTime * TurnDampening);
+
+        //Camera Collision
+        RaycastHit hit;
+        Physics.Raycast(_ParentTransform.position, (_CameraTansform.position - _ParentTransform.position).normalized, out hit, CameraDistance, cameraCollisionLayers);
+        
+        if (hit.point != Vector3.zero)
+        {
+            hit.point -= _ParentTransform.position;
+            //Debug.Log(hit.point.magnitude / _TargetLocalPosition.magnitude * 2 * 100 + "%");
+            //Debug.DrawLine(_ParentTransform.position, hit.point + _ParentTransform.position, Color.red, 0.1f);
+            _CameraTansform.localPosition = Vector3.Lerp(_CameraTansform.localPosition, _TargetLocalPosition * Mathf.Clamp((hit.point.magnitude / _TargetLocalPosition.magnitude), cameraCollisionMinDisPercent, 0.5f), Time.deltaTime * cameraCollisionDampening);
+        }
+        else
+        {
+            _CameraTansform.localPosition = Vector3.Lerp(_CameraTansform.localPosition, _TargetLocalPosition * 0.5f, Time.deltaTime * cameraCollisionDampening);
+        }
     }
 
     void DefaultCameraMovement()
@@ -92,6 +116,7 @@ public class PlayerCamera : MonoBehaviour
 
     public void ChangePlayerCamera(float pOffSetLeft, float pMouseSensitivity, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
     {
+        Debug.Log("Change Camera");
         StopCoroutine("OtherCameraVarsTransition");
         StartCoroutine(OtherCameraVarsTransition(pOffSetLeft, pMouseSensitivity, pTurnDampening, pCameraDistance, pCameraMinHeight, pCameraMaxHeight, pTransitionSpeed));
     }
@@ -127,7 +152,7 @@ public class PlayerCamera : MonoBehaviour
                 OffSetLeft = pOffSetLeft;
 
             //Setting camera distance
-            _CameraTansform.localPosition = new Vector3(-OffSetLeft, 0f, CameraDistance * -1f);
+            _TargetLocalPosition = new Vector3(-OffSetLeft, 0f, CameraDistance * -1f);
 
             yield return null;
         }
