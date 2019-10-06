@@ -41,18 +41,16 @@ public class PlayerLockOnScript : MonoBehaviour
             if (_cameraScript.Idle == false && _cameraScript.lockOnTarget == null)
             {
                 _cameraScript.Idle = true;
-                Debug.Log("Idle");
                 _cameraPivotScript.ChangePlayerCamera(idlePreset, cameraTransSpeed);
             }
         }
         else if (_cameraScript.Idle == true && _cameraScript.lockOnTarget == null)
         {
             _cameraScript.Idle = false;
-            Debug.Log("Default");
             _cameraPivotScript.ChangePlayerCamera(defaultPreset, cameraTransSpeed);
         }
 
-        //Toggle LockOn
+        //Toggle LockOn Camera
         if (_stateController.lockOnInput == true)
         {
             _stateController.lockOnInput = false;
@@ -64,14 +62,12 @@ public class PlayerLockOnScript : MonoBehaviour
                 if (target != null)
                 {
                     _cameraScript.lockOnTarget = target;
-                    Debug.Log("LockOn");
                     _cameraPivotScript.ChangePlayerCamera(lockOnPreset, cameraTransSpeed);
                 }
             }
             else
             {
                 _cameraScript.lockOnTarget = null;
-                Debug.Log("Default");
                 _cameraPivotScript.ChangePlayerCamera(defaultPreset, cameraTransSpeed);
             }
             //else if (Mathf.Abs(Input.GetAxis("Mouse X")) > 0.05f && cameraScript.lockOnTarget != null)

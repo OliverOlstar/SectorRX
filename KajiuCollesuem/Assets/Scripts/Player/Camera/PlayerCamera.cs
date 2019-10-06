@@ -10,8 +10,7 @@ public class PlayerCamera : MonoBehaviour
     private Vector3 _TargetLocalPosition;
 
     public Transform lockOnTarget;
-    [SerializeField] private float lockOnOffset1 = 0;
-    [SerializeField] private float lockOnOffset2 = 0;
+    [SerializeField] private float lockOnXOffset = 0;
 
     [Header("Idle")]
     [SerializeField] private float idleSpinSpeed = 1;
@@ -104,7 +103,7 @@ public class PlayerCamera : MonoBehaviour
     {
         //Locked onto Target
         Vector2 direction = new Vector2(lockOnTarget.position.z, lockOnTarget.position.x)  - new Vector2(_ParentTransform.position.z, _ParentTransform.position.x) ;
-        _LocalRotation.x = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        _LocalRotation.x = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + (lockOnXOffset * OffSetLeft);
         _LocalRotation.y = _ParentTransform.position.y - lockOnTarget.position.y;
     }
 

@@ -240,7 +240,7 @@ public class PlayerInputHandler : MonoBehaviour
             power_Input = 0;
         }
 
-        if (Input.anyKeyDown || Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0 || Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
+        if (Input.anyKeyDown || Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0 || horizontal != 0 || vertical != 0)
         {
             _stateController.LastInputTime = Time.time;
         }
