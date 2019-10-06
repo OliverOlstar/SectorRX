@@ -13,6 +13,9 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float lockOnOffset1 = 0;
     [SerializeField] private float lockOnOffset2 = 0;
 
+    [Header("Idle")]
+    [SerializeField] private float idleSpinSpeed = 1;
+    [SerializeField] private float idleSpinY = 40;
 
     [Header("Camera Collision")]
     [SerializeField] private LayerMask cameraCollisionLayers;
@@ -28,7 +31,10 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float CameraMaxHeight = 90f;
 
     public bool CameraDisabled = false;
+    public bool Idle = false;
     
+    private Coroutine transRoutine;
+
     void Start()
     {
         //Getting Transforms
@@ -52,13 +58,17 @@ public class PlayerCamera : MonoBehaviour
         //Getting Mouse Movement
         if (!CameraDisabled)
         {
-            if (lockOnTarget == null)
+            if (lockOnTarget != null)
             {
-                DefaultCameraMovement();
+                LockOnCameraMovement();
+            }
+            else if (Idle == true)
+            {
+                IdleCameraMovement();
             }
             else
             {
-                LockOnCameraMovement();
+                DefaultCameraMovement();
             }
         }
 
@@ -98,6 +108,12 @@ public class PlayerCamera : MonoBehaviour
         _LocalRotation.y = _ParentTransform.position.y - lockOnTarget.position.y;
     }
 
+    void IdleCameraMovement()
+    {
+        _LocalRotation.x += idleSpinSpeed * Time.deltaTime;
+        _LocalRotation.y = Mathf.Lerp(_LocalRotation.y, idleSpinY, Time.deltaTime);
+    }
+
     void CameraCollision()
     {
         RaycastHit hit;
@@ -124,8 +140,9 @@ public class PlayerCamera : MonoBehaviour
 
     public void ChangePlayerCamera(float pOffSetLeft, float pMouseSensitivity, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
     {
-        StopCoroutine("OtherCameraVarsTransition");
-        StartCoroutine(OtherCameraVarsTransition(pOffSetLeft, pMouseSensitivity, pTurnDampening, pCameraDistance, pCameraMinHeight, pCameraMaxHeight, pTransitionSpeed));
+        if (transRoutine != null)
+            StopCoroutine(transRoutine);
+        transRoutine = StartCoroutine(OtherCameraVarsTransition(pOffSetLeft, pMouseSensitivity, pTurnDampening, pCameraDistance, pCameraMinHeight, pCameraMaxHeight, pTransitionSpeed));
     }
 
     public IEnumerator OtherCameraVarsTransition(float pOffSetLeft, float pMouseSensitivity, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)

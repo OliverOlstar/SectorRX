@@ -8,6 +8,8 @@ public class CameraPivot : MonoBehaviour
     private PlayerCamera _camera;
     public float offSetUp = 0.6f;
 
+    private Coroutine transRoutine;
+
     //For Experimenting
     [Space]
     [SerializeField] private bool runFunc1 = false;
@@ -57,15 +59,19 @@ public class CameraPivot : MonoBehaviour
     // Camera Transition //////////////
     public void ChangePlayerCamera(float pOffSetUp, float pOffSetLeft, float pMouseSensitivity, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
     {
-        StopCoroutine("CameraOffSetTransition");
-        StartCoroutine(CameraOffSetTransition(pOffSetUp, pTransitionSpeed));
+        if (transRoutine != null)
+            StopCoroutine(transRoutine);
+        transRoutine = StartCoroutine(CameraOffSetTransition(pOffSetUp, pTransitionSpeed));
+
         _camera.ChangePlayerCamera(pOffSetLeft, pMouseSensitivity, pTurnDampening, pCameraDistance, pCameraMinHeight, pCameraMaxHeight, pTransitionSpeed);
     }
 
     public void ChangePlayerCamera(SOCamera pPreset, float pTransitionSpeed)
     {
-        StopCoroutine("CameraOffSetTransition");
-        StartCoroutine(CameraOffSetTransition(pPreset.UpOffset, pTransitionSpeed));
+        if (transRoutine != null)
+            StopCoroutine(transRoutine);
+        transRoutine = StartCoroutine(CameraOffSetTransition(pPreset.UpOffset, pTransitionSpeed));
+
         _camera.ChangePlayerCamera(pPreset.LeftOffset, pPreset.Sensitivity, pPreset.TurnDampening, pPreset.Distance, pPreset.MinY, pPreset.MaxY, pTransitionSpeed);
     }
 

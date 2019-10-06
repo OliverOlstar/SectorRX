@@ -46,8 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   offSetUp: 0.6
-  runFunc1: 0
-  DemoVarsPreset: {fileID: 11400000, guid: 0fd6f18ae13c5be4dbf3686890111a6d, type: 2}
+  runFunc1: 1
+  DemoVarsPreset: {fileID: 11400000, guid: 9aed1e3693ccc6149ac1471b451f36be, type: 2}
   runFunc2: 0
   DemoVarOffup: 0.3
   DemoVarOffleft: 0
@@ -153,6 +153,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockOnTarget: {fileID: 0}
+  lockOnOffset1: 0
+  lockOnOffset2: 0
+  idleSpinSpeed: 3
+  idleSpinY: 10
   cameraCollisionLayers:
     serializedVersion: 2
     m_Bits: 1
@@ -165,3 +169,4 @@ MonoBehaviour:
   CameraMinHeight: -8
   CameraMaxHeight: 70
   CameraDisabled: 0
+  Idle: 1

@@ -6,37 +6,73 @@ public class PlayerLockOnScript : MonoBehaviour
 {
     // OLIVER - This script tells the PlayerCamera Script weather to be locked on or not and who to lock on too.
 
-    private PlayerStateController stateController;
-    private PlayerCamera cameraScript;
+    private PlayerStateController _stateController;
+    private PlayerCamera _cameraScript;
+    private CameraPivot _cameraPivotScript;
 
+    [SerializeField] private SOCamera defaultPreset;
+    [SerializeField] private float cameraTransSpeed = 1;
+
+    [Header("LockOn")]
+    [SerializeField] private SOCamera lockOnPreset;
     [SerializeField] private LayerMask enemiesLayer;
     [SerializeField] private float lockOnRange = 10.0f;
     
     [HideInInspector] public bool focusedOnScreen = false;
     [HideInInspector] public bool unfocusedOnScreen = false;
+
+    [Header("Idle")]
+    [SerializeField] private SOCamera idlePreset;
+    [SerializeField] private float TimeUntilIdle = 20f;
     
     void Start()
     {
-        cameraScript = Camera.main.GetComponent<PlayerCamera>();
-        stateController = GetComponent<PlayerStateController>();
+        _cameraScript = Camera.main.GetComponent<PlayerCamera>();
+        _cameraPivotScript = _cameraScript.transform.parent.GetComponent<CameraPivot>();
+        _stateController = GetComponent<PlayerStateController>();
     }
     
     void Update()
     {
         // TODO make work with pause screen
-        
-        if (stateController.lockOnInput == true)
+        //Toggle Idle Camera
+        if (Time.time - _stateController.LastInputTime > TimeUntilIdle)
         {
-            Debug.Log("LockOn");
-            stateController.lockOnInput = false;
-
-            if (cameraScript.lockOnTarget == null)
+            if (_cameraScript.Idle == false && _cameraScript.lockOnTarget == null)
             {
-                cameraScript.lockOnTarget = pickNewTarget();
+                _cameraScript.Idle = true;
+                Debug.Log("Idle");
+                _cameraPivotScript.ChangePlayerCamera(idlePreset, cameraTransSpeed);
+            }
+        }
+        else if (_cameraScript.Idle == true && _cameraScript.lockOnTarget == null)
+        {
+            _cameraScript.Idle = false;
+            Debug.Log("Default");
+            _cameraPivotScript.ChangePlayerCamera(defaultPreset, cameraTransSpeed);
+        }
+
+        //Toggle LockOn
+        if (_stateController.lockOnInput == true)
+        {
+            _stateController.lockOnInput = false;
+
+            if (_cameraScript.lockOnTarget == null)
+            {
+                Transform target = pickNewTarget();
+
+                if (target != null)
+                {
+                    _cameraScript.lockOnTarget = target;
+                    Debug.Log("LockOn");
+                    _cameraPivotScript.ChangePlayerCamera(lockOnPreset, cameraTransSpeed);
+                }
             }
             else
             {
-                cameraScript.lockOnTarget = null;
+                _cameraScript.lockOnTarget = null;
+                Debug.Log("Default");
+                _cameraPivotScript.ChangePlayerCamera(defaultPreset, cameraTransSpeed);
             }
             //else if (Mathf.Abs(Input.GetAxis("Mouse X")) > 0.05f && cameraScript.lockOnTarget != null)
             //{
@@ -69,7 +105,7 @@ public class PlayerLockOnScript : MonoBehaviour
             }
         }
         
-        if (cameraScript.lockOnTarget == possibleTargets[currentClosest].gameObject)
+        if (_cameraScript.lockOnTarget == possibleTargets[currentClosest].gameObject)
         {
             return possibleTargets[secondClosest].gameObject.transform;
         }
