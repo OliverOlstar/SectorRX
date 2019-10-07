@@ -137,50 +137,61 @@ public class PlayerCamera : MonoBehaviour
 
     // Camera Transition //////////////
 
-    public void ChangePlayerCamera(float pOffSetLeft, float pMouseSensitivity, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
+    public void ChangePlayerCamera(float pOffSetLeft, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
     {
         if (transRoutine != null)
             StopCoroutine(transRoutine);
-        transRoutine = StartCoroutine(OtherCameraVarsTransition(pOffSetLeft, pMouseSensitivity, pTurnDampening, pCameraDistance, pCameraMinHeight, pCameraMaxHeight, pTransitionSpeed));
+        transRoutine = StartCoroutine(OtherCameraVarsTransition(pOffSetLeft, pTurnDampening, pCameraDistance, pCameraMinHeight, pCameraMaxHeight, pTransitionSpeed));
     }
 
-    public IEnumerator OtherCameraVarsTransition(float pOffSetLeft, float pMouseSensitivity, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
+    public IEnumerator OtherCameraVarsTransition(float pOffSetLeft, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
     {
-        while (MouseSensitivity != pMouseSensitivity || TurnDampening != pTurnDampening || CameraDistance != pCameraDistance
-                || CameraMinHeight != pCameraMinHeight || CameraMaxHeight != pCameraMaxHeight || OffSetLeft != pOffSetLeft)
-        {
-            //Lerping all of the values
-            if (pMouseSensitivity > 0)
-            {
-                MouseSensitivity = Mathf.Lerp(MouseSensitivity, pMouseSensitivity, pTransitionSpeed * Time.deltaTime);
-                if (Mathf.Abs(MouseSensitivity - pMouseSensitivity) <= 0.01f)
-                    MouseSensitivity = pMouseSensitivity;
-            }
+        short done;
 
+        do {
+            done = 0;
+
+            //Lerping all of the values
             TurnDampening = Mathf.Lerp(TurnDampening, pTurnDampening, pTransitionSpeed * Time.deltaTime);
             if (Mathf.Abs(TurnDampening - pTurnDampening) <= 0.01f)
+            {
                 TurnDampening = pTurnDampening;
+                done++;
+            }
 
             CameraDistance = Mathf.Lerp(CameraDistance, pCameraDistance, pTransitionSpeed * Time.deltaTime);
             if (Mathf.Abs(CameraDistance - pCameraDistance) <= 0.01f)
+            {
                 CameraDistance = pCameraDistance;
+                done++;
+            }
 
             CameraMinHeight = Mathf.Lerp(CameraMinHeight, pCameraMinHeight, pTransitionSpeed * Time.deltaTime);
             if (Mathf.Abs(CameraMinHeight - pCameraMinHeight) <= 0.01f)
+            {
                 CameraMinHeight = pCameraMinHeight;
+                done++;
+            }
 
             CameraMaxHeight = Mathf.Lerp(CameraMaxHeight, pCameraMaxHeight, pTransitionSpeed * Time.deltaTime);
             if (Mathf.Abs(CameraMaxHeight - pCameraMaxHeight) <= 0.01f)
+            {
                 CameraMaxHeight = pCameraMaxHeight;
+                done++;
+            }
 
             OffSetLeft = Mathf.Lerp(OffSetLeft, pOffSetLeft, pTransitionSpeed * Time.deltaTime);
             if (Mathf.Abs(OffSetLeft - pOffSetLeft) <= 0.01f)
+            {
                 OffSetLeft = pOffSetLeft;
+                done++;
+            }
 
             //Setting camera distance
             _TargetLocalPosition = new Vector3(-OffSetLeft, 0f, CameraDistance * -1f);
 
             yield return null;
         }
+        while (done != 5);
     }
 }

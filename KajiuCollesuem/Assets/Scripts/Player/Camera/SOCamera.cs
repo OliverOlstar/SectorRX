@@ -11,10 +11,9 @@ public class SOCamera : ScriptableObject
     public float Distance = 6.0f;
     
     [Header("Input")]
-    public float Sensitivity = 0.0f;
     public float TurnDampening = 20.0f;
 
-    [Space]
+    [Header("Constraints")]
     public float MaxY = 70.0f;
     public float MinY = -8.0f;
 }
