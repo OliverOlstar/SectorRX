@@ -159,7 +159,6 @@ GameObject:
   - component: {fileID: 806430449}
   - component: {fileID: 17874600}
   - component: {fileID: 17874601}
-  - component: {fileID: 17874602}
   m_Layer: 8
   m_Name: TestPlayer
   m_TagString: Player
@@ -492,19 +491,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathLength: 3
---- !u!114 &17874602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8582934654442581043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ec917de4462e1b42b82f8b8c9efc0b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  vars: {fileID: 11400000, guid: 6d6ea06f8d5b49949899e4db9e49897f, type: 2}
 --- !u!1001 &1349502261
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -512,22 +498,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1184346003}
     m_Modifications:
-    - target: {fileID: 100052, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
-      propertyPath: m_Name
-      value: RX
-      objectReference: {fileID: 0}
-    - target: {fileID: 100052, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 100004, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 100050, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 400052, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -583,6 +553,22 @@ PrefabInstance:
     - target: {fileID: 400052, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
       propertyPath: m_LocalScale.z
       value: 1.3333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 100052, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
+      propertyPath: m_Name
+      value: RX
+      objectReference: {fileID: 0}
+    - target: {fileID: 100052, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 100050, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
       propertyPath: m_Controller
