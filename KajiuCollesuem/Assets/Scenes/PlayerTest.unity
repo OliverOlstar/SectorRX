@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -283,6 +283,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829199621649923870, guid: 30d9d8f6955e32149a274cccd0194673,
+        type: 3}
+      propertyPath: m_Name
+      value: Dummy1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30d9d8f6955e32149a274cccd0194673, type: 3}
@@ -638,6 +643,14 @@ PrefabInstance:
       propertyPath: core
       value: 
       objectReference: {fileID: 94496956}
+    - target: {fileID: 806430457, guid: 8e7d410007ab955488e1c836a456382a, type: 3}
+      propertyPath: lockOnRange
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 806430457, guid: 8e7d410007ab955488e1c836a456382a, type: 3}
+      propertyPath: lockOnCheckOffset
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e7d410007ab955488e1c836a456382a, type: 3}
 --- !u!1001 &675847982
@@ -716,6 +729,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829199621649923870, guid: 30d9d8f6955e32149a274cccd0194673,
+        type: 3}
+      propertyPath: m_Name
+      value: Dummy2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30d9d8f6955e32149a274cccd0194673, type: 3}
@@ -1580,6 +1598,11 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 17874585}
+    - target: {fileID: 5688443931053791717, guid: 280b55a2e946809418577ba6f4095e90,
+        type: 3}
+      propertyPath: runFunc1
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 280b55a2e946809418577ba6f4095e90, type: 3}
 --- !u!1001 &1825660913

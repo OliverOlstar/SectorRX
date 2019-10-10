@@ -76,7 +76,7 @@ public class CameraPivot : MonoBehaviour
 
     private IEnumerator CameraOffSetTransition(float pOffSetUp, float pTransitionSpeed)
     {
-        while (Mathf.Abs(offSetUp - pOffSetUp) <= 0.001f)
+        while (Mathf.Abs(offSetUp - pOffSetUp) >= 0.01f)
         {
             offSetUp = Mathf.Lerp(offSetUp, pOffSetUp, pTransitionSpeed * Time.deltaTime);
             yield return null;

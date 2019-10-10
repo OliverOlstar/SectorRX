@@ -17,6 +17,8 @@ public class PlayerLockOnScript : MonoBehaviour
     [SerializeField] private SOCamera lockOnPreset;
     [SerializeField] private LayerMask enemiesLayer;
     [SerializeField] private float lockOnRange = 10.0f;
+    [SerializeField] private float lockOnCheckOffset = 1.0f;
+    [SerializeField] [Range(0,1)] private float DisVsMid = 0.5f;
     
     [HideInInspector] public bool focusedOnScreen = false;
     [HideInInspector] public bool unfocusedOnScreen = false;
@@ -79,28 +81,53 @@ public class PlayerLockOnScript : MonoBehaviour
 
     Transform pickNewTarget()
     {
-        Collider[] possibleTargets = Physics.OverlapSphere(transform.position, lockOnRange, enemiesLayer);
+        Collider[] possibleTargets = Physics.OverlapSphere(transform.position + _cameraScript.transform.forward * lockOnRange / 2 - Vector3.one * lockOnCheckOffset, lockOnRange, enemiesLayer);
 
         if (possibleTargets.Length == 0)
             return null;
 
         int currentClosest = 0;
         int secondClosest = 0;
+        float currentClosestScore = 99999;
+        float secondClosestScore = 99999;
+
+        //for (int i = 0; i < possibleTargets.Length; i++)
+        //{
+        //    float view = Camera.main.WorldToViewportPoint(possibleTargets[i].transform.position).x;
+        //    float bestView = Camera.main.WorldToViewportPoint(possibleTargets[currentClosest].transform.position).x;
+
+        //    if (Mathf.Abs(view - 0.5f) < Mathf.Abs(bestView - 0.5f))
+        //    {
+        //        //if (Vector3.Distance(transform.forward * 5, possibleTargets[i].transform.position) < Vector3.Distance(transform.forward * 5, possibleTargets[currentClosest].transform.position))
+        //        secondClosest = currentClosest;
+        //        currentClosest = i;
+        //    }
+        //}
 
         //Finds the two closest options
         for (int i = 0; i < possibleTargets.Length; i++)
         {
-            float view = Camera.main.WorldToViewportPoint(possibleTargets[i].transform.position).x;
-            float bestView = Camera.main.WorldToViewportPoint(possibleTargets[currentClosest].transform.position).x;
+            float score;
+            score = Vector3.Distance(transform.position, possibleTargets[i].transform.position) * (1 - DisVsMid);
+            Debug.Log("Distance" + score);
+            score += Vector3.Angle(_cameraScript.transform.forward, possibleTargets[i].transform.position - transform.position) * DisVsMid / 2;
+            Debug.Log("Angle" + score);
+            Debug.Log(possibleTargets[i].gameObject.name);
 
-            if (Mathf.Abs(view - 0.5f) < Mathf.Abs(bestView - 0.5f))
+            if (score < currentClosestScore)
             {
-                //if (Vector3.Distance(transform.forward * 5, possibleTargets[i].transform.position) < Vector3.Distance(transform.forward * 5, possibleTargets[currentClosest].transform.position))
                 secondClosest = currentClosest;
+                secondClosestScore = currentClosestScore;
                 currentClosest = i;
+                currentClosestScore = score;
+            }
+            else if (score < secondClosestScore)
+            {
+                secondClosest = i;
+                secondClosestScore = score;
             }
         }
-        
+
         if (_cameraScript.lockOnTarget == possibleTargets[currentClosest].gameObject)
         {
             return possibleTargets[secondClosest].gameObject.transform;

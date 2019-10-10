@@ -152,7 +152,7 @@ public class PlayerCamera : MonoBehaviour
             done = 0;
 
             //Lerping all of the values
-            TurnDampening = Mathf.Lerp(TurnDampening, pTurnDampening, pTransitionSpeed * Time.deltaTime);
+            TurnDampening = Mathf.Lerp(TurnDampening, pTurnDampening, pTransitionSpeed * Time.deltaTime * 10);
             if (Mathf.Abs(TurnDampening - pTurnDampening) <= 0.01f)
             {
                 TurnDampening = pTurnDampening;
