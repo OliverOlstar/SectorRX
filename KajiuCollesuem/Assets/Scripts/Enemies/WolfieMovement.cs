@@ -25,7 +25,7 @@ public class WolfieMovement : MonoBehaviour
     public int enemySpeed;
     Vector3 direction;
     bool decisionMade = false, canShootFireBall = false, canAttack = false;
-    float time = 0;
+    float decisionTime = 0, patrolSwitchTime = 0;
 
     private enum WolfieState
     {
@@ -165,12 +165,18 @@ public class WolfieMovement : MonoBehaviour
         if (Vector3.Distance(transform.position, currentPatrolDest.transform.position) > 2)
         {
             agent.SetDestination(currentPatrolDest.transform.position);
-            //Debug.Log(Vector3.Distance(transform.position, currentPatrolDest.transform.position));
+            Debug.Log(Vector3.Distance(transform.position, currentPatrolDest.transform.position));
         }
 
         else
         {
-            currentPatrolDest = enemyPatrol.FindNode(currentPatrolDest).GetOutgoing()[0].GetData();
+            patrolSwitchTime += Time.deltaTime;
+
+            if (patrolSwitchTime > 5)
+            {
+                currentPatrolDest = enemyPatrol.FindNode(currentPatrolDest).GetOutgoing()[0].GetData();
+                patrolSwitchTime = 0;
+            }
         }
 
         //Swtich States
@@ -180,11 +186,11 @@ public class WolfieMovement : MonoBehaviour
 
     IEnumerator MakeDecision()
     {
-        int decision = Random.Range(2, 100);
+        int decision = Mathf.RoundToInt(Random.Range(0, 1));
 
         if (!decisionMade)
         {
-            if (decision % 4 == 0)
+            if (decision == 0)
             {
                 canShootFireBall = true;
             }
@@ -207,14 +213,14 @@ public class WolfieMovement : MonoBehaviour
         else if (Vector3.Distance(player.position, this.transform.position) > 15.0f)
             state = WolfieState.Idle;
 
-        time += Time.deltaTime;
+        decisionTime += Time.deltaTime;
 
-        yield return new WaitUntil(() => time >= 5);
+        yield return new WaitUntil(() => decisionTime >= 5);
 
         decisionMade = false;
         canShootFireBall = false;
         canAttack = false;
-        time = 0;
+        decisionTime = 0;
     }
 
     void ShootFireball()
