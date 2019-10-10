@@ -1,13 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class PlayerCollectibles : MonoBehaviour
+public class CellCollect : MonoBehaviour
 {
     HUDManager playerHUD;
     public GameObject cell;
-    public GameObject core;
 
     private void Start()
     {
@@ -16,19 +14,12 @@ public class PlayerCollectibles : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Core")
-        {
-            playerHUD.coreUIOn = true;
-            Destroy(collision.gameObject);
-            playerHUD.coreUI.SetActive(true);
-            playerHUD.coreCounter = playerHUD.coreCounter + 1;
-            playerHUD.SetCoreCount();
-        }
+        Vector3 cellOriginalPos = playerHUD.cellUI.transform.position;
 
-        if (collision.gameObject.tag == "Cell")
+        if (collision.gameObject.tag == "Player")
         {
             playerHUD.cellUIOn = true;
-            Destroy(collision.gameObject);
+            Destroy(cell);
             playerHUD.cellUI.SetActive(true);
             playerHUD.cellCounter = playerHUD.cellCounter + 1;
             playerHUD.SetCellCount();
