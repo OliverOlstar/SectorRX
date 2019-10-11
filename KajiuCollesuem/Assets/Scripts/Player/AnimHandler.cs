@@ -95,7 +95,7 @@ public class AnimHandler : MonoBehaviour
     public void StartAttack(bool pHeavy, int pCombo)
     {
         _anim.SetBool("Heavy Attack", pHeavy);
-        _anim.SetInteger("Combo", pCombo /*_anim.GetInteger("Combo") + 1*/);
+        _anim.SetInteger("Combo", _anim.GetInteger("Combo") + 1);
         attackState = 0;
         //Debug.Log("AnimHandler: StartAttack");
     }

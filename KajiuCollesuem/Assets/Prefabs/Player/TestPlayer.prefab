@@ -276,7 +276,7 @@ MonoBehaviour:
   attack_TimeToHeavy: 0.3
   attack_MaxHoldTime: 0.5
   KClockon_Input: 324
-  gp_KClockon_Input: 333
+  gp_KClockon_Input: 324
   KCdodge_Input: 32
   gp_KCdodge_Input: 330
   KCjump_Input: 304
@@ -318,8 +318,6 @@ MonoBehaviour:
   mapInput: 0
   OnGround: 0
   Stunned: 0
-  AttackStateReturnDelay: 0
-  LastInputTime: 0
   _dodgeComponent: {fileID: 0}
   _powerComponent: {fileID: 0}
   _hitboxComponent: {fileID: 0}
@@ -382,9 +380,9 @@ MonoBehaviour:
   disableMovement: 0
   inputInfluenceGrounded: 1
   inputInfluenceInAir: 0.7
-  jumpDistance: 1.7
-  jumpDuration: 1
-  jumpForceUp: 17
+  jumpDistance: 1.4
+  jumpDuration: 0.8
+  jumpForceUp: 12
   downForceRate: 4.5
   OnGround: 1
   horizontalInput: 0
@@ -416,22 +414,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8582934654442581043}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9abbbd8f192f4914a8769326c3b47a35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultPreset: {fileID: 11400000, guid: 0fd6f18ae13c5be4dbf3686890111a6d, type: 2}
-  cameraTransSpeed: 1
-  lockOnPreset: {fileID: 11400000, guid: 9aed1e3693ccc6149ac1471b451f36be, type: 2}
-  enemiesLayer:
-    serializedVersion: 2
-    m_Bits: 512
   lockOnRange: 10
+  lockOnInput: 0
   focusedOnScreen: 0
   unfocusedOnScreen: 0
-  idlePreset: {fileID: 11400000, guid: 67ad0d9b288e04043ae10b57d85fe6c2, type: 2}
-  TimeUntilIdle: 20
 --- !u!114 &4086892133307703399
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,36 +4,38 @@ using UnityEngine;
 
 public class StatusEffects : MonoBehaviour
 {
-    public enum Statuses { Burn, Shock };
+    static StatusEffects instance;
 
-    private IAttributes attributes;
-
+    // Start is called before the first frame update
     void Start()
     {
-        attributes = GetComponent<IAttributes>();
+        instance = this;
     }
 
-    public void Effect(Statuses pStatus, float pSeconds)
+    // Update is called once per frame
+    void Update()
     {
-        switch (pStatus)
-        {
-            case Statuses.Burn:
-                StartCoroutine("BurnRoutine", Mathf.RoundToInt(pSeconds + Time.time));
-                break;
+        
+    }
 
-            case Statuses.Shock:
-                
-                break;
+    static IEnumerator Effect(State state, int seconds)
+    {
+        Debug.Log(state);
+        yield return new WaitForSeconds(seconds);
+        Debug.Log("Player is back to normal");
+    }
+
+    public static void Status(string state)
+    {
+        if (state == "burn")
+        {
+            //start burn corutine
+            instance.StartCoroutine(Effect(State.Burn, 10));
         }
     }
+}
 
-    IEnumerator BurnRoutine(int pTime)
-    {
-        //Burn the player every second
-        while (Time.time < pTime)
-        {
-            attributes.TakeDamage(3, false);
-            yield return new WaitForSeconds(1);
-        }
-    }
+public enum State
+{
+    Burn
 }
