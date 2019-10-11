@@ -78,9 +78,36 @@ public class PlayerLockOnScript : MonoBehaviour
         }
     }
 
-    Transform pickNewTarget()
+    private Transform pickNewTarget()
     {
         Collider[] possibleTargets = Physics.OverlapSphere(transform.position + _cameraScript.transform.forward * lockOnRange / 2, lockOnRange, enemiesLayer);
+
+        if (possibleTargets.Length == 0)
+            return null;
+
+        int currentClosest = 0;
+        float currentClosestScore = 99999;
+
+        //Finds the two closest options
+        for (int i = 0; i < possibleTargets.Length; i++)
+        {
+            float score;
+            score = Vector3.Distance(transform.position, possibleTargets[i].transform.position) * (1 - DisVsMid);
+            score += Vector3.Angle(_cameraScript.transform.forward, possibleTargets[i].transform.position - transform.position) * DisVsMid / 2;
+
+            if (score < currentClosestScore)
+            {
+                currentClosest = i;
+                currentClosestScore = score;
+            }
+        }
+
+        return possibleTargets[currentClosest].gameObject.transform;
+    }
+
+    public Transform changeTarget()
+    {
+        Collider[] possibleTargets = Physics.OverlapSphere(transform.position, lockOnRange * 2, enemiesLayer);
 
         if (possibleTargets.Length == 0)
             return null;
@@ -89,19 +116,6 @@ public class PlayerLockOnScript : MonoBehaviour
         int secondClosest = 0;
         float currentClosestScore = 99999;
         float secondClosestScore = 99999;
-
-        //for (int i = 0; i < possibleTargets.Length; i++)
-        //{
-        //    float view = Camera.main.WorldToViewportPoint(possibleTargets[i].transform.position).x;
-        //    float bestView = Camera.main.WorldToViewportPoint(possibleTargets[currentClosest].transform.position).x;
-
-        //    if (Mathf.Abs(view - 0.5f) < Mathf.Abs(bestView - 0.5f))
-        //    {
-        //        //if (Vector3.Distance(transform.forward * 5, possibleTargets[i].transform.position) < Vector3.Distance(transform.forward * 5, possibleTargets[currentClosest].transform.position))
-        //        secondClosest = currentClosest;
-        //        currentClosest = i;
-        //    }
-        //}
 
         //Finds the two closest options
         for (int i = 0; i < possibleTargets.Length; i++)

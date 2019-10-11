@@ -61,6 +61,8 @@ public class PlayerCamera : MonoBehaviour
             if (lockOnTarget != null)
             {
                 LockOnCameraMovement();
+
+                if (lockOnTarget)
             }
             else if (Idle == true)
             {
@@ -115,6 +117,12 @@ public class PlayerCamera : MonoBehaviour
         _LocalRotation.x += idleSpinSpeed * Time.deltaTime;
         _LocalRotation.y = Mathf.Lerp(_LocalRotation.y, idleSpinY, Time.deltaTime);
     }
+
+
+
+
+
+    // Camera Collision /////////////
 
     void CameraCollision()
     {
