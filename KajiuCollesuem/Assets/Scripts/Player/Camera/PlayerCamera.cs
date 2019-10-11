@@ -11,6 +11,7 @@ public class PlayerCamera : MonoBehaviour
 
     public Transform lockOnTarget;
     [SerializeField] private float lockOnXOffset = 0;
+    [SerializeField] private float lockOnInputInfluence = 0.2f;
 
     [Header("Idle")]
     [SerializeField] private float idleSpinSpeed = 1;
@@ -79,13 +80,13 @@ public class PlayerCamera : MonoBehaviour
         CameraCollision();
     }
 
-    void DefaultCameraMovement()
+    void DefaultCameraMovement(float pInputModifier = 1f)
     {
         //Rotation of the camera based on mouse movement
         if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
         {
-            _LocalRotation.x += Input.GetAxis("Mouse X") * MouseSensitivity;
-            _LocalRotation.y -= Input.GetAxis("Mouse Y") * MouseSensitivity;
+            _LocalRotation.x += Input.GetAxis("Mouse X") * MouseSensitivity * pInputModifier;
+            _LocalRotation.y -= Input.GetAxis("Mouse Y") * MouseSensitivity * pInputModifier;
 
             //Clamping the y rotation to horizon and not flipping over at the top
             if (_LocalRotation.y < CameraMinHeight)
@@ -105,6 +106,8 @@ public class PlayerCamera : MonoBehaviour
         Vector2 direction = new Vector2(lockOnTarget.position.z, lockOnTarget.position.x)  - new Vector2(_ParentTransform.position.z, _ParentTransform.position.x) ;
         _LocalRotation.x = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + (lockOnXOffset * OffSetLeft);
         _LocalRotation.y = _ParentTransform.position.y - lockOnTarget.position.y;
+
+        DefaultCameraMovement(lockOnInputInfluence);
     }
 
     void IdleCameraMovement()

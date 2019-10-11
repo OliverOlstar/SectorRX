@@ -17,7 +17,6 @@ public class PlayerLockOnScript : MonoBehaviour
     [SerializeField] private SOCamera lockOnPreset;
     [SerializeField] private LayerMask enemiesLayer;
     [SerializeField] private float lockOnRange = 10.0f;
-    [SerializeField] private float lockOnCheckOffset = 1.0f;
     [SerializeField] [Range(0,1)] private float DisVsMid = 0.5f;
     
     [HideInInspector] public bool focusedOnScreen = false;
@@ -81,7 +80,7 @@ public class PlayerLockOnScript : MonoBehaviour
 
     Transform pickNewTarget()
     {
-        Collider[] possibleTargets = Physics.OverlapSphere(transform.position + _cameraScript.transform.forward * lockOnRange / 2 - Vector3.one * lockOnCheckOffset, lockOnRange, enemiesLayer);
+        Collider[] possibleTargets = Physics.OverlapSphere(transform.position + _cameraScript.transform.forward * lockOnRange / 2, lockOnRange, enemiesLayer);
 
         if (possibleTargets.Length == 0)
             return null;
@@ -109,10 +108,7 @@ public class PlayerLockOnScript : MonoBehaviour
         {
             float score;
             score = Vector3.Distance(transform.position, possibleTargets[i].transform.position) * (1 - DisVsMid);
-            Debug.Log("Distance" + score);
             score += Vector3.Angle(_cameraScript.transform.forward, possibleTargets[i].transform.position - transform.position) * DisVsMid / 2;
-            Debug.Log("Angle" + score);
-            Debug.Log(possibleTargets[i].gameObject.name);
 
             if (score < currentClosestScore)
             {
