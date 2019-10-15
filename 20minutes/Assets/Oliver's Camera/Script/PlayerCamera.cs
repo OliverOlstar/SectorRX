@@ -9,18 +9,6 @@ public class PlayerCamera : MonoBehaviour
     private Vector3 _LocalRotation;
     private Vector3 _TargetLocalPosition;
 
-    public Transform lockOnTarget;
-    private PlayerLockOnScript lockOnScript;
-
-    [SerializeField] private float lockOnXOffset = 0;
-    [SerializeField] private float lockOnInputInfluence = 0.2f;
-    private float timeToChangeTarget = 0.0f;
-    [SerializeField] private float lockOnChangeDelay = 1.0f;
-
-    [Header("Idle")]
-    [SerializeField] private float idleSpinSpeed = 1;
-    [SerializeField] private float idleSpinY = 40;
-
     [Header("Camera Collision")]
     [SerializeField] private LayerMask cameraCollisionLayers;
     [SerializeField] private float cameraCollisionDampening = 20;
@@ -35,10 +23,7 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float CameraMaxHeight = 90f;
 
     public bool CameraDisabled = false;
-    public bool Idle = false;
     
-    private Coroutine transRoutine;
-
     void Start()
     {
         //Getting Transforms
@@ -62,35 +47,22 @@ public class PlayerCamera : MonoBehaviour
         //Getting Mouse Movement
         if (!CameraDisabled)
         {
-            if (lockOnTarget != null)
-            {
-                LockOnCameraMovement();
-            }
-            else if (Idle == true)
-            {
-                IdleCameraMovement();
-            }
-            else
-            {
-                DefaultCameraMovement();
-            }
+            DefaultCameraMovement();
+            CameraCollision();
         }
 
         //Actual Camera Transformations
         Quaternion TargetQ = Quaternion.Euler(_LocalRotation.y, _LocalRotation.x, 0);
         _ParentTransform.rotation = Quaternion.Lerp(_ParentTransform.rotation, TargetQ, Time.deltaTime * TurnDampening);
-
-        //Camera Collision
-        CameraCollision();
     }
 
-    void DefaultCameraMovement(float pInputModifier = 1f)
+    void DefaultCameraMovement()
     {
         //Rotation of the camera based on mouse movement
         if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
         {
-            _LocalRotation.x += Input.GetAxis("Mouse X") * MouseSensitivity * pInputModifier;
-            _LocalRotation.y -= Input.GetAxis("Mouse Y") * MouseSensitivity * pInputModifier;
+            _LocalRotation.x += Input.GetAxis("Mouse X") * MouseSensitivity;
+            _LocalRotation.y -= Input.GetAxis("Mouse Y") * MouseSensitivity;
 
             //Clamping the y rotation to horizon and not flipping over at the top
             if (_LocalRotation.y < CameraMinHeight)
@@ -104,49 +76,18 @@ public class PlayerCamera : MonoBehaviour
         }
     }
 
-    void LockOnCameraMovement()
-    {
-        //Locked onto Target
-        Vector2 direction = new Vector2(lockOnTarget.position.z, lockOnTarget.position.x)  - new Vector2(_ParentTransform.position.z, _ParentTransform.position.x) ;
-        _LocalRotation.x = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + (lockOnXOffset * OffSetLeft); // Add distance into this line potentially
-        _LocalRotation.y = _ParentTransform.position.y - lockOnTarget.position.y;
-
-        Vector3 _RotTarget = _LocalRotation;
-
-        DefaultCameraMovement(lockOnInputInfluence);
-
-        //Change Target
-        Debug.Log((_LocalRotation - _RotTarget).magnitude);
-        if ((_LocalRotation - _RotTarget).magnitude >= 1.5f && timeToChangeTarget <= Time.time)
-        {
-            timeToChangeTarget = Time.time + lockOnChangeDelay;
-            lockOnTarget = lockOnScript.changeTarget(); //Vector tagent to camera forward but facing mouse input direction
-        }
-    }
-
-    void IdleCameraMovement()
-    {
-        _LocalRotation.x += idleSpinSpeed * Time.deltaTime;
-        _LocalRotation.y = Mathf.Lerp(_LocalRotation.y, idleSpinY, Time.deltaTime);
-    }
-
-
-
-
-
-    // Camera Collision /////////////
-
     void CameraCollision()
     {
+        //Camera Collision
         RaycastHit hit;
         Physics.Raycast(_ParentTransform.position, (_CameraTansform.position - _ParentTransform.position).normalized, out hit, CameraDistance, cameraCollisionLayers);
 
         if (hit.point != Vector3.zero)
         {
             hit.point -= _ParentTransform.position;
-            _CameraTansform.localPosition = Vector3.Lerp(_CameraTansform.localPosition, _TargetLocalPosition * Mathf.Clamp((hit.point.magnitude / _TargetLocalPosition.magnitude), cameraCollisionMinDisPercent, 0.5f), Time.deltaTime * cameraCollisionDampening);
             //Debug.Log(hit.point.magnitude / _TargetLocalPosition.magnitude * 2 * 100 + "%");
             //Debug.DrawLine(_ParentTransform.position, hit.point + _ParentTransform.position, Color.red, 0.1f);
+            _CameraTansform.localPosition = Vector3.Lerp(_CameraTansform.localPosition, _TargetLocalPosition * Mathf.Clamp((hit.point.magnitude / _TargetLocalPosition.magnitude), cameraCollisionMinDisPercent, 0.5f), Time.deltaTime * cameraCollisionDampening);
         }
         else
         {
@@ -156,67 +97,48 @@ public class PlayerCamera : MonoBehaviour
 
 
 
-
-
     // Camera Transition //////////////
 
-    public void ChangePlayerCamera(float pOffSetLeft, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
+    public void ChangePlayerCamera(float pOffSetLeft, float pMouseSensitivity, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
     {
-        if (transRoutine != null)
-            StopCoroutine(transRoutine);
-        transRoutine = StartCoroutine(OtherCameraVarsTransition(pOffSetLeft, pTurnDampening, pCameraDistance, pCameraMinHeight, pCameraMaxHeight, pTransitionSpeed));
+        StopCoroutine("OtherCameraVarsTransition");
+        StartCoroutine(OtherCameraVarsTransition(pOffSetLeft, pMouseSensitivity, pTurnDampening, pCameraDistance, pCameraMinHeight, pCameraMaxHeight, pTransitionSpeed));
     }
 
-    public IEnumerator OtherCameraVarsTransition(float pOffSetLeft, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
+    public IEnumerator OtherCameraVarsTransition(float pOffSetLeft, float pMouseSensitivity, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
     {
-        short done;
-
-        do {
-            done = 0;
-
+        while (MouseSensitivity != pMouseSensitivity || TurnDampening != pTurnDampening || CameraDistance != pCameraDistance
+                || CameraMinHeight != pCameraMinHeight || CameraMaxHeight != pCameraMaxHeight || OffSetLeft != pOffSetLeft)
+        {
             //Lerping all of the values
-            TurnDampening = Mathf.Lerp(TurnDampening, pTurnDampening, pTransitionSpeed * Time.deltaTime * 10);
+            MouseSensitivity = Mathf.Lerp(MouseSensitivity, pMouseSensitivity, pTransitionSpeed * Time.deltaTime);
+            if (Mathf.Abs(MouseSensitivity - pMouseSensitivity) <= 0.01f)
+                MouseSensitivity = pMouseSensitivity;
+
+            TurnDampening = Mathf.Lerp(TurnDampening, pTurnDampening, pTransitionSpeed * Time.deltaTime);
             if (Mathf.Abs(TurnDampening - pTurnDampening) <= 0.01f)
-            {
                 TurnDampening = pTurnDampening;
-                done++;
-            }
 
             CameraDistance = Mathf.Lerp(CameraDistance, pCameraDistance, pTransitionSpeed * Time.deltaTime);
             if (Mathf.Abs(CameraDistance - pCameraDistance) <= 0.01f)
-            {
                 CameraDistance = pCameraDistance;
-                done++;
-            }
 
             CameraMinHeight = Mathf.Lerp(CameraMinHeight, pCameraMinHeight, pTransitionSpeed * Time.deltaTime);
             if (Mathf.Abs(CameraMinHeight - pCameraMinHeight) <= 0.01f)
-            {
                 CameraMinHeight = pCameraMinHeight;
-                done++;
-            }
 
             CameraMaxHeight = Mathf.Lerp(CameraMaxHeight, pCameraMaxHeight, pTransitionSpeed * Time.deltaTime);
             if (Mathf.Abs(CameraMaxHeight - pCameraMaxHeight) <= 0.01f)
-            {
                 CameraMaxHeight = pCameraMaxHeight;
-                done++;
-            }
 
             OffSetLeft = Mathf.Lerp(OffSetLeft, pOffSetLeft, pTransitionSpeed * Time.deltaTime);
             if (Mathf.Abs(OffSetLeft - pOffSetLeft) <= 0.01f)
-            {
                 OffSetLeft = pOffSetLeft;
-                done++;
-            }
 
             //Setting camera distance
             _TargetLocalPosition = new Vector3(-OffSetLeft, 0f, CameraDistance * -1f);
 
             yield return null;
         }
-        while (done != 5);
     }
-
-    public void GiveLockOnScript(PlayerLockOnScript pScript) => lockOnScript = pScript;
 }

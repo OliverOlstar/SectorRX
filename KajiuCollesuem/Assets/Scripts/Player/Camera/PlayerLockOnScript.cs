@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PlayerLockOnScript : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class PlayerLockOnScript : MonoBehaviour
     void Start()
     {
         _cameraScript = Camera.main.GetComponent<PlayerCamera>();
+        _cameraScript.GiveLockOnScript(this);
         _cameraPivotScript = _cameraScript.transform.parent.GetComponent<CameraPivot>();
         _stateController = GetComponent<PlayerStateController>();
     }
@@ -58,7 +60,7 @@ public class PlayerLockOnScript : MonoBehaviour
 
             if (_cameraScript.lockOnTarget == null)
             {
-                Transform target = pickNewTarget();
+                Transform target = pickTarget();
 
                 if (target != null)
                 {
@@ -78,7 +80,7 @@ public class PlayerLockOnScript : MonoBehaviour
         }
     }
 
-    private Transform pickNewTarget()
+    public Transform pickTarget()
     {
         Collider[] possibleTargets = Physics.OverlapSphere(transform.position + _cameraScript.transform.forward * lockOnRange / 2, lockOnRange, enemiesLayer);
 
@@ -105,11 +107,20 @@ public class PlayerLockOnScript : MonoBehaviour
         return possibleTargets[currentClosest].gameObject.transform;
     }
 
-    public Transform changeTarget()
+    public Transform changeTarget(Vector3 pDir)
     {
-        Collider[] possibleTargets = Physics.OverlapSphere(transform.position, lockOnRange * 2, enemiesLayer);
+        List<Collider> possibleTargets = (Physics.OverlapSphere(transform.position, lockOnRange * 2, enemiesLayer)).ToList();
 
-        if (possibleTargets.Length == 0)
+        for (int i = 0; i < possibleTargets.Count; i++)
+        {
+            Vector3 relPosition = possibleTargets[i].transform.position - transform.position;
+            if (Vector3.Distance(relPosition, _cameraScript.transform.forward) >= Vector3.Distance(relPosition, -_cameraScript.transform.forward))
+            {
+                possibleTargets.Remove(possibleTargets[i]);
+            }
+        }
+
+        if (possibleTargets.Count == 0)
             return null;
 
         int currentClosest = 0;
@@ -118,7 +129,7 @@ public class PlayerLockOnScript : MonoBehaviour
         float secondClosestScore = 99999;
 
         //Finds the two closest options
-        for (int i = 0; i < possibleTargets.Length; i++)
+        for (int i = 0; i < possibleTargets.Count; i++)
         {
             float score;
             score = Vector3.Distance(transform.position, possibleTargets[i].transform.position) * (1 - DisVsMid);
@@ -138,11 +149,11 @@ public class PlayerLockOnScript : MonoBehaviour
             }
         }
 
-        if (_cameraScript.lockOnTarget == possibleTargets[currentClosest].gameObject)
+        if (_cameraScript.lockOnTarget == possibleTargets[currentClosest].transform)
         {
-            return possibleTargets[secondClosest].gameObject.transform;
+            return possibleTargets[secondClosest].transform;
         }
 
-        return possibleTargets[currentClosest].gameObject.transform;
+        return possibleTargets[currentClosest].transform;
     }
 }
