@@ -120,7 +120,7 @@ public class PlayerCamera : MonoBehaviour
         if ((_LocalRotation - _RotTarget).magnitude >= 1.5f && timeToChangeTarget <= Time.time)
         {
             timeToChangeTarget = Time.time + lockOnChangeDelay;
-            lockOnTarget = lockOnScript.changeTarget(); //Vector tagent to camera forward but facing mouse input direction
+            //lockOnTarget = lockOnScript.changeTarget(); //Vector tagent to camera forward but facing mouse input direction
         }
     }
 
