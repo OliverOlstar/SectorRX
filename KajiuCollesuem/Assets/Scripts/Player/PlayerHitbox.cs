@@ -25,7 +25,7 @@ public class PlayerHitbox : MonoBehaviour
 
         if (otherAttributes != null)
         {
-            otherAttributes.TakeDamage(damage, true);
+            otherAttributes.TakeDamage(damage, true, playerAttributes.gameObject);
             playerAttributes.RecivePower(powerRecivedOnHit);
         }
     }

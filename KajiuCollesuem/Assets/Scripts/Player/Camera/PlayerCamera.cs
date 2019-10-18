@@ -116,7 +116,7 @@ public class PlayerCamera : MonoBehaviour
         DefaultCameraMovement(lockOnInputInfluence);
 
         //Change Target
-        Debug.Log((_LocalRotation - _RotTarget).magnitude);
+        //Debug.Log((_LocalRotation - _RotTarget).magnitude);
         if ((_LocalRotation - _RotTarget).magnitude >= 1.5f && timeToChangeTarget <= Time.time)
         {
             timeToChangeTarget = Time.time + lockOnChangeDelay;

@@ -27,7 +27,7 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         }
     }
 
-    public void TakeDamage(int pAmount, bool pReact)
+    public void TakeDamage(int pAmount, bool pReact, GameObject pKiller)
     {
         currentHealth -= pAmount;
 
@@ -35,7 +35,7 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
             healthSlider.value = (float)currentHealth/startHealth;
 
         if (currentHealth <= 0 && !isDead)
-            Death();
+            Death(pKiller);
 
         StopCoroutine("ShowHealthbar");
         StartCoroutine("ShowHealthbar");
@@ -48,9 +48,10 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         enemyHealthBar.SetActive(false);
     }
 
-    void Death()
+    void Death(GameObject pKiller)
     {
         isDead = true;
+        pKiller.GetComponent<PlayerLockOnScript>().TargetDead(transform);
         Destroy(gameObject);
     }
 }

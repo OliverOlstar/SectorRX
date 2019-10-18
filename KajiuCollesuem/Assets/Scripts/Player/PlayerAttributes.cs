@@ -146,7 +146,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     }
 
     //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
-    public void TakeDamage(int pAmount, bool pReact)
+    public void TakeDamage(int pAmount, bool pReact, GameObject pKiller)
     {
         Debug.Log("Damaging Player " + pAmount);
 

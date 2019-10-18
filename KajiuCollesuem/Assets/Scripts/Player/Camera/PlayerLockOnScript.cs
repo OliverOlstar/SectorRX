@@ -156,4 +156,14 @@ public class PlayerLockOnScript : MonoBehaviour
 
         return possibleTargets[currentClosest].transform;
     }
+
+    public void TargetDead(Transform pTarget)
+    {
+        //If LockOn Target dies return to default camera
+        if (pTarget == _cameraScript.lockOnTarget)
+        {
+            _cameraScript.lockOnTarget = null;
+            _cameraPivotScript.ChangePlayerCamera(defaultPreset, cameraTransSpeed);
+        }
+    }
 }
