@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Space]
     [SerializeField] private float downForceRate = 1f;
+    [SerializeField] private float downForceTerminal = 5f;
     private float downForce = 0;
     [HideInInspector] public bool OnGround;
 
@@ -121,7 +122,10 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             inputInfluence = inputInfluenceInAir;
-            downForce += downForceRate * Time.deltaTime;
+            if (downForce < downForceTerminal)
+                downForce += downForceRate * Time.deltaTime;
+            else
+                downForce = downForceTerminal;
         }
         
         _Rb.AddForce(Vector3.down * Mathf.Pow(downForce, 2) * _Rb.mass);
