@@ -117,7 +117,8 @@ public class PlayerCamera : MonoBehaviour
 
         //Change Target
         //Debug.Log((_LocalRotation - _RotTarget).magnitude);
-        if ((_LocalRotation - _RotTarget).magnitude >= 10 && timeToChangeTarget <= Time.time)
+        float RequiredPushAmount = ((Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0) ? 10.0f : 1.5f);
+        if ((_LocalRotation - _RotTarget).magnitude >= RequiredPushAmount && timeToChangeTarget <= Time.time)
         {
             timeToChangeTarget = Time.time + lockOnChangeDelay;
             Vector2 inputVector = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
