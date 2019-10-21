@@ -32,7 +32,7 @@ public class StatusEffects : MonoBehaviour
         //Burn the player every second
         while (Time.time < pTime)
         {
-            attributes.TakeDamage(3, false, null);
+            attributes.TakeDamage(3, false);
             yield return new WaitForSeconds(1);
         }
     }

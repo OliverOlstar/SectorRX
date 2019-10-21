@@ -9,7 +9,7 @@ public class AttackState : BaseState
     
     private bool done = false;
     private int combo = 0;
-    private float AttackStateReturnDelayLength = 0.9f;
+    private float AttackStateReturnDelayLength = 0.6f;
 
     public AttackState(PlayerStateController controller) : base(controller.gameObject)
     {

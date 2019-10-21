@@ -146,7 +146,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     }
 
     //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
-    public void TakeDamage(int pAmount, bool pReact, GameObject pKiller)
+    public bool TakeDamage(int pAmount, bool pReact)
     {
         Debug.Log("Damaging Player " + pAmount);
 
@@ -183,6 +183,11 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
         if (pReact)
             _anim.Stunned(Random.value < 0.5f);
+
+        //Return If Dead or Not
+        if (_health <= 0)
+            return true;
+        return false;
     }
 
     public void RecivePower(int pPower)

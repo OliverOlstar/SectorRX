@@ -75,7 +75,7 @@ public class MeleeGrunt : AI
     {
         if (collision.gameObject.name.Contains("Player") && isDash)
         {
-            player.GetComponent<IAttributes>().TakeDamage(10, true, this.gameObject);
+            player.GetComponent<IAttributes>().TakeDamage(10, true);
         }
     }
 }

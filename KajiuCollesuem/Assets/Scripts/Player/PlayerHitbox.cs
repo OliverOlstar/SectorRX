@@ -10,13 +10,20 @@ public class PlayerHitbox : MonoBehaviour
     [SerializeField] private int heavyAttackDamage = 2;
     private int damage;
 
+    [Space]
     [SerializeField] private int powerRecivedOnHit = 20;
 
+    [Header("Time Slow")]
+    [SerializeField] private float timeSlowSeconds = 1f;
+    [SerializeField] private float timeSlowAmount = 1f;
+
     private PlayerAttributes playerAttributes;
+    private PlayerLockOnScript lockOnScript;
 
     private void Start()
     {
         playerAttributes = GetComponentInParent<PlayerAttributes>();
+        lockOnScript = playerAttributes.GetComponent<PlayerLockOnScript>();
     }
 
     private void OnTriggerEnter (Collider other)
@@ -25,9 +32,20 @@ public class PlayerHitbox : MonoBehaviour
 
         if (otherAttributes != null)
         {
-            otherAttributes.TakeDamage(damage, true, playerAttributes.gameObject);
+            if (otherAttributes.TakeDamage(damage, true))
+                lockOnScript.TargetDead(other.transform);
+
             playerAttributes.RecivePower(powerRecivedOnHit);
+
+            StartCoroutine("SlowTime");
         }
+    }
+
+    private IEnumerator SlowTime()
+    {
+        Time.timeScale = timeSlowAmount;
+        yield return new WaitForSecondsRealtime(timeSlowSeconds);
+        Time.timeScale = 1;
     }
 
     public void SetDamage(int pIndex)

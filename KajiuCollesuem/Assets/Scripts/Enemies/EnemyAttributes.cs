@@ -27,18 +27,26 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         }
     }
 
-    public void TakeDamage(int pAmount, bool pReact, GameObject pKiller)
+    public bool TakeDamage(int pAmount, bool pReact)
     {
         currentHealth -= pAmount;
 
         if (healthSlider)
             healthSlider.value = (float)currentHealth/startHealth;
 
-        if (currentHealth <= 0 && !isDead)
-            Death(pKiller);
-
+        //Show Health Bar
         StopCoroutine("ShowHealthbar");
         StartCoroutine("ShowHealthbar");
+
+        //Dead
+        if (currentHealth <= 0 && !isDead)
+        {
+            Death();
+            return true;
+        }
+
+        //Return Alive
+        return false;
     }
 
     IEnumerator ShowHealthbar()
@@ -48,10 +56,9 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         enemyHealthBar.SetActive(false);
     }
 
-    void Death(GameObject pKiller)
+    void Death()
     {
         isDead = true;
-        pKiller.GetComponent<PlayerLockOnScript>().TargetDead(transform);
         Destroy(gameObject);
     }
 }
