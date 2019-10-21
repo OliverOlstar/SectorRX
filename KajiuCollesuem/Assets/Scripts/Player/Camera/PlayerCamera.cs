@@ -117,10 +117,11 @@ public class PlayerCamera : MonoBehaviour
 
         //Change Target
         //Debug.Log((_LocalRotation - _RotTarget).magnitude);
-        if ((_LocalRotation - _RotTarget).magnitude >= 1.5f && timeToChangeTarget <= Time.time)
+        if ((_LocalRotation - _RotTarget).magnitude >= 10 && timeToChangeTarget <= Time.time)
         {
             timeToChangeTarget = Time.time + lockOnChangeDelay;
-            //lockOnTarget = lockOnScript.changeTarget(); //Vector tagent to camera forward but facing mouse input direction
+            Vector2 inputVector = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+            lockOnTarget = lockOnScript.changeTarget(inputVector); //Vector tagent to camera forward but facing mouse input direction
         }
     }
 

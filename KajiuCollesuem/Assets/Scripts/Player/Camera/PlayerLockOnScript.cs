@@ -19,6 +19,7 @@ public class PlayerLockOnScript : MonoBehaviour
     [SerializeField] private LayerMask enemiesLayer;
     [SerializeField] private float lockOnRange = 10.0f;
     [SerializeField] [Range(0,1)] private float DisVsMid = 0.5f;
+    [SerializeField] [Range(0, 359)] private float lockOnAngle = 45;
     
     [HideInInspector] public bool focusedOnScreen = false;
     [HideInInspector] public bool unfocusedOnScreen = false;
@@ -73,88 +74,69 @@ public class PlayerLockOnScript : MonoBehaviour
                 _cameraScript.lockOnTarget = null;
                 _cameraPivotScript.ChangePlayerCamera(defaultPreset, cameraTransSpeed);
             }
-            //else if (Mathf.Abs(Input.GetAxis("Mouse X")) > 0.05f && cameraScript.lockOnTarget != null)
-            //{
-            //cameraScript.lockOnTarget = pickNewTarget();
-            //}
         }
     }
 
     public Transform pickTarget()
     {
-        Collider[] possibleTargets = Physics.OverlapSphere(transform.position + _cameraScript.transform.forward * lockOnRange / 2, lockOnRange, enemiesLayer);
+        //Get Possible Targets
+        List<Collider> possibleTargets = Physics.OverlapSphere(_cameraScript.transform.position + _cameraScript.transform.forward * lockOnRange / 2, lockOnRange, enemiesLayer).ToList();
 
-        if (possibleTargets.Length == 0)
-            return null;
-
-        int currentClosest = 0;
-        float currentClosestScore = 99999;
-
-        //Finds the two closest options
-        for (int i = 0; i < possibleTargets.Length; i++)
-        {
-            float score;
-            score = Vector3.Distance(transform.position, possibleTargets[i].transform.position) * (1 - DisVsMid);
-            score += Vector3.Angle(_cameraScript.transform.forward, possibleTargets[i].transform.position - transform.position) * DisVsMid / 2;
-
-            if (score < currentClosestScore)
-            {
-                currentClosest = i;
-                currentClosestScore = score;
-            }
-        }
-
-        return possibleTargets[currentClosest].gameObject.transform;
-    }
-
-    public Transform changeTarget(Vector3 pDir)
-    {
-        List<Collider> possibleTargets = (Physics.OverlapSphere(transform.position, lockOnRange * 2, enemiesLayer)).ToList();
-
-        for (int i = 0; i < possibleTargets.Count; i++)
-        {
-            Vector3 relPosition = possibleTargets[i].transform.position - transform.position;
-            if (Vector3.Distance(relPosition, _cameraScript.transform.forward) >= Vector3.Distance(relPosition, -_cameraScript.transform.forward))
-            {
-                possibleTargets.Remove(possibleTargets[i]);
-            }
-        }
-
+        //Return NULL if no targets
         if (possibleTargets.Count == 0)
             return null;
 
-        int currentClosest = 0;
-        int secondClosest = 0;
-        float currentClosestScore = 99999;
-        float secondClosestScore = 99999;
+        Vector3 forwardVector = _cameraScript.transform.forward;
 
-        //Finds the two closest options
-        for (int i = 0; i < possibleTargets.Count; i++)
+        //Sort Targets
+        possibleTargets.Sort((col1, col2) => (Vector3.Dot(col2.transform.position - _cameraScript.transform.position, forwardVector)).CompareTo(Vector3.Dot(col1.transform.position - _cameraScript.transform.position, forwardVector)));
+
+        //for (int i = 0; i < possibleTargets.Count; i++)
+        //{
+        //    Debug.DrawLine(possibleTargets[i].transform.position, _cameraScript.transform.position, new Color(1 - 0.45f * i, 0, 0), 20);
+        //}
+
+        //Return Best Target
+        return possibleTargets[0].transform;
+    }
+
+    public Transform changeTarget(Vector2 pInput)
+    {
+        //Get Possible Targets
+        List<Collider> possibleTargets = (Physics.OverlapSphere(_cameraScript.transform.position, lockOnRange * 2, enemiesLayer)).ToList();
+
+        //No other targets than the one already locked onto
+        if (possibleTargets.Count == 1)
+            return possibleTargets[0].transform;
+
+        Vector3 forwardVector = _cameraScript.transform.forward;
+        Vector3 InputVector = _cameraScript.transform.right * pInput.x + _cameraScript.transform.up * pInput.y;
+        InputVector.Normalize();
+        //Debug.DrawLine(_cameraScript.transform.position, _cameraScript.transform.forward + _cameraScript.transform.position, Color.blue, 20);
+        //Debug.DrawLine(_cameraScript.transform.position, _cameraScript.transform.position + InputVector, Color.green, 20);
+
+        float lockOnRad = lockOnAngle * Mathf.Deg2Rad;
+        Vector3 ConeVector = Mathf.Cos(lockOnRad) * _cameraScript.transform.forward + Mathf.Sin(lockOnRad) * InputVector;
+        //Debug.DrawLine(_cameraScript.transform.position, _cameraScript.transform.position + ConeVector, Color.red, 20);
+
+        Vector3 halfwayVector = (ConeVector + _cameraScript.transform.forward).normalized;
+        //Debug.DrawLine(_cameraScript.transform.position, _cameraScript.transform.position + halfwayVector, Color.yellow, 20);
+
+        //Remove Non Options
+        for (int i = possibleTargets.Count - 1; i >= 0; i--)
         {
-            float score;
-            score = Vector3.Distance(transform.position, possibleTargets[i].transform.position) * (1 - DisVsMid);
-            score += Vector3.Angle(_cameraScript.transform.forward, possibleTargets[i].transform.position - transform.position) * DisVsMid / 2;
-
-            if (score < currentClosestScore)
-            {
-                secondClosest = currentClosest;
-                secondClosestScore = currentClosestScore;
-                currentClosest = i;
-                currentClosestScore = score;
-            }
-            else if (score < secondClosestScore)
-            {
-                secondClosest = i;
-                secondClosestScore = score;
-            }
+            if (Vector3.Dot((possibleTargets[i].transform.position - _cameraScript.transform.position).normalized, halfwayVector) < Mathf.Cos(lockOnRad / 2))
+                possibleTargets.Remove(possibleTargets[i]);
         }
 
-        if (_cameraScript.lockOnTarget == possibleTargets[currentClosest].transform)
-        {
-            return possibleTargets[secondClosest].transform;
-        }
+        //Sort Targets
+        possibleTargets.Sort((col1, col2) => (Vector3.Dot(col2.transform.position - _cameraScript.transform.position, forwardVector)).CompareTo(Vector3.Dot(col1.transform.position - _cameraScript.transform.position, forwardVector)));
 
-        return possibleTargets[currentClosest].transform;
+        //Dont Return Same Target
+        if (_cameraScript.lockOnTarget == possibleTargets[0].transform)
+            return possibleTargets[1].transform;
+
+        return possibleTargets[0].transform;
     }
 
     public void TargetDead(Transform pTarget)
