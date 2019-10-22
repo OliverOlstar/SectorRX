@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerRespawn : MonoBehaviour
 {
     [SerializeField] private float deathLength = 3f;
+    [SerializeField] [Range(0,1)] private float deathSlowAmount = 0.2f;
     private static Vector3 currentRespawnPoint = new Vector3(0, 0, 0);
 
     private void Start()
@@ -23,8 +24,11 @@ public class PlayerRespawn : MonoBehaviour
 
     private IEnumerator DeadRoutine()
     {
-        yield return new WaitForSeconds(deathLength);
+        Time.timeScale = deathSlowAmount;
 
+        yield return new WaitForSecondsRealtime(deathLength);
+
+        Time.timeScale = 1.0f;
         //Temp Restart Scene (replace this with the proper scene manager and with a HUD element)
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }

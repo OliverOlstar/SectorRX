@@ -18,7 +18,6 @@ public class PlayerLockOnScript : MonoBehaviour
     [SerializeField] private SOCamera lockOnPreset;
     [SerializeField] private LayerMask enemiesLayer;
     [SerializeField] private float lockOnRange = 10.0f;
-    [SerializeField] [Range(0,1)] private float DisVsMid = 0.5f;
     [SerializeField] [Range(0, 359)] private float lockOnAngle = 45;
     
     [HideInInspector] public bool focusedOnScreen = false;

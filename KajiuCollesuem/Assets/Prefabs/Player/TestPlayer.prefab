@@ -62,8 +62,8 @@ MonoBehaviour:
   lightAttackDamage_S3: 15
   heavyAttackDamage: 25
   powerRecivedOnHit: 5
-  timeSlowSeconds: 0.1
-  timeSlowAmount: 0.25
+  timeSlowSeconds: 0.025
+  timeSlowAmount: 0
 --- !u!1 &1184346002
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +431,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   lockOnRange: 9
-  DisVsMid: 0.5
+  lockOnAngle: 90
   focusedOnScreen: 0
   unfocusedOnScreen: 0
   idlePreset: {fileID: 11400000, guid: 67ad0d9b288e04043ae10b57d85fe6c2, type: 2}
@@ -491,7 +491,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e59be9c88d714649bf60ad0c32f7d51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathLength: 3
+  deathLength: 9
+  deathSlowAmount: 0.3
 --- !u!1001 &1349502261
 PrefabInstance:
   m_ObjectHideFlags: 0
