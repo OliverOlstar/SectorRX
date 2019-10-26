@@ -19,18 +19,15 @@ public class AttackState : BaseState
     public override void Enter()
     {
         //stateController._hitboxComponent.gameObject.SetActive(true); /* Handled by animation events */
-        //Debug.Log("AttackState: Enter");
         combo = 0;
         Attack();
+        //Debug.Log("AttackState: Enter");
     }
 
     public override void Exit()
     {
         //stateController._hitboxComponent.gameObject.SetActive(false); /* Handled by animation events */
-        stateController.quickAttackInput = false;
-        stateController.heavyAttackInput = false;
-        stateController.powerInput = 0;
-
+        ClearAttackInputs();
         stateController.AttackStateReturnDelay = Time.time + AttackStateReturnDelayLength;
         //Debug.Log("AttackState: Exit");
     }
@@ -104,6 +101,7 @@ public class AttackState : BaseState
             else
             {
                 stateController._animHandler.StartPower(whichPower);
+                combo = 3;
             }
         }
     }
