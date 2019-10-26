@@ -16,6 +16,8 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float lockOnInputInfluence = 0.2f;
     private float timeToChangeTarget = 0.0f;
     [SerializeField] private float lockOnChangeDelay = 1.0f;
+    [SerializeField] private float lockOnChangeAmount_KB = 10.0f;
+    [SerializeField] private float lockOnChangeAmount_GP = 1.5f;
 
     [Header("Idle")]
     [SerializeField] private float idleSpinSpeed = 1;
@@ -116,9 +118,9 @@ public class PlayerCamera : MonoBehaviour
         DefaultCameraMovement(lockOnInputInfluence);
 
         //Change Target
-        //Debug.Log((_LocalRotation - _RotTarget).magnitude);
-        float RequiredPushAmount = ((Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0) ? 10.0f : 1.5f);
-        if ((_LocalRotation - _RotTarget).magnitude >= RequiredPushAmount && timeToChangeTarget <= Time.time)
+        Debug.Log((_LocalRotation - _RotTarget).magnitude / MouseSensitivity);
+        float RequiredPushAmount = ((Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0) ? lockOnChangeAmount_KB : lockOnChangeAmount_GP);
+        if ((_LocalRotation - _RotTarget).magnitude >= RequiredPushAmount * MouseSensitivity && timeToChangeTarget <= Time.time)
         {
             timeToChangeTarget = Time.time + lockOnChangeDelay;
             Vector2 inputVector = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
