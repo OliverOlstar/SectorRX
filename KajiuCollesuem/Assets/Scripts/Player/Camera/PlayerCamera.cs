@@ -120,7 +120,7 @@ public class PlayerCamera : MonoBehaviour
         DefaultCameraMovement(lockOnInputInfluence);
 
         //Change Target
-        Debug.Log((_LocalRotation - _RotTarget).magnitude / MouseSensitivity);
+        //Debug.Log((_LocalRotation - _RotTarget).magnitude / MouseSensitivity);
         float RequiredPushAmount = ((Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0) ? lockOnChangeAmount_KB : lockOnChangeAmount_GP);
         if ((_LocalRotation - _RotTarget).magnitude >= RequiredPushAmount * MouseSensitivity && timeToChangeTarget <= Time.time)
         {

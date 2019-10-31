@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using EZCameraShake;
 
 public class PlayerAttributes : MonoBehaviour, IAttributes
 {
@@ -186,7 +187,16 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
         //Return If Dead or Not
         if (_health <= 0)
+        {
+            //Camera Shake
+            CameraShaker.Instance.ShakeOnce(20, 4, 0.4f, 0.3f);
+
             return true;
+        }
+
+        //Camera Shake
+        CameraShaker.Instance.ShakeOnce(1, 2, 0.2f, 0.1f);
+
         return false;
     }
 

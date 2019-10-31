@@ -29,7 +29,7 @@ public class PlayerLockOnScript : MonoBehaviour
     
     void Start()
     {
-        _cameraScript = Camera.main.GetComponent<PlayerCamera>();
+        _cameraScript = Camera.main.GetComponentInParent<PlayerCamera>();
         _cameraScript.GiveLockOnScript(this);
         _cameraPivotScript = _cameraScript.transform.parent.GetComponent<CameraPivot>();
         _stateController = GetComponent<PlayerStateController>();

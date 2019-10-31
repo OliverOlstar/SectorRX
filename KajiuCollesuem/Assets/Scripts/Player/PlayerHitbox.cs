@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
 public class PlayerHitbox : MonoBehaviour
 {
@@ -42,6 +43,9 @@ public class PlayerHitbox : MonoBehaviour
 
             //Recieve Power
             playerAttributes.RecivePower(powerRecivedOnHit);
+
+            //Camera Shake
+            CameraShaker.Instance.ShakeOnce(1, 0.5f, 0.2f, 0.1f);
 
             //Slow Game for a small time on hit
             StartCoroutine("SlowTime");
