@@ -44,13 +44,20 @@ public class patrolScript : MonoBehaviour
         {
             if (waitTime <= 0)
             {
+                Debug.Log("Here");
+
                 patrolSpots.position = new Vector3(Random.Range(minX, maxX), 0, Random.Range(minZ, maxZ));
                 waitTime = startWaitTime;
+                wolfAnim.SetBool("isIdle2", true);
+                wolfAnim.SetBool("isPatrol", false);
+
             }
 
             else
             {
                 waitTime -= Time.deltaTime;
+                //wolfAnim.SetBool("isIdle2", false);
+                wolfAnim.SetBool("isPatrol", true);
             }
 
         }
@@ -63,11 +70,18 @@ public class patrolScript : MonoBehaviour
             wolfAnim.SetBool("isChasing", false);
             wolfAnim.SetBool("isIdle", false);
             wolfAnim.SetBool("isPatrol", true);
+            wolfAnim.SetBool("isIdle2", false);
         }
 
-        else
+        else if (Vector3.Distance(wolfAnim.transform.position, PlayerPosition.position) < 30)
         {
+            
+
+            wolfAnim.SetBool("isChasing", false);
+            wolfAnim.SetBool("isIdle", true);
             wolfAnim.SetBool("isPatrol", false);
+            wolfAnim.SetBool("isIdle2", false);
+
         }
     }
 }

@@ -2,36 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatrolBehaviour : StateMachineBehaviour
+public class Idle2Behaviour : StateMachineBehaviour
 {
-    public Transform PlayerPosition;
     private patrolScript Script;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        PlayerPosition = GameObject.FindGameObjectWithTag("Player").transform;
+        
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (Vector3.Distance(animator.transform.position, PlayerPosition.position) > 30)
-        {
-            Script = GameObject.FindWithTag("Hellhound").GetComponent<patrolScript>();
-            
-            
+        animator.SetBool("isIdle2", true);
 
-         
-
-        }
-
-        else if (Vector3.Distance(animator.transform.position, PlayerPosition.position) < 30)
-        {
-            Script.enabled = false;
-
-           
-        }
+        animator.SetBool("isPatrol", false);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
