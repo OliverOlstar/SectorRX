@@ -55,7 +55,7 @@ public class HUDManager : MonoBehaviour
 
     private void Update()
     {
-        if(cellUIOn)
+        if (cellUIOn)
         {
             StartCoroutine("CellUIOff");
         }
@@ -64,7 +64,7 @@ public class HUDManager : MonoBehaviour
             cellUI.SetActive(false);
         }
 
-        if(coreUIOn)
+        if (coreUIOn)
         {
             StartCoroutine("CoreUIOff");
         }
@@ -96,7 +96,7 @@ public class HUDManager : MonoBehaviour
         yield return new WaitForSeconds(3.5f);
         coreUI.SetActive(false);
         coreUIOn = false;
-    }
+    }   
 
 
     //Menus and Settings Management
