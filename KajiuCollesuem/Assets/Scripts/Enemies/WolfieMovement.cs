@@ -25,7 +25,7 @@ public class WolfieMovement : MonoBehaviour
     public int enemySpeed;
     Vector3 direction;
     bool decisionMade = false, canShootFireBall = false, canAttack = false;
-    float decisionTime = 0, patrolSwitchTime = 0;
+    float decisionTime = 0, patrolSwitchTime = 0, attackPlayerTime = 0;
 
     private enum WolfieState
     {
@@ -60,21 +60,25 @@ public class WolfieMovement : MonoBehaviour
         direction = player.position - this.transform.position;
         direction.y = 0;
 
-        this.transform.rotation = Quaternion.Slerp(this.transform.rotation,
-            Quaternion.LookRotation(direction), 0.1f);
+        //this.transform.rotation = Quaternion.Slerp(this.transform.rotation,
+        //    Quaternion.LookRotation(direction), 0.1f);
 
         switch (state)
         {
             case WolfieState.Idle:
                 StopCoroutine(MakeDecision());
                 Patrol();
+                print("idle");
                 break;
             case WolfieState.SeePlayerInRange:
                 StartCoroutine(MakeDecision());
+                print("in range");
                 break;
+
             case WolfieState.CloseToPlayer:
                 StopCoroutine(MakeDecision());
                 AttackPlayer(direction);
+                print("close to player");
                 break;
         }
 
@@ -136,17 +140,17 @@ public class WolfieMovement : MonoBehaviour
             FireballInstance = Instantiate(fireballPrefab, FBSpawnpoint.position, FBSpawnpoint.rotation) as Rigidbody;
             FireballInstance.AddForce(FBSpawnpoint.forward * 1000);*/
 
-            /*if (Vector3.Distance(transform.position, currentPatrolDest.transform.position) > 2)
-            {
-                agent.SetDestination(currentPatrolDest.transform.position);
-                //Debug.Log(Vector3.Distance(transform.position, currentPatrolDest.transform.position));
-            }
+        /*if (Vector3.Distance(transform.position, currentPatrolDest.transform.position) > 2)
+        {
+            agent.SetDestination(currentPatrolDest.transform.position);
+            //Debug.Log(Vector3.Distance(transform.position, currentPatrolDest.transform.position));
+        }
 
-            else
-            {
-                currentPatrolDest = enemyPatrol.FindNode(currentPatrolDest).GetOutgoing()[0].GetData();
-            }
-        }*/
+        else
+        {
+            currentPatrolDest = enemyPatrol.FindNode(currentPatrolDest).GetOutgoing()[0].GetData();
+        }
+    }*/
 
     }
 
@@ -165,7 +169,7 @@ public class WolfieMovement : MonoBehaviour
         if (Vector3.Distance(transform.position, currentPatrolDest.transform.position) > 2)
         {
             agent.SetDestination(currentPatrolDest.transform.position);
-            Debug.Log(Vector3.Distance(transform.position, currentPatrolDest.transform.position));
+            //Debug.Log(Vector3.Distance(transform.position, currentPatrolDest.transform.position));
         }
 
         else
@@ -199,7 +203,7 @@ public class WolfieMovement : MonoBehaviour
             {
                 canAttack = true;
             }
-            Debug.Log(decision);
+            //Debug.Log(decision);
             decisionMade = true;
         }
 
@@ -260,52 +264,71 @@ public class WolfieMovement : MonoBehaviour
 
     void AttackPlayer(Vector3 pDirection)
     {
-        //if (pDirection.magnitude < 10.0f)
-        //{
-            if (attackDecision == 0)
+        int temp = attackDecision;
+        if (attackDecision == 0)
+        {
+            transform.LookAt(player.position);
+            this.transform.position += this.transform.forward * 0.1f;
+
+            //this.transform.Translate(0, 0, 0.1f);
+            anim.SetBool("FiringRange", false);
+        }
+
+        float distanceToPlayer = Vector3.Distance(player.position, this.transform.position);
+        if (distanceToPlayer < 5
+            && distanceToPlayer > 3
+            && attackPlayerTime <= 0)
+        {
+            transform.LookAt(player);
+            attackDecision = Random.Range(0, 4);
+
+            if (attackDecision == 1 || attackDecision == 2 || attackDecision == 3)
             {
-                this.transform.Translate(0, 0, 0.1f);
-                anim.SetBool("FiringRange", false);
+                attackPlayerTime = 5;
             }
+        }
+        else
+        {
+            attackPlayerTime -= Time.deltaTime;
+        }
 
-            if (Vector3.Distance(player.position, this.transform.position) < 5
-                && Vector3.Distance(player.position, this.transform.position) > 3)
+        if (attackDecision == 1)
+        {
+            anim.SetBool("TargetLongRange", true);
+        }
+
+        else if (attackDecision == 2)
+        {
+            //Move left
+            transform.RotateAround(player.position, new Vector3(0, 0, 1), 20);
+        }
+
+        else if (attackDecision == 3)
+        {
+            //Move right
+            transform.RotateAround(player.position, new Vector3(0, 0, -1), 20);
+        }
+
+        distanceToPlayer = Vector3.Distance(player.position, this.transform.position);
+        if (attackDecision == 4 && distanceToPlayer < 3 && distanceToPlayer > 1)
+        {
+            anim.SetBool("TargetLongRange", false);
+            anim.SetBool("TargetCloseRange", true);
+
+            for (int i = 0; i < 4; ++i)
             {
-                attackDecision = Random.Range(0, 4);
-                Debug.Log(attackDecision);
-
-                if (attackDecision == 1)
-                {
-                    anim.SetBool("TargetLongRange", true);
-                }
-
-                else if (attackDecision == 2)
-                {
-                    //Move left
-                }
-
-                else if (attackDecision == 3)
-                {
-                    //Move right
-                }
+                this.transform.position += this.transform.forward * -0.1f;
             }
+        }
 
-            if (attackDecision == 4 && Vector3.Distance(player.position, this.transform.position) < 3
-                    && Vector3.Distance(player.position, this.transform.position) > 1)
-            {
-                anim.SetBool("TargetLongRange", false); 
-                anim.SetBool("TargetCloseRange", true);
+        distanceToPlayer = Vector3.Distance(player.position, this.transform.position);
+        if (distanceToPlayer < 5)
+            state = WolfieState.SeePlayerInRange;
 
-                for (int i = 0; i < 4; ++i)
-                {
-                this.transform.Translate(0, 0, -0.1f);
-                }
-            }
 
-            if (Vector3.Distance(player.position, this.transform.position) < 5)
-                state = WolfieState.SeePlayerInRange;
-            // anim.SetBool("isPunching", false);
-        //}
+
+
+        //print(temp + " - " + attackDecision);
     }
 
     private void OnTriggerEnter(Collider other)
