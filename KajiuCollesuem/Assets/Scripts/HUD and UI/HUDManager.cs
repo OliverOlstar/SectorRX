@@ -98,7 +98,6 @@ public class HUDManager : MonoBehaviour
         coreUIOn = false;
     }
 
-
     //Menus and Settings Management
     public void GoToOptions()
     {
