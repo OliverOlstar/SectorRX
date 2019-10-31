@@ -10,6 +10,8 @@ public class PlayerHitbox : MonoBehaviour
     [SerializeField] private int heavyAttackDamage = 2;
     private int damage;
 
+    [SerializeField] private float damageMultiplier = 1;
+
     [Space]
     [SerializeField] private int powerRecivedOnHit = 20;
 
@@ -73,5 +75,10 @@ public class PlayerHitbox : MonoBehaviour
                 damage = heavyAttackDamage;
                 break;
         }
+
+        damage = Mathf.RoundToInt(damageMultiplier * damageMultiplier);
     }
+
+    //For Upgrading Attack Damage
+    public void SetDamageMultiplier(float pMult) => damageMultiplier = pMult;
 }
