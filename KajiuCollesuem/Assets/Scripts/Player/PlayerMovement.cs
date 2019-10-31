@@ -81,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float timer = 0;
 
+        //Jump On An Arc
         while (timer <= jumpDuration && disableMovement == false)
         {
             _Rb.velocity = new Vector3(pJumpDir.x, _Rb.velocity.y, pJumpDir.z);
@@ -114,6 +115,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckGrounded()
     {
+        //Change the amount of influence player input has on the player movement based on wether he is grounded or not
         if (OnGround)
         {
             inputInfluence = inputInfluenceGrounded;
@@ -122,6 +124,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             inputInfluence = inputInfluenceInAir;
+            //Add force downwards which adds ontop of gravity
             if (downForce < downForceTerminal)
                 downForce += downForceRate * Time.deltaTime;
             else

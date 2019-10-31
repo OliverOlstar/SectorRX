@@ -59,6 +59,8 @@ public class PlayerCamera : MonoBehaviour
         _CameraTansform.localPosition = _TargetLocalPosition;
     }
 
+    public void GiveLockOnScript(PlayerLockOnScript pScript) => lockOnScript = pScript;
+
     void Update()
     {
         //Getting Mouse Movement
@@ -130,6 +132,7 @@ public class PlayerCamera : MonoBehaviour
 
     void IdleCameraMovement()
     {
+        //Slowly Rotate
         _LocalRotation.x += idleSpinSpeed * Time.deltaTime;
         _LocalRotation.y = Mathf.Lerp(_LocalRotation.y, idleSpinY, Time.deltaTime);
     }
@@ -138,8 +141,7 @@ public class PlayerCamera : MonoBehaviour
 
 
 
-    // Camera Collision /////////////
-
+    // Camera Collision //////////////
     void CameraCollision()
     {
         RaycastHit hit;
@@ -161,9 +163,7 @@ public class PlayerCamera : MonoBehaviour
 
 
 
-
-    // Camera Transition //////////////
-
+    // Camera Transition ////////////// Lerp camera variables
     public void ChangePlayerCamera(float pOffSetLeft, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
     {
         if (transRoutine != null)
@@ -221,6 +221,4 @@ public class PlayerCamera : MonoBehaviour
         }
         while (done != 5);
     }
-
-    public void GiveLockOnScript(PlayerLockOnScript pScript) => lockOnScript = pScript;
 }

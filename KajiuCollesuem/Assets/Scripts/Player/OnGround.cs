@@ -54,8 +54,10 @@ public class OnGround : MonoBehaviour
 
     private void CheckFell()
     {
+        //If falling do damage
         if (damageOnLanding == false && transform.position.y - respawnYOffset - lastPoint.y <= -isFallingYDifference)
         {
+            //If distance to ground is to far teleport player back to their last point OnGround
             if (Physics.Raycast(transform.position, Vector3.down, fallGroundCheckDis) == false)
             {
                 _rb.velocity = Vector3.zero;

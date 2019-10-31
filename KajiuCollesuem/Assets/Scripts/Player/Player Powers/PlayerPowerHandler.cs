@@ -45,6 +45,7 @@ public class PlayerPowerHandler : MonoBehaviour
 
     public void AddPower(int pWhichPower)
     {
+        //Add power component based off of input
         switch (pWhichPower)
         {
             case (int)powers.Fireball:

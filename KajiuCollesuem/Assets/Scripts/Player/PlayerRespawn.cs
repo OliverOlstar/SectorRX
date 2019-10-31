@@ -11,6 +11,7 @@ public class PlayerRespawn : MonoBehaviour
 
     private void Start()
     {
+        //Set Player Spawn
         if (currentRespawnPoint == Vector3.zero)
             currentRespawnPoint = transform.position;
         else
@@ -24,9 +25,10 @@ public class PlayerRespawn : MonoBehaviour
 
     private IEnumerator DeadRoutine()
     {
+        //Slow while dieing time
         Time.timeScale = deathSlowAmount;
 
-        yield return new WaitForSecondsRealtime(deathLength);
+        yield return new WaitForSeconds(deathLength * deathSlowAmount);
 
         Time.timeScale = 1.0f;
         //Temp Restart Scene (replace this with the proper scene manager and with a HUD element)
@@ -35,6 +37,7 @@ public class PlayerRespawn : MonoBehaviour
 
     public void setRespawinPoint(Vector3 pPoint)
     {
+        //Change Where the player spawns after dieing
         currentRespawnPoint = pPoint;
     }
 }

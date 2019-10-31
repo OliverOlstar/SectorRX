@@ -25,8 +25,6 @@ public class DeathState : BaseState
 
     public override Type Tick()
     {
-        //Debug.Log("Death State");
-
         return null;
     }
 }
