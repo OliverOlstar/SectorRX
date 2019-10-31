@@ -186,11 +186,11 @@ public class WolfieMovement : MonoBehaviour
 
     IEnumerator MakeDecision()
     {
-        int decision = Mathf.RoundToInt(Random.Range(0, 1));
+        int decision = Mathf.RoundToInt(Random.Range(0, 10));
 
         if (!decisionMade)
         {
-            if (decision == 0)
+            if (decision % 4 == 0)
             {
                 canShootFireBall = true;
             }
@@ -262,26 +262,44 @@ public class WolfieMovement : MonoBehaviour
     {
         //if (pDirection.magnitude < 10.0f)
         //{
-            this.transform.Translate(0, 0, 0.1f);
-            anim.SetBool("FiringRange", false);
+            if (attackDecision == 0)
+            {
+                this.transform.Translate(0, 0, 0.1f);
+                anim.SetBool("FiringRange", false);
+            }
 
             if (Vector3.Distance(player.position, this.transform.position) < 5
                 && Vector3.Distance(player.position, this.transform.position) > 3)
             {
-                attackDecision = Random.Range(0, 2);
+                attackDecision = Random.Range(0, 4);
                 Debug.Log(attackDecision);
 
                 if (attackDecision == 1)
                 {
                     anim.SetBool("TargetLongRange", true);
                 }
+
+                else if (attackDecision == 2)
+                {
+                    //Move left
+                }
+
+                else if (attackDecision == 3)
+                {
+                    //Move right
+                }
             }
 
-            if (attackDecision == 0 && Vector3.Distance(player.position, this.transform.position) < 3
+            if (attackDecision == 4 && Vector3.Distance(player.position, this.transform.position) < 3
                     && Vector3.Distance(player.position, this.transform.position) > 1)
             {
                 anim.SetBool("TargetLongRange", false); 
                 anim.SetBool("TargetCloseRange", true);
+
+                for (int i = 0; i < 4; ++i)
+                {
+                this.transform.Translate(0, 0, -0.1f);
+                }
             }
 
             if (Vector3.Distance(player.position, this.transform.position) < 5)
