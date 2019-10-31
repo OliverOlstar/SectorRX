@@ -18,11 +18,12 @@ public class ChaseBehaviour : StateMachineBehaviour
 
         animator.transform.position = Vector3.MoveTowards(animator.transform.position, PlayerPosition.position, speed * Time.deltaTime);
 
-        if (Vector3.Distance(animator.transform.position, PlayerPosition.position) > 10)
+        if (Vector3.Distance(animator.transform.position, PlayerPosition.position) > 15)
         {
           
             animator.SetBool("isChasing", false);
             animator.SetBool("isIdle", true);
+            animator.SetBool("isPatrol", false);
         }
 
     }
