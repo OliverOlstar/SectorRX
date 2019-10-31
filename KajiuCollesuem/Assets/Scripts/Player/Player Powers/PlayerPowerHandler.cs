@@ -13,7 +13,6 @@ public class PlayerPowerHandler : MonoBehaviour
         Fireball
     }
 
-    //
     private List<IPower> _collectedPowers = new List<IPower>();
 
     private void Start()
@@ -21,10 +20,13 @@ public class PlayerPowerHandler : MonoBehaviour
         playerAttributes = GetComponent<PlayerAttributes>();
     }
 
+    //Attack state calls this function
     public int UsingPower(int pPowerInput)
     {
+        //If power specific button exists
         if (pPowerInput > 0 && pPowerInput <= _collectedPowers.Count)
         {
+            //If required power
             if (playerAttributes.getPower() >= _collectedPowers[pPowerInput - 1].GetPowerRequired())
             {
                 playerAttributes.modifyPower(-_collectedPowers[pPowerInput - 1].GetPowerRequired());
