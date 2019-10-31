@@ -10,7 +10,14 @@ public class PlayerCamera : MonoBehaviour
     private Vector3 _TargetLocalPosition;
 
     public Transform lockOnTarget;
+    private PlayerLockOnScript lockOnScript;
+
     [SerializeField] private float lockOnXOffset = 0;
+    [SerializeField] private float lockOnInputInfluence = 0.2f;
+    private float timeToChangeTarget = 0.0f;
+    [SerializeField] private float lockOnChangeDelay = 1.0f;
+    [SerializeField] private float lockOnChangeAmount_KB = 10.0f;
+    [SerializeField] private float lockOnChangeAmount_GP = 1.5f;
 
     [Header("Idle")]
     [SerializeField] private float idleSpinSpeed = 1;
@@ -79,13 +86,13 @@ public class PlayerCamera : MonoBehaviour
         CameraCollision();
     }
 
-    void DefaultCameraMovement()
+    void DefaultCameraMovement(float pInputModifier = 1f)
     {
         //Rotation of the camera based on mouse movement
         if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
         {
-            _LocalRotation.x += Input.GetAxis("Mouse X") * MouseSensitivity;
-            _LocalRotation.y -= Input.GetAxis("Mouse Y") * MouseSensitivity;
+            _LocalRotation.x += Input.GetAxis("Mouse X") * MouseSensitivity * pInputModifier;
+            _LocalRotation.y -= Input.GetAxis("Mouse Y") * MouseSensitivity * pInputModifier;
 
             //Clamping the y rotation to horizon and not flipping over at the top
             if (_LocalRotation.y < CameraMinHeight)
@@ -103,8 +110,22 @@ public class PlayerCamera : MonoBehaviour
     {
         //Locked onto Target
         Vector2 direction = new Vector2(lockOnTarget.position.z, lockOnTarget.position.x)  - new Vector2(_ParentTransform.position.z, _ParentTransform.position.x) ;
-        _LocalRotation.x = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + (lockOnXOffset * OffSetLeft);
+        _LocalRotation.x = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + (lockOnXOffset * OffSetLeft); // Add distance into this line potentially
         _LocalRotation.y = _ParentTransform.position.y - lockOnTarget.position.y;
+
+        Vector3 _RotTarget = _LocalRotation;
+
+        DefaultCameraMovement(lockOnInputInfluence);
+
+        //Change Target
+        Debug.Log((_LocalRotation - _RotTarget).magnitude / MouseSensitivity);
+        float RequiredPushAmount = ((Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0) ? lockOnChangeAmount_KB : lockOnChangeAmount_GP);
+        if ((_LocalRotation - _RotTarget).magnitude >= RequiredPushAmount * MouseSensitivity && timeToChangeTarget <= Time.time)
+        {
+            timeToChangeTarget = Time.time + lockOnChangeDelay;
+            Vector2 inputVector = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+            lockOnTarget = lockOnScript.changeTarget(inputVector); //Vector tagent to camera forward but facing mouse input direction
+        }
     }
 
     void IdleCameraMovement()
@@ -112,6 +133,12 @@ public class PlayerCamera : MonoBehaviour
         _LocalRotation.x += idleSpinSpeed * Time.deltaTime;
         _LocalRotation.y = Mathf.Lerp(_LocalRotation.y, idleSpinY, Time.deltaTime);
     }
+
+
+
+
+
+    // Camera Collision /////////////
 
     void CameraCollision()
     {
@@ -152,7 +179,7 @@ public class PlayerCamera : MonoBehaviour
             done = 0;
 
             //Lerping all of the values
-            TurnDampening = Mathf.Lerp(TurnDampening, pTurnDampening, pTransitionSpeed * Time.deltaTime);
+            TurnDampening = Mathf.Lerp(TurnDampening, pTurnDampening, pTransitionSpeed * Time.deltaTime * 10);
             if (Mathf.Abs(TurnDampening - pTurnDampening) <= 0.01f)
             {
                 TurnDampening = pTurnDampening;
@@ -194,4 +221,6 @@ public class PlayerCamera : MonoBehaviour
         }
         while (done != 5);
     }
+
+    public void GiveLockOnScript(PlayerLockOnScript pScript) => lockOnScript = pScript;
 }

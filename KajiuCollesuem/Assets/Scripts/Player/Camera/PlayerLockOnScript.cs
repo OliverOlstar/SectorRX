@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PlayerLockOnScript : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class PlayerLockOnScript : MonoBehaviour
     [SerializeField] private SOCamera lockOnPreset;
     [SerializeField] private LayerMask enemiesLayer;
     [SerializeField] private float lockOnRange = 10.0f;
+    [SerializeField] [Range(0, 359)] private float lockOnAngle = 45;
     
     [HideInInspector] public bool focusedOnScreen = false;
     [HideInInspector] public bool unfocusedOnScreen = false;
@@ -28,6 +30,7 @@ public class PlayerLockOnScript : MonoBehaviour
     void Start()
     {
         _cameraScript = Camera.main.GetComponent<PlayerCamera>();
+        _cameraScript.GiveLockOnScript(this);
         _cameraPivotScript = _cameraScript.transform.parent.GetComponent<CameraPivot>();
         _stateController = GetComponent<PlayerStateController>();
     }
@@ -57,7 +60,7 @@ public class PlayerLockOnScript : MonoBehaviour
 
             if (_cameraScript.lockOnTarget == null)
             {
-                Transform target = pickNewTarget();
+                Transform target = pickTarget();
 
                 if (target != null)
                 {
@@ -70,42 +73,78 @@ public class PlayerLockOnScript : MonoBehaviour
                 _cameraScript.lockOnTarget = null;
                 _cameraPivotScript.ChangePlayerCamera(defaultPreset, cameraTransSpeed);
             }
-            //else if (Mathf.Abs(Input.GetAxis("Mouse X")) > 0.05f && cameraScript.lockOnTarget != null)
-            //{
-            //cameraScript.lockOnTarget = pickNewTarget();
-            //}
         }
     }
 
-    Transform pickNewTarget()
+    public Transform pickTarget()
     {
-        Collider[] possibleTargets = Physics.OverlapSphere(transform.position, lockOnRange, enemiesLayer);
+        //Get Possible Targets
+        List<Collider> possibleTargets = Physics.OverlapSphere(_cameraScript.transform.position + _cameraScript.transform.forward * lockOnRange / 2, lockOnRange, enemiesLayer).ToList();
 
-        if (possibleTargets.Length == 0)
+        //Return NULL if no targets
+        if (possibleTargets.Count == 0)
             return null;
 
-        int currentClosest = 0;
-        int secondClosest = 0;
+        Vector3 forwardVector = _cameraScript.transform.forward;
 
-        //Finds the two closest options
-        for (int i = 0; i < possibleTargets.Length; i++)
+        //Sort Targets
+        possibleTargets.Sort((col1, col2) => (Vector3.Dot(col2.transform.position - _cameraScript.transform.position, forwardVector)).CompareTo(Vector3.Dot(col1.transform.position - _cameraScript.transform.position, forwardVector)));
+
+        //for (int i = 0; i < possibleTargets.Count; i++)
+        //{
+        //    Debug.DrawLine(possibleTargets[i].transform.position, _cameraScript.transform.position, new Color(1 - 0.45f * i, 0, 0), 20);
+        //}
+
+        //Return Best Target
+        return possibleTargets[0].transform;
+    }
+
+    public Transform changeTarget(Vector2 pInput)
+    {
+        //Get Possible Targets
+        List<Collider> possibleTargets = (Physics.OverlapSphere(_cameraScript.transform.position, lockOnRange * 2, enemiesLayer)).ToList();
+
+        //No other targets than the one already locked onto
+        if (possibleTargets.Count == 1)
+            return possibleTargets[0].transform;
+
+        Vector3 forwardVector = _cameraScript.transform.forward;
+        Vector3 InputVector = _cameraScript.transform.right * pInput.x + _cameraScript.transform.up * pInput.y;
+        InputVector.Normalize();
+        //Debug.DrawLine(_cameraScript.transform.position, _cameraScript.transform.forward + _cameraScript.transform.position, Color.blue, 20);
+        //Debug.DrawLine(_cameraScript.transform.position, _cameraScript.transform.position + InputVector, Color.green, 20);
+
+        float lockOnRad = lockOnAngle * Mathf.Deg2Rad;
+        Vector3 ConeVector = Mathf.Cos(lockOnRad) * _cameraScript.transform.forward + Mathf.Sin(lockOnRad) * InputVector;
+        //Debug.DrawLine(_cameraScript.transform.position, _cameraScript.transform.position + ConeVector, Color.red, 20);
+
+        Vector3 halfwayVector = (ConeVector + _cameraScript.transform.forward).normalized;
+        //Debug.DrawLine(_cameraScript.transform.position, _cameraScript.transform.position + halfwayVector, Color.yellow, 20);
+
+        //Remove Non Options
+        for (int i = possibleTargets.Count - 1; i >= 0; i--)
         {
-            float view = Camera.main.WorldToViewportPoint(possibleTargets[i].transform.position).x;
-            float bestView = Camera.main.WorldToViewportPoint(possibleTargets[currentClosest].transform.position).x;
-
-            if (Mathf.Abs(view - 0.5f) < Mathf.Abs(bestView - 0.5f))
-            {
-                //if (Vector3.Distance(transform.forward * 5, possibleTargets[i].transform.position) < Vector3.Distance(transform.forward * 5, possibleTargets[currentClosest].transform.position))
-                secondClosest = currentClosest;
-                currentClosest = i;
-            }
+            if (Vector3.Dot((possibleTargets[i].transform.position - _cameraScript.transform.position).normalized, halfwayVector) < Mathf.Cos(lockOnRad / 2))
+                possibleTargets.Remove(possibleTargets[i]);
         }
-        
-        if (_cameraScript.lockOnTarget == possibleTargets[currentClosest].gameObject)
+
+        //Sort Targets
+        possibleTargets.Sort((col1, col2) => (Vector3.Dot(col2.transform.position - _cameraScript.transform.position, forwardVector)).CompareTo(Vector3.Dot(col1.transform.position - _cameraScript.transform.position, forwardVector)));
+
+        //Dont Return Same Target
+        if (_cameraScript.lockOnTarget == possibleTargets[0].transform)
+            return possibleTargets[1].transform;
+
+        return possibleTargets[0].transform;
+    }
+
+    public void TargetDead(Transform pTarget)
+    {
+        //If LockOn Target dies return to default camera
+        if (pTarget == _cameraScript.lockOnTarget)
         {
-            return possibleTargets[secondClosest].gameObject.transform;
+            _cameraScript.lockOnTarget = null;
+            _cameraPivotScript.ChangePlayerCamera(defaultPreset, cameraTransSpeed);
         }
-
-        return possibleTargets[currentClosest].gameObject.transform;
     }
 }

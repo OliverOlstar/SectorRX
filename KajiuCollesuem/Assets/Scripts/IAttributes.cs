@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IAttributes
 {
-    void TakeDamage(int damage, bool react);
+    bool TakeDamage(int damage, bool react);
 }

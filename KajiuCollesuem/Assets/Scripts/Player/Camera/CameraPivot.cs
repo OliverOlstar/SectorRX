@@ -14,16 +14,6 @@ public class CameraPivot : MonoBehaviour
     [Space]
     [SerializeField] private bool runFunc1 = false;
     [SerializeField] private SOCamera DemoVarsPreset;
-
-    //For Experimenting
-    [Space]
-    [SerializeField] private bool runFunc2 = false;
-    [SerializeField] private float DemoVarOffup = 0.6f;
-    [SerializeField] private float DemoVarOffleft = 0;
-    [SerializeField] private float DemoVarDamp = 20;
-    [SerializeField] private float DemoVarDis = 6;
-    [SerializeField] private float DemoVarMiny = -8;
-    [SerializeField] private float DemoVarMaxy = 70;
     [SerializeField] private float DemoVarTrnsSpd = 1;
 
     void Start()
@@ -43,13 +33,6 @@ public class CameraPivot : MonoBehaviour
         {
             ChangePlayerCamera(DemoVarsPreset, DemoVarTrnsSpd);
             runFunc1 = false;
-        }
-
-        //For Experimenting
-        if (runFunc2)
-        {
-            ChangePlayerCamera(DemoVarOffup, DemoVarOffleft, DemoVarDamp, DemoVarDis, DemoVarMiny, DemoVarMaxy, DemoVarTrnsSpd);
-            runFunc2 = false;
         }
     }
 
@@ -76,7 +59,7 @@ public class CameraPivot : MonoBehaviour
 
     private IEnumerator CameraOffSetTransition(float pOffSetUp, float pTransitionSpeed)
     {
-        while (Mathf.Abs(offSetUp - pOffSetUp) <= 0.001f)
+        while (Mathf.Abs(offSetUp - pOffSetUp) >= 0.01f)
         {
             offSetUp = Mathf.Lerp(offSetUp, pOffSetUp, pTransitionSpeed * Time.deltaTime);
             yield return null;

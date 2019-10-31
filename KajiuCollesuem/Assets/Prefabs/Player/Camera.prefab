@@ -48,15 +48,7 @@ MonoBehaviour:
   offSetUp: 0.6
   runFunc1: 1
   DemoVarsPreset: {fileID: 11400000, guid: 0fd6f18ae13c5be4dbf3686890111a6d, type: 2}
-  runFunc2: 0
-  DemoVarOffup: 0.3
-  DemoVarOffleft: 0
-  DemoVarSensi: 0
-  DemoVarDamp: 20
-  DemoVarDis: 6
-  DemoVarMiny: -8
-  DemoVarMaxy: 70
-  DemoVarTrnsSpd: 1
+  DemoVarTrnsSpd: 5
 --- !u!1 &5688443931472006255
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,9 +94,10 @@ Camera:
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_GateFitMode: 2
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -153,7 +146,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockOnTarget: {fileID: 0}
-  lockOnXOffset: 16
+  lockOnXOffset: 18
+  lockOnInputInfluence: 0.3
+  lockOnChangeDelay: 0.6
+  lockOnChangeAmount_KB: 3
+  lockOnChangeAmount_GP: 1
   idleSpinSpeed: 3
   idleSpinY: 10
   cameraCollisionLayers:

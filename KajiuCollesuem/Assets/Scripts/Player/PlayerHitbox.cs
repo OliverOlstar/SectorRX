@@ -10,24 +10,47 @@ public class PlayerHitbox : MonoBehaviour
     [SerializeField] private int heavyAttackDamage = 2;
     private int damage;
 
+    [Space]
     [SerializeField] private int powerRecivedOnHit = 20;
 
+    [Header("Time Slow")]
+    [SerializeField] private float timeSlowSeconds = 1f;
+    [SerializeField] private float timeSlowAmount = 1f;
+
     private PlayerAttributes playerAttributes;
+    private PlayerLockOnScript lockOnScript;
 
     private void Start()
     {
         playerAttributes = GetComponentInParent<PlayerAttributes>();
+        lockOnScript = playerAttributes.GetComponent<PlayerLockOnScript>();
     }
 
     private void OnTriggerEnter (Collider other)
     {
+        //Check if collided with an Attributes Script
         IAttributes otherAttributes = other.GetComponent<IAttributes>();
 
         if (otherAttributes != null)
         {
-            otherAttributes.TakeDamage(damage, true);
+            //Damage other
+            if (otherAttributes.TakeDamage(damage, true))
+                //If other died and is lockOn target return camera to default
+                lockOnScript.TargetDead(other.transform);
+
+            //Recieve Power
             playerAttributes.RecivePower(powerRecivedOnHit);
+
+            //Slow Game for a small time on hit
+            StartCoroutine("SlowTime");
         }
+    }
+
+    private IEnumerator SlowTime()
+    {
+        Time.timeScale = timeSlowAmount;
+        yield return new WaitForSeconds(timeSlowSeconds * timeSlowAmount);
+        Time.timeScale = 1;
     }
 
     public void SetDamage(int pIndex)
