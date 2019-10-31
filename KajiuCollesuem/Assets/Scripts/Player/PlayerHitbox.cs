@@ -28,15 +28,20 @@ public class PlayerHitbox : MonoBehaviour
 
     private void OnTriggerEnter (Collider other)
     {
+        //Check if collided with an Attributes Script
         IAttributes otherAttributes = other.GetComponent<IAttributes>();
 
         if (otherAttributes != null)
         {
+            //Damage other
             if (otherAttributes.TakeDamage(damage, true))
+                //If other died and is lockOn target return camera to default
                 lockOnScript.TargetDead(other.transform);
 
+            //Recieve Power
             playerAttributes.RecivePower(powerRecivedOnHit);
 
+            //Slow Game for a small time on hit
             StartCoroutine("SlowTime");
         }
     }
@@ -44,7 +49,7 @@ public class PlayerHitbox : MonoBehaviour
     private IEnumerator SlowTime()
     {
         Time.timeScale = timeSlowAmount;
-        yield return new WaitForSecondsRealtime(timeSlowSeconds);
+        yield return new WaitForSeconds(timeSlowSeconds * timeSlowAmount);
         Time.timeScale = 1;
     }
 

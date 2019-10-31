@@ -6,12 +6,14 @@ public class PlayerPowerHandler : MonoBehaviour
 {
     private PlayerAttributes playerAttributes;
 
+    //List of all powers to help with entering the desired power to be added
     public enum powers
     {
         MagmaErupter,
         Fireball
     }
 
+    //
     private List<IPower> _collectedPowers = new List<IPower>();
 
     private void Start()
