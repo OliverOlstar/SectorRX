@@ -12,6 +12,9 @@ public class PlayerCamera : MonoBehaviour
     public Transform lockOnTarget;
     private PlayerLockOnScript lockOnScript;
 
+    [SerializeField] private bool Inverted = false;
+    
+    [Space]
     [SerializeField] private float lockOnXOffset = 0;
     [SerializeField] private float lockOnInputInfluence = 0.2f;
     private float timeToChangeTarget = 0.0f;
@@ -94,7 +97,7 @@ public class PlayerCamera : MonoBehaviour
         if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
         {
             _LocalRotation.x += Input.GetAxis("Mouse X") * MouseSensitivity * pInputModifier;
-            _LocalRotation.y -= Input.GetAxis("Mouse Y") * MouseSensitivity * pInputModifier;
+            _LocalRotation.y -= Input.GetAxis("Mouse Y") * MouseSensitivity * pInputModifier * (Inverted ? -1 : 1);
 
             //Clamping the y rotation to horizon and not flipping over at the top
             if (_LocalRotation.y < CameraMinHeight)
@@ -120,7 +123,6 @@ public class PlayerCamera : MonoBehaviour
         DefaultCameraMovement(lockOnInputInfluence);
 
         //Change Target
-        //Debug.Log((_LocalRotation - _RotTarget).magnitude / MouseSensitivity);
         float RequiredPushAmount = ((Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0) ? lockOnChangeAmount_KB : lockOnChangeAmount_GP);
         if ((_LocalRotation - _RotTarget).magnitude >= RequiredPushAmount * MouseSensitivity && timeToChangeTarget <= Time.time)
         {
