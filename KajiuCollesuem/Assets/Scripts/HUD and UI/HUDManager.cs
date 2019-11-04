@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class HUDManager : MonoBehaviour
 {
     //public RectTransform pauseMenu, optionsMenu, powerMenu, skillMenu;
-    public GameObject pause, option, ability, videoOP, audioOP, gameplayOP, cellUI, coreUI;
+    public GameObject pause, option, ability, videoOP, audioOP, gameplayOP, cellUI, coreUI, powerUpgrade, statUpgrade;
     public Text subtitleToggle, displayToggle, resToggle, cellCount, coreCount;
     public bool subtitleOn, isFullScreen, isWindowed;
 
@@ -27,8 +27,10 @@ public class HUDManager : MonoBehaviour
 
     private void Start()
     {
-        option.SetActive(false);
-        ability.SetActive(false);
+        //option.SetActive(false);
+        //ability.SetActive(false);
+        powerUpgrade.SetActive(false);
+        statUpgrade.SetActive(false);
 
         cellUIOn = false;
         coreUIOn = false;
@@ -98,6 +100,35 @@ public class HUDManager : MonoBehaviour
         coreUIOn = false;
     }
 
+    //Navigate between upgrade Menus
+    public void goPowUpgrade()
+    {
+        pause.SetActive(false);
+        statUpgrade.SetActive(false);
+        powerUpgrade.SetActive(true);
+        coreUI.SetActive(true);
+    }
+
+    public void goStatUpgrade()
+    {
+        pause.SetActive(false);
+        powerUpgrade.SetActive(false);
+        statUpgrade.SetActive(true);
+        cellUI.SetActive(true);
+    }
+
+    public void PowerToStat()
+    {
+        powerUpgrade.SetActive(false);
+        statUpgrade.SetActive(true);
+    }
+
+    public void StatToPower()
+    {
+        statUpgrade.SetActive(false);
+        powerUpgrade.SetActive(true);
+    }
+
     //Menus and Settings Management
     public void GoToOptions()
     {
@@ -128,9 +159,11 @@ public class HUDManager : MonoBehaviour
 
     public void BackToPause()
     {
-        pause.SetActive(true);
-        option.SetActive(false);
-        ability.SetActive(false);
+        //pause.SetActive(true);
+        //option.SetActive(false);
+        //ability.SetActive(false);
+        powerUpgrade.SetActive(false);
+        statUpgrade.SetActive(false);
     }
 
     public void ResumeGame()
