@@ -8,15 +8,13 @@ public class CameraPivot : MonoBehaviour
     private PlayerCamera _camera;
     public float offSetUp = 0.6f;
 
-    public bool runFunc = false;
-    public float DemoVarOffup = 0.6f;
-    public float DemoVarOffleft = 0;
-    public float DemoVarSensi = 3;
-    public float DemoVarDamp = 20;
-    public float DemoVarDis = 6;
-    public float DemoVarMiny = -8;
-    public float DemoVarMaxy = 70;
-    public float DemoVarTrnsSpd = 1;
+    private Coroutine transRoutine;
+
+    //For Experimenting
+    [Space]
+    [SerializeField] private bool runFunc1 = false;
+    [SerializeField] private SOCamera DemoVarsPreset;
+    [SerializeField] private float DemoVarTrnsSpd = 1;
 
     void Start()
     {
@@ -29,36 +27,44 @@ public class CameraPivot : MonoBehaviour
         //Position the camera pivot on the player
         transform.position = target.transform.position + (Vector3.up * offSetUp);
 
-        //Call Camera Transition
-        if (runFunc)
+
+        //For Experimenting
+        if (runFunc1)
         {
-            ChangePlayerCamera(DemoVarOffup, DemoVarOffleft, DemoVarSensi, DemoVarDamp, DemoVarDis, DemoVarMiny, DemoVarMaxy, DemoVarTrnsSpd);
-            runFunc = false;
+            ChangePlayerCamera(DemoVarsPreset, DemoVarTrnsSpd);
+            runFunc1 = false;
         }
     }
 
-
     
 
-
     // Camera Transition //////////////
-
-    public void ChangePlayerCamera(float pOffSetUp, float pOffSetLeft, float pMouseSensitivity, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
+    public void ChangePlayerCamera(float pOffSetUp, float pOffSetLeft, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
     {
-        StopCoroutine("CameraOffSetTransition");
-        StartCoroutine(CameraOffSetTransition(pOffSetUp, pTransitionSpeed));
-        _camera.ChangePlayerCamera(pOffSetLeft, pMouseSensitivity, pTurnDampening, pCameraDistance, pCameraMinHeight, pCameraMaxHeight, pTransitionSpeed);
+        if (transRoutine != null)
+            StopCoroutine(transRoutine);
+        transRoutine = StartCoroutine(CameraOffSetTransition(pOffSetUp, pTransitionSpeed));
+
+        _camera.ChangePlayerCamera(pOffSetLeft, pTurnDampening, pCameraDistance, pCameraMinHeight, pCameraMaxHeight, pTransitionSpeed);
+    }
+
+    public void ChangePlayerCamera(SOCamera pPreset, float pTransitionSpeed)
+    {
+        if (transRoutine != null)
+            StopCoroutine(transRoutine);
+        transRoutine = StartCoroutine(CameraOffSetTransition(pPreset.UpOffset, pTransitionSpeed));
+
+        _camera.ChangePlayerCamera(pPreset.LeftOffset, pPreset.TurnDampening, pPreset.Distance, pPreset.MinY, pPreset.MaxY, pTransitionSpeed);
     }
 
     private IEnumerator CameraOffSetTransition(float pOffSetUp, float pTransitionSpeed)
     {
-        while (offSetUp != pOffSetUp)
+        while (Mathf.Abs(offSetUp - pOffSetUp) >= 0.01f)
         {
             offSetUp = Mathf.Lerp(offSetUp, pOffSetUp, pTransitionSpeed * Time.deltaTime);
-            if (Mathf.Abs(offSetUp - pOffSetUp) <= 0.01f)
-                offSetUp = pOffSetUp;
-
             yield return null;
         }
+
+        offSetUp = pOffSetUp;
     }
 }

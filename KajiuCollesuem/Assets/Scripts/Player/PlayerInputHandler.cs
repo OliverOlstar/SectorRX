@@ -179,7 +179,7 @@ public class PlayerInputHandler : MonoBehaviour
 
         Vector3 dir = (vertical * transform.forward + horizontal * transform.right).normalized;
         if (dir != Vector3.zero)
-            _stateController.movementDir = _stateController._animHandler.transform.forward;
+            _stateController.movementDir = _stateController._Camera.TransformDirection(dir);
 
         float m = Mathf.Abs(vertical) + Mathf.Abs(horizontal);
         _stateController.moveAmount = Mathf.Clamp01(m);
@@ -238,6 +238,11 @@ public class PlayerInputHandler : MonoBehaviour
         {
             _stateController.powerInput = power_Input;
             power_Input = 0;
+        }
+
+        if (Input.anyKeyDown || Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0 || horizontal != 0 || vertical != 0)
+        {
+            _stateController.LastInputTime = Time.time;
         }
     }
     

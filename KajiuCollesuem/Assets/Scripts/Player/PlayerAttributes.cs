@@ -146,7 +146,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     }
 
     //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
-    public void TakeDamage(int pAmount, bool pReact)
+    public bool TakeDamage(int pAmount, bool pReact)
     {
         Debug.Log("Damaging Player " + pAmount);
 
@@ -183,12 +183,17 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
         if (pReact)
             _anim.Stunned(Random.value < 0.5f);
+
+        //Return If Dead or Not
+        if (_health <= 0)
+            return true;
+        return false;
     }
 
     public void RecivePower(int pPower)
     {
         modifyPower(pPower);
-        Debug.Log("Power Recieved: " + pPower + ", " + _power);
+        //Debug.Log("Power Recieved: " + pPower + ", " + _power);
 
         //Restarting Power Loss over time
         if (_power > 0)
@@ -228,7 +233,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         while (_power > 0)
         {
             modifyPower(-_powerLossAmount);
-            Debug.Log("Power lost: " + _power);
+            //Debug.Log("Power lost: " + _power);
             yield return new WaitForSeconds(_powerLossDelaySeconds);
         }
     }

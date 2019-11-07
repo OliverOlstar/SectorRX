@@ -5,12 +5,14 @@ using UnityEngine;
 public class OnGround : MonoBehaviour
 {
     [SerializeField] private float isGroundedCheckDistance = 1.0f;
-    [SerializeField] private float isFallingYDifference = 1.0f;
     [SerializeField] private float respawnYOffset = 1;
     private Vector3 lastPoint = new Vector3(0,0,0);
 
-    [Space]
+    [Header("Damage")]
+    [SerializeField] private float isFallingYDifference = 1.0f;
+    [SerializeField] private int fallGroundCheckDis = 1;
     [SerializeField] private int fallDamage = 30;
+    private bool damageOnLanding = false;
 
     private PlayerStateController _stateController;
     private Rigidbody _rb;
@@ -37,6 +39,12 @@ public class OnGround : MonoBehaviour
         {
             _stateController.OnGround = true;
             lastPoint = hit.point;
+
+             if (damageOnLanding)
+            {
+                _stateController._playerAttributes.modifyHealth(-fallDamage);
+                damageOnLanding = false;
+            }
         }
         else
         {
@@ -46,11 +54,14 @@ public class OnGround : MonoBehaviour
 
     private void CheckFell()
     {
-        if (transform.position.y - respawnYOffset - lastPoint.y <= -isFallingYDifference)
+        if (damageOnLanding == false && transform.position.y - respawnYOffset - lastPoint.y <= -isFallingYDifference)
         {
-            _rb.velocity = Vector3.zero;
-            transform.position = lastPoint + new Vector3(0, respawnYOffset, 0);
-            _stateController._playerAttributes.modifyHealth(-fallDamage);
+            if (Physics.Raycast(transform.position, Vector3.down, fallGroundCheckDis) == false)
+            {
+                _rb.velocity = Vector3.zero;
+                transform.position = lastPoint + new Vector3(0, respawnYOffset, 0);
+            }
+            damageOnLanding = true;
         }
     }
 }
