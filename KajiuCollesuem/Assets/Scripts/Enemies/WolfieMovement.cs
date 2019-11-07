@@ -264,6 +264,7 @@ public class WolfieMovement : MonoBehaviour
 
     void AttackPlayer(Vector3 pDirection)
     {
+        transform.LookAt(player.position);
         int temp = attackDecision;
         if (attackDecision == 0)
         {
@@ -279,7 +280,6 @@ public class WolfieMovement : MonoBehaviour
             && distanceToPlayer > 3
             && attackPlayerTime <= 0)
         {
-            transform.LookAt(player);
             attackDecision = Random.Range(0, 4);
 
             if (attackDecision == 1 || attackDecision == 2 || attackDecision == 3)
@@ -300,13 +300,13 @@ public class WolfieMovement : MonoBehaviour
         else if (attackDecision == 2)
         {
             //Move left
-            transform.RotateAround(player.position, new Vector3(0, 0, 1), 20);
+            transform.Translate(Vector3.left * .005f);
         }
 
         else if (attackDecision == 3)
         {
             //Move right
-            transform.RotateAround(player.position, new Vector3(0, 0, -1), 20);
+            transform.Translate(Vector3.right * .005f);
         }
 
         distanceToPlayer = Vector3.Distance(player.position, this.transform.position);
