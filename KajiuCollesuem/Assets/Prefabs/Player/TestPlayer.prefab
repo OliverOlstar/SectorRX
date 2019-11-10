@@ -61,9 +61,10 @@ MonoBehaviour:
   lightAttackDamage_S2: 10
   lightAttackDamage_S3: 15
   heavyAttackDamage: 25
+  damageMultiplier: 1
   powerRecivedOnHit: 5
   timeSlowSeconds: 0.025
-  timeSlowAmount: 0
+  timeSlowAmount: 0.01
 --- !u!1 &1184346002
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,18 +126,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitbox: {fileID: 1048502805}
   animHandler: {fileID: 1184346004}
---- !u!114 &1318645611
+--- !u!114 &1130615505
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349403617}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10dab0756557aa64ba1ad31663d97550, type: 3}
+  m_Script: {fileID: 11500000, guid: e760d6bf5a13bff49b4b8f8dbc53cb41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _target: {fileID: 0}
 --- !u!1 &8582934654442581043
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,7 +388,7 @@ MonoBehaviour:
   inputInfluenceInAir: 0.7
   jumpDistance: 1.7
   jumpDuration: 1
-  jumpForceUp: 17
+  jumpForceUp: 10
   downForceRate: 4.5
   downForceTerminal: 5
   OnGround: 1
@@ -444,7 +446,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8582934654442581043}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57df21d598cd16c4983cce38a4b7e9a4, type: 3}
   m_Name: 
