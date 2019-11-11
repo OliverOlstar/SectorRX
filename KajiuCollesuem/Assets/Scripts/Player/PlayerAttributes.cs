@@ -116,33 +116,36 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     }
 
     //MODIFY MAXES
-    public void modifyMaxHealth(int pMaxHealth)
+    public void setMaxHealth(int pMaxHealth)
     {
         //Change Value
-        _maxHealth += pMaxHealth;
+        _maxHealth = pMaxHealth;
 
         //Change respective bar length
-        healthRect.sizeDelta = new Vector2(_maxHealth * barLengthMultiplier, BAR_HEIGHT);
+        if (healthRect)
+            healthRect.sizeDelta = new Vector2(_maxHealth * barLengthMultiplier, BAR_HEIGHT);
         _healthSlider.maxValue = _maxHealth;
     }
 
-    public void modifyMaxDefense(int pMaxShield)
+    public void setMaxDefense(int pMaxShield)
     {
         //Change Value
-        _maxShield += pMaxShield;
+        _maxShield = pMaxShield;
 
         //Change respective bar length
-        shieldRect.sizeDelta = new Vector2(_maxShield * barLengthMultiplier, BAR_HEIGHT);
+        if (shieldRect)
+            shieldRect.sizeDelta = new Vector2(_maxShield * barLengthMultiplier, BAR_HEIGHT);
         _shieldSlider.maxValue = _maxShield;
     }
 
-    public void modifyMaxPower(int pMaxPowerGuage)
+    public void setMaxPower(int pMaxPowerGuage)
     {
         //Change Value
-        _maxPower += pMaxPowerGuage;
+        _maxPower = pMaxPowerGuage;
 
         //Change respective bar length
-        powerRect.sizeDelta = new Vector2(_maxPower * barLengthMultiplier, BAR_HEIGHT);
+        if (powerRect)
+            powerRect.sizeDelta = new Vector2(_maxPower * barLengthMultiplier, BAR_HEIGHT);
         _powerSlider.maxValue = _maxPower;
     }
 

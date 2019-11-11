@@ -80,7 +80,7 @@ public class PlayerHitbox : MonoBehaviour
                 break;
         }
 
-        damage = Mathf.RoundToInt(damageMultiplier * damageMultiplier);
+        damage = Mathf.RoundToInt(damage * damageMultiplier);
     }
 
     //For Upgrading Attack Damage

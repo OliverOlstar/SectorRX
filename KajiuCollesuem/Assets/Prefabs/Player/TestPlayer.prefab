@@ -126,19 +126,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitbox: {fileID: 1048502805}
   animHandler: {fileID: 1184346004}
---- !u!114 &1130615505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1349403617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e760d6bf5a13bff49b4b8f8dbc53cb41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _target: {fileID: 0}
 --- !u!1 &8582934654442581043
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,9 +343,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee92f20ca394cc4ea8aefa00433d0d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
-  _maxShield: 100
-  _maxPower: 40
+  _maxHealth: 54
+  _maxShield: 50
+  _maxPower: 100
   _shieldRegenStartDelaySeconds: 6
   _shieldRegenDelaySeconds: 1
   _shieldRegenAmount: 4
