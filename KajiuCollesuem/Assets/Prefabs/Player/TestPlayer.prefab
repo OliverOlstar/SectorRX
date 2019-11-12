@@ -371,13 +371,12 @@ MonoBehaviour:
   moveSpeed: 3000
   maxSpeed: 5
   disableMovement: 0
-  inputInfluenceGrounded: 1
-  inputInfluenceInAir: 0.7
+  targetInputInfluence: 1
+  influenceUpdateSpeed: 3
+  inputInfluence: 1
   jumpDistance: 1.7
   jumpDuration: 1
   jumpForceUp: 10
-  downForceRate: 4.5
-  downForceTerminal: 3.55
   OnGround: 1
   horizontalInput: 0
   verticalInput: 0
@@ -466,9 +465,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGroundedCheckDistance: 1
   respawnYOffset: 1
-  isFallingYDifference: 18
+  isFallingYDifference: 10
   fallGroundCheckDis: 6
   fallDamage: 30
+  inputInfluenceGrounded: 1
+  inputInfluenceInAir: 0.7
+  downForceRate: 6
+  downForceTerminal: 5
 --- !u!114 &17874601
 MonoBehaviour:
   m_ObjectHideFlags: 0

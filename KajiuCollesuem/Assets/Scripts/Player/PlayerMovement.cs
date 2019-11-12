@@ -14,19 +14,15 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public bool disableMovement = false;
 
     [Space]
-    public float inputInfluenceGrounded = 1.0f;
-    public float inputInfluenceInAir = 0.2f;
-    private float inputInfluence = 1.0f;
+    public float targetInputInfluence = 1.0f;
+    [SerializeField] private float influenceUpdateSpeed = 1.0f;
+    public float inputInfluence = 1.0f;
 
     [Header("Jump")]
     public float jumpDistance = 5;
     public float jumpDuration = 5;
     public float jumpForceUp = 4;
 
-    [Space]
-    [SerializeField] private float downForceRate = 1f;
-    [SerializeField] private float downForceTerminal = 5f;
-    private float downForce = 0;
     [HideInInspector] public bool OnGround;
 
     [Header("Inputs")]
@@ -50,9 +46,6 @@ public class PlayerMovement : MonoBehaviour
         //If controls are disabled
         if (disableMovement == true)
             return;
-        
-        //OnGround
-        CheckGrounded();
 
         //Jump
         Jump();
@@ -111,26 +104,8 @@ public class PlayerMovement : MonoBehaviour
             if (new Vector3(_Rb.velocity.x, 0, _Rb.velocity.z).magnitude < maxSpeed * inputInfluence)
                 _Rb.AddForce(move);
         }
-    }
 
-    private void CheckGrounded()
-    {
-        //Change the amount of influence player input has on the player movement based on wether he is grounded or not
-        if (OnGround)
-        {
-            inputInfluence = inputInfluenceGrounded;
-            downForce = 0;
-        }
-        else
-        {
-            inputInfluence = inputInfluenceInAir;
-            //Add force downwards which adds ontop of gravity
-            if (downForce < downForceTerminal)
-                downForce += downForceRate * Time.deltaTime;
-            else
-                downForce = downForceTerminal;
-        }
-        
-        _Rb.AddForce(Vector3.down * Mathf.Pow(downForce, 2) * _Rb.mass);
+        //Update inputInflunce to target
+        inputInfluence = Mathf.Lerp(inputInfluence, targetInputInfluence, influenceUpdateSpeed * Time.deltaTime);
     }
 }
