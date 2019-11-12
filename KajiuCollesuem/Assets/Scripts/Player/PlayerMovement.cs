@@ -82,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
         float timer = 0;
 
         //Jump On An Arc
-        while (timer <= jumpDuration && disableMovement == false)
+        while (timer <= jumpDuration && disableMovement == false && (OnGround == false || timer <= 0.2f))
         {
             _Rb.velocity = new Vector3(pJumpDir.x, _Rb.velocity.y, pJumpDir.z);
             yield return null;

@@ -377,7 +377,7 @@ MonoBehaviour:
   jumpDuration: 1
   jumpForceUp: 10
   downForceRate: 4.5
-  downForceTerminal: 5
+  downForceTerminal: 3.55
   OnGround: 1
   horizontalInput: 0
   verticalInput: 0
@@ -498,14 +498,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 100004, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 100050, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 400052, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -561,6 +553,14 @@ PrefabInstance:
     - target: {fileID: 400052, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
       propertyPath: m_LocalScale.z
       value: 1.3333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 100050, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
       propertyPath: m_Controller
