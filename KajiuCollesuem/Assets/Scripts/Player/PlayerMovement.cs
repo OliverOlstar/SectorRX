@@ -13,10 +13,9 @@ public class PlayerMovement : MonoBehaviour
     public float maxSpeed = 4.0f;
     [HideInInspector] public bool disableMovement = false;
 
-    [Space]
-    public float targetInputInfluence = 1.0f;
-    [SerializeField] private float influenceUpdateSpeed = 1.0f;
-    public float inputInfluence = 1.0f;
+    [HideInInspector] public float targetInputInfluence = 1.0f;
+    [Space] [SerializeField] private float influenceUpdateSpeed = 1.0f;
+    [HideInInspector] public float inputInfluence = 1.0f;
 
     [Header("Jump")]
     public float jumpDistance = 5;

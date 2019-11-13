@@ -8,11 +8,12 @@ public class OnGround : MonoBehaviour
     [SerializeField] private float respawnYOffset = 1;
     private Vector3 lastPoint = new Vector3(0,0,0);
 
-    [Header("Damage")]
-    [SerializeField] private float isFallingYDifference = 1.0f;
-    [SerializeField] private int fallGroundCheckDis = 1;
-    [SerializeField] private int fallDamage = 30;
-    private bool damageOnLanding = false;
+    [Header("Fall Damage")]
+    [SerializeField] private float fallMaxTime = 2;
+    [SerializeField] private float fallDamageStartTime = 1;
+    [SerializeField] private int fallDamageMax = 40;
+    [SerializeField] private int fallDamageMin = 20;
+    private float terminalFallingTimer = 0;
 
     [Space]
     public float inputInfluenceGrounded = 1.0f;
@@ -36,16 +37,17 @@ public class OnGround : MonoBehaviour
     {
         //Falling Force (Add extra force to falling to make falling feel better)
         //if (_stateController._movementComponent.disableMovement == false)
-            FallingForce();
+        FallingForce();
 
+        //Check if on the ground
         CheckGrounded();
-        CheckFell();
+
+        //Damage player if they fall for too long and teleport them back to ground
+        CheckFellTeleport();
     }
     
     private void CheckGrounded()
     {
-        //Debug.DrawRay(transform.position, Vector3.down, Color.red, 0.1f, false);
-
         //Raycast to check for if grounded
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit, isGroundedCheckDistance))
@@ -53,31 +55,40 @@ public class OnGround : MonoBehaviour
             _stateController.OnGround = true;
             lastPoint = hit.point;
 
-             if (damageOnLanding)
-            {
-                _stateController._playerAttributes.modifyHealth(-fallDamage);
-                _stateController._movementComponent.inputInfluence = 0;
-                damageOnLanding = false;
-            }
+            CheckFellLanding();
+            terminalFallingTimer = 0;
         }
         else
         {
             _stateController.OnGround = false;
+
+            if (downForce >= downForceTerminal)
+                terminalFallingTimer += Time.deltaTime;
         }
     }
 
-    private void CheckFell()
+    private void CheckFellTeleport()
     {
-        //If falling do damage
-        if (damageOnLanding == false && transform.position.y - respawnYOffset - lastPoint.y <= -isFallingYDifference)
+        //If falling for max time, teleport back to last place on ground
+        if (terminalFallingTimer >= fallMaxTime)
         {
-            //If distance to ground is to far teleport player back to their last point OnGround
-            if (Physics.Raycast(transform.position, Vector3.down, fallGroundCheckDis) == false)
-            {
-                _rb.velocity = Vector3.zero;
-                transform.position = lastPoint + new Vector3(0, respawnYOffset, 0);
-            }
-            damageOnLanding = true;
+            _rb.velocity = Vector3.zero;
+            transform.position = lastPoint + new Vector3(0, respawnYOffset, 0);
+            _stateController._playerAttributes.modifyHealth(-fallDamageMax);
+            terminalFallingTimer = 0;
+        }
+    }
+
+    private void CheckFellLanding()
+    {
+        if (terminalFallingTimer >= fallDamageStartTime)
+        {
+            float fallPercent = (terminalFallingTimer - fallDamageStartTime) / (fallMaxTime - fallDamageStartTime);
+            int fallDamage = Mathf.RoundToInt(fallDamageMax * fallPercent + fallDamageMin * (1 - fallPercent));
+            //Debug.Log("Percent: " + fallPercent + " | Damage: " + fallDamage + " | Timer: " + terminalFallingTimer);
+
+            _stateController._playerAttributes.modifyHealth(-fallDamage);
+            _stateController._movementComponent.inputInfluence = 0;
         }
     }
 

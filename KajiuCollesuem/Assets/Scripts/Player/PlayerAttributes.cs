@@ -125,6 +125,8 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         if (healthRect)
             healthRect.sizeDelta = new Vector2(_maxHealth * barLengthMultiplier, BAR_HEIGHT);
         _healthSlider.maxValue = _maxHealth;
+
+        modifyHealth(_maxHealth);
     }
 
     public void setMaxDefense(int pMaxShield)
@@ -136,6 +138,8 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         if (shieldRect)
             shieldRect.sizeDelta = new Vector2(_maxShield * barLengthMultiplier, BAR_HEIGHT);
         _shieldSlider.maxValue = _maxShield;
+
+        modifyShield(_maxShield);
     }
 
     public void setMaxPower(int pMaxPowerGuage)
