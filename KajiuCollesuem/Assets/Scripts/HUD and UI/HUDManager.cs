@@ -7,7 +7,8 @@ public class HUDManager : MonoBehaviour
 {
     //public RectTransform pauseMenu, optionsMenu, powerMenu, skillMenu;
     public GameObject pause, option, ability, videoOP, audioOP, gameplayOP, cellUI, coreUI, powerUpgrade, statUpgrade;
-    public Text subtitleToggle, displayToggle, resToggle, cellCount, coreCount;
+    public Text subtitleToggle, displayToggle, resToggle, cellCount, coreCount, upCoreCount, upCellCount, 
+        coreNotficationOne, coreNotficationTwo, cellNotficationOne, cellNotficationTwo;
     public bool subtitleOn, isFullScreen, isWindowed;
 
     //Booleans to check if Cell UI or Power Core UI are already active when collecting other item
@@ -31,6 +32,10 @@ public class HUDManager : MonoBehaviour
         //ability.SetActive(false);
         powerUpgrade.SetActive(false);
         statUpgrade.SetActive(false);
+        coreNotficationOne.gameObject.SetActive(false);
+        coreNotficationTwo.gameObject.SetActive(false);
+        cellNotficationOne.gameObject.SetActive(false);
+        cellNotficationTwo.gameObject.SetActive(false);
 
         cellUIOn = false;
         coreUIOn = false;
@@ -106,7 +111,8 @@ public class HUDManager : MonoBehaviour
         pause.SetActive(false);
         statUpgrade.SetActive(false);
         powerUpgrade.SetActive(true);
-        coreUI.SetActive(true);
+        coreCount.gameObject.SetActive(true);
+        upCoreCount.text = coreCounter.ToString();
     }
 
     public void goStatUpgrade()
@@ -114,7 +120,8 @@ public class HUDManager : MonoBehaviour
         pause.SetActive(false);
         powerUpgrade.SetActive(false);
         statUpgrade.SetActive(true);
-        cellUI.SetActive(true);
+        cellCount.gameObject.SetActive(true);
+        upCellCount.text = cellCounter.ToString();
     }
 
     public void PowerToStat()
@@ -127,6 +134,17 @@ public class HUDManager : MonoBehaviour
     {
         statUpgrade.SetActive(false);
         powerUpgrade.SetActive(true);
+    }
+
+    IEnumerator CoreNotifyOne()
+    {
+        yield return new WaitForSeconds(2.0f);
+        coreNotficationOne.gameObject.SetActive(false);
+    }
+    IEnumerator CoreNotifyTwo()
+    {
+        yield return new WaitForSeconds(2.0f);
+        coreNotficationTwo.gameObject.SetActive(false);
     }
 
     //Menus and Settings Management
