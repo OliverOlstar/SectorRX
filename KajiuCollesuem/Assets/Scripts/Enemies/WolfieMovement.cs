@@ -192,7 +192,7 @@ public class WolfieMovement : MonoBehaviour
     {
         int decision = Mathf.RoundToInt(Random.Range(0, 10));
 
-        if (!decisionMade)
+        /*if (!decisionMade)
         {
             if (decision % 4 == 0)
             {
@@ -205,7 +205,8 @@ public class WolfieMovement : MonoBehaviour
             }
             //Debug.Log(decision);
             decisionMade = true;
-        }
+        }*/
+        canAttack = true;
 
         if (canShootFireBall)
             ShootFireball();
@@ -264,6 +265,7 @@ public class WolfieMovement : MonoBehaviour
 
     void AttackPlayer(Vector3 pDirection)
     {
+        agent.enabled = false;
         transform.LookAt(player.position);
         int temp = attackDecision;
         if (attackDecision == 0)
@@ -280,21 +282,47 @@ public class WolfieMovement : MonoBehaviour
             && distanceToPlayer > 3
             && attackPlayerTime <= 0)
         {
-            attackDecision = Random.Range(0, 4);
+            /*attackDecision = Random.Range(0, 4);
 
             if (attackDecision == 1 || attackDecision == 2 || attackDecision == 3)
             {
                 attackPlayerTime = 5;
-            }
+            }*/
+            attackDecision = 1;
         }
+
+        else if (distanceToPlayer < 3)
+        {
+            //for (int i = 0; i < 3; ++i)
+            //{
+            attackDecision = -1;
+                this.transform.position += this.transform.forward * -0.1f;
+            //}
+        }
+
         else
         {
             attackPlayerTime -= Time.deltaTime;
         }
 
+        /*if (attackDecision != 0)
+        {
+            agent.enabled = false;
+        }
+
+        else
+        {
+            agent.enabled = true;
+        }*/
+
         if (attackDecision == 1)
         {
             anim.SetBool("TargetLongRange", true);
+            
+            for (int i = 0; i < 4; ++i)
+            {
+                this.transform.position += this.transform.forward * 0.1f;
+            }
         }
 
         else if (attackDecision == 2)
@@ -315,6 +343,11 @@ public class WolfieMovement : MonoBehaviour
             anim.SetBool("TargetLongRange", false);
             anim.SetBool("TargetCloseRange", true);
 
+            /*for (int i = 0; i < 4; ++i)
+            {
+                this.transform.position += this.transform.forward * 0.1f;
+            }*/
+
             if (anim.GetAnimatorTransitionInfo(0).normalizedTime > 0.9f)
             {
                 for (int i = 0; i < 4; ++i)
@@ -323,6 +356,7 @@ public class WolfieMovement : MonoBehaviour
                 }
             }
         }
+        agent.enabled = true;
 
         distanceToPlayer = Vector3.Distance(player.position, this.transform.position);
         if (distanceToPlayer < 5)

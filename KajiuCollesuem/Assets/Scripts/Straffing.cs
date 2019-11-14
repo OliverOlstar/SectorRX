@@ -25,12 +25,14 @@ public class Straffing : MonoBehaviour
         if (distanceToPlayer < 5 && distanceToPlayer > 3 && decisionTime <= 0)
         {
             this.transform.position += this.transform.forward * 0.1f;
-            decision = Random.Range(0, 4);
+            /*decision = Random.Range(0, 4);
 
             if (decision == 1 || decision == 2 || decision == 3)
             {
                 decisionTime = 5;
-            }
+            }*/
+            decision = 1;
+            decisionTime = 5;
         }
 
         else
@@ -41,6 +43,7 @@ public class Straffing : MonoBehaviour
 
         if (decision == 1)
         {
+            anim.SetBool("TargetLongRange", true);
             for (int i = 0; i < 4; ++i)
             {
                 this.transform.position += this.transform.forward * -0.005f;
