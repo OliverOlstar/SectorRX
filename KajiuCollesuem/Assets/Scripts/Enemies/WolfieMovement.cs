@@ -68,17 +68,17 @@ public class WolfieMovement : MonoBehaviour
             case WolfieState.Idle:
                 StopCoroutine(MakeDecision());
                 Patrol();
-                print("idle");
+                //print("idle");
                 break;
             case WolfieState.SeePlayerInRange:
                 StartCoroutine(MakeDecision());
-                print("in range");
+                //print("in range");
                 break;
 
             case WolfieState.CloseToPlayer:
                 StopCoroutine(MakeDecision());
                 AttackPlayer(direction);
-                print("close to player");
+                //print("close to player");
                 break;
         }
 
@@ -315,9 +315,12 @@ public class WolfieMovement : MonoBehaviour
             anim.SetBool("TargetLongRange", false);
             anim.SetBool("TargetCloseRange", true);
 
-            for (int i = 0; i < 4; ++i)
+            if (anim.GetAnimatorTransitionInfo(0).normalizedTime > 0.9f)
             {
-                this.transform.position += this.transform.forward * -0.1f;
+                for (int i = 0; i < 4; ++i)
+                {
+                    this.transform.position += this.transform.forward * -0.1f;
+                }
             }
         }
 
