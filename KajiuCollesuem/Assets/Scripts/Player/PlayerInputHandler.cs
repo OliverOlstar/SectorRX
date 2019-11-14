@@ -71,6 +71,9 @@ public class PlayerInputHandler : MonoBehaviour
     private bool pause_Input;
     private bool map_Input;
 
+    [Header("Disable")]
+    public bool inputDisabled = false;
+
     private PlayerStateController _stateController;
 
     private float delta;
@@ -82,6 +85,8 @@ public class PlayerInputHandler : MonoBehaviour
     
     private void Update()
     {
+        if (inputDisabled) return;
+
         delta = Time.deltaTime;
 
         GetInput();
