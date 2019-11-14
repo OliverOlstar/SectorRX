@@ -177,9 +177,11 @@ public class HUDManager : MonoBehaviour
 
     public void BackToPause()
     {
-        pause.SetActive(true);
-        option.SetActive(false);
-        ability.SetActive(false);
+        //pause.SetActive(true);
+        //option.SetActive(false);
+        //ability.SetActive(false);
+        powerUpgrade.SetActive(false);
+        statUpgrade.SetActive(false);
     }
 
     public void ResumeGame()
