@@ -1293,7 +1293,7 @@ GameObject:
   - component: {fileID: 334985944}
   - component: {fileID: 334985943}
   m_Layer: 5
-  m_Name: Count
+  m_Name: UpCellCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4066,6 +4066,7 @@ GameObject:
   - component: {fileID: 1094445143}
   - component: {fileID: 1094445145}
   - component: {fileID: 1094445144}
+  - component: {fileID: 714758342}
   m_Layer: 5
   m_Name: NotEnoughUp1
   m_TagString: Untagged
@@ -4132,6 +4133,19 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Requires 2
+--- !u!114 &714758342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094445142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18abb8d9f22866b43934cbbd22c86fad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 2
 --- !u!1 &1129348469
 GameObject:
   m_ObjectHideFlags: 0
@@ -4271,6 +4285,7 @@ GameObject:
   - component: {fileID: 1131220279}
   - component: {fileID: 1131220281}
   - component: {fileID: 1131220280}
+  - component: {fileID: 989830348}
   m_Layer: 5
   m_Name: NotEnoughUp2
   m_TagString: Untagged
@@ -4337,6 +4352,19 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: ' Requires 5'
+--- !u!114 &989830348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1131220278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18abb8d9f22866b43934cbbd22c86fad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 2
 --- !u!1 &1139419444
 GameObject:
   m_ObjectHideFlags: 0
@@ -12514,7 +12542,7 @@ MonoBehaviour:
   cellCount: {fileID: 5354964215441970527}
   coreCount: {fileID: 383972717452115008}
   upCoreCount: {fileID: 793561797}
-  upCellCount: {fileID: 0}
+  upCellCount: {fileID: 334985943}
   coreNotficationOne: {fileID: 1094445144}
   coreNotficationTwo: {fileID: 1131220280}
   cellNotficationOne: {fileID: 0}

@@ -35,6 +35,7 @@ public class LuckUpgrade : MonoBehaviour
         if (luckRnk1.GetComponent<Image>().color == Color.white)
         {
             hud.cellCounter = hud.cellCounter - 50;
+            hud.upCellCount.text = hud.cellCounter.ToString();
         }
     }
 
@@ -55,6 +56,7 @@ public class LuckUpgrade : MonoBehaviour
         if (luckRnk2.GetComponent<Image>().color == Color.white)
         {
             hud.cellCounter = hud.cellCounter - 150;
+            hud.upCellCount.text = hud.cellCounter.ToString();
         }
     }
 
@@ -75,6 +77,7 @@ public class LuckUpgrade : MonoBehaviour
         if (luckRnk3.GetComponent<Image>().color == Color.white)
         {
             hud.cellCounter = hud.cellCounter - 300;
+            hud.upCellCount.text = hud.cellCounter.ToString();
         }
     }
 }

@@ -35,6 +35,7 @@ public class ShieldUpgrade : MonoBehaviour
         if (shldRnk1.GetComponent<Image>().color == Color.yellow)
         {
             hud.cellCounter = hud.cellCounter - 50;
+            hud.upCellCount.text = hud.cellCounter.ToString();
         }
     }
 
@@ -55,6 +56,7 @@ public class ShieldUpgrade : MonoBehaviour
         if (shldRnk2.GetComponent<Image>().color == Color.yellow)
         {
             hud.cellCounter = hud.cellCounter - 150;
+            hud.upCellCount.text = hud.cellCounter.ToString();
         }
     }
 
@@ -75,6 +77,7 @@ public class ShieldUpgrade : MonoBehaviour
         if (shldRnk3.GetComponent<Image>().color == Color.yellow)
         {
             hud.cellCounter = hud.cellCounter - 300;
+            hud.upCellCount.text = hud.cellCounter.ToString();
         }
     }
 }
