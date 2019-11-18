@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6d146be2ce439e4408ac3c30fb154fff
+guid: 1773d603d0bdd5c4b8a71629c6e4c39b
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable:
@@ -263,7 +263,7 @@ ModelImporter:
     second: wolf
   - first:
       74: 7400000
-    second: Attack01
+    second: Idle02
   - first:
       95: 9500000
     second: //RootNode
@@ -299,11 +299,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Attack01
+      name: Idle02
       takeName: Take 001
       internalID: 0
       firstFrame: 0
-      lastFrame: 30
+      lastFrame: 50
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -311,7 +311,7 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 0
-      loopBlend: 0
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -322,7 +322,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.7430125
+        functionName: AESummonGrunts
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.9519519
+        functionName: AEDoneSummoning
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -363,7 +377,17 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  referencedClips: []
+  referencedClips:
+  - 6d146be2ce439e4408ac3c30fb154fff
+  - 54c223d44d10a334a9b71a43118a42b8
+  - 944c70745a9f75a41bc90957f90796a5
+  - 514b22b49e133b4428d7efc3a67b5b8e
+  - 12da5797d69d89e43936ac927ea240af
+  - 6a0d94163a9b71f4c9c805cf7e9f188a
+  - e21efdc02f9a6e84cb914a6fd355622d
+  - 1234b5f9cddc41f4284d7828a30448b7
+  - 4466f04c58bd83f42a4774aea206f804
+  - d3b3431c4b90d5d4c9da317f4b1671d0
   importAnimation: 1
   copyAvatar: 1
   humanDescription:

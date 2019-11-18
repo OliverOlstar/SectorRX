@@ -15,6 +15,10 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
 
     private bool isDead;
 
+    private Decision _decision;
+    private IState _deadState;
+    private IState _stunnedState;
+
     // Use this for initialization
     void Start()
     {
@@ -25,6 +29,10 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
             healthSlider = enemyHealthBar.GetComponentInChildren<Slider>();
             enemyHealthBar.SetActive(false);
         }
+
+        _decision = GetComponent<Decision>();
+        _deadState = GetComponent<Dead>();
+        _stunnedState = GetComponent<Stunned>();
     }
 
     public bool TakeDamage(int pAmount, bool pReact)
@@ -46,6 +54,9 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
             return true;
         }
 
+        if (pReact)
+            _decision.ForceStateSwitch(_stunnedState);
+
         return false;
     }
 
@@ -59,6 +70,6 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
     void Death()
     {
         isDead = true;
-        Destroy(gameObject);
+        _decision.ForceStateSwitch(_deadState);
     }
 }
