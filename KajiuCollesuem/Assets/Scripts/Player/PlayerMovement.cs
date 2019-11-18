@@ -13,19 +13,15 @@ public class PlayerMovement : MonoBehaviour
     public float maxSpeed = 4.0f;
     [HideInInspector] public bool disableMovement = false;
 
-    [Space]
-    public float inputInfluenceGrounded = 1.0f;
-    public float inputInfluenceInAir = 0.2f;
-    private float inputInfluence = 1.0f;
+    [HideInInspector] public float targetInputInfluence = 1.0f;
+    [Space] [SerializeField] private float influenceUpdateSpeed = 1.0f;
+    [HideInInspector] public float inputInfluence = 1.0f;
 
     [Header("Jump")]
     public float jumpDistance = 5;
     public float jumpDuration = 5;
     public float jumpForceUp = 4;
 
-    [Space]
-    [SerializeField] private float downForceRate = 1f;
-    private float downForce = 0;
     [HideInInspector] public bool OnGround;
 
     [Header("Inputs")]
@@ -49,9 +45,6 @@ public class PlayerMovement : MonoBehaviour
         //If controls are disabled
         if (disableMovement == true)
             return;
-        
-        //OnGround
-        CheckGrounded();
 
         //Jump
         Jump();
@@ -80,7 +73,8 @@ public class PlayerMovement : MonoBehaviour
     {
         float timer = 0;
 
-        while (timer <= jumpDuration && disableMovement == false)
+        //Jump On An Arc
+        while (timer <= jumpDuration && disableMovement == false && (OnGround == false || timer <= 0.2f))
         {
             _Rb.velocity = new Vector3(pJumpDir.x, _Rb.velocity.y, pJumpDir.z);
             yield return null;
@@ -109,21 +103,8 @@ public class PlayerMovement : MonoBehaviour
             if (new Vector3(_Rb.velocity.x, 0, _Rb.velocity.z).magnitude < maxSpeed * inputInfluence)
                 _Rb.AddForce(move);
         }
-    }
 
-    private void CheckGrounded()
-    {
-        if (OnGround)
-        {
-            inputInfluence = inputInfluenceGrounded;
-            downForce = 0;
-        }
-        else
-        {
-            inputInfluence = inputInfluenceInAir;
-            downForce += downForceRate * Time.deltaTime;
-        }
-        
-        _Rb.AddForce(Vector3.down * Mathf.Pow(downForce, 2) * _Rb.mass);
+        //Update inputInflunce to target
+        inputInfluence = Mathf.Lerp(inputInfluence, targetInputInfluence, influenceUpdateSpeed * Time.deltaTime);
     }
 }

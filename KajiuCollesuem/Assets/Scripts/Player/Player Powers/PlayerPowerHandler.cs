@@ -6,6 +6,7 @@ public class PlayerPowerHandler : MonoBehaviour
 {
     private PlayerAttributes playerAttributes;
 
+    //List of all powers to help with entering the desired power to be added
     public enum powers
     {
         MagmaErupter,
@@ -19,10 +20,13 @@ public class PlayerPowerHandler : MonoBehaviour
         playerAttributes = GetComponent<PlayerAttributes>();
     }
 
+    //Attack state calls this function
     public int UsingPower(int pPowerInput)
     {
+        //If power specific button exists
         if (pPowerInput > 0 && pPowerInput <= _collectedPowers.Count)
         {
+            //If required power
             if (playerAttributes.getPower() >= _collectedPowers[pPowerInput - 1].GetPowerRequired())
             {
                 playerAttributes.modifyPower(-_collectedPowers[pPowerInput - 1].GetPowerRequired());
@@ -41,6 +45,7 @@ public class PlayerPowerHandler : MonoBehaviour
 
     public void AddPower(int pWhichPower)
     {
+        //Add power component based off of input
         switch (pWhichPower)
         {
             case (int)powers.Fireball:

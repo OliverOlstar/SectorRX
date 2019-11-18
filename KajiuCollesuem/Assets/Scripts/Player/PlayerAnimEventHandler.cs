@@ -14,7 +14,7 @@ public class PlayerAnimEventHandler : MonoBehaviour
         playerHitbox = hitbox.GetComponent<PlayerHitbox>();
     }
 
-
+    // Hitbox
     public void DeactivateHitbox()
     {
         hitbox.SetActive(false);
@@ -26,11 +26,10 @@ public class PlayerAnimEventHandler : MonoBehaviour
         playerHitbox.SetDamage(animHandler.GetCurrentCombo());
     }
 
-
+    // Attack State
     public void ListenForAttack()
     {
         animHandler.attackState = 1;
-        //Debug.Log("AnimEventHandler: ListenForAttack");
     }
 
     public void LeaveAttacking()

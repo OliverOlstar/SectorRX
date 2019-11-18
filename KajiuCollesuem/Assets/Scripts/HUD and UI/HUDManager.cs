@@ -6,20 +6,16 @@ using UnityEngine.UI;
 public class HUDManager : MonoBehaviour
 {
     //public RectTransform pauseMenu, optionsMenu, powerMenu, skillMenu;
-    public GameObject pause, option, ability, videoOP, audioOP, gameplayOP;
-    public Text subtitleToggle;
-    public Text displayToggle;
-    public Text resToggle;
-    public bool subtitleOn;
-    public bool isFullScreen;
-    public bool isWindowed;
-    
+    public GameObject pause, option, ability, videoOP, audioOP, gameplayOP, cellUI, coreUI, powerUpgrade, statUpgrade;
+    public Text subtitleToggle, displayToggle, resToggle, cellCount, coreCount, upCoreCount, upCellCount, 
+        coreNotficationOne, coreNotficationTwo, cellNotficationOne, cellNotficationTwo;
+    public bool subtitleOn, isFullScreen, isWindowed;
+
+    //Booleans to check if Cell UI or Power Core UI are already active when collecting other item
+    public bool cellUIOn, coreUIOn;
+
     //Screen Resolutions
-    public bool is1920;
-    public bool is1280;
-    public bool is2560;
-    public bool is1360;
-    public bool is1366;
+    public bool is1920, is1280, is2560, is1360, is1366;
 
     public PauseMenu pauseMenu;
 
@@ -27,12 +23,23 @@ public class HUDManager : MonoBehaviour
     public Slider masterVolSlide;
     public AudioSource master;
     float masterVol;
+    public int cellCounter;
+    public int coreCounter;
 
     private void Start()
     {
-        option.SetActive(false);
-        ability.SetActive(false);
-        
+        //option.SetActive(false);
+        //ability.SetActive(false);
+        powerUpgrade.SetActive(false);
+        statUpgrade.SetActive(false);
+        coreNotficationOne.gameObject.SetActive(false);
+        coreNotficationTwo.gameObject.SetActive(false);
+        cellNotficationOne.gameObject.SetActive(false);
+        cellNotficationTwo.gameObject.SetActive(false);
+
+        cellUIOn = false;
+        coreUIOn = false;
+
         //Default subtitles are set to off
         subtitleOn = false;
         subtitleToggle.text = "OFF";
@@ -53,6 +60,94 @@ public class HUDManager : MonoBehaviour
         master.volume = masterVol;
     }
 
+    private void Update()
+    {
+        if(cellUIOn)
+        {
+            StartCoroutine("CellUIOff");
+        }
+        else if (cellUIOn == false)
+        {
+            cellUI.SetActive(false);
+        }
+
+        if(coreUIOn)
+        {
+            StartCoroutine("CoreUIOff");
+        }
+        else if (coreUIOn == false)
+        {
+            coreUI.SetActive(false);
+        }
+    }
+
+    //Collectable UI Management
+    public void SetCellCount()
+    {
+        cellCount.text = cellCounter.ToString();
+    }
+    public void SetCoreCount()
+    {
+        coreCount.text = coreCounter.ToString();
+    }
+
+    IEnumerator CellUIOff()
+    {
+        yield return new WaitForSeconds(3.5f);
+        cellUI.SetActive(false);
+        cellUIOn = false;
+    }
+
+    IEnumerator CoreUIOff()
+    {
+        yield return new WaitForSeconds(3.5f);
+        coreUI.SetActive(false);
+        coreUIOn = false;
+    }
+
+    //Navigate between upgrade Menus
+    public void goPowUpgrade()
+    {
+        pause.SetActive(false);
+        statUpgrade.SetActive(false);
+        powerUpgrade.SetActive(true);
+        coreCount.gameObject.SetActive(true);
+        upCoreCount.text = coreCounter.ToString();
+    }
+
+    public void goStatUpgrade()
+    {
+        pause.SetActive(false);
+        powerUpgrade.SetActive(false);
+        statUpgrade.SetActive(true);
+        cellCount.gameObject.SetActive(true);
+        upCellCount.text = cellCounter.ToString();
+    }
+
+    public void PowerToStat()
+    {
+        powerUpgrade.SetActive(false);
+        statUpgrade.SetActive(true);
+    }
+
+    public void StatToPower()
+    {
+        statUpgrade.SetActive(false);
+        powerUpgrade.SetActive(true);
+    }
+
+    IEnumerator CoreNotifyOne()
+    {
+        yield return new WaitForSeconds(2.0f);
+        coreNotficationOne.gameObject.SetActive(false);
+    }
+    IEnumerator CoreNotifyTwo()
+    {
+        yield return new WaitForSeconds(2.0f);
+        coreNotficationTwo.gameObject.SetActive(false);
+    }
+
+    //Menus and Settings Management
     public void GoToOptions()
     {
         pause.SetActive(false);
@@ -82,9 +177,11 @@ public class HUDManager : MonoBehaviour
 
     public void BackToPause()
     {
-        pause.SetActive(true);
-        option.SetActive(false);
-        ability.SetActive(false);
+        //pause.SetActive(true);
+        //option.SetActive(false);
+        //ability.SetActive(false);
+        powerUpgrade.SetActive(false);
+        statUpgrade.SetActive(false);
     }
 
     public void ResumeGame()
