@@ -5,33 +5,109 @@ using UnityEngine.UI;
 
 public class PlayerCollectibles : MonoBehaviour
 {
-    HUDManager playerHUD;
-    public GameObject cell;
-    public GameObject core;
+    //Scotts
 
-    private void Start()
+    //Variables to keep track of Cells and Cores
+    private int cellCounter;
+    private int coreCounter;
+    public Text cellCount;
+    public Text coreCount;
+    public GameObject cellUI;
+    public GameObject coreUI;
+    public GameObject newUILocation;
+
+    //Booleans to check if Cell UI or Power Core UI are already active when collecting other item
+    public bool cellUIOn;
+    public bool coreUIOn;
+
+    // Start is called before the first frame update
+    void Start()
     {
-        playerHUD = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>();
+        if (cellUI)
+        {
+            cellUI.SetActive(false);
+            SetCellCount();
+        }
+        if (coreUI)
+        {
+            coreUI.SetActive(false);
+            SetCoreCount();
+        }
     }
 
+    //Sets count values to text in UI
+    public void SetCellCount()
+    {
+        cellCount.text = cellCounter.ToString();
+    }
+
+    public void SetCoreCount()
+    {
+        coreCount.text = coreCounter.ToString();
+    }
+
+    //If player collides with either collectible
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Core")
-        {
-            playerHUD.coreUIOn = true;
-            Destroy(collision.gameObject);
-            playerHUD.coreUI.SetActive(true);
-            playerHUD.coreCounter = playerHUD.coreCounter + 1;
-            playerHUD.SetCoreCount();
-        }
+        if (!coreUI || !cellUI)
+            return;
+
+        Vector3 cellOriginalPos = cellUI.transform.position;
+        Vector3 coreOriginalPos = coreUI.transform.position;
 
         if (collision.gameObject.tag == "Cell")
         {
-            playerHUD.cellUIOn = true;
+            cellUIOn = true;
             Destroy(collision.gameObject);
-            playerHUD.cellUI.SetActive(true);
-            playerHUD.cellCounter = playerHUD.cellCounter + 1;
-            playerHUD.SetCellCount();
+            cellUI.SetActive(true);
+            cellCounter = cellCounter + 1;
+            SetCellCount();
+            //Check if Core UI is already active
+            if (coreUIOn == true)
+            {
+                cellUI.transform.position = newUILocation.transform.position;
+                StartCoroutine("CellUIOff");
+            }
+            else
+            {
+                cellUI.transform.position = cellOriginalPos;
+                StartCoroutine("CellUIOff");
+            }
         }
+
+        if (collision.gameObject.tag == "Core")
+        {
+            coreUIOn = true;
+            Destroy(collision.gameObject);
+            coreUI.SetActive(true);
+            coreCounter = coreCounter + 1;
+            SetCoreCount();
+            //Check if Cell UI is already active
+            if(cellUIOn == true)
+            {
+                coreUI.transform.position = newUILocation.transform.position;
+                StartCoroutine("CoreUIOff");
+            }
+            else
+            {
+                coreUI.transform.position = coreOriginalPos;
+                StartCoroutine("CoreUIOff");
+            }
+        }
+    }
+
+    //Turn collectible UIs off after a couple seconds have passed
+    IEnumerator CellUIOff()
+    {
+        yield return new WaitForSeconds(2.0f);
+        cellUI.SetActive(false);
+        cellUIOn = false;
+    }
+
+    IEnumerator CoreUIOff()
+    {
+        yield return new WaitForSeconds(2.0f);
+        coreUI.SetActive(false);
+        coreUIOn = false;
     }
 }

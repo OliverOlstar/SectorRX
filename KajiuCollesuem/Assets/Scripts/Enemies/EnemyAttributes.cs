@@ -27,26 +27,18 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         }
     }
 
-    public bool TakeDamage(int pAmount, bool pReact)
+    public void TakeDamage(int pAmount, bool pReact)
     {
         currentHealth -= pAmount;
 
         if (healthSlider)
             healthSlider.value = (float)currentHealth/startHealth;
 
-        //Show Health Bar
+        if (currentHealth <= 0 && !isDead)
+            Death();
+
         StopCoroutine("ShowHealthbar");
         StartCoroutine("ShowHealthbar");
-
-        //Dead
-        if (currentHealth <= 0 && !isDead)
-        {
-            Death();
-            return true;
-        }
-
-        //Return Alive
-        return false;
     }
 
     IEnumerator ShowHealthbar()

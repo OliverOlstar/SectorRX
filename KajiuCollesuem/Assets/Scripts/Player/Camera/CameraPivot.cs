@@ -7,13 +7,16 @@ public class CameraPivot : MonoBehaviour
     public GameObject target;
     private PlayerCamera _camera;
     public float offSetUp = 0.6f;
-    private Coroutine transRoutine;
 
-    //For Testing
-    [Space]
-    [SerializeField] private bool runFunc1 = false;
-    [SerializeField] private SOCamera DemoVarsPreset;
-    [SerializeField] private float DemoVarTrnsSpd = 1;
+    public bool runFunc = false;
+    public float DemoVarOffup = 0.6f;
+    public float DemoVarOffleft = 0;
+    public float DemoVarSensi = 3;
+    public float DemoVarDamp = 20;
+    public float DemoVarDis = 6;
+    public float DemoVarMiny = -8;
+    public float DemoVarMaxy = 70;
+    public float DemoVarTrnsSpd = 1;
 
     void Start()
     {
@@ -26,23 +29,17 @@ public class CameraPivot : MonoBehaviour
         //Position the camera pivot on the player
         transform.position = target.transform.position + (Vector3.up * offSetUp);
 
-        //For Testing
-        if (runFunc1)
+        //Call Camera Transition
+        if (runFunc)
         {
-            ChangePlayerCamera(DemoVarsPreset, DemoVarTrnsSpd);
-            runFunc1 = false;
+            ChangePlayerCamera(DemoVarOffup, DemoVarOffleft, DemoVarSensi, DemoVarDamp, DemoVarDis, DemoVarMiny, DemoVarMaxy, DemoVarTrnsSpd);
+            runFunc = false;
         }
     }
 
 
     
 
-    // Camera Transition ////////////// Starts coroutines that lerp all camera variables
-    public void ChangePlayerCamera(float pOffSetUp, float pOffSetLeft, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
-    {
-        if (transRoutine != null)
-            StopCoroutine(transRoutine);
-        transRoutine = StartCoroutine(CameraOffSetTransition(pOffSetUp, pTransitionSpeed));
 
     // Camera Transition //////////////
 
@@ -55,7 +52,7 @@ public class CameraPivot : MonoBehaviour
 
     private IEnumerator CameraOffSetTransition(float pOffSetUp, float pTransitionSpeed)
     {
-        while (Mathf.Abs(offSetUp - pOffSetUp) >= 0.01f)
+        while (offSetUp != pOffSetUp)
         {
             offSetUp = Mathf.Lerp(offSetUp, pOffSetUp, pTransitionSpeed * Time.deltaTime);
             if (Mathf.Abs(offSetUp - pOffSetUp) <= 0.01f)

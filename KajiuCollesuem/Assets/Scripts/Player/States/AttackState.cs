@@ -9,7 +9,6 @@ public class AttackState : BaseState
     
     private bool done = false;
     private int combo = 0;
-    private float AttackStateReturnDelayLength = 0.6f;
 
     public AttackState(PlayerStateController controller) : base(controller.gameObject)
     {
@@ -19,22 +18,23 @@ public class AttackState : BaseState
     public override void Enter()
     {
         //stateController._hitboxComponent.gameObject.SetActive(true); /* Handled by animation events */
+        //Debug.Log("AttackState: Enter");
         combo = 0;
-
-        //Run attack
         Attack();
     }
 
     public override void Exit()
     {
         //stateController._hitboxComponent.gameObject.SetActive(false); /* Handled by animation events */
-        ClearAttackInputs();
-        stateController.AttackStateReturnDelay = Time.time + AttackStateReturnDelayLength;
+        stateController.quickAttackInput = false;
+        stateController.heavyAttackInput = false;
+        stateController.powerInput = 0;
+        //Debug.Log("AttackState: Exit");
     }
 
     public override Type Tick()
     {
-        //State Switched with Animation Events
+        //Debug.Log("Attack State");
         switch (stateController._animHandler.attackState)
         {
             case 0:
@@ -49,15 +49,14 @@ public class AttackState : BaseState
                 done = true;
                 break;
         }
+        //}
 
-        //Done Attack
         if (done)
         {
             done = false;
             return typeof(MovementState);
         }
 
-        //Stunned
         if (stateController.Stunned)
         {
             return typeof(StunnedState);
@@ -92,7 +91,7 @@ public class AttackState : BaseState
             if (whichPower == -1)
             {
                 done = true;
-                Debug.Log("No In Slot Power");
+                Debug.Log("No Power");
             }
             else if (whichPower == -2)
             {
@@ -102,7 +101,6 @@ public class AttackState : BaseState
             else
             {
                 stateController._animHandler.StartPower(whichPower);
-                combo = 3;
             }
         }
     }
