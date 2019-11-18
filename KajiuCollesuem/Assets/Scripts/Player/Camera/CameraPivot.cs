@@ -35,7 +35,7 @@ public class CameraPivot : MonoBehaviour
     }
 
 
-    
+
 
     // Camera Transition ////////////// Starts coroutines that lerp all camera variables
     public void ChangePlayerCamera(float pOffSetUp, float pOffSetLeft, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
@@ -43,7 +43,7 @@ public class CameraPivot : MonoBehaviour
         if (transRoutine != null)
             StopCoroutine(transRoutine);
         transRoutine = StartCoroutine(CameraOffSetTransition(pOffSetUp, pTransitionSpeed));
-
+    }
     // Camera Transition //////////////
 
     public void ChangePlayerCamera(float pOffSetUp, float pOffSetLeft, float pMouseSensitivity, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
