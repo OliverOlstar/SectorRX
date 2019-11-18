@@ -27,7 +27,7 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         }
     }
 
-    public void TakeDamage(int pAmount, bool pReact)
+    public bool TakeDamage(int pAmount, bool pReact)
     {
         currentHealth -= pAmount;
 
@@ -39,6 +39,14 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
 
         StopCoroutine("ShowHealthbar");
         StartCoroutine("ShowHealthbar");
+
+        //Return If Dead or Not
+        if (currentHealth <= 0)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     IEnumerator ShowHealthbar()

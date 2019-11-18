@@ -8,8 +8,9 @@ public class PlayerDodge : MonoBehaviour
 
     [HideInInspector] public bool doneDodge = false;
 
-    public float dashCooldown = 1.0f;
-    private float _dashDelay = 0.0f;
+    public float shortDodgeCooldown = 1.0f;
+    public float longDodgeCooldown = 1.0f;
+    private float _dodgeDelay = 0.0f;
 
     [Space]
     [SerializeField] private float shortDodgeDistance = 6.0f;
@@ -20,28 +21,26 @@ public class PlayerDodge : MonoBehaviour
     [SerializeField] private float longDodgeDuration = 0.3f;
 
     private Rigidbody _Rb;
-    private Transform _Camera;
 
     void Start()
     {
         _Rb = GetComponent<Rigidbody>();
-        _Camera = Camera.main.transform;
     }
 
     public bool Dodge(bool pShortDodge, Vector3 pDirection)
     {
         //Cooldown
-        if (Time.time > _dashDelay)
+        if (Time.time > _dodgeDelay)
         {
             if (pShortDodge)
             {
                 //Short Dodge
-                StartCoroutine(DodgeRoutine(shortDodgeDistance, shortDodgeDuration, pDirection));
+                StartCoroutine(DodgeRoutine(shortDodgeDistance, shortDodgeDuration, pDirection, shortDodgeCooldown));
             }
             else
             {
                 //Long Dodge
-                StartCoroutine(DodgeRoutine(longDodgeDistance, longDodgeDuration, pDirection));
+                StartCoroutine(DodgeRoutine(longDodgeDistance, longDodgeDuration, pDirection, longDodgeCooldown));
             }
 
             return true;
@@ -54,10 +53,10 @@ public class PlayerDodge : MonoBehaviour
         }
     }
 
-    IEnumerator DodgeRoutine(float pDistance, float pDuration, Vector3 pDirection)
+    IEnumerator DodgeRoutine(float pDistance, float pDuration, Vector3 pDirection, float pCooldown)
     {
         //Setting Delay
-        _dashDelay = Time.time + dashCooldown + pDuration;
+        _dodgeDelay = Time.time + pCooldown + pDuration;
         float dodgeEndTime = Time.time + pDuration;
 
         //Run Dodge Force

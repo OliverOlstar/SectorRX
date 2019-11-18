@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using EZCameraShake;
 
 public class PlayerAttributes : MonoBehaviour, IAttributes
 {
@@ -115,38 +116,45 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     }
 
     //MODIFY MAXES
-    public void modifyMaxHealth(int pMaxHealth)
+    public void setMaxHealth(int pMaxHealth)
     {
         //Change Value
-        _maxHealth += pMaxHealth;
+        _maxHealth = pMaxHealth;
 
         //Change respective bar length
-        healthRect.sizeDelta = new Vector2(_maxHealth * barLengthMultiplier, BAR_HEIGHT);
+        if (healthRect)
+            healthRect.sizeDelta = new Vector2(_maxHealth * barLengthMultiplier, BAR_HEIGHT);
         _healthSlider.maxValue = _maxHealth;
+
+        modifyHealth(_maxHealth);
     }
 
-    public void modifyMaxDefense(int pMaxShield)
+    public void setMaxDefense(int pMaxShield)
     {
         //Change Value
-        _maxShield += pMaxShield;
+        _maxShield = pMaxShield;
 
         //Change respective bar length
-        shieldRect.sizeDelta = new Vector2(_maxShield * barLengthMultiplier, BAR_HEIGHT);
+        if (shieldRect)
+            shieldRect.sizeDelta = new Vector2(_maxShield * barLengthMultiplier, BAR_HEIGHT);
         _shieldSlider.maxValue = _maxShield;
+
+        modifyShield(_maxShield);
     }
 
-    public void modifyMaxPower(int pMaxPowerGuage)
+    public void setMaxPower(int pMaxPowerGuage)
     {
         //Change Value
-        _maxPower += pMaxPowerGuage;
+        _maxPower = pMaxPowerGuage;
 
         //Change respective bar length
-        powerRect.sizeDelta = new Vector2(_maxPower * barLengthMultiplier, BAR_HEIGHT);
+        if (powerRect)
+            powerRect.sizeDelta = new Vector2(_maxPower * barLengthMultiplier, BAR_HEIGHT);
         _powerSlider.maxValue = _maxPower;
     }
 
     //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
-    public void TakeDamage(int pAmount, bool pReact)
+    public bool TakeDamage(int pAmount, bool pReact)
     {
         Debug.Log("Damaging Player " + pAmount);
 
@@ -183,12 +191,26 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
         if (pReact)
             _anim.Stunned(Random.value < 0.5f);
+
+        //Return If Dead or Not
+        if (_health <= 0)
+        {
+            //Camera Shake
+            CameraShaker.Instance.ShakeOnce(20, 4, 0.4f, 0.3f);
+
+            return true;
+        }
+
+        //Camera Shake
+        CameraShaker.Instance.ShakeOnce(1, 2, 0.2f, 0.1f);
+
+        return false;
     }
 
     public void RecivePower(int pPower)
     {
         modifyPower(pPower);
-        Debug.Log("Power Recieved: " + pPower + ", " + _power);
+        //Debug.Log("Power Recieved: " + pPower + ", " + _power);
 
         //Restarting Power Loss over time
         if (_power > 0)
@@ -228,7 +250,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         while (_power > 0)
         {
             modifyPower(-_powerLossAmount);
-            Debug.Log("Power lost: " + _power);
+            //Debug.Log("Power lost: " + _power);
             yield return new WaitForSeconds(_powerLossDelaySeconds);
         }
     }
