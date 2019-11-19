@@ -55,7 +55,7 @@ public class PlayerCamera : MonoBehaviour
         _LocalRotation.y = _ParentTransform.eulerAngles.x;
 
         //Locking cursor
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
 
         //Setting camera distance
         _TargetLocalPosition = new Vector3(-OffSetLeft, 0f, CameraDistance * -1f);
