@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class PlayerUpgrades : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
-
-    private PlayerAttributes _attributes;
-    private PlayerHitbox _hitbox;
+    [SerializeField] private PlayerAttributes _attributes;
+    [SerializeField] private PlayerHitbox _hitbox;
 
     [Space]
     [SerializeField] private int[] healthLevels = new int[3];
@@ -32,9 +30,6 @@ public class PlayerUpgrades : MonoBehaviour
 
     private void Start()
     {
-        _attributes = player.GetComponent<PlayerAttributes>();
-        _hitbox = player.GetComponentInChildren<PlayerHitbox>();
-
         LevelUpHealth();
         LevelUpShield();
         LevelUpPower();
