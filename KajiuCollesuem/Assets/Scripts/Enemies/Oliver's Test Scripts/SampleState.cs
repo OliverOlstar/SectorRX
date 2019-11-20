@@ -30,12 +30,12 @@ public class SampleState : MonoBehaviour, IState
 
     public bool CanEnter(float pDistance)
     {
-        return false;
+        return true;
     }
 
     public bool CanExit(float pDistance)
     {
-        return CanEnter(pDistance);
+        return true;
     }
 
     public void Tick()
