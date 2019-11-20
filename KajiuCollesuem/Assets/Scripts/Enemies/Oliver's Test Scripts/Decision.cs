@@ -31,7 +31,7 @@ public class Decision : MonoBehaviour
     private void StartLastState()
     {
         //Enter least priority State that can be entered
-        for (int i = _states.Length - 1; i > 0; i--)
+        for (int i = _states.Length - 1; i >= 0; i--)
         {
             //Get distance to target
             float distance = Vector3.Distance(transform.position, _target.position);

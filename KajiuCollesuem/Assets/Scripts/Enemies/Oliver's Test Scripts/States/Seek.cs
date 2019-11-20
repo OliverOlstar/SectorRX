@@ -12,7 +12,7 @@ public class Seek : MonoBehaviour, IState
     [SerializeField] private float agroRange = 10;
     [SerializeField] private float agroLostRange = 10;
 
-    [SerializeField] private bool _enabled = false;
+    private bool _enabled = false;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
     {

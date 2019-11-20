@@ -7,8 +7,8 @@ public class PauseMenu : MonoBehaviour
 {
     public bool pause;
     public GameObject pauseScreen;
-    [SerializeField] PlayerCamera mainCam;
-    [SerializeField] PlayerInputHandler input;
+    [SerializeField] private PlayerCamera mainCam;
+    [SerializeField] private PlayerInputHandler input;
 
     // Use this for initialization
     void Start()
