@@ -29,7 +29,6 @@ public class MagmaUpgrade : MonoBehaviour
         {
             Debug.Log("Cost not met");
             hud.coreNotficationOne.gameObject.SetActive(true);
-            hud.StartCoroutine("CoreNotifyOne");
         }
 
         // Used Power Cores (2) are subtracted from current count when upgrade is purchased
@@ -52,7 +51,6 @@ public class MagmaUpgrade : MonoBehaviour
         {
             Debug.Log("Conditions not met");
             hud.coreNotficationTwo.gameObject.SetActive(true);
-            hud.StartCoroutine("CoreNotifyTwo");
         }
 
         // Used Power Cores (5) are subtracted from current count when upgrade is purchased

@@ -136,17 +136,6 @@ public class HUDManager : MonoBehaviour
         powerUpgrade.SetActive(true);
     }
 
-    IEnumerator CoreNotifyOne()
-    {
-        yield return new WaitForSeconds(2.0f);
-        coreNotficationOne.gameObject.SetActive(false);
-    }
-    IEnumerator CoreNotifyTwo()
-    {
-        yield return new WaitForSeconds(2.0f);
-        coreNotficationTwo.gameObject.SetActive(false);
-    }
-
     //Menus and Settings Management
     public void GoToOptions()
     {
