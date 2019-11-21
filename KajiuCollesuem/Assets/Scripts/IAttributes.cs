@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IAttributes
 {
+    bool IsDead();
     bool TakeDamage(int damage, bool react);
 }
