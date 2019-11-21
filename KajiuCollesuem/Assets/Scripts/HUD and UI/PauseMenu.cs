@@ -16,6 +16,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1;
         pause = false;
         pauseScreen.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -23,24 +24,18 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            pause = !pause;
+            TogglePauseGame();
         }
+    }
 
-        if (pause)
-        {
-            Time.timeScale = 0;
-            pauseScreen.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
-            mainCam.CameraDisabled = true;
-            input.inputDisabled = true;
-        }
-        else if(!pause)
-        {
-            Time.timeScale = 1;
-            pauseScreen.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
-            mainCam.CameraDisabled = false;
-            input.inputDisabled = false;
-        }
+    private void TogglePauseGame()
+    {
+        pause = !pause;
+
+        Time.timeScale = pause ? 0 : 1;
+        pauseScreen.SetActive(pause);
+        Cursor.lockState = pause ? CursorLockMode.None : CursorLockMode.Locked;
+        mainCam.CameraDisabled = pause;
+        input.inputDisabled = pause;
     }
 }

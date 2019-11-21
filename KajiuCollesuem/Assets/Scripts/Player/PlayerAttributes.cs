@@ -39,7 +39,8 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     const int BAR_HEIGHT = 20;
     public float barLengthMultiplier = 1.5f;
 
-    // Start is called before the first frame update
+    public bool IsDead() { return true; }
+
     void Start()
     {
         _anim = GetComponentInChildren<AnimHandler>();

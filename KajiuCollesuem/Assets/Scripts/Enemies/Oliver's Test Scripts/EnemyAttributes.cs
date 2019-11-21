@@ -19,7 +19,8 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
     private IState _deadState;
     private IState _stunnedState;
 
-    // Use this for initialization
+    public bool IsDead() { return isDead; }
+
     void Start()
     {
         currentHealth = startHealth;
@@ -54,7 +55,7 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
             return true;
         }
 
-        if (pReact)
+        if (pReact && _decision != null)
             _decision.ForceStateSwitch(_stunnedState);
 
         return false;
@@ -70,6 +71,7 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
     void Death()
     {
         isDead = true;
-        _decision.ForceStateSwitch(_deadState);
+        if (_decision != null)
+            _decision.ForceStateSwitch(_deadState);
     }
 }

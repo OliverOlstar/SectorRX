@@ -34,7 +34,7 @@ public class PlayerHitbox : MonoBehaviour
         //Check if collided with an Attributes Script
         IAttributes otherAttributes = other.GetComponent<IAttributes>();
 
-        if (otherAttributes != null)
+        if (otherAttributes != null && otherAttributes.IsDead() == false)
         {
             //Damage other
             if (otherAttributes.TakeDamage(damage, true))
@@ -48,6 +48,7 @@ public class PlayerHitbox : MonoBehaviour
             CameraShaker.Instance.ShakeOnce(1, 0.5f, 0.2f, 0.1f);
 
             //Slow Game for a small time on hit
+            StopCoroutine("SlowTime");
             StartCoroutine("SlowTime");
         }
     }

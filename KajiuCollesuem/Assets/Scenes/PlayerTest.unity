@@ -238,7 +238,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 163005233}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e760d6bf5a13bff49b4b8f8dbc53cb41, type: 3}
   m_Name: 
@@ -623,6 +623,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 5397536735001967586, guid: 8e7d410007ab955488e1c836a456382a,
+        type: 3}
+      propertyPath: _healthSlider
+      value: 
+      objectReference: {fileID: 2026772891}
+    - target: {fileID: 5397536735001967586, guid: 8e7d410007ab955488e1c836a456382a,
+        type: 3}
+      propertyPath: _shieldSlider
+      value: 
+      objectReference: {fileID: 1429812540}
+    - target: {fileID: 5397536735001967586, guid: 8e7d410007ab955488e1c836a456382a,
+        type: 3}
+      propertyPath: _powerSlider
+      value: 
+      objectReference: {fileID: 1441719110}
     - target: {fileID: 8582934654442581039, guid: 8e7d410007ab955488e1c836a456382a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -678,6 +693,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1048502808, guid: 8e7d410007ab955488e1c836a456382a, type: 3}
+      propertyPath: timeSlowAmount
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1048502808, guid: 8e7d410007ab955488e1c836a456382a, type: 3}
+      propertyPath: timeSlowSeconds
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 806430457, guid: 8e7d410007ab955488e1c836a456382a, type: 3}
       propertyPath: defaultPreset
       value: 
@@ -697,21 +720,6 @@ PrefabInstance:
       propertyPath: enemiesLayer.m_Bits
       value: 512
       objectReference: {fileID: 0}
-    - target: {fileID: 5397536735001967586, guid: 8e7d410007ab955488e1c836a456382a,
-        type: 3}
-      propertyPath: _healthSlider
-      value: 
-      objectReference: {fileID: 2026772891}
-    - target: {fileID: 5397536735001967586, guid: 8e7d410007ab955488e1c836a456382a,
-        type: 3}
-      propertyPath: _shieldSlider
-      value: 
-      objectReference: {fileID: 1429812540}
-    - target: {fileID: 5397536735001967586, guid: 8e7d410007ab955488e1c836a456382a,
-        type: 3}
-      propertyPath: _powerSlider
-      value: 
-      objectReference: {fileID: 1441719110}
     - target: {fileID: 17874600, guid: 8e7d410007ab955488e1c836a456382a, type: 3}
       propertyPath: fallDamageStartTime
       value: 1.2
