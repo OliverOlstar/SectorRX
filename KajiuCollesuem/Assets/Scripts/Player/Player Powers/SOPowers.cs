@@ -17,6 +17,6 @@ public class SOPowers : ScriptableObject
     public int damage = 0;
 
     [Header("Upgrades")]
-    [TextArea] public string[] statDescriptions = new string[3];
+    [TextArea] public string[] powerDescriptions = new string[3];
     public int[] cost = new int[3];
 }

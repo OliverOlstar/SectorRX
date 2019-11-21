@@ -964,77 +964,18 @@ PrefabInstance:
       propertyPath: input
       value: 
       objectReference: {fileID: 17874596}
-    - target: {fileID: 1646561991989683153, guid: cc9f41ad548a6de4e91f819105275911,
+    - target: {fileID: 1774573749155763818, guid: cc9f41ad548a6de4e91f819105275911,
         type: 3}
       propertyPath: pU
       value: 
       objectReference: {fileID: 1783135179}
-    - target: {fileID: 4221332045502202662, guid: cc9f41ad548a6de4e91f819105275911,
+    - target: {fileID: 136830031787418897, guid: cc9f41ad548a6de4e91f819105275911,
         type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 284.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4221332045502202662, guid: cc9f41ad548a6de4e91f819105275911,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -131.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4221332045502202662, guid: cc9f41ad548a6de4e91f819105275911,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 340.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4221332045502202662, guid: cc9f41ad548a6de4e91f819105275911,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 89.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 325439310755658257, guid: cc9f41ad548a6de4e91f819105275911,
-        type: 3}
-      propertyPath: m_FontData.m_Alignment
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 325439310755658257, guid: cc9f41ad548a6de4e91f819105275911,
-        type: 3}
-      propertyPath: m_Text
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 325439310755658257, guid: cc9f41ad548a6de4e91f819105275911,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 325439310755658257, guid: cc9f41ad548a6de4e91f819105275911,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 325439310755658257, guid: cc9f41ad548a6de4e91f819105275911,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 1
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc9f41ad548a6de4e91f819105275911, type: 3}
---- !u!1 &761940987 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2839122606243555675, guid: cc9f41ad548a6de4e91f819105275911,
-    type: 3}
-  m_PrefabInstance: {fileID: 761940986}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &761940988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 761940987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18abb8d9f22866b43934cbbd22c86fad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delay: 2
 --- !u!1 &861142678
 GameObject:
   m_ObjectHideFlags: 0
@@ -1597,6 +1538,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8216565199927251694, guid: d6c49454cc747784b93c7db8f742f45e,
         type: 3}
+      propertyPath: Powers.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8216565199927251694, guid: d6c49454cc747784b93c7db8f742f45e,
+        type: 3}
       propertyPath: _attributes
       value: 
       objectReference: {fileID: 17874593}
@@ -1605,6 +1551,24 @@ PrefabInstance:
       propertyPath: _hitbox
       value: 
       objectReference: {fileID: 582195791}
+    - target: {fileID: 8216565199927251694, guid: d6c49454cc747784b93c7db8f742f45e,
+        type: 3}
+      propertyPath: Powers.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6d6ea06f8d5b49949899e4db9e49897f,
+        type: 2}
+    - target: {fileID: 8216565199927251694, guid: d6c49454cc747784b93c7db8f742f45e,
+        type: 3}
+      propertyPath: Powers.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6d6ea06f8d5b49949899e4db9e49897f,
+        type: 2}
+    - target: {fileID: 8216565199927251694, guid: d6c49454cc747784b93c7db8f742f45e,
+        type: 3}
+      propertyPath: Powers.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6d6ea06f8d5b49949899e4db9e49897f,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6c49454cc747784b93c7db8f742f45e, type: 3}
 --- !u!1001 &1339724864

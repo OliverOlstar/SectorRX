@@ -5,9 +5,12 @@ using UnityEngine.UI;
 
 public class StatUpgrades : MonoBehaviour
 {
-    public Text description;
+    public Text descriptionStat;
+    public Text descriptionPower;
+    public Text insufficientCost;
     [SerializeField] private PlayerUpgrades pU;
     private SOStats[] stats;
+    private SOPowers[] powers;
 
     // Access the HUDManager to get access to the current Power Core count
     HUDManager hud;
@@ -15,7 +18,9 @@ public class StatUpgrades : MonoBehaviour
     void Start()
     {
         stats = pU.Stats;
+        powers = pU.Powers;
         hud = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>();
+        insufficientCost.gameObject.SetActive(false);
     }
 
     // Purchase Rank One upgrade if player has 50 Cells.
@@ -81,14 +86,66 @@ public class StatUpgrades : MonoBehaviour
     //    }
     //}
 
-    public void HoverButton(int pIndex, int pLevel, float pYPos)
+    public void ClickButtonPower(int pIndex, int pLevel)
     {
-        description.text = stats[pIndex].statDescriptions[pLevel];
-        description.rectTransform.position = new Vector2(description.rectTransform.position.x, pYPos);
+        if(hud.coreCounter >= powers[pIndex].cost[pLevel])
+        {
+            if(pU.PowerUpgrade(pIndex, pLevel))
+            {
+                hud.coreCounter -= powers[pIndex].cost[pLevel];
+            }
+            else
+            {
+                insufficientCost.text = "Can't do level";
+                insufficientCost.gameObject.SetActive(false);
+                insufficientCost.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            insufficientCost.text = "Not enough cores";
+            insufficientCost.gameObject.SetActive(false);
+            insufficientCost.gameObject.SetActive(true);
+        }
+    }
+
+    public void ClickButtonStat(int pIndex, int pLevel)
+    {
+        if (hud.cellCounter >= stats[pIndex].cost[pLevel])
+        {
+            if (pU.LevelUp(pIndex, pLevel))
+            {
+                hud.cellCounter -= stats[pIndex].cost[pLevel];
+            }
+            else
+            {
+                insufficientCost.text = "Can't do level";
+                insufficientCost.gameObject.SetActive(false);
+                insufficientCost.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            insufficientCost.text = "Not enough cells";
+            insufficientCost.gameObject.SetActive(false);
+            insufficientCost.gameObject.SetActive(true);
+        }
+    }
+
+    public void HoverStatButton(int pIndex, int pLevel, float pYPos)
+    {
+        descriptionStat.text = stats[pIndex].statDescriptions[pLevel];
+        descriptionStat.rectTransform.position = new Vector2(descriptionStat.rectTransform.position.x, pYPos);
+    }
+    public void HoverPowerButton(int pIndex, int pLevel, float pYPos)
+    {
+        descriptionPower.text = powers[pIndex].powerDescriptions[pLevel];
+        descriptionPower.rectTransform.position = new Vector2(descriptionPower.rectTransform.position.x, pYPos);
     }
 
     public void HoverExit()
     {
-        description.text = "";
+        descriptionStat.text = "";
+        descriptionPower.text = "";
     }
 }

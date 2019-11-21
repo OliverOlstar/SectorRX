@@ -8,11 +8,11 @@ public class PlayerUpgrades : MonoBehaviour
     [SerializeField] private PlayerHitbox _hitbox;
 
     [Space]
-    [SerializeField] private SOStats[] Stats;
+    public SOStats[] Stats;
     private int[] _statLevels;
 
     [Space]
-    [SerializeField] private SOStats[] Powers;
+    public SOPowers[] Powers;
     private int[] _powerLevels;
 
     [SerializeField] private int luck = 0;
@@ -22,7 +22,7 @@ public class PlayerUpgrades : MonoBehaviour
         _statLevels = new int[Stats.Length];
         for (int i = 0; i < Stats.Length; i++)
         {
-            LevelUp(i);
+            LevelUp(i, 0);
         }
 
         _powerLevels = new int[Powers.Length];
@@ -32,7 +32,7 @@ public class PlayerUpgrades : MonoBehaviour
         }
     }
 
-    public void LevelUp(int pIndex)
+    public bool LevelUp(int pIndex, int pLevel)
     {
         switch(Stats[pIndex].dislayName[0])
         {
@@ -63,11 +63,12 @@ public class PlayerUpgrades : MonoBehaviour
         }
 
         _statLevels[pIndex]++;
+        return true;
     }
 
-    public void PowerUpgrade(int pIndex)
+    public bool PowerUpgrade(int pIndex, int pLevel)
     {
-        switch (Stats[pIndex].dislayName[0])
+        switch (Powers[pIndex].dislayName[0])
         {
             //Magma
             case 'M':
@@ -76,5 +77,6 @@ public class PlayerUpgrades : MonoBehaviour
         }
 
         _powerLevels[pIndex]++;
+        return true;
     }
 }
