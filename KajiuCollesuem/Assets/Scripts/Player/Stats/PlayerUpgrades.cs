@@ -8,7 +8,7 @@ public class PlayerUpgrades : MonoBehaviour
     [SerializeField] private PlayerHitbox _hitbox;
 
     [Space]
-    [SerializeField] private SOStats[] Stats;
+    public SOStats[] Stats;
     private int[] Levels;
 
     [SerializeField] private int luck = 0;
