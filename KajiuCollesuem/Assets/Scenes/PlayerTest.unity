@@ -1156,6 +1156,11 @@ PrefabInstance:
       propertyPath: pauseMenu
       value: 
       objectReference: {fileID: 1590311855}
+    - target: {fileID: 1774573749155763818, guid: cc9f41ad548a6de4e91f819105275911,
+        type: 3}
+      propertyPath: pU
+      value: 
+      objectReference: {fileID: 1716003617}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc9f41ad548a6de4e91f819105275911, type: 3}
 --- !u!1001 &1074441745
@@ -1737,6 +1742,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25d92853095a56d4fb37e61b191c6188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1716003617 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8216565199927251694, guid: d6c49454cc747784b93c7db8f742f45e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1711869013374563981}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e62e4af0a87498f42a24a459a25954d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1776228980
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2248,16 +2265,6 @@ PrefabInstance:
     - target: {fileID: 1885166620873023016, guid: d6c49454cc747784b93c7db8f742f45e,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8216565199927251694, guid: d6c49454cc747784b93c7db8f742f45e,
-        type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 17874585}
-    - target: {fileID: 8216565199927251694, guid: d6c49454cc747784b93c7db8f742f45e,
-        type: 3}
-      propertyPath: healthLevel
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8216565199927251694, guid: d6c49454cc747784b93c7db8f742f45e,

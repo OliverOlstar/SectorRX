@@ -34,6 +34,11 @@ public class PlayerUpgrades : MonoBehaviour
 
     public bool LevelUp(int pIndex, int pLevel)
     {
+        //Return false if trying to upgrade that is not possible
+        if (_statLevels[pIndex] != pLevel)
+            return false;
+
+        //Make Upgrade Happen
         switch(Stats[pIndex].dislayName[0])
         {
             //Health
@@ -68,6 +73,10 @@ public class PlayerUpgrades : MonoBehaviour
 
     public bool PowerUpgrade(int pIndex, int pLevel)
     {
+        //Return false if trying to upgrade that is not possible
+        if (_statLevels[pIndex] != pLevel)
+            return false;
+
         switch (Powers[pIndex].dislayName[0])
         {
             //Magma
