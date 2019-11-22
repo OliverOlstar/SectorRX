@@ -138,4 +138,10 @@ public class AnimHandler : MonoBehaviour
         _anim.SetBool("ReactLeft", pLeft);
         _anim.SetTrigger("React");
     }
+    
+    public void Respawn()
+    {
+        _anim.SetTrigger("Respawn");
+        _anim.SetBool("IsDead", false);
+    }
 }

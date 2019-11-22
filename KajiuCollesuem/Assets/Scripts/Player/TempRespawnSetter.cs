@@ -9,5 +9,7 @@ public class TempRespawnSetter : MonoBehaviour
         PlayerRespawn playerRespawn = other.GetComponent<PlayerRespawn>();
         if (playerRespawn)
             playerRespawn.setRespawnTransform(transform.GetChild(0).position, transform.GetChild(0).eulerAngles.y);
+
+        Debug.Log("Checkpoint");
     }
 }

@@ -41,6 +41,15 @@ public class DodgeState : BaseState
             return typeof(MovementState);
         }
 
+        //Respawn
+        if (stateController.Respawn)
+        {
+            stateController.Respawn = false;
+            stateController._animHandler.Respawn();
+            stateController._dodgeComponent.EndDodge();
+            return typeof(MovementState);
+        }
+
         // TODO Maybe add way to enter stunned state from here
 
         return null;

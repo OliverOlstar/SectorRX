@@ -133,7 +133,7 @@ public class HUDManager : MonoBehaviour
 
     public void BackToPause()
     {
-        //pause.SetActive(true);
+        pause.SetActive(true);
         //option.SetActive(false);
         //ability.SetActive(false);
         powerUpgrade.SetActive(false);
@@ -142,7 +142,7 @@ public class HUDManager : MonoBehaviour
 
     public void ResumeGame()
     {
-        //pause.SetActive(false);
+        pause.SetActive(false);
         //Time.timeScale = 1;
         pauseMenu.pause = !pauseMenu.pause;
     }

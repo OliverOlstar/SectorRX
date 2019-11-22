@@ -70,8 +70,8 @@ public class SaveAndLoad : MonoBehaviour
     {
         Debug.Log("SaveAndLoad: <color=Orange>QuickLoadSave</color>");
         //Loads Save after dieing. Only resets enemies and player.
-        playerAttributes.Respawn();
         playerRespawn.Respawn();
+        playerAttributes.Respawn();
         RespawnEnemies(null);
     }
 
@@ -80,7 +80,6 @@ public class SaveAndLoad : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftBracket))
         {
             Save(0);
-            //RespawnEnemies(null);
         }
 
         if (Input.GetKeyDown(KeyCode.RightBracket))
@@ -91,14 +90,12 @@ public class SaveAndLoad : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             QuickLoadSave(0);
-            //RespawnEnemies(null);
         }
 
         if (Input.GetKeyDown(KeyCode.L))
         {
             playerUpgrades.LevelUp(0, 1);
             playerUpgrades.LevelUp(1, 1);
-            //RespawnEnemies(null);
         }
     }
 

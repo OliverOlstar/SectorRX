@@ -31,6 +31,9 @@ public class PlayerRespawn : MonoBehaviour
         transform.position = currentRespawnPoint;
         transform.GetChild(0).rotation = Quaternion.Euler(0, currentRespawnRotationY, 0);
         camera.Respawn(currentRespawnRotationY);
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<PlayerStateController>().movementDir = transform.GetChild(0).forward;
+        GetComponent<PlayerStateController>().Respawn = true;
     }
 
     public void Dead()
