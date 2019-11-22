@@ -41,13 +41,13 @@ public class SaveAndLoad : MonoBehaviour
 
     public void ClearSave(int pSlot = 0)
     {
-        Debug.Log("SaveAndLoad: ClearSave");
+        Debug.Log("SaveAndLoad: <color=Orange>ClearSave</color>");
         PlayerPrefs.SetInt("Save Slot Taken", 0);
     }
 
     public void Save(int pSlot = 0)
     {
-        Debug.Log("SaveAndLoad: Save");
+        Debug.Log("SaveAndLoad: <color=Orange>Save</color>");
         PlayerPrefs.SetInt("Save Slot Taken", 1);
         SaveLevels(pSlot);
         SaveSpawnTransform(pSlot);
@@ -56,7 +56,7 @@ public class SaveAndLoad : MonoBehaviour
 
     public bool LoadSave(int pSlot = 0)
     {
-        Debug.Log("SaveAndLoad: LoadSave");
+        Debug.Log("SaveAndLoad: <color=Orange>LoadSave</color>");
         //If Slot has not save don't load
         if (PlayerPrefs.GetInt("Save Slot Taken") == 0) return false;
 
@@ -68,7 +68,7 @@ public class SaveAndLoad : MonoBehaviour
 
     public void QuickLoadSave(int pSlot = 0)
     {
-        Debug.Log("SaveAndLoad: QuickLoadSave");
+        Debug.Log("SaveAndLoad: <color=Orange>QuickLoadSave</color>");
         //Loads Save after dieing. Only resets enemies and player.
         playerAttributes.Respawn();
         playerRespawn.Respawn();

@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class ForwardGizmo : MonoBehaviour
 {
+    [SerializeField] private Color color;
+
     private void OnDrawGizmosSelected()
     {
         Vector3 lineEnd = transform.position + transform.forward;
-        Debug.DrawLine(transform.position, lineEnd);
-        Debug.DrawLine(lineEnd + transform.up / 6, lineEnd - transform.up / 6);
+        Gizmos.color = color;
+        Gizmos.DrawLine(transform.position, lineEnd);
+        Gizmos.DrawLine(lineEnd + transform.up / 6, lineEnd - transform.up / 6);
     }
 }
