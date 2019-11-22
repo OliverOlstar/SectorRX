@@ -63,6 +63,12 @@ public class PlayerCamera : MonoBehaviour
     }
 
     public void GiveLockOnScript(PlayerLockOnScript pScript) => lockOnScript = pScript;
+    public void Respawn(float pRotationY) 
+    {
+        transform.parent.rotation = Quaternion.Euler(0, pRotationY, 0);
+        _LocalRotation.x = pRotationY;
+        _LocalRotation.y = 0;
+    }
 
     void Update()
     {

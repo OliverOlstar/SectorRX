@@ -19,6 +19,11 @@ public class PlayerUpgrades : MonoBehaviour
 
     private void Start()
     {
+        Setup();
+    }
+
+    public void Setup()
+    {
         _statLevels = new int[Stats.Length];
         for (int i = 0; i < Stats.Length; i++)
         {
@@ -87,5 +92,15 @@ public class PlayerUpgrades : MonoBehaviour
 
         _powerLevels[pIndex]++;
         return true;
+    }
+
+    public int[] GetStatLevels()
+    {
+        return _statLevels;
+    }
+
+    public int[] GetPowerLevels()
+    {
+        return _powerLevels;
     }
 }

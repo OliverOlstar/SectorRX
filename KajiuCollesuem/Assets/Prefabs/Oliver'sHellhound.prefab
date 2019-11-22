@@ -1845,6 +1845,7 @@ GameObject:
   - component: {fileID: 8872662308017337300}
   - component: {fileID: 3601481036375685087}
   - component: {fileID: 3601481036375685086}
+  - component: {fileID: 488027853679517256}
   - component: {fileID: 3601481036375685082}
   m_Layer: 0
   m_Name: Oliver'sHellhound
@@ -1955,7 +1956,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agroRange: 10
   agroLostRange: 14
-  _enabled: 0
 --- !u!114 &8872662308017337302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1983,7 +1983,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pauseTimeMin: 1
-  _pauseTimeMax: 1
+  _pauseTimeMax: 2
   pointReachedDistance: 1
   patrolPath: {fileID: 0}
 --- !u!114 &8872662308017337303
@@ -2038,6 +2038,18 @@ MonoBehaviour:
   startHealth: 15
   healthDisplayLength: 2
   enemyHealthBar: {fileID: 3601481037182919060}
+--- !u!114 &488027853679517256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8872662308017337307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf3bbb397904f534e97d5862ff64e334, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!195 &3601481036375685082
 NavMeshAgent:
   m_ObjectHideFlags: 0

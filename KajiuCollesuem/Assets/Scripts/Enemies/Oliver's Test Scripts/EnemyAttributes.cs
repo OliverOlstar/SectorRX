@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class EnemyAttributes : MonoBehaviour, IAttributes
 {
     [SerializeField] private int startHealth = 100;
-    private int currentHealth;
+    private int _health;
     
     [SerializeField] private float healthDisplayLength = 2f;
 
@@ -23,7 +23,7 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
 
     void Start()
     {
-        currentHealth = startHealth;
+        _health = startHealth;
         
         if (enemyHealthBar)
         {
@@ -38,19 +38,19 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
 
     public bool TakeDamage(int pAmount, bool pReact)
     {
-        currentHealth -= pAmount;
+        _health -= pAmount;
 
         if (healthSlider)
-            healthSlider.value = (float)currentHealth/startHealth;
+            healthSlider.value = (float)_health / startHealth;
 
-        if (currentHealth <= 0 && !isDead)
+        if (_health <= 0 && !isDead)
             Death();
 
         StopCoroutine("ShowHealthbar");
         StartCoroutine("ShowHealthbar");
 
         //Return If Dead or Not
-        if (currentHealth <= 0)
+        if (_health <= 0)
         {
             return true;
         }
@@ -73,5 +73,14 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         isDead = true;
         if (_decision != null)
             _decision.ForceStateSwitch(_deadState);
+    }
+
+    public void Respawn()
+    {
+        isDead = false;
+        _health = startHealth;
+
+        if (enemyHealthBar)
+            enemyHealthBar.SetActive(false);
     }
 }

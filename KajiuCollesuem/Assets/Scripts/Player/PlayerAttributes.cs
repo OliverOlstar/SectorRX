@@ -73,15 +73,22 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         }
     }
 
+    public void Respawn()
+    {
+        setHealth(_maxHealth);
+        setShield(_maxShield);
+        setPower(0);
+    }
+
     //GET
     public int getHealth() { return _health; }
     public int getShield() { return _shield; }
     public int getPower() { return _power; }
 
     //SET
-    public void setHealth(int pHealth) { _health = pHealth; }
-    public void setShield(int pShield) { _shield = pShield; }
-    public void setPower(int pPower) { _power = pPower; }
+    public void setHealth(int pHealth) { modifyHealth(pHealth - _health); }
+    public void setShield(int pShield) { modifyShield(pShield - _shield); }
+    public void setPower(int pPower) { modifyPower(pPower - _power); }
 
     //MODIFY VARS ///////////////////////////////////////////////////////////////////////////////////////////
     public void modifyHealth(int x)

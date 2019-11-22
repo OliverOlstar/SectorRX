@@ -29,6 +29,8 @@ public class Dead : MonoBehaviour, IState
 
     public void Exit()
     {
+        _anim.SetTrigger("Respawn");
+        _anim.SetBool("IsDead", false);
         _enabled = false;
     }
 

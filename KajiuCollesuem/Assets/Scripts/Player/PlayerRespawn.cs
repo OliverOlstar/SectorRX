@@ -1,21 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerRespawn : MonoBehaviour
 {
+    [SerializeField] private PlayerCamera camera;
+
+    [Space]
     [SerializeField] private float deathLength = 3f;
-    [SerializeField] [Range(0,1)] private float deathSlowAmount = 0.2f;
-    private static Vector3 currentRespawnPoint = new Vector3(0, 0, 0);
+    [SerializeField] [Range(0.001f,1)] private float deathSlowAmount = 0.2f;
+    private static Vector3 currentRespawnPoint;
+    private static float currentRespawnRotationY;
 
     private void Start()
     {
         //Set Player Spawn
         if (currentRespawnPoint == Vector3.zero)
+        {
             currentRespawnPoint = transform.position;
+            currentRespawnRotationY = transform.GetChild(0).eulerAngles.y;
+        }
         else
-            transform.position = currentRespawnPoint;
+        {
+            Respawn();
+        }
+    }
+
+    public void Respawn()
+    {
+        transform.position = currentRespawnPoint;
+        transform.GetChild(0).rotation = Quaternion.Euler(0, currentRespawnRotationY, 0);
+        camera.Respawn(currentRespawnRotationY);
     }
 
     public void Dead()
@@ -32,12 +47,23 @@ public class PlayerRespawn : MonoBehaviour
 
         Time.timeScale = 1.0f;
         //Temp Restart Scene (replace this with the proper scene manager and with a HUD element)
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SaveAndLoad._Instance.QuickLoadSave();
     }
 
-    public void setRespawinPoint(Vector3 pPoint)
+    public void setRespawnTransform(Vector3 pPoint, float pRotationY)
     {
         //Change Where the player spawns after dieing
         currentRespawnPoint = pPoint;
+        currentRespawnRotationY = pRotationY;
+    }
+
+    public Vector3 getRespawnPoint()
+    {
+        return currentRespawnPoint;
+    }
+
+    public float getRespawnRotation()
+    {
+        return currentRespawnRotationY;
     }
 }
