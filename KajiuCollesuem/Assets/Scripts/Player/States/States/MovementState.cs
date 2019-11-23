@@ -70,6 +70,7 @@ public class MovementState : BaseState
         if (stateController.Respawn)
         {
             stateController._movementComponent.EndJump();
+            stateController._animHandler.Respawn();
             stateController.Respawn = false;
         }
 

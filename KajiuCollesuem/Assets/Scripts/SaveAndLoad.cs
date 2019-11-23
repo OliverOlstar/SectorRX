@@ -27,12 +27,15 @@ public class SaveAndLoad : MonoBehaviour
     public static event Action<SaveAndLoad> RespawnEnemies;
     public static SaveAndLoad _Instance;
 
+    private float lastSaveTime = 0;
     private void Start()
     {
         if (_Instance != null) 
             Destroy(gameObject);
         else
             _Instance = this;
+
+        lastSaveTime = Time.time;
     }
 
     [SerializeField] private PlayerUpgrades playerUpgrades;
@@ -41,14 +44,21 @@ public class SaveAndLoad : MonoBehaviour
 
     public void ClearSave(int pSlot = 0)
     {
-        Debug.Log("SaveAndLoad: <color=Orange>ClearSave</color>");
-        PlayerPrefs.SetInt("Save Slot Taken", 0);
+        Debug.Log("SaveAndLoad: <color=Orange>ClearSave</color> " + pSlot);
+        PlayerPrefs.SetInt(pSlot + "-SlotTaken", 0);
+        PlayerPrefs.SetFloat(pSlot + "-TimePlayed", 0);
     }
 
     public void Save(int pSlot = 0)
     {
-        Debug.Log("SaveAndLoad: <color=Orange>Save</color>");
-        PlayerPrefs.SetInt("Save Slot Taken", 1);
+        Debug.Log("SaveAndLoad: <color=Orange>Save</color> " + pSlot);
+        PlayerPrefs.SetInt(pSlot + "-SlotTaken", 1);
+        
+        float deltaTimeBetweenSaves = Time.time - lastSaveTime;
+        PlayerPrefs.SetFloat(pSlot + "-TimePlayed", deltaTimeBetweenSaves + PlayerPrefs.GetFloat(pSlot + "-TimePlayed"));
+        lastSaveTime = Time.time;
+        Debug.Log("Timeplayed: " + PlayerPrefs.GetFloat(pSlot + "-TimePlayed"));
+
         SaveLevels(pSlot);
         SaveSpawnTransform(pSlot);
         PlayerPrefs.Save();
@@ -56,9 +66,11 @@ public class SaveAndLoad : MonoBehaviour
 
     public bool LoadSave(int pSlot = 0)
     {
-        Debug.Log("SaveAndLoad: <color=Orange>LoadSave</color>");
+        Debug.Log("SaveAndLoad: <color=Orange>LoadSave</color> " + pSlot);
         //If Slot has not save don't load
-        if (PlayerPrefs.GetInt("Save Slot Taken") == 0) return false;
+        if (PlayerPrefs.GetInt(pSlot + "-SlotTaken") == 0) return false;
+        lastSaveTime = Time.time;
+        Debug.Log("Timeplayed: " + PlayerPrefs.GetFloat(pSlot + "-TimePlayed"));
 
         LoadLevels();
         LoadSpawnTransform(pSlot);
@@ -68,7 +80,7 @@ public class SaveAndLoad : MonoBehaviour
 
     public void QuickLoadSave(int pSlot = 0)
     {
-        Debug.Log("SaveAndLoad: <color=Orange>QuickLoadSave</color>");
+        Debug.Log("SaveAndLoad: <color=Orange>QuickLoadSave</color> " + pSlot);
         //Loads Save after dieing. Only resets enemies and player.
         playerRespawn.Respawn();
         playerAttributes.Respawn();
