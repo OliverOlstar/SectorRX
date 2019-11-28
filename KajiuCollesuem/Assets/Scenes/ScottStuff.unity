@@ -626,6 +626,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 5397536735001967586, guid: 8e7d410007ab955488e1c836a456382a,
+        type: 3}
+      propertyPath: _healthSlider
+      value: 
+      objectReference: {fileID: 428942969}
+    - target: {fileID: 5397536735001967586, guid: 8e7d410007ab955488e1c836a456382a,
+        type: 3}
+      propertyPath: _shieldSlider
+      value: 
+      objectReference: {fileID: 2082572002}
+    - target: {fileID: 5397536735001967586, guid: 8e7d410007ab955488e1c836a456382a,
+        type: 3}
+      propertyPath: _powerSlider
+      value: 
+      objectReference: {fileID: 334673819}
     - target: {fileID: 4489995641700635053, guid: 8e7d410007ab955488e1c836a456382a,
         type: 3}
       propertyPath: inputDisabled
@@ -686,21 +701,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5397536735001967586, guid: 8e7d410007ab955488e1c836a456382a,
-        type: 3}
-      propertyPath: _healthSlider
-      value: 
-      objectReference: {fileID: 428942969}
-    - target: {fileID: 5397536735001967586, guid: 8e7d410007ab955488e1c836a456382a,
-        type: 3}
-      propertyPath: _shieldSlider
-      value: 
-      objectReference: {fileID: 2082572002}
-    - target: {fileID: 5397536735001967586, guid: 8e7d410007ab955488e1c836a456382a,
-        type: 3}
-      propertyPath: _powerSlider
-      value: 
-      objectReference: {fileID: 334673819}
     - target: {fileID: 6736149249947245804, guid: 8e7d410007ab955488e1c836a456382a,
         type: 3}
       propertyPath: cell
@@ -969,7 +969,7 @@ PrefabInstance:
       propertyPath: pU
       value: 
       objectReference: {fileID: 1783135179}
-    - target: {fileID: 136830031787418897, guid: cc9f41ad548a6de4e91f819105275911,
+    - target: {fileID: 2881289104756942333, guid: cc9f41ad548a6de4e91f819105275911,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1538,11 +1538,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8216565199927251694, guid: d6c49454cc747784b93c7db8f742f45e,
         type: 3}
-      propertyPath: Powers.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8216565199927251694, guid: d6c49454cc747784b93c7db8f742f45e,
-        type: 3}
       propertyPath: _attributes
       value: 
       objectReference: {fileID: 17874593}
@@ -1551,24 +1546,6 @@ PrefabInstance:
       propertyPath: _hitbox
       value: 
       objectReference: {fileID: 582195791}
-    - target: {fileID: 8216565199927251694, guid: d6c49454cc747784b93c7db8f742f45e,
-        type: 3}
-      propertyPath: Powers.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 6d6ea06f8d5b49949899e4db9e49897f,
-        type: 2}
-    - target: {fileID: 8216565199927251694, guid: d6c49454cc747784b93c7db8f742f45e,
-        type: 3}
-      propertyPath: Powers.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 6d6ea06f8d5b49949899e4db9e49897f,
-        type: 2}
-    - target: {fileID: 8216565199927251694, guid: d6c49454cc747784b93c7db8f742f45e,
-        type: 3}
-      propertyPath: Powers.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: 6d6ea06f8d5b49949899e4db9e49897f,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6c49454cc747784b93c7db8f742f45e, type: 3}
 --- !u!1001 &1339724864

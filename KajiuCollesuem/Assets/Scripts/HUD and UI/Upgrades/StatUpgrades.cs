@@ -90,9 +90,10 @@ public class StatUpgrades : MonoBehaviour
     {
         if(hud.coreCounter >= powers[pIndex].cost[pLevel])
         {
-            if(pU.PowerUpgrade(pIndex, pLevel))
+            if(pU.PowerUpgrade(pIndex, pLevel + 1))
             {
                 hud.coreCounter -= powers[pIndex].cost[pLevel];
+                pU.GetComponent<Button>().interactable = false;
             }
             else
             {
@@ -113,7 +114,7 @@ public class StatUpgrades : MonoBehaviour
     {
         if (hud.cellCounter >= stats[pIndex].cost[pLevel])
         {
-            if (pU.LevelUp(pIndex, pLevel))
+            if (pU.LevelUp(pIndex, pLevel + 1))
             {
                 hud.cellCounter -= stats[pIndex].cost[pLevel];
             }

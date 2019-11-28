@@ -88,6 +88,14 @@ public class PlayerUpgrades : MonoBehaviour
             case 'M':
                 //_attributes.setMaxHealth(Powers[pIndex].values[_statLevels[pIndex]]);
                 break;
+
+            //Ice
+            case 'I':
+                break;
+
+            //Sand Coffin
+            case 'C':
+                break;
         }
 
         _powerLevels[pIndex]++;
