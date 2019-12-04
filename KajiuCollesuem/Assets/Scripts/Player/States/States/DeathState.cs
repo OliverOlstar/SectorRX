@@ -20,12 +20,17 @@ public class DeathState : BaseState
 
     public override void Exit()
     {
-
+        stateController._animHandler.Respawn();
     }
 
     public override Type Tick()
     {
-        //Debug.Log("Death State");
+        //Respawn
+        if (stateController.Respawn)
+        {
+            stateController.Respawn = false;
+            return typeof(MovementState);
+        }
 
         return null;
     }

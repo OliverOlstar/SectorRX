@@ -22,11 +22,11 @@ public class WolfCaptainSummon : MonoBehaviour
 
     void Update()
     {
-        if (Vector3.Distance(alphaMovement.player.position, this.transform.position) < 20.0f && gruntsSummoned == false)
+        /*if (Vector3.Distance(alphaMovement.player.position, this.transform.position) < 20.0f && gruntsSummoned == false)
         {
             SummonGrunts();
             gruntsSummoned = true;
-        }
+        }*/
     }
 
     void SummonGrunts()

@@ -20,8 +20,9 @@ public class AttackState : BaseState
     {
         //stateController._hitboxComponent.gameObject.SetActive(true); /* Handled by animation events */
         combo = 0;
+
+        //Run attack
         Attack();
-        //Debug.Log("AttackState: Enter");
     }
 
     public override void Exit()
@@ -29,12 +30,11 @@ public class AttackState : BaseState
         //stateController._hitboxComponent.gameObject.SetActive(false); /* Handled by animation events */
         ClearAttackInputs();
         stateController.AttackStateReturnDelay = Time.time + AttackStateReturnDelayLength;
-        //Debug.Log("AttackState: Exit");
     }
 
     public override Type Tick()
     {
-        //Debug.Log("Attack State");
+        //State Switched with Animation Events
         switch (stateController._animHandler.attackState)
         {
             case 0:
@@ -49,17 +49,26 @@ public class AttackState : BaseState
                 done = true;
                 break;
         }
-        //}
 
+        //Done Attack
         if (done)
         {
             done = false;
             return typeof(MovementState);
         }
 
+        //Stunned
         if (stateController.Stunned)
         {
             return typeof(StunnedState);
+        }
+
+        //Respawn
+        if (stateController.Respawn)
+        {
+            stateController.Respawn = false;
+            stateController._animHandler.Respawn();
+            return typeof(MovementState);
         }
 
         return null;
@@ -91,7 +100,7 @@ public class AttackState : BaseState
             if (whichPower == -1)
             {
                 done = true;
-                Debug.Log("No Power");
+                Debug.Log("No In Slot Power");
             }
             else if (whichPower == -2)
             {

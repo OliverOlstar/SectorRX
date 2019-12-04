@@ -7,6 +7,8 @@ public class PauseMenu : MonoBehaviour
 {
     public bool pause;
     public GameObject pauseScreen;
+    [SerializeField] private PlayerCamera mainCam;
+    [SerializeField] private PlayerInputHandler input;
 
     // Use this for initialization
     void Start()
@@ -14,6 +16,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1;
         pause = false;
         pauseScreen.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -21,20 +24,18 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            pause = !pause;
+            TogglePauseGame();
         }
+    }
 
-        if (pause)
-        {
-            Time.timeScale = 0;
-            pauseScreen.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
-        }
-        else if(!pause)
-        {
-            Time.timeScale = 1;
-            pauseScreen.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
-        }
+    private void TogglePauseGame()
+    {
+        pause = !pause;
+
+        Time.timeScale = pause ? 0 : 1;
+        pauseScreen.SetActive(pause);
+        Cursor.lockState = pause ? CursorLockMode.None : CursorLockMode.Locked;
+        mainCam.CameraDisabled = pause;
+        input.inputDisabled = pause;
     }
 }

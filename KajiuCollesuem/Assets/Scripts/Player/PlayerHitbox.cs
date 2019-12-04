@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
 public class PlayerHitbox : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class PlayerHitbox : MonoBehaviour
     [SerializeField] private int lightAttackDamage_S3 = 1;
     [SerializeField] private int heavyAttackDamage = 2;
     private int damage;
+
+    [SerializeField] private float damageMultiplier = 1;
 
     [Space]
     [SerializeField] private int powerRecivedOnHit = 20;
@@ -31,7 +34,7 @@ public class PlayerHitbox : MonoBehaviour
         //Check if collided with an Attributes Script
         IAttributes otherAttributes = other.GetComponent<IAttributes>();
 
-        if (otherAttributes != null)
+        if (otherAttributes != null && otherAttributes.IsDead() == false)
         {
             //Damage other
             if (otherAttributes.TakeDamage(damage, true))
@@ -41,7 +44,11 @@ public class PlayerHitbox : MonoBehaviour
             //Recieve Power
             playerAttributes.RecivePower(powerRecivedOnHit);
 
+            //Camera Shake
+            CameraShaker.Instance.ShakeOnce(1, 0.5f, 0.2f, 0.1f);
+
             //Slow Game for a small time on hit
+            StopCoroutine("SlowTime");
             StartCoroutine("SlowTime");
         }
     }
@@ -73,5 +80,10 @@ public class PlayerHitbox : MonoBehaviour
                 damage = heavyAttackDamage;
                 break;
         }
+
+        damage = Mathf.RoundToInt(damage * damageMultiplier);
     }
+
+    //For Upgrading Attack Damage
+    public void SetDamageMultiplier(float pMult) => damageMultiplier = pMult;
 }

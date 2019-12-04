@@ -23,6 +23,9 @@ public class WolfieMovement : MonoBehaviour
     GameObject currentPatrolDest;
     int attackDecision = 0;
     public int enemySpeed;
+    Vector3 direction;
+    bool decisionMade = false, canShootFireBall = false, canAttack = false;
+    float decisionTime = 0, patrolSwitchTime = 0, attackPlayerTime = 0;
 
     private enum WolfieState
     {
@@ -54,22 +57,28 @@ public class WolfieMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 direction = player.position - this.transform.position;
+        direction = player.position - this.transform.position;
         direction.y = 0;
 
-        this.transform.rotation = Quaternion.Slerp(this.transform.rotation,
-            Quaternion.LookRotation(direction), 0.1f);
+        //this.transform.rotation = Quaternion.Slerp(this.transform.rotation,
+        //    Quaternion.LookRotation(direction), 0.1f);
 
         switch (state)
         {
             case WolfieState.Idle:
+                StopCoroutine(MakeDecision());
                 Patrol();
+                //print("idle");
                 break;
             case WolfieState.SeePlayerInRange:
-                ShootFireball();
+                StartCoroutine(MakeDecision());
+                //print("in range");
                 break;
+
             case WolfieState.CloseToPlayer:
+                StopCoroutine(MakeDecision());
                 AttackPlayer(direction);
+                //print("close to player");
                 break;
         }
 
@@ -131,24 +140,25 @@ public class WolfieMovement : MonoBehaviour
             FireballInstance = Instantiate(fireballPrefab, FBSpawnpoint.position, FBSpawnpoint.rotation) as Rigidbody;
             FireballInstance.AddForce(FBSpawnpoint.forward * 1000);*/
 
-            /*if (Vector3.Distance(transform.position, currentPatrolDest.transform.position) > 2)
-            {
-                agent.SetDestination(currentPatrolDest.transform.position);
-                //Debug.Log(Vector3.Distance(transform.position, currentPatrolDest.transform.position));
-            }
+        /*if (Vector3.Distance(transform.position, currentPatrolDest.transform.position) > 2)
+        {
+            agent.SetDestination(currentPatrolDest.transform.position);
+            //Debug.Log(Vector3.Distance(transform.position, currentPatrolDest.transform.position));
+        }
 
-            else
-            {
-                currentPatrolDest = enemyPatrol.FindNode(currentPatrolDest).GetOutgoing()[0].GetData();
-            }
-        }*/
+        else
+        {
+            currentPatrolDest = enemyPatrol.FindNode(currentPatrolDest).GetOutgoing()[0].GetData();
+        }
+    }*/
 
     }
 
     void Patrol()
     {
         agent.isStopped = false;
-        anim.SetBool("FiringRange", true);
+        anim.SetBool("FiringRange", false);
+        anim.SetBool("PlayerInRange", true);
         /*StopCoroutine(fireCast());
 
         Rigidbody FireballInstance;
@@ -159,12 +169,18 @@ public class WolfieMovement : MonoBehaviour
         if (Vector3.Distance(transform.position, currentPatrolDest.transform.position) > 2)
         {
             agent.SetDestination(currentPatrolDest.transform.position);
-            //Debug.Log(Vector3.Distance(transform.position, currentPatrolDest.transform.position));
+            Debug.Log(Vector3.Distance(transform.position, currentPatrolDest.transform.position));
         }
 
         else
         {
-            currentPatrolDest = enemyPatrol.FindNode(currentPatrolDest).GetOutgoing()[0].GetData();
+            patrolSwitchTime += Time.deltaTime;
+
+            if (patrolSwitchTime > 5)
+            {
+                currentPatrolDest = enemyPatrol.FindNode(currentPatrolDest).GetOutgoing()[0].GetData();
+                patrolSwitchTime = 0;
+            }
         }
 
         //Swtich States
@@ -172,14 +188,61 @@ public class WolfieMovement : MonoBehaviour
             state = WolfieState.SeePlayerInRange;
     }
 
+    IEnumerator MakeDecision()
+    {
+        int decision = Mathf.RoundToInt(Random.Range(0, 10));
+
+        /*if (!decisionMade)
+        {
+            if (decision % 4 == 0)
+            {
+                canShootFireBall = true;
+            }
+
+            else
+            {
+                canAttack = true;
+            }
+            //Debug.Log(decision);
+            decisionMade = true;
+        }*/
+        canAttack = true;
+
+        if (canShootFireBall)
+            ShootFireball();
+        else if (canAttack)
+            AttackPlayer(direction);
+
+        if (Vector3.Distance(player.position, this.transform.position) < 5.0f)
+            state = WolfieState.CloseToPlayer;
+        else if (Vector3.Distance(player.position, this.transform.position) > 15.0f)
+            state = WolfieState.Idle;
+
+        decisionTime += Time.deltaTime;
+
+        yield return new WaitUntil(() => decisionTime >= 5);
+
+        decisionMade = false;
+        canShootFireBall = false;
+        canAttack = false;
+        decisionTime = 0;
+    }
+
     void ShootFireball()
     {
         //From here
         agent.isStopped = true;
-        anim.SetBool("FiringRange", false);
 
-        if (Time.time > newFireballTime)
+        int decision = Random.Range(0, 2);
+
+        if (decision == 0)
         {
+            anim.SetBool("FiringRange", true);
+        }
+
+        else if (Time.time > newFireballTime)
+        {
+            anim.SetBool("FiringRange", false);
             /*if (direction.magnitude < 10.0f)
             {
                 this.transform.Translate(0, 0, 0.1f);
@@ -194,43 +257,115 @@ public class WolfieMovement : MonoBehaviour
 
             else
             {*/
-                // anim.SetBool("isPunching", true);
-                StartCoroutine(fireCast());
+            // anim.SetBool("isPunching", true);
+            StartCoroutine(fireCast());
             //}
         }
-
-        if (Vector3.Distance(player.position, this.transform.position) < 5.0f)
-            state = WolfieState.CloseToPlayer;
     }
 
     void AttackPlayer(Vector3 pDirection)
     {
-        if (pDirection.magnitude < 10.0f)
+        agent.enabled = false;
+        transform.LookAt(player.position);
+        int temp = attackDecision;
+        if (attackDecision == 0)
         {
-            this.transform.Translate(0, 0, 0.1f);
-            anim.SetBool("FiringRange", true);
+            transform.LookAt(player.position);
+            this.transform.position += this.transform.forward * 0.1f;
 
-            if (Vector3.Distance(player.position, this.transform.position) < 5
-                && Vector3.Distance(player.position, this.transform.position) > 3)
+            //this.transform.Translate(0, 0, 0.1f);
+            anim.SetBool("FiringRange", false);
+        }
+
+        float distanceToPlayer = Vector3.Distance(player.position, this.transform.position);
+        if (distanceToPlayer < 5
+            && distanceToPlayer > 3
+            && attackPlayerTime <= 0)
+        {
+            /*attackDecision = Random.Range(0, 4);
+
+            if (attackDecision == 1 || attackDecision == 2 || attackDecision == 3)
             {
-                attackDecision = Random.Range(0, 2);
-                Debug.Log(attackDecision);
+                attackPlayerTime = 5;
+            }*/
+            attackDecision = 1;
+        }
 
-                if (attackDecision == 1)
+        else if (distanceToPlayer < 3)
+        {
+            //for (int i = 0; i < 3; ++i)
+            //{
+            attackDecision = -1;
+                this.transform.position += this.transform.forward * -0.1f;
+            //}
+        }
+
+        else
+        {
+            attackPlayerTime -= Time.deltaTime;
+        }
+
+        /*if (attackDecision != 0)
+        {
+            agent.enabled = false;
+        }
+
+        else
+        {
+            agent.enabled = true;
+        }*/
+
+        if (attackDecision == 1)
+        {
+            anim.SetBool("TargetLongRange", true);
+            
+            for (int i = 0; i < 4; ++i)
+            {
+                this.transform.position += this.transform.forward * 0.1f;
+            }
+        }
+
+        else if (attackDecision == 2)
+        {
+            //Move left
+            transform.Translate(Vector3.left * .005f);
+        }
+
+        else if (attackDecision == 3)
+        {
+            //Move right
+            transform.Translate(Vector3.right * .005f);
+        }
+
+        distanceToPlayer = Vector3.Distance(player.position, this.transform.position);
+        if (attackDecision == 4 && distanceToPlayer < 3 && distanceToPlayer > 1)
+        {
+            anim.SetBool("TargetLongRange", false);
+            anim.SetBool("TargetCloseRange", true);
+
+            /*for (int i = 0; i < 4; ++i)
+            {
+                this.transform.position += this.transform.forward * 0.1f;
+            }*/
+
+            if (anim.GetAnimatorTransitionInfo(0).normalizedTime > 0.9f)
+            {
+                for (int i = 0; i < 4; ++i)
                 {
-                    anim.SetBool("TargetLongRange", true);
+                    this.transform.position += this.transform.forward * -0.1f;
                 }
             }
-
-            if (attackDecision == 0 && Vector3.Distance(player.position, this.transform.position) < 3
-                    && Vector3.Distance(player.position, this.transform.position) > 1)
-            {
-                anim.SetBool("TargetCloseRange", true);
-            }
-
-
-            // anim.SetBool("isPunching", false);
         }
+        agent.enabled = true;
+
+        distanceToPlayer = Vector3.Distance(player.position, this.transform.position);
+        if (distanceToPlayer < 5)
+            state = WolfieState.SeePlayerInRange;
+
+
+
+
+        //print(temp + " - " + attackDecision);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -244,7 +379,8 @@ public class WolfieMovement : MonoBehaviour
 
     IEnumerator fireCast()
     {
-        anim.SetTrigger("PlayerInRange");
+        anim.SetBool("PlayerInRange", false);
+        anim.SetTrigger("FiringRange");
         Rigidbody FireballInstance;
 
         FireballInstance = Instantiate(fireballPrefab, FBSpawnpoint.position, FBSpawnpoint.rotation) as Rigidbody;

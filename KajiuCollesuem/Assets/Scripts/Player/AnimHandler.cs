@@ -27,10 +27,13 @@ public class AnimHandler : MonoBehaviour
     
     void Update()
     {
+        //If Movement isn't disabled
         if (_stateController._movementComponent.disableMovement == false)
         {
+            //If Movement Inputed
             if (_stateController._movementComponent.moveDirection != Vector3.zero)
             {
+                //Lerp Player Model Rotation
                 Vector3 dir = _stateController._movementComponent.moveDirection;
 
                 if (transform.forward.normalized == -_stateController._movementComponent.moveDirection.normalized)
@@ -39,10 +42,12 @@ public class AnimHandler : MonoBehaviour
                 transform.forward = Vector3.Lerp(transform.forward, dir, Time.deltaTime * _rotationDampening);
             }
 
+            //Set Anim
             _anim.SetFloat("Speed", Mathf.Lerp(_anim.GetFloat("Speed"), _stateController._movementComponent.moveDirection.magnitude, Time.deltaTime * _animSpeedDampening));
         }
         else
         {
+            //Set Anim Speed Stopping
             _anim.SetFloat("Speed", Mathf.Lerp(_anim.GetFloat("Speed"), 0.1f, Time.deltaTime * _animSpeedDampening));
         }
 
@@ -95,9 +100,8 @@ public class AnimHandler : MonoBehaviour
     public void StartAttack(bool pHeavy, int pCombo)
     {
         _anim.SetBool("Heavy Attack", pHeavy);
-        _anim.SetInteger("Combo", pCombo /*_anim.GetInteger("Combo") + 1*/);
+        _anim.SetInteger("Combo", pCombo);
         attackState = 0;
-        //Debug.Log("AnimHandler: StartAttack");
     }
 
     public void StartPower(int pPowerIndex)
@@ -105,7 +109,6 @@ public class AnimHandler : MonoBehaviour
         _anim.SetInteger("WhichPower", pPowerIndex);
         _anim.SetTrigger("Power");
         attackState = 0;
-        //Debug.Log("AnimHandler: StartAttack");
     }
 
     public void StopAttacking()
@@ -115,7 +118,6 @@ public class AnimHandler : MonoBehaviour
 
         LeaveAttackState();
         _anim.SetInteger("Combo", 0);
-        //Debug.Log("AnimHandler: StopAttacking");
     }
 
     public void LeaveAttackState()
@@ -135,5 +137,11 @@ public class AnimHandler : MonoBehaviour
     {
         _anim.SetBool("ReactLeft", pLeft);
         _anim.SetTrigger("React");
+    }
+    
+    public void Respawn()
+    {
+        _anim.SetTrigger("Respawn");
+        _anim.SetBool("IsDead", false);
     }
 }

@@ -12,6 +12,9 @@ public class PlayerCamera : MonoBehaviour
     public Transform lockOnTarget;
     private PlayerLockOnScript lockOnScript;
 
+    [SerializeField] private bool Inverted = false;
+    
+    [Space]
     [SerializeField] private float lockOnXOffset = 0;
     [SerializeField] private float lockOnInputInfluence = 0.2f;
     private float timeToChangeTarget = 0.0f;
@@ -52,11 +55,19 @@ public class PlayerCamera : MonoBehaviour
         _LocalRotation.y = _ParentTransform.eulerAngles.x;
 
         //Locking cursor
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
 
         //Setting camera distance
         _TargetLocalPosition = new Vector3(-OffSetLeft, 0f, CameraDistance * -1f);
         _CameraTansform.localPosition = _TargetLocalPosition;
+    }
+
+    public void GiveLockOnScript(PlayerLockOnScript pScript) => lockOnScript = pScript;
+    public void Respawn(float pRotationY) 
+    {
+        transform.parent.rotation = Quaternion.Euler(0, pRotationY, 0);
+        _LocalRotation.x = pRotationY;
+        _LocalRotation.y = 0;
     }
 
     void Update()
@@ -92,7 +103,7 @@ public class PlayerCamera : MonoBehaviour
         if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
         {
             _LocalRotation.x += Input.GetAxis("Mouse X") * MouseSensitivity * pInputModifier;
-            _LocalRotation.y -= Input.GetAxis("Mouse Y") * MouseSensitivity * pInputModifier;
+            _LocalRotation.y -= Input.GetAxis("Mouse Y") * MouseSensitivity * pInputModifier * (Inverted ? -1 : 1);
 
             //Clamping the y rotation to horizon and not flipping over at the top
             if (_LocalRotation.y < CameraMinHeight)
@@ -118,7 +129,6 @@ public class PlayerCamera : MonoBehaviour
         DefaultCameraMovement(lockOnInputInfluence);
 
         //Change Target
-        Debug.Log((_LocalRotation - _RotTarget).magnitude / MouseSensitivity);
         float RequiredPushAmount = ((Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0) ? lockOnChangeAmount_KB : lockOnChangeAmount_GP);
         if ((_LocalRotation - _RotTarget).magnitude >= RequiredPushAmount * MouseSensitivity && timeToChangeTarget <= Time.time)
         {
@@ -130,6 +140,7 @@ public class PlayerCamera : MonoBehaviour
 
     void IdleCameraMovement()
     {
+        //Slowly Rotate
         _LocalRotation.x += idleSpinSpeed * Time.deltaTime;
         _LocalRotation.y = Mathf.Lerp(_LocalRotation.y, idleSpinY, Time.deltaTime);
     }
@@ -138,8 +149,7 @@ public class PlayerCamera : MonoBehaviour
 
 
 
-    // Camera Collision /////////////
-
+    // Camera Collision //////////////
     void CameraCollision()
     {
         RaycastHit hit;
@@ -161,9 +171,7 @@ public class PlayerCamera : MonoBehaviour
 
 
 
-
-    // Camera Transition //////////////
-
+    // Camera Transition ////////////// Lerp camera variables
     public void ChangePlayerCamera(float pOffSetLeft, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
     {
         if (transRoutine != null)
@@ -221,6 +229,4 @@ public class PlayerCamera : MonoBehaviour
         }
         while (done != 5);
     }
-
-    public void GiveLockOnScript(PlayerLockOnScript pScript) => lockOnScript = pScript;
 }

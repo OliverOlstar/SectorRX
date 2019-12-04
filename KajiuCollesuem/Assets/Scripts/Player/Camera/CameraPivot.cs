@@ -10,7 +10,7 @@ public class CameraPivot : MonoBehaviour
 
     private Coroutine transRoutine;
 
-    //For Experimenting
+    //For Testing
     [Space]
     [SerializeField] private bool runFunc1 = false;
     [SerializeField] private SOCamera DemoVarsPreset;
@@ -28,7 +28,7 @@ public class CameraPivot : MonoBehaviour
         transform.position = target.transform.position + (Vector3.up * offSetUp);
 
 
-        //For Experimenting
+        //For Testing
         if (runFunc1)
         {
             ChangePlayerCamera(DemoVarsPreset, DemoVarTrnsSpd);
@@ -38,7 +38,7 @@ public class CameraPivot : MonoBehaviour
 
     
 
-    // Camera Transition //////////////
+    // Camera Transition ////////////// Starts coroutines that lerp all camera variables
     public void ChangePlayerCamera(float pOffSetUp, float pOffSetLeft, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pTransitionSpeed)
     {
         if (transRoutine != null)

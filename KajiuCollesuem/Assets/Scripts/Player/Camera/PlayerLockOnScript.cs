@@ -5,7 +5,7 @@ using System.Linq;
 
 public class PlayerLockOnScript : MonoBehaviour
 {
-    // OLIVER - This script tells the PlayerCamera Script weather to be locked on or not and who to lock on too.
+    // OLIVER - This script tells the PlayerCamera Script wether to be locked on or not and who to lock on too.
 
     private PlayerStateController _stateController;
     private PlayerCamera _cameraScript;
@@ -29,10 +29,13 @@ public class PlayerLockOnScript : MonoBehaviour
     
     void Start()
     {
-        _cameraScript = Camera.main.GetComponent<PlayerCamera>();
+        _cameraScript = Camera.main.GetComponentInParent<PlayerCamera>();
         _cameraScript.GiveLockOnScript(this);
         _cameraPivotScript = _cameraScript.transform.parent.GetComponent<CameraPivot>();
         _stateController = GetComponent<PlayerStateController>();
+
+        //Start Camera on preset
+        _cameraPivotScript.ChangePlayerCamera(defaultPreset, 9999);
     }
     
     void Update()
@@ -49,6 +52,7 @@ public class PlayerLockOnScript : MonoBehaviour
         }
         else if (_cameraScript.Idle == true && _cameraScript.lockOnTarget == null)
         {
+            //Leave Idle Camera
             _cameraScript.Idle = false;
             _cameraPivotScript.ChangePlayerCamera(defaultPreset, cameraTransSpeed);
         }
@@ -57,11 +61,12 @@ public class PlayerLockOnScript : MonoBehaviour
         if (_stateController.lockOnInput == true)
         {
             _stateController.lockOnInput = false;
-
+            //Start LockOn
             if (_cameraScript.lockOnTarget == null)
             {
                 Transform target = pickTarget();
 
+                //If Target Found
                 if (target != null)
                 {
                     _cameraScript.lockOnTarget = target;
@@ -70,12 +75,14 @@ public class PlayerLockOnScript : MonoBehaviour
             }
             else
             {
+                //Leave LockOn
                 _cameraScript.lockOnTarget = null;
                 _cameraPivotScript.ChangePlayerCamera(defaultPreset, cameraTransSpeed);
             }
         }
     }
 
+    //Function To Find Intial Target
     public Transform pickTarget()
     {
         //Get Possible Targets
@@ -99,6 +106,7 @@ public class PlayerLockOnScript : MonoBehaviour
         return possibleTargets[0].transform;
     }
 
+    //Function To Find Target to change too
     public Transform changeTarget(Vector2 pInput)
     {
         //Get Possible Targets

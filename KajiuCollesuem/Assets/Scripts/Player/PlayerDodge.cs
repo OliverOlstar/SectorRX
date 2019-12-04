@@ -21,12 +21,10 @@ public class PlayerDodge : MonoBehaviour
     [SerializeField] private float longDodgeDuration = 0.3f;
 
     private Rigidbody _Rb;
-    private Transform _Camera;
 
     void Start()
     {
         _Rb = GetComponent<Rigidbody>();
-        _Camera = Camera.main.transform;
     }
 
     public bool Dodge(bool pShortDodge, Vector3 pDirection)
@@ -64,12 +62,21 @@ public class PlayerDodge : MonoBehaviour
         //Run Dodge Force
         while (Time.time <= dodgeEndTime)
         {
+            //Can end early
+            if (doneDodge) break;
+
+            //Move player
             _Rb.velocity = pDirection * (pDistance / pDuration);
             yield return null;
         }
 
         //Stop player
         //_Rb.velocity = _Rb.velocity.normalized;
+        doneDodge = true;
+    }
+
+    public void EndDodge()
+    {
         doneDodge = true;
     }
 }

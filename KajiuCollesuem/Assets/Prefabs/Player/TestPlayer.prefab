@@ -61,9 +61,10 @@ MonoBehaviour:
   lightAttackDamage_S2: 10
   lightAttackDamage_S3: 15
   heavyAttackDamage: 25
+  damageMultiplier: 1
   powerRecivedOnHit: 5
-  timeSlowSeconds: 0.025
-  timeSlowAmount: 0
+  timeSlowSeconds: 1
+  timeSlowAmount: 1
 --- !u!1 &1184346002
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,18 +126,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitbox: {fileID: 1048502805}
   animHandler: {fileID: 1184346004}
---- !u!114 &1318645611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1349403617}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10dab0756557aa64ba1ad31663d97550, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8582934654442581043
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,6 +282,7 @@ MonoBehaviour:
   KCmap_Input: 109
   gp_KCpause_Input: 27
   gp_KCmap_Input: 109
+  inputDisabled: 0
 --- !u!114 &8844467493756483741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,9 +344,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee92f20ca394cc4ea8aefa00433d0d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
-  _maxShield: 100
-  _maxPower: 40
+  _maxHealth: 54
+  _maxShield: 50
+  _maxPower: 100
   _shieldRegenStartDelaySeconds: 6
   _shieldRegenDelaySeconds: 1
   _shieldRegenAmount: 4
@@ -382,13 +372,12 @@ MonoBehaviour:
   moveSpeed: 3000
   maxSpeed: 5
   disableMovement: 0
-  inputInfluenceGrounded: 1
-  inputInfluenceInAir: 0.7
+  targetInputInfluence: 1
+  influenceUpdateSpeed: 1
+  inputInfluence: 1
   jumpDistance: 1.7
   jumpDuration: 1
-  jumpForceUp: 17
-  downForceRate: 4.5
-  downForceTerminal: 5
+  jumpForceUp: 10
   OnGround: 1
   horizontalInput: 0
   verticalInput: 0
@@ -407,8 +396,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doneDodge: 0
-  shortDodgeCooldown: 0.8
-  longDodgeCooldown: 1.2
+  shortDodgeCooldown: 1
+  longDodgeCooldown: 1
   shortDodgeDistance: 3
   shortDodgeDuration: 0.12
   longDodgeDistance: 8.2
@@ -432,7 +421,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   lockOnRange: 9
-  lockOnAngle: 90
+  lockOnAngle: 45
   focusedOnScreen: 0
   unfocusedOnScreen: 0
   idlePreset: {fileID: 11400000, guid: 67ad0d9b288e04043ae10b57d85fe6c2, type: 2}
@@ -444,7 +433,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8582934654442581043}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57df21d598cd16c4983cce38a4b7e9a4, type: 3}
   m_Name: 
@@ -477,9 +466,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGroundedCheckDistance: 1
   respawnYOffset: 1
-  isFallingYDifference: 18
-  fallGroundCheckDis: 6
-  fallDamage: 30
+  fallMaxTime: 2
+  fallDamageStartTime: 1
+  fallDamageMax: 40
+  fallDamageMin: 20
+  inputInfluenceGrounded: 1
+  inputInfluenceInAir: 0.7
+  downForceRate: 6
+  downForceTerminal: 4
 --- !u!114 &17874601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,7 +487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathLength: 9
-  deathSlowAmount: 0.3
+  deathSlowAmount: 0.2
 --- !u!1001 &1349502261
 PrefabInstance:
   m_ObjectHideFlags: 0
