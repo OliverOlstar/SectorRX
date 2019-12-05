@@ -8,9 +8,16 @@ public class StatUpgrades : MonoBehaviour
     public Text descriptionStat;
     public Text descriptionPower;
     public Text insufficientCost;
-    [SerializeField] private PlayerUpgrades pU;
+    public PlayerUpgrades pU;
     private SOStats[] stats;
     private SOPowers[] powers;
+
+    [SerializeField] private Color[] statColors = new Color[5];
+    [SerializeField] private Color[] powerColors = new Color[3];
+    [SerializeField] private Color defaultColor;
+
+    [SerializeField] private Button[] powerButtons;
+    [SerializeField] private Button[] statButtons;
 
     // Access the HUDManager to get access to the current Power Core count
     HUDManager hud;
@@ -86,14 +93,15 @@ public class StatUpgrades : MonoBehaviour
     //    }
     //}
 
-    public void ClickButtonPower(int pIndex, int pLevel)
+    public void ClickButtonPower(int pIndex, int pLevel, Button pButton)
     {
         if(hud.coreCounter >= powers[pIndex].cost[pLevel])
         {
             if(pU.PowerUpgrade(pIndex, pLevel + 1))
             {
                 hud.coreCounter -= powers[pIndex].cost[pLevel];
-                pU.GetComponent<Button>().interactable = false;
+                pButton.GetComponent<Image>().color = powerColors[pIndex];
+                pButton.interactable = false;
             }
             else
             {
@@ -110,13 +118,15 @@ public class StatUpgrades : MonoBehaviour
         }
     }
 
-    public void ClickButtonStat(int pIndex, int pLevel)
+    public void ClickButtonStat(int pIndex, int pLevel, Button pButton)
     {
         if (hud.cellCounter >= stats[pIndex].cost[pLevel])
         {
             if (pU.LevelUp(pIndex, pLevel + 1))
             {
                 hud.cellCounter -= stats[pIndex].cost[pLevel];
+                pButton.GetComponent<Image>().color = statColors[pIndex];
+                pButton.interactable = false;
             }
             else
             {
@@ -148,5 +158,32 @@ public class StatUpgrades : MonoBehaviour
     {
         descriptionStat.text = "";
         descriptionPower.text = "";
+    }
+
+    public void RespawnPowersUI(int pIndex, int pLevel)
+    {
+        powerButtons[pLevel + (pIndex * 2)].interactable = false;
+        powerButtons[pLevel + (pIndex * 2)].GetComponent<Image>().color = powerColors[pIndex];
+    }
+
+    public void RespawnStatsUI(int pIndex, int pLevel)
+    {
+        statButtons[pLevel + (pIndex * 3)].interactable = false;
+        statButtons[pLevel + (pIndex * 3)].GetComponent<Image>().color = powerColors[pIndex];
+    }
+
+    public void RespawnAllButtons()
+    {
+        foreach(Button button in statButtons)
+        {
+            button.interactable = true;
+            button.GetComponent<Image>().color = defaultColor;
+        }
+
+        foreach (Button button in powerButtons)
+        {
+            button.interactable = true;
+            button.GetComponent<Image>().color = defaultColor;
+        }
     }
 }
