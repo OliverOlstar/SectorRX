@@ -85,4 +85,9 @@ public class PlayerPowerHandler : MonoBehaviour
         //Add power to list of collected powers
         _collectedPowers.Add(pPower);
     }
+
+    private void Respawn()
+    {
+        
+    }
 }

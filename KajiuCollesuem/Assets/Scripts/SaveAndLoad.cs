@@ -19,6 +19,7 @@ Oliver
     Everything in save and
     Respawn all enemies
     Respawn Player
+    Set UpgradeUI
 
  */
 
