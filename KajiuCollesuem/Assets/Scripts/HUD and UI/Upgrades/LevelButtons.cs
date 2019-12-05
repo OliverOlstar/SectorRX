@@ -7,21 +7,24 @@ public class LevelButtons : MonoBehaviour
 {
     [SerializeField] private int index;
     [SerializeField] private int level;
+    
+    private Button statButton;
     private StatUpgrades powerUpgrade;
     // Start is called before the first frame update
     void Start()
     {
         powerUpgrade = transform.parent.parent.parent.GetComponent<StatUpgrades>();
+        statButton = GetComponent<Button>();
     }
 
     public void ClickStatButton()
     {
-        powerUpgrade.ClickButtonStat(index, level);
+        powerUpgrade.ClickButtonStat(index, level, statButton);
     }
 
     public void ClickPowerButton()
     {
-        powerUpgrade.ClickButtonPower(index, level);
+        powerUpgrade.ClickButtonPower(index, level, statButton);
     }
 
     public void HoverStatButton()

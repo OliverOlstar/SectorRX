@@ -10,18 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3665ea56f6bcad3429bf3d0b917eb9e5, type: 3}
-  m_Name: Magma
+  m_Name: Sand
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 2c4e8c3e89480c74494b9d602e08a8dc, type: 3}
-  dislayName: Magma Eruptor
-  dislayDescription: "A spoken or written representation or account of a person, object,
-    or event.\r"
-  animationIndex: 0
+  icon: {fileID: 0}
+  dislayName: Sand Coffin
+  dislayDescription: Description
+  animationIndex: 2
   powerRequired: 10
   damage: 40
   powerDescriptions:
-  - Two balls of magma are now launched.
-  - 'Three balls of maga are now launched.
-
-    Blast radius increased.'
-  cost: 0100000005000000
+  - The created pit is now larger and can trap 2 enemies.
+  - "After 2 enemies are trapped the pit explodes, \ndealing 50% of their health as
+    damage."
+  cost: 0200000005000000

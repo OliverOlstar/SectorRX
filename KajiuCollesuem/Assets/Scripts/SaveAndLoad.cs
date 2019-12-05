@@ -42,6 +42,8 @@ public class SaveAndLoad : MonoBehaviour
     [SerializeField] private PlayerRespawn playerRespawn;
     [SerializeField] private PlayerAttributes playerAttributes;
 
+    [SerializeField] private StatUpgrades upgradesUI;
+
     public void ClearSave(int pSlot = 0)
     {
         Debug.Log("SaveAndLoad: <color=Orange>ClearSave</color> " + pSlot);
@@ -152,6 +154,7 @@ public class SaveAndLoad : MonoBehaviour
     {
         //Clear Current Levels
         playerUpgrades.Setup();
+        upgradesUI.RespawnAllButtons();
 
         //Levelup to match save stats
         for (int i = 0; i < playerUpgrades.GetStatLevels().Length; i++)
@@ -159,6 +162,7 @@ public class SaveAndLoad : MonoBehaviour
             for (int z = 1; z < PlayerPrefs.GetInt(pSlot + "-Stats-" + i); z++)
             {
                 playerUpgrades.LevelUp(i, z);
+                upgradesUI.RespawnStatsUI(i, z);
             }
         }
 
@@ -167,6 +171,7 @@ public class SaveAndLoad : MonoBehaviour
             for (int z = 1; z < PlayerPrefs.GetInt(pSlot + "-Powers-" + i); z++)
             {
                 playerUpgrades.PowerUpgrade(i, z);
+                upgradesUI.RespawnPowersUI(i, z);
             }
         }
     }
