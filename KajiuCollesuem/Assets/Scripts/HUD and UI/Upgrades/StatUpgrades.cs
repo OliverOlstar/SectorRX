@@ -28,6 +28,10 @@ public class StatUpgrades : MonoBehaviour
         powers = pU.Powers;
         hud = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>();
         insufficientCost.gameObject.SetActive(false);
+
+        powerButtons = transform.GetChild(0).GetComponentsInChildren<Button>();
+        statButtons = transform.GetChild(1).GetComponentsInChildren<Button>();
+        RespawnAllButtons();
     }
 
     // Purchase Rank One upgrade if player has 50 Cells.
@@ -100,6 +104,7 @@ public class StatUpgrades : MonoBehaviour
             if(pU.PowerUpgrade(pIndex, pLevel + 1))
             {
                 hud.coreCounter -= powers[pIndex].cost[pLevel];
+                hud.upCoreCount.text = hud.coreCounter.ToString();
                 pButton.GetComponent<Image>().color = powerColors[pIndex];
                 pButton.interactable = false;
             }
@@ -125,6 +130,7 @@ public class StatUpgrades : MonoBehaviour
             if (pU.LevelUp(pIndex, pLevel + 1))
             {
                 hud.cellCounter -= stats[pIndex].cost[pLevel];
+                hud.upCellCount.text = hud.cellCounter.ToString();
                 pButton.GetComponent<Image>().color = statColors[pIndex];
                 pButton.interactable = false;
             }
@@ -168,22 +174,22 @@ public class StatUpgrades : MonoBehaviour
 
     public void RespawnStatsUI(int pIndex, int pLevel)
     {
-        statButtons[pLevel + (pIndex * 3)].interactable = false;
-        statButtons[pLevel + (pIndex * 3)].GetComponent<Image>().color = powerColors[pIndex];
+        statButtons[pLevel - 1 + (pIndex * 3)].interactable = false;
+        statButtons[pLevel - 1 + (pIndex * 3)].GetComponent<Image>().color = statColors[pIndex];
     }
 
     public void RespawnAllButtons()
     {
-        foreach(Button button in statButtons)
+        for (int i = 0; i < statButtons.Length - 2; i++)
         {
-            button.interactable = true;
-            button.GetComponent<Image>().color = defaultColor;
+            statButtons[i].interactable = true;
+            statButtons[i].GetComponent<Image>().color = defaultColor;
         }
 
-        foreach (Button button in powerButtons)
+        for (int i = 0; i < powerButtons.Length - 2; i++)
         {
-            button.interactable = true;
-            button.GetComponent<Image>().color = defaultColor;
+            powerButtons[i].interactable = true;
+            powerButtons[i].GetComponent<Image>().color = defaultColor;
         }
     }
 }
