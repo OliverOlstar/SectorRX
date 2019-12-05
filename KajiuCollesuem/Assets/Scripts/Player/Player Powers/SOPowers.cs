@@ -11,6 +11,7 @@ public class SOPowers : ScriptableObject
 
     [Space]
     public int animationIndex = 0;
+    public PlayerPowerHandler.powers WhichPower;
 
     [Space]
     public int powerRequired = 0;

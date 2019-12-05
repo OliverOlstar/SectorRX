@@ -63,8 +63,8 @@ MonoBehaviour:
   heavyAttackDamage: 25
   damageMultiplier: 1
   powerRecivedOnHit: 5
-  timeSlowSeconds: 1
-  timeSlowAmount: 1
+  timeSlowSeconds: 0.2
+  timeSlowAmount: 0.3
 --- !u!1 &1184346002
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,6 +126,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitbox: {fileID: 1048502805}
   animHandler: {fileID: 1184346004}
+--- !u!114 &163005237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349403617}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e760d6bf5a13bff49b4b8f8dbc53cb41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {fileID: 0}
 --- !u!1 &8582934654442581043
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,6 +333,7 @@ MonoBehaviour:
   _animHandler: {fileID: 0}
   _rb: {fileID: 0}
   _Camera: {fileID: 0}
+  Respawn: 0
 --- !u!114 &7996918551186684739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -452,6 +466,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d84d9a668651854da50ad10f54cef49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _model: {fileID: 1349403617}
+  AddPowerTest: {fileID: 11400000, guid: 6d6ea06f8d5b49949899e4db9e49897f, type: 2}
+  AddPowerTestActivate: 0
 --- !u!114 &17874600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -467,7 +484,7 @@ MonoBehaviour:
   isGroundedCheckDistance: 1
   respawnYOffset: 1
   fallMaxTime: 2
-  fallDamageStartTime: 1
+  fallDamageStartTime: 1.2
   fallDamageMax: 40
   fallDamageMin: 20
   inputInfluenceGrounded: 1
@@ -486,6 +503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e59be9c88d714649bf60ad0c32f7d51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera: {fileID: 0}
   deathLength: 9
   deathSlowAmount: 0.2
 --- !u!1001 &1349502261
@@ -571,10 +589,6 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 014088acb24973a4cad421606d4085a6, type: 2}
-    - target: {fileID: 9500000, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 100022, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
       propertyPath: m_Layer
       value: 8
