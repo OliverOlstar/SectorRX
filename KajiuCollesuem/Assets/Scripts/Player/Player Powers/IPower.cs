@@ -4,4 +4,5 @@ using UnityEngine;
 
 public interface IPower
 {
+    void Destroy();
 }

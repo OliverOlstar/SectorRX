@@ -86,8 +86,24 @@ public class PlayerPowerHandler : MonoBehaviour
         _collectedPowers.Add(pPower);
     }
 
-    private void Respawn()
+
+    // SAVE & LOAD
+    public List<SOPowers> GetCollectedPowers()
     {
-        
+        return _collectedPowers;
+    }
+
+    public void Respawn(List<SOPowers> pPowers)
+    {
+        //Empty current powers
+        _collectedPowers = new List<SOPowers>();
+
+        //Remove current powers
+        foreach(IPower power in _model.GetComponents<IPower>())
+            power.Destroy();
+
+        //Add powers back in
+        foreach(SOPowers power in pPowers)
+            AddPower(power);
     }
 }
