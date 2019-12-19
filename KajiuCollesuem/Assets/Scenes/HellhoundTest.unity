@@ -7580,10 +7580,10 @@ GameObject:
   - component: {fileID: 1463110823705497953}
   - component: {fileID: 644685300}
   - component: {fileID: 2450664818058136042}
-  - component: {fileID: 5393342817663061879}
   - component: {fileID: 5393342817663061880}
-  - component: {fileID: 5393342817663061884}
   - component: {fileID: 5393342817663061883}
+  - component: {fileID: 5393342817663061879}
+  - component: {fileID: 5393342817663061884}
   - component: {fileID: 2039647089}
   - component: {fileID: 5393342817663061882}
   - component: {fileID: 5393342817663061881}
@@ -7609,8 +7609,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e397c3cde415364cb2400cb6d4ecd0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strafeMax: 5
+  strafeMax: 8
   strafeMin: 3
+  _nextEnterTime: 0
+  _enabled: 0
 --- !u!114 &5393342817663061880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7659,11 +7661,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5393342817663061878}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb77404ad2b1d6b49bf3c2235dc4bea3, type: 3}
+  m_Script: {fileID: 11500000, guid: b83753b55aad7df4cbc2aec978d99000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stareRange: 12
-  _enabled: 0
+  _cooldown: 1
+  _fireballRange: 1
 --- !u!114 &5393342817663061884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7676,8 +7678,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60c1e79821f79ca41ad8be6352da89be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agroRange: 2
-  agroLostRange: 1
+  agroRange: 12
+  agroLostRange: 16
 --- !u!1 &5952922497815045870
 GameObject:
   m_ObjectHideFlags: 0
