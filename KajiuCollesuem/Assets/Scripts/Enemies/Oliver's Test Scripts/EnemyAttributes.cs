@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class EnemyAttributes : MonoBehaviour, IAttributes
 {
     [SerializeField] private int startHealth = 100;
-    private int currentHealth;
+    private int _health;
     
     [SerializeField] private float healthDisplayLength = 2f;
 
@@ -16,13 +16,15 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
     private bool isDead;
 
     private Decision _decision;
+    HUDManager _playerHUD;
     private IState _deadState;
     private IState _stunnedState;
 
-    // Use this for initialization
+    public bool IsDead() { return isDead; }
+
     void Start()
     {
-        currentHealth = startHealth;
+        _health = startHealth;
         
         if (enemyHealthBar)
         {
@@ -33,28 +35,29 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         _decision = GetComponent<Decision>();
         _deadState = GetComponent<Dead>();
         _stunnedState = GetComponent<Stunned>();
+        _playerHUD = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>();
     }
 
     public bool TakeDamage(int pAmount, bool pReact)
     {
-        currentHealth -= pAmount;
+        _health -= pAmount;
 
         if (healthSlider)
-            healthSlider.value = (float)currentHealth/startHealth;
+            healthSlider.value = (float)_health / startHealth;
 
-        if (currentHealth <= 0 && !isDead)
+        if (_health <= 0 && !isDead)
             Death();
 
         StopCoroutine("ShowHealthbar");
         StartCoroutine("ShowHealthbar");
 
         //Return If Dead or Not
-        if (currentHealth <= 0)
+        if (_health <= 0)
         {
             return true;
         }
 
-        if (pReact)
+        if (pReact && _decision != null)
             _decision.ForceStateSwitch(_stunnedState);
 
         return false;
@@ -70,6 +73,21 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
     void Death()
     {
         isDead = true;
-        _decision.ForceStateSwitch(_deadState);
+        if (_decision != null)
+            _decision.ForceStateSwitch(_deadState);
+
+        _playerHUD.cellUIOn = true;
+        _playerHUD.cellUI.SetActive(true);
+        _playerHUD.cellCounter = _playerHUD.cellCounter + 150;
+        _playerHUD.SetCellCount();
+    }
+
+    public void Respawn()
+    {
+        isDead = false;
+        _health = startHealth;
+
+        if (enemyHealthBar)
+            enemyHealthBar.SetActive(false);
     }
 }

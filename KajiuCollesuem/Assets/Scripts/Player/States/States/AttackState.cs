@@ -63,6 +63,14 @@ public class AttackState : BaseState
             return typeof(StunnedState);
         }
 
+        //Respawn
+        if (stateController.Respawn)
+        {
+            stateController.Respawn = false;
+            stateController._animHandler.Respawn();
+            return typeof(MovementState);
+        }
+
         return null;
     }
 

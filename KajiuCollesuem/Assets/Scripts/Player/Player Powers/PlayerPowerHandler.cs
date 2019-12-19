@@ -4,21 +4,38 @@ using UnityEngine;
 
 public class PlayerPowerHandler : MonoBehaviour
 {
-    private PlayerAttributes playerAttributes;
+    private PlayerAttributes _playerAttributes;
+    [SerializeField] private GameObject _model;
+
+    [Space]
+    [SerializeField] private SOPowers AddPowerTest;
+    [SerializeField] private bool AddPowerTestActivate;
 
     //List of all powers to help with entering the desired power to be added
     public enum powers
     {
         MagmaErupter,
-        Fireball
+        IceQuake,
+        SandCoffin
     }
 
-    private List<IPower> _collectedPowers = new List<IPower>();
+    private List<SOPowers> _collectedPowers = new List<SOPowers>();
 
     private void Start()
     {
-        playerAttributes = GetComponent<PlayerAttributes>();
+        _playerAttributes = GetComponent<PlayerAttributes>();
     }
+
+    // TEMP FOR TESTING /////////////////////////
+    private void FixedUpdate()
+    {
+        if (AddPowerTestActivate)
+        {
+            AddPower(AddPowerTest);
+            AddPowerTestActivate = false;
+        }
+    }
+    //////////////////////////////////////////////
 
     //Attack state calls this function
     public int UsingPower(int pPowerInput)
@@ -27,47 +44,66 @@ public class PlayerPowerHandler : MonoBehaviour
         if (pPowerInput > 0 && pPowerInput <= _collectedPowers.Count)
         {
             //If required power
-            if (playerAttributes.getPower() >= _collectedPowers[pPowerInput - 1].GetPowerRequired())
+            if (_playerAttributes.getPower() >= _collectedPowers[pPowerInput - 1].powerRequired)
             {
-                playerAttributes.modifyPower(-_collectedPowers[pPowerInput - 1].GetPowerRequired());
-                _collectedPowers[pPowerInput - 1].UsingMe();
-                return _collectedPowers[pPowerInput - 1].GetAnimIndex();
+                _playerAttributes.modifyPower(-_collectedPowers[pPowerInput - 1].powerRequired);
+
+                //Returns animation index
+                return _collectedPowers[pPowerInput - 1].animationIndex;
             }
             else
             {
+                //Not enough power
                 return -2;
             }
         }
-
-        //If no power
+        //Requested power doesnt exist
         return -1;
     }
 
-    public void AddPower(int pWhichPower)
+    public void AddPower(SOPowers pPower)
     {
-        //Add power component based off of input
-        switch (pWhichPower)
+        // TODO Make sure you cant add two of the same power
+
+
+        //Add power component based off of entered Power
+        switch (pPower.WhichPower)
         {
-            case (int)powers.Fireball:
-                gameObject.AddComponent<Power_Fireball>();
+            case powers.IceQuake:
+                _model.AddComponent<Power_MagmaEruptor>();
                 break;
 
-            case (int)powers.MagmaErupter:
-                gameObject.AddComponent<Power_Lightning>();
+            case powers.MagmaErupter:
+                _model.AddComponent<Power_MagmaEruptor>();
+                break;
+
+            case powers.SandCoffin:
+                _model.AddComponent<Power_MagmaEruptor>();
                 break;
         }
-    }
 
-    public void AddedPower(IPower pPower)
-    {
-        Debug.Log("Power Added");
+        //Add power to list of collected powers
         _collectedPowers.Add(pPower);
     }
 
-    public void PowerRemoved(IPower pPower)
+
+    // SAVE & LOAD
+    public List<SOPowers> GetCollectedPowers()
     {
-        Debug.Log("Power Removed");
-        if (_collectedPowers.Contains(pPower))
-            _collectedPowers.Remove(pPower);
+        return _collectedPowers;
+    }
+
+    public void Respawn(List<SOPowers> pPowers)
+    {
+        //Empty current powers
+        _collectedPowers = new List<SOPowers>();
+
+        //Remove current powers
+        foreach(IPower power in _model.GetComponents<IPower>())
+            power.Destroy();
+
+        //Add powers back in
+        foreach(SOPowers power in pPowers)
+            AddPower(power);
     }
 }

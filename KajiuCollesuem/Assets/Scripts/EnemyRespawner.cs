@@ -1,28 +1,34 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyRespawner : MonoBehaviour
 {
     private Vector3 spawnPosition;
     private Quaternion spawnRotation;
-    private Vector3 spawnScale;
 
-    private GameObject myEnemy;
-
-    void RespawnEnemy()
+    void Start()
     {
-        myEnemy.transform.position = spawnPosition;
-        myEnemy.transform.rotation = spawnRotation;
-        myEnemy.transform.localScale = spawnScale;
-        myEnemy.SetActive(true);
+        spawnPosition = transform.position;
+        spawnRotation = transform.rotation;
+
+        //Add my function to event
+        SaveAndLoad.RespawnEnemies += RespawnEnemy;
     }
 
-    public void Setup(GameObject pEnemy)
+    private void OnDestroy()
     {
-        myEnemy = pEnemy;
-        spawnPosition = myEnemy.transform.position;
-        spawnRotation = myEnemy.transform.rotation;
-        spawnScale = myEnemy.transform.localScale;
+        //Remove my function from event
+        SaveAndLoad.RespawnEnemies -= RespawnEnemy;
+    }
+
+    void RespawnEnemy(SaveAndLoad pSaveAndLoad)
+    {
+        transform.position = spawnPosition;
+        transform.rotation = spawnRotation;
+        GetComponent<IAttributes>().Respawn();
+        GetComponent<Decision>().Respawn();
+        gameObject.SetActive(true);
     }
 }

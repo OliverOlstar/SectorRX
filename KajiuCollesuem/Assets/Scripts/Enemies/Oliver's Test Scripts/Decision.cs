@@ -67,8 +67,14 @@ public class Decision : MonoBehaviour
         foreach (IState state in _states)
         {
             //Check if can stay in same state
-            if (_currentState == state && state.CanEnter(distance)) break;
-            
+            if (_currentState == state)
+            {
+                if (state.CanEnter(distance))
+                    break;
+                else
+                    continue;
+            }
+
             //Check if state can be entered
             if (state.CanEnter(distance))
             {

@@ -30,6 +30,7 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private LayerMask cameraCollisionLayers;
     [SerializeField] private float cameraCollisionDampening = 20;
     [SerializeField] [Range(0, 1)] private float cameraCollisionMinDisPercent = 0.1f;
+    [SerializeField] private float cameraCollisionOffset = 0.1f;
 
     [Space]
     public float MouseSensitivity = 4f;
@@ -63,6 +64,12 @@ public class PlayerCamera : MonoBehaviour
     }
 
     public void GiveLockOnScript(PlayerLockOnScript pScript) => lockOnScript = pScript;
+    public void Respawn(float pRotationY) 
+    {
+        transform.parent.rotation = Quaternion.Euler(0, pRotationY, 0);
+        _LocalRotation.x = pRotationY;
+        _LocalRotation.y = 0;
+    }
 
     void Update()
     {
@@ -147,11 +154,12 @@ public class PlayerCamera : MonoBehaviour
     void CameraCollision()
     {
         RaycastHit hit;
-        Physics.Raycast(_ParentTransform.position, (_CameraTansform.position - _ParentTransform.position).normalized, out hit, CameraDistance, cameraCollisionLayers);
+        Vector3 rayDirection = (_CameraTansform.position - _ParentTransform.position).normalized;
+        Physics.Raycast(_ParentTransform.position, rayDirection, out hit, CameraDistance + cameraCollisionOffset, cameraCollisionLayers);
 
         if (hit.point != Vector3.zero)
         {
-            hit.point -= _ParentTransform.position;
+            hit.point -= _ParentTransform.position + rayDirection * cameraCollisionOffset;
             _CameraTansform.localPosition = Vector3.Lerp(_CameraTansform.localPosition, _TargetLocalPosition * Mathf.Clamp((hit.point.magnitude / _TargetLocalPosition.magnitude), cameraCollisionMinDisPercent, 0.5f), Time.deltaTime * cameraCollisionDampening);
             //Debug.Log(hit.point.magnitude / _TargetLocalPosition.magnitude * 2 * 100 + "%");
             //Debug.DrawLine(_ParentTransform.position, hit.point + _ParentTransform.position, Color.red, 0.1f);

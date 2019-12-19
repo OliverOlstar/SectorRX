@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerCollectibles : MonoBehaviour
 {
     HUDManager playerHUD;
-    public GameObject cell;
+    //public GameObject cell;
     public GameObject core;
 
     private void Start()
@@ -25,13 +25,13 @@ public class PlayerCollectibles : MonoBehaviour
             playerHUD.SetCoreCount();
         }
 
-        if (collision.gameObject.tag == "Cell")
-        {
-            playerHUD.cellUIOn = true;
-            Destroy(collision.gameObject);
-            playerHUD.cellUI.SetActive(true);
-            playerHUD.cellCounter = playerHUD.cellCounter + 1;
-            playerHUD.SetCellCount();
-        }
+        //if (collision.gameObject.tag == "Cell")
+        //{
+        //    playerHUD.cellUIOn = true;
+        //    Destroy(collision.gameObject);
+        //    playerHUD.cellUI.SetActive(true);
+        //    playerHUD.cellCounter = playerHUD.cellCounter + 1;
+        //    playerHUD.SetCellCount();
+        //}
     }
 }

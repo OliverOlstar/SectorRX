@@ -62,12 +62,21 @@ public class PlayerDodge : MonoBehaviour
         //Run Dodge Force
         while (Time.time <= dodgeEndTime)
         {
+            //Can end early
+            if (doneDodge) break;
+
+            //Move player
             _Rb.velocity = pDirection * (pDistance / pDuration);
             yield return null;
         }
 
         //Stop player
         //_Rb.velocity = _Rb.velocity.normalized;
+        doneDodge = true;
+    }
+
+    public void EndDodge()
+    {
         doneDodge = true;
     }
 }

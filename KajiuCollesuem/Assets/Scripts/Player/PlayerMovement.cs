@@ -107,4 +107,9 @@ public class PlayerMovement : MonoBehaviour
         //Update inputInflunce to target
         inputInfluence = Mathf.Lerp(inputInfluence, targetInputInfluence, influenceUpdateSpeed * Time.deltaTime);
     }
+
+    public void EndJump()
+    {
+        StopCoroutine("JumpRoutine");
+    }
 }
