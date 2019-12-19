@@ -434,12 +434,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8582934654442581043}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57df21d598cd16c4983cce38a4b7e9a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cell: {fileID: 0}
   core: {fileID: 0}
 --- !u!114 &806430449
 MonoBehaviour:
@@ -500,22 +499,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1184346003}
     m_Modifications:
-    - target: {fileID: 100052, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
-      propertyPath: m_Name
-      value: RX
-      objectReference: {fileID: 0}
-    - target: {fileID: 100052, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 100004, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 100050, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 400052, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -571,6 +554,22 @@ PrefabInstance:
     - target: {fileID: 400052, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
       propertyPath: m_LocalScale.z
       value: 1.3333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 100052, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
+      propertyPath: m_Name
+      value: RX
+      objectReference: {fileID: 0}
+    - target: {fileID: 100052, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 100050, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 63b9a33606bbe9c479c356bbc2bc5999, type: 3}
       propertyPath: m_Controller
