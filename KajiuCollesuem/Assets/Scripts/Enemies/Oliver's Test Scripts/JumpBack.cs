@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Attack : MonoBehaviour, IState
+public class JumpBack : MonoBehaviour, IState
 {
     private Animator _anim;
     private NavMeshAgent _agent;
@@ -12,9 +12,7 @@ public class Attack : MonoBehaviour, IState
     [SerializeField] private float _cooldown = 1.0f;
     private float _nextEnterTime = 0.0f;
 
-    [SerializeField] private float _attackRange = 1;
-
-    [SerializeField] private AttackHitbox _hitbox;
+    [SerializeField] private float _fireballRange = 1;
 
     private bool _enabled = false;
 
@@ -31,14 +29,13 @@ public class Attack : MonoBehaviour, IState
         _enabled = true;
         //_agent.isStopped = true;
         transform.LookAt(_target.position);
-        _anim.SetBool("Attacking", true);
+        _agent.Stop();
     }
 
     public void Exit()
     {
         //Debug.Log("Fireball: Exit");
         _enabled = false;
-        _anim.SetBool("Attacking", false);
     }
 
     public bool CanEnter(float pDistance)
@@ -47,7 +44,7 @@ public class Attack : MonoBehaviour, IState
         if (_target == null || _target.gameObject.activeSelf == false) return false;
 
         //Can shoot if cooldown is up and player is in range
-        if (Time.time >= _nextEnterTime && pDistance < _attackRange)
+        if (Time.time >= _nextEnterTime && pDistance < _fireballRange)
             return true;
 
         return false;
@@ -61,22 +58,6 @@ public class Attack : MonoBehaviour, IState
 
     public void Tick()
     {
-
-    }
-
-    //Animation Events //////////////
-    public void AEEnableHitbox()
-    {
-        _hitbox.enabled = true;
-    }
-
-    public void AEDisableHitbox()
-    {
-        _hitbox.enabled = false;
-    }
-
-    public void AEDoneAttack()
-    {
-        _enabled = false;
+        transform.Translate(Vector3.back);
     }
 }

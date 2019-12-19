@@ -7,6 +7,8 @@ public class PauseMenu : MonoBehaviour
 {
     public bool pause;
     public GameObject pauseScreen;
+    public GameObject powUpgrade;
+    public GameObject statUpgrade;
     [SerializeField] private PlayerCamera mainCam;
     [SerializeField] private PlayerInputHandler input;
 
@@ -25,7 +27,14 @@ public class PauseMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePauseGame();
+            if(!pause)
+            {
+                powUpgrade.SetActive(false);
+                statUpgrade.SetActive(false);
+                Cursor.lockState = CursorLockMode.Locked;
+            }
         }
+
     }
 
     private void TogglePauseGame()

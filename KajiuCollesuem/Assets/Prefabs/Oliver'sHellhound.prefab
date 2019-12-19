@@ -1837,6 +1837,10 @@ GameObject:
   - component: {fileID: 2717082766559030732}
   - component: {fileID: 3601481035353022809}
   - component: {fileID: 1439328071215740231}
+  - component: {fileID: 2964978027032789664}
+  - component: {fileID: 256945506962967333}
+  - component: {fileID: 310579018944365167}
+  - component: {fileID: 3561347989333791640}
   - component: {fileID: 8872662308017337306}
   - component: {fileID: 8872662308017337301}
   - component: {fileID: 8872662308017337302}
@@ -1924,6 +1928,73 @@ CapsuleCollider:
   m_Height: 1.1905245
   m_Direction: 2
   m_Center: {x: 0, y: 0.399, z: 0.19738394}
+--- !u!114 &2964978027032789664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8872662308017337307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b83753b55aad7df4cbc2aec978d99000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cooldown: 1
+  _fireballPrefab: {fileID: 0}
+  _fireballSpawnpoint: {fileID: 0}
+  _fireballRangeMax: 1
+  _fireballRangeMin: 0
+--- !u!114 &256945506962967333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8872662308017337307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd1120fc6a6c4b64e92660619be2bee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cooldown: 1
+  _fireballPrefab: {fileID: 0}
+  _fireballSpawnpoint: {fileID: 0}
+  _fireballRangeMax: 3
+  _fireballRangeMin: 0
+--- !u!114 &310579018944365167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8872662308017337307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 348280d13dbbc3b4f876548f1fee47a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cooldown: 1
+  summonSpots:
+  - {fileID: 3601481036205478612}
+  - {fileID: 3601481036973021643}
+  - {fileID: 3601481036972648309}
+  gruntPrefab: {fileID: 7175426251968232976, guid: de5e0031b5a349149b181d6583f1f33c,
+    type: 3}
+  _summonRangeMax: 6
+  _summonRangeMin: 5
+--- !u!114 &3561347989333791640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8872662308017337307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e397c3cde415364cb2400cb6d4ecd0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8872662308017337306
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -18,7 +18,9 @@ public class Summon : MonoBehaviour, IState
     [SerializeField] private float _summonRangeMax;
     [SerializeField] private float _summonRangeMin;
 
-    private bool _enabled = false;
+    public static int _gruntCount = 0;
+
+    private bool _enabled = false, _allGruntsSummoned = false;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
     {
@@ -65,9 +67,13 @@ public class Summon : MonoBehaviour, IState
     //Animation Events //////////////
     public void AESummonGrunts()
     {
-        foreach (Transform spot in summonSpots)
+        if (_gruntCount != 3 && !_allGruntsSummoned)
         {
-            Instantiate(gruntPrefab, spot.position, spot.rotation);
+            foreach (Transform spot in summonSpots)
+            {
+                Instantiate(gruntPrefab, spot.position, spot.rotation);
+                ++_gruntCount;
+            }
         }
     }
 
@@ -76,5 +82,10 @@ public class Summon : MonoBehaviour, IState
         //Debug.Log("Fireball: AEDoneShooting");
         _enabled = false;
         _nextEnterTime = Time.time + _cooldown;
+
+        if (_gruntCount == 3)
+        {
+            _allGruntsSummoned = true;
+        }
     }
 }
