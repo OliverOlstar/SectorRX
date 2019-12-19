@@ -294,18 +294,16 @@ GameObject:
   - component: {fileID: 6055264870543736800}
   - component: {fileID: 8505643812736150526}
   - component: {fileID: 2220731904774253932}
-  - component: {fileID: 2220731904774253935}
-  - component: {fileID: 2220731904774253923}
   - component: {fileID: 2220731904774253928}
-  - component: {fileID: 6055264869548468581}
+  - component: {fileID: 4944307402221784857}
   - component: {fileID: 2220731904774253934}
   - component: {fileID: 2220731904774253933}
   - component: {fileID: 6055264869548468582}
   - component: {fileID: 6055264869548468583}
   - component: {fileID: 6055264869548468579}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Oliver'sHellhound
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -394,39 +392,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldown: 1
-  _attackRange: 1
+  _attackRange: 1.5
   _hitbox: {fileID: 6055264869934658793}
---- !u!114 &2220731904774253935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2220731904774253922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b83753b55aad7df4cbc2aec978d99000, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cooldown: 1
-  _fireballRange: 1
-  _enabled: 0
---- !u!114 &2220731904774253923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2220731904774253922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e397c3cde415364cb2400cb6d4ecd0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  strafeMax: 8
-  strafeMin: 3
-  _nextEnterTime: 0
-  _enabled: 0
 --- !u!114 &2220731904774253928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,7 +408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agroRange: 12
   agroLostRange: 16
---- !u!114 &6055264869548468581
+--- !u!114 &4944307402221784857
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -450,13 +417,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2220731904774253922}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c85bd48623d017f4199a335a4be0a3a7, type: 3}
+  m_Script: {fileID: 11500000, guid: d7706da75738bcd47974c0182c534b33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pauseTimeMin: 1
-  _pauseTimeMax: 1
-  pointReachedDistance: 1
-  patrolPath: {fileID: 0}
+  homeReachedDistance: 1
 --- !u!114 &2220731904774253934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1239,7 +1203,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6055264869559411530}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1307,7 +1271,7 @@ GameObject:
   - component: {fileID: 6055264869666928146}
   - component: {fileID: 6055264869666928156}
   - component: {fileID: 6055264869666928147}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1382,7 +1346,7 @@ GameObject:
   - component: {fileID: 6055264869823495976}
   - component: {fileID: 6055264869823495983}
   - component: {fileID: 6055264869823495982}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: EnemyHealth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1490,7 +1454,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6055264869890751167}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1643,7 +1607,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6055264870379319336}
   - component: {fileID: 6055264870379319337}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1733,7 +1697,7 @@ GameObject:
   - component: {fileID: 6055264871157978371}
   - component: {fileID: 6055264871157978381}
   - component: {fileID: 6055264871157978380}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}

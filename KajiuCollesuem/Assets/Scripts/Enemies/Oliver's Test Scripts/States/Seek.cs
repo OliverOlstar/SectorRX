@@ -64,7 +64,7 @@ public class Seek : MonoBehaviour, IState
         //Set Anim Speed
         _anim.SetFloat("Speed", _agent.velocity.magnitude / _agent.speed);
 
-        if (Vector3.Distance(transform.position, _target.position) <= 4)
+        if (Vector3.Distance(transform.position, _target.position) <= 1)
         {
             _agent.isStopped = true;
         }

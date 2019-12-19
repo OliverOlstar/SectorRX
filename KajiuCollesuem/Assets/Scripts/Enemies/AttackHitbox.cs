@@ -21,7 +21,7 @@ public class AttackHitbox : MonoBehaviour
         //If collided with the player model, player takes damage
         if (other.gameObject.GetComponent<PlayerAttributes>() != null)
         {
-            other.gameObject.GetComponent<PlayerAttributes>().TakeDamage(1, true);
+            other.gameObject.GetComponent<PlayerAttributes>().TakeDamage(40, true);
         }
     }
 }
