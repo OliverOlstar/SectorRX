@@ -50,6 +50,11 @@ public class PlayerHitbox : MonoBehaviour
             //Slow Game for a small time on hit
             StartCoroutine("SlowTime");
         }
+
+        if (other.gameObject.name.Equals("Fireball"))
+        {
+            playerAttributes.TakeDamage(damage, true);
+        }
     }
 
     private IEnumerator SlowTime()
