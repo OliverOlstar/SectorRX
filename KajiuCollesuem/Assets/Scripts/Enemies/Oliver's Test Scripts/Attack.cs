@@ -61,7 +61,7 @@ public class Attack : MonoBehaviour, IState
 
     public void Tick()
     {
-
+        
     }
 
     //Animation Events //////////////
