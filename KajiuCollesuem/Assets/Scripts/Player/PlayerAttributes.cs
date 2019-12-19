@@ -179,6 +179,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
             //Changing Health by remainder
             modifyHealth(-pAmount);
+            Debug.Log(pAmount);
         }
 
         //Restarting Shield Regening
