@@ -21,7 +21,7 @@ public class PowerSelectScreen : MonoBehaviour
     //Power Selection
     public void SelectPower(int i)
     {
-        playerPowerHandler.AddPower(powers[i].animationIndex);
+        playerPowerHandler.AddPower(powers[i]);
         powers.Remove(powers[i]);
     }
 

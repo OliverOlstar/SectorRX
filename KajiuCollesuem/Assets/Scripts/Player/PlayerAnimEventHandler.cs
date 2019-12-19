@@ -15,29 +15,29 @@ public class PlayerAnimEventHandler : MonoBehaviour
     }
 
     // Hitbox
-    public void AEDeactivateHitbox()
+    public void DeactivateHitbox()
     {
         hitbox.SetActive(false);
     }
 
-    public void AEActivateHitbox()
+    public void ActivateHitbox()
     {
         hitbox.SetActive(true);
         playerHitbox.SetDamage(animHandler.GetCurrentCombo());
     }
 
     // Attack State
-    public void AEListenForAttack()
+    public void ListenForAttack()
     {
         animHandler.attackState = 1;
     }
 
-    public void AELeaveAttacking()
+    public void LeaveAttacking()
     {
         animHandler.StopAttacking();
     }
 
-    public void AELeaveAttackState()
+    public void LeaveAttackState()
     {
         animHandler.LeaveAttackState();
     }
