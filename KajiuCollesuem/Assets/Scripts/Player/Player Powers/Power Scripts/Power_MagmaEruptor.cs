@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Power_MagmaEruptor : Power_Master, IPower
+public class Power_MagmaEruptor : MonoBehaviour, IPower
 {
-    /* Select SOPower before play time. When script is selected option to select shows in inspector. */
+    public void Destroy() => Destroy(this);
 
-    new public void UsingMe()
+    // Anim Events ///////////
+    public void AESpawnMagmaball()
     {
-        Debug.Log("Magma Power Used");
+        Debug.Log("Spawn Ball");
     }
 }

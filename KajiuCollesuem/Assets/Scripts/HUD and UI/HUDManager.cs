@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class HUDManager : MonoBehaviour
 {
     //public RectTransform pauseMenu, optionsMenu, powerMenu, skillMenu;
-    public GameObject pause, /*option, ability, videoOP, audioOP gameplayOP,*/ cellUI, coreUI, powerUpgrade, statUpgrade;
+    public GameObject pause, /*option, ability, videoOP, audioOP gameplayOP,*/ cellUI, coreUI, powerUpgrade, statUpgrade, powerSelect;
     public Text cellCount, coreCount, upCoreCount, upCellCount;
 
     //Booleans to check if Cell UI or Power Core UI are already active when collecting other item
@@ -15,11 +15,14 @@ public class HUDManager : MonoBehaviour
     public int coreCounter;
 
     public PauseMenu pauseMenu;
+    [SerializeField] private PlayerCamera mainCam;
+    [SerializeField] private PlayerInputHandler input;
 
     private void Start()
     {
         //option.SetActive(false);
         //ability.SetActive(false);
+
         powerUpgrade.SetActive(false);
         statUpgrade.SetActive(false);
 
@@ -60,14 +63,14 @@ public class HUDManager : MonoBehaviour
 
     IEnumerator CellUIOff()
     {
-        yield return new WaitForSeconds(3.5f);
+        yield return new WaitForSeconds(1.5f);
         cellUI.SetActive(false);
         cellUIOn = false;
     }
 
     IEnumerator CoreUIOff()
     {
-        yield return new WaitForSeconds(3.5f);
+        yield return new WaitForSeconds(1.5f);
         coreUI.SetActive(false);
         coreUIOn = false;
     }   
@@ -143,7 +146,10 @@ public class HUDManager : MonoBehaviour
     public void ResumeGame()
     {
         pause.SetActive(false);
-        //Time.timeScale = 1;
+        Time.timeScale = 1;
         pauseMenu.pause = !pauseMenu.pause;
+        mainCam.CameraDisabled = !pause;
+        input.inputDisabled = !pause;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }

@@ -9,7 +9,7 @@ Oliver
 
     Powers Player Has
     Player Upgrades
-    Cells Collected
+    ////////////////////Cells Collected
     Current Checkpoint
 
     Time played
@@ -19,6 +19,7 @@ Oliver
     Everything in save and
     Respawn all enemies
     Respawn Player
+    Set UpgradeUI
 
  */
 
@@ -41,6 +42,11 @@ public class SaveAndLoad : MonoBehaviour
     [SerializeField] private PlayerUpgrades playerUpgrades;
     [SerializeField] private PlayerRespawn playerRespawn;
     [SerializeField] private PlayerAttributes playerAttributes;
+    [SerializeField] private StatUpgrades upgradesUI;
+    [SerializeField] private PlayerPowerHandler playerPowers;
+
+    [Header("Order Matches order of Powers Enum in PlayerPowerHandler")]
+    [SerializeField] private SOPowers[] allSOPowers;
 
     public void ClearSave(int pSlot = 0)
     {
@@ -61,6 +67,7 @@ public class SaveAndLoad : MonoBehaviour
 
         SaveLevels(pSlot);
         SaveSpawnTransform(pSlot);
+        SavePowersCollected(pSlot);
         PlayerPrefs.Save();
     }
 
@@ -74,6 +81,7 @@ public class SaveAndLoad : MonoBehaviour
 
         LoadLevels();
         LoadSpawnTransform(pSlot);
+        LoadPowersCollected(pSlot);
         QuickLoadSave(pSlot);
         return true;
     }
@@ -86,6 +94,8 @@ public class SaveAndLoad : MonoBehaviour
         playerAttributes.Respawn();
         RespawnEnemies(null);
     }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void Update()
     {
@@ -103,15 +113,9 @@ public class SaveAndLoad : MonoBehaviour
         {
             QuickLoadSave(0);
         }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            playerUpgrades.LevelUp(0, 1);
-            playerUpgrades.LevelUp(1, 1);
-        }
     }
 
-    //Player Position
+    // Player Position
     private void SaveSpawnTransform(int pSlot = 0)
     {
         Vector3 respawnPoint = playerRespawn.getRespawnPoint();
@@ -136,7 +140,7 @@ public class SaveAndLoad : MonoBehaviour
         playerRespawn.setRespawnTransform(respawnPoint, respawnRotation);
     }
 
-    //Levels
+    // Levels
     private void SaveLevels(int pSlot = 0)
     {
         int[] levels = playerUpgrades.GetStatLevels();
@@ -152,6 +156,7 @@ public class SaveAndLoad : MonoBehaviour
     {
         //Clear Current Levels
         playerUpgrades.Setup();
+        upgradesUI.RespawnAllButtons();
 
         //Levelup to match save stats
         for (int i = 0; i < playerUpgrades.GetStatLevels().Length; i++)
@@ -159,6 +164,7 @@ public class SaveAndLoad : MonoBehaviour
             for (int z = 1; z < PlayerPrefs.GetInt(pSlot + "-Stats-" + i); z++)
             {
                 playerUpgrades.LevelUp(i, z);
+                upgradesUI.RespawnStatsUI(i, z);
             }
         }
 
@@ -167,7 +173,44 @@ public class SaveAndLoad : MonoBehaviour
             for (int z = 1; z < PlayerPrefs.GetInt(pSlot + "-Powers-" + i); z++)
             {
                 playerUpgrades.PowerUpgrade(i, z);
+                upgradesUI.RespawnPowersUI(i, z);
             }
         }
+    }
+
+    // Powers Collected
+    private void SavePowersCollected(int pSlot = 0)
+    {
+        List<SOPowers> powers = playerPowers.GetCollectedPowers();
+
+        for (int i = 0; i < 3; i++)
+        {
+            //Save -1 if no power
+            if (powers.Count <= i)
+                PlayerPrefs.SetInt(pSlot + "-CollectPowers-" + i, -1);
+            else
+                PlayerPrefs.SetInt(pSlot + "-CollectPowers-" + i, (int)powers[i].WhichPower);
+
+        }
+    }
+
+    private void LoadPowersCollected(int pSlot = 0)
+    {
+        List<SOPowers> powers = new List<SOPowers>();
+
+        for (int i = 0; i < 3; i++)
+        {
+            //Get Saved Power
+            int value = PlayerPrefs.GetInt(pSlot + "-CollectPowers-" + i);
+
+            //If -1 no more powers
+            if (value == -1)
+                break;
+
+            //Add Power
+            powers.Add(allSOPowers[value]);
+        }
+
+        playerPowers.Respawn(powers);
     }
 }

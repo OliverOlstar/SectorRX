@@ -8,9 +8,16 @@ public class StatUpgrades : MonoBehaviour
     public Text descriptionStat;
     public Text descriptionPower;
     public Text insufficientCost;
-    [SerializeField] private PlayerUpgrades pU;
+    public PlayerUpgrades pU;
     private SOStats[] stats;
     private SOPowers[] powers;
+
+    [SerializeField] private Color[] statColors = new Color[5];
+    [SerializeField] private Color[] powerColors = new Color[3];
+    [SerializeField] private Color defaultColor;
+
+    [SerializeField] private Button[] powerButtons;
+    [SerializeField] private Button[] statButtons;
 
     // Access the HUDManager to get access to the current Power Core count
     HUDManager hud;
@@ -21,6 +28,10 @@ public class StatUpgrades : MonoBehaviour
         powers = pU.Powers;
         hud = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>();
         insufficientCost.gameObject.SetActive(false);
+
+        powerButtons = transform.GetChild(0).GetComponentsInChildren<Button>();
+        statButtons = transform.GetChild(1).GetComponentsInChildren<Button>();
+        RespawnAllButtons();
     }
 
     // Purchase Rank One upgrade if player has 50 Cells.
@@ -86,13 +97,16 @@ public class StatUpgrades : MonoBehaviour
     //    }
     //}
 
-    public void ClickButtonPower(int pIndex, int pLevel)
+    public void ClickButtonPower(int pIndex, int pLevel, Button pButton)
     {
         if(hud.coreCounter >= powers[pIndex].cost[pLevel])
         {
-            if(pU.PowerUpgrade(pIndex, pLevel))
+            if(pU.PowerUpgrade(pIndex, pLevel + 1))
             {
                 hud.coreCounter -= powers[pIndex].cost[pLevel];
+                hud.upCoreCount.text = hud.coreCounter.ToString();
+                pButton.GetComponent<Image>().color = powerColors[pIndex];
+                pButton.interactable = false;
             }
             else
             {
@@ -109,13 +123,16 @@ public class StatUpgrades : MonoBehaviour
         }
     }
 
-    public void ClickButtonStat(int pIndex, int pLevel)
+    public void ClickButtonStat(int pIndex, int pLevel, Button pButton)
     {
         if (hud.cellCounter >= stats[pIndex].cost[pLevel])
         {
-            if (pU.LevelUp(pIndex, pLevel))
+            if (pU.LevelUp(pIndex, pLevel + 1))
             {
                 hud.cellCounter -= stats[pIndex].cost[pLevel];
+                hud.upCellCount.text = hud.cellCounter.ToString();
+                pButton.GetComponent<Image>().color = statColors[pIndex];
+                pButton.interactable = false;
             }
             else
             {
@@ -134,12 +151,12 @@ public class StatUpgrades : MonoBehaviour
 
     public void HoverStatButton(int pIndex, int pLevel, float pYPos)
     {
-        descriptionStat.text = stats[pIndex].statDescriptions[pLevel];
+        descriptionStat.text = stats[pIndex].statDescriptions[pLevel] + "\n" + "Cost: " + stats[pIndex].cost[pLevel] + " Cells";
         descriptionStat.rectTransform.position = new Vector2(descriptionStat.rectTransform.position.x, pYPos);
     }
     public void HoverPowerButton(int pIndex, int pLevel, float pYPos)
     {
-        descriptionPower.text = powers[pIndex].powerDescriptions[pLevel];
+        descriptionPower.text = powers[pIndex].powerDescriptions[pLevel] + "\n" + "Cost: " + powers[pIndex].cost[pLevel] + " Cores";
         descriptionPower.rectTransform.position = new Vector2(descriptionPower.rectTransform.position.x, pYPos);
     }
 
@@ -147,5 +164,32 @@ public class StatUpgrades : MonoBehaviour
     {
         descriptionStat.text = "";
         descriptionPower.text = "";
+    }
+
+    public void RespawnPowersUI(int pIndex, int pLevel)
+    {
+        powerButtons[pLevel + (pIndex * 2)].interactable = false;
+        powerButtons[pLevel + (pIndex * 2)].GetComponent<Image>().color = powerColors[pIndex];
+    }
+
+    public void RespawnStatsUI(int pIndex, int pLevel)
+    {
+        statButtons[pLevel - 1 + (pIndex * 3)].interactable = false;
+        statButtons[pLevel - 1 + (pIndex * 3)].GetComponent<Image>().color = statColors[pIndex];
+    }
+
+    public void RespawnAllButtons()
+    {
+        for (int i = 0; i < statButtons.Length - 2; i++)
+        {
+            statButtons[i].interactable = true;
+            statButtons[i].GetComponent<Image>().color = defaultColor;
+        }
+
+        for (int i = 0; i < powerButtons.Length - 2; i++)
+        {
+            powerButtons[i].interactable = true;
+            powerButtons[i].GetComponent<Image>().color = defaultColor;
+        }
     }
 }

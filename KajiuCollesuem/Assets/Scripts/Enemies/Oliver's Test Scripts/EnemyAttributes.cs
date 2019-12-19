@@ -16,6 +16,7 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
     private bool isDead;
 
     private Decision _decision;
+    HUDManager _playerHUD;
     private IState _deadState;
     private IState _stunnedState;
 
@@ -34,6 +35,7 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         _decision = GetComponent<Decision>();
         _deadState = GetComponent<Dead>();
         _stunnedState = GetComponent<Stunned>();
+        _playerHUD = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>();
     }
 
     public bool TakeDamage(int pAmount, bool pReact)
@@ -73,6 +75,11 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         isDead = true;
         if (_decision != null)
             _decision.ForceStateSwitch(_deadState);
+
+        _playerHUD.cellUIOn = true;
+        _playerHUD.cellUI.SetActive(true);
+        _playerHUD.cellCounter = _playerHUD.cellCounter + 150;
+        _playerHUD.SetCellCount();
     }
 
     public void Respawn()

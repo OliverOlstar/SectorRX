@@ -194,18 +194,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockOnTarget: {fileID: 0}
-  lockOnXOffset: 18
-  lockOnInputInfluence: 0.3
-  lockOnChangeDelay: 0.6
-  lockOnChangeAmount_KB: 3
-  lockOnChangeAmount_GP: 1
-  idleSpinSpeed: 3
-  idleSpinY: 10
+  Inverted: 0
+  lockOnXOffset: 0
+  lockOnInputInfluence: 0.2
+  lockOnChangeDelay: 1
+  lockOnChangeAmount_KB: 10
+  lockOnChangeAmount_GP: 1.5
+  idleSpinSpeed: 1
+  idleSpinY: 40
   cameraCollisionLayers:
     serializedVersion: 2
     m_Bits: 1
   cameraCollisionDampening: 20
-  cameraCollisionMinDisPercent: 0.1
+  cameraCollisionMinDisPercent: 0.09
+  cameraCollisionOffset: 0.4
   MouseSensitivity: 5
   TurnDampening: 20
   OffSetLeft: 0

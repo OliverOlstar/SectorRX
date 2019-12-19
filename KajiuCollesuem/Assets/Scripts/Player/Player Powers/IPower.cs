@@ -4,7 +4,5 @@ using UnityEngine;
 
 public interface IPower
 {
-    void UsingMe();
-    int GetAnimIndex();
-    int GetPowerRequired();
+    void Destroy();
 }
