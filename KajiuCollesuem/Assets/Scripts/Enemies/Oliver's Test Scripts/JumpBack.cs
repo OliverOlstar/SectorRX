@@ -14,7 +14,7 @@ public class JumpBack : MonoBehaviour, IState
 
     [SerializeField] private float _fireballRange = 1;
 
-    private bool _enabled = false;
+    public bool _enabled = false;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
     {
@@ -58,6 +58,9 @@ public class JumpBack : MonoBehaviour, IState
 
     public void Tick()
     {
-        transform.Translate(Vector3.back);
+        if (_enabled)
+        {
+            transform.Translate(Vector3.back);
+        }
     }
 }
