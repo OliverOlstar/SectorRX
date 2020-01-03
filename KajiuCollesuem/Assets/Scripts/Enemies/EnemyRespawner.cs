@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+    Oliver
+
+    Script gets attached to enemy and adds itself to listen for enemyRespawn function
+    This is what respawns enemies
+*/
+
 public class EnemyRespawner : MonoBehaviour
 {
     private Vector3 spawnPosition;

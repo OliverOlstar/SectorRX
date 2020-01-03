@@ -8,13 +8,6 @@ public class FireballHitbox : MonoBehaviour
     public float maxTime;
     float timer = 0;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         timer += Time.deltaTime;
@@ -28,9 +21,11 @@ public class FireballHitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<PlayerAttributes>() != null)
+        IAttributes otherAttributes = other.gameObject.GetComponent<PlayerAttributes>();
+
+        if (otherAttributes != null)
         {
-            other.gameObject.GetComponent<PlayerAttributes>().TakeDamage(damageAmount, true);
+            otherAttributes.TakeDamage(damageAmount, true);
             DestroyFireball();
         }
     }

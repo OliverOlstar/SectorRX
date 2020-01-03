@@ -137,6 +137,9 @@ public class AnimHandler : MonoBehaviour
     {
         _anim.SetBool("ReactLeft", pLeft);
         _anim.SetTrigger("React");
+        LeaveAttackState();
+        StopAttacking();
+        // Disable Hitbox
     }
     
     public void Respawn()
