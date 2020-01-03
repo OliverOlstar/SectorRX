@@ -93,7 +93,7 @@ public class AnimHandler : MonoBehaviour
 
     public void Dead()
     {
-        _anim.SetBool("Dead", true);
+        _anim.SetBool("IsDead", true);
         _anim.SetTrigger("Died");
     }
 
