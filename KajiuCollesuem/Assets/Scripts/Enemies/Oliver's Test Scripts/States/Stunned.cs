@@ -8,7 +8,7 @@ public class Stunned : MonoBehaviour, IState
     private Animator _anim;
     private NavMeshAgent _agent;
 
-    private bool _enabled = false;
+    [SerializeField] private bool _enabled = false;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
     {

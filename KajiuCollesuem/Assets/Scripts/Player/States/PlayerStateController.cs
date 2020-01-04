@@ -46,7 +46,7 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public float LastInputTime = 0;
 
     [Header("State Components")]
-    private PlayerStateMachine stateMachine;
+    [HideInInspector] public PlayerStateMachine _stateMachine;
     public PlayerMovement _movementComponent { get; private set; } // Player's movement component, access this to move and jump
     [HideInInspector] public PlayerDodge _dodgeComponent; // Player's dodge component, access this to
     private PlayerLockOnScript _lockOnComponent;
@@ -78,7 +78,7 @@ public class PlayerStateController : MonoBehaviour
         _playerAttributes = GetComponent<PlayerAttributes>();
         _animHandler = GetComponentInChildren<AnimHandler>();
 
-        stateMachine = GetComponent<PlayerStateMachine>();
+        _stateMachine = GetComponent<PlayerStateMachine>();
         InitializeStateMachine();
 
         _rb = GetComponent<Rigidbody>();
@@ -96,6 +96,6 @@ public class PlayerStateController : MonoBehaviour
             {typeof(DeathState), new DeathState(controller:this) }
         };
 
-        stateMachine.SetStates(states);
+        _stateMachine.SetStates(states);
     }
 }

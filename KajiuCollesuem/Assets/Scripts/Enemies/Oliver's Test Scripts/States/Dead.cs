@@ -9,7 +9,7 @@ public class Dead : MonoBehaviour, IState
     private NavMeshAgent _agent;
     private Transform _target;
 
-    private bool _enabled = false;
+    [SerializeField] private bool _enabled = false;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
     {

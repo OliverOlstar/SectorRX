@@ -14,7 +14,7 @@ public class Guard : MonoBehaviour, IState
     private int _subState = 0;
     private float _stateChangeTime = 0;
 
-    private bool _enabled = false;
+    [SerializeField] private bool _enabled = false;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
     {

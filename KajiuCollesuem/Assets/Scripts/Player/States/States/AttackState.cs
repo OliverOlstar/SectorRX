@@ -7,9 +7,9 @@ public class AttackState : BaseState
 {
     PlayerStateController stateController;
     
-    private bool done = false;
     private int combo = 0;
     private float AttackStateReturnDelayLength = 0.6f;
+    private bool done = false;
 
     public AttackState(PlayerStateController controller) : base(controller.gameObject)
     {
@@ -30,6 +30,8 @@ public class AttackState : BaseState
         //stateController._hitboxComponent.gameObject.SetActive(false); /* Handled by animation events */
         ClearAttackInputs();
         stateController.AttackStateReturnDelay = Time.time + AttackStateReturnDelayLength;
+        stateController._animHandler.LeaveAttackState();
+        stateController._animHandler.StopAttacking();
     }
 
     public override Type Tick()

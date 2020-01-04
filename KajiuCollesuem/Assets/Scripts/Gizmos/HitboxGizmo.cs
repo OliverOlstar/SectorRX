@@ -9,6 +9,6 @@ public class HitboxGizmo : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = color;
-        Gizmos.DrawIcon(transform.position, "Warning");
+        Gizmos.DrawWireSphere(transform.position, 0.1f);
     }
 }

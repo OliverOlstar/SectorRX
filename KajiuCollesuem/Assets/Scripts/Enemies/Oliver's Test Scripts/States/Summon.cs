@@ -12,6 +12,7 @@ public class Summon : MonoBehaviour, IState
     [SerializeField] private float _cooldown = 1.0f;
     private float _nextEnterTime = 0.0f;
 
+    [Space]
     [SerializeField] private Transform[] summonSpots = new Transform[3];
     [SerializeField] private GameObject gruntPrefab;
 
@@ -19,8 +20,9 @@ public class Summon : MonoBehaviour, IState
     [SerializeField] private float _summonRangeMin;
 
     public static int _gruntCount = 0;
+    private bool _allGruntsSummoned = false;
 
-    private bool _enabled = false, _allGruntsSummoned = false;
+    [SerializeField] private bool _enabled = false;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
     {
@@ -56,7 +58,7 @@ public class Summon : MonoBehaviour, IState
 
     public bool CanExit(float pDistance)
     {
-        return (_enabled == false);
+        return (_enabled == false); 
     }
 
     public void Tick()
@@ -71,7 +73,7 @@ public class Summon : MonoBehaviour, IState
         {
             foreach (Transform spot in summonSpots)
             {
-                Instantiate(gruntPrefab, spot.position, spot.rotation);
+                Instantiate(gruntPrefab, spot.position, spot.rotation).GetComponent<Decision>().target = _target; ;
                 ++_gruntCount;
             }
         }

@@ -20,7 +20,7 @@ public class Patrol : MonoBehaviour, IState
     private DirectedGraph _patrolGraph = new DirectedGraph();
     private GameObject _currentPatrolDest;
 
-    private bool _enabled = false;
+    [SerializeField] private bool _enabled = false;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
     {

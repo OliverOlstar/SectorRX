@@ -16,7 +16,7 @@ public class Attack : MonoBehaviour, IState
 
     [SerializeField] private GameObject _hitbox;
 
-    private bool _enabled = false;
+    [SerializeField] private bool _enabled = false;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
     {

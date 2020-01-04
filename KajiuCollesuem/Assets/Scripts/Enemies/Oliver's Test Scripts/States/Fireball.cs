@@ -15,10 +15,14 @@ public class Fireball : MonoBehaviour, IState
     [SerializeField] private Rigidbody _fireballPrefab;
     [SerializeField] private Transform _fireballSpawnpoint;
 
+    [Space]
     [SerializeField] private float _fireballRangeMax = 10;
     [SerializeField] private float _fireballRangeMin = 3;
 
-    private bool _enabled = false;
+    [SerializeField] private float _fireballSpeed = 1000;
+
+    [Space]
+    [SerializeField] private bool _enabled = false;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
     {
@@ -70,10 +74,13 @@ public class Fireball : MonoBehaviour, IState
     public void AEShootFireball()
     {
         //Debug.Log("Fireball: AEShootFireball");
-        Rigidbody FireballInstance;
+        Rigidbody fireballInstance;
+        Vector3 direction;
 
-        FireballInstance = Instantiate(_fireballPrefab, _fireballSpawnpoint.position, _fireballSpawnpoint.rotation) as Rigidbody;
-        FireballInstance.AddForce(_fireballSpawnpoint.forward * 1000);
+        direction = (_target.position - _fireballSpawnpoint.position).normalized;
+        fireballInstance = Instantiate(_fireballPrefab) as Rigidbody;
+        fireballInstance.transform.position = _fireballSpawnpoint.position;
+        fireballInstance.AddForce(direction * _fireballSpeed);
     }
 
     public void AEDoneShooting()

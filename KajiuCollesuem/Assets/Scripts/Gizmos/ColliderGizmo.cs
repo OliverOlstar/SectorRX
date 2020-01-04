@@ -9,6 +9,6 @@ public class ColliderGizmo : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = color;
-        Gizmos.DrawWireCube(transform.position, GetComponent<BoxCollider>().size);
+        Gizmos.DrawWireCube(transform.position + GetComponent<BoxCollider>().center, GetComponent<BoxCollider>().size);
     }
 }

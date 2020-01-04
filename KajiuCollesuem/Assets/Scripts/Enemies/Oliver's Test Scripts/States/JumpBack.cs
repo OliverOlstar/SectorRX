@@ -14,7 +14,7 @@ public class JumpBack : MonoBehaviour, IState
 
     [SerializeField] private float _fireballRange = 1;
 
-    public bool _enabled = false;
+    [SerializeField] private bool _enabled = false;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
     {
@@ -27,9 +27,8 @@ public class JumpBack : MonoBehaviour, IState
     {
         //Debug.Log("Fireball: Enter");
         _enabled = true;
-        //_agent.isStopped = true;
         transform.LookAt(_target.position);
-        _agent.Stop();
+        _agent.isStopped = true;
     }
 
     public void Exit()

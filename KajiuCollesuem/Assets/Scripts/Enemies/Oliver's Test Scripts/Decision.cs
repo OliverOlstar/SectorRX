@@ -8,7 +8,7 @@ public class Decision : MonoBehaviour
     private IState[] _states;
     private IState _currentState;
 
-    [SerializeField] private Transform _target;
+    public Transform target;
 
     void Start()
     {
@@ -21,7 +21,7 @@ public class Decision : MonoBehaviour
 
         foreach(IState state in _states)
         {
-            state.Setup(_target, anim, agent);
+            state.Setup(target, anim, agent);
         }
 
         //Start on least priority State that can be entered
@@ -34,7 +34,7 @@ public class Decision : MonoBehaviour
         for (int i = _states.Length - 1; i >= 0; i--)
         {
             //Get distance to target
-            float distance = Vector3.Distance(transform.position, _target.position);
+            float distance = Vector3.Distance(transform.position, target.position);
 
             //Check if can Enter
             if (_states[i].CanEnter(distance))
@@ -59,7 +59,7 @@ public class Decision : MonoBehaviour
     private void CheckStates()
     {
         //Get distance to target
-        float distance = Vector3.Distance(transform.position, _target.position);
+        float distance = Vector3.Distance(transform.position, target.position);
 
         //Return if you can't Exit current state
         if (_currentState.CanExit(distance) == false) return;

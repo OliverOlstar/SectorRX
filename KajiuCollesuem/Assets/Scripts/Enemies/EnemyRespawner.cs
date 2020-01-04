@@ -14,6 +14,8 @@ public class EnemyRespawner : MonoBehaviour
     private Vector3 spawnPosition;
     private Quaternion spawnRotation;
 
+    [SerializeField] private bool _killOnLoad;
+
     void Start()
     {
         spawnPosition = transform.position;
@@ -31,6 +33,9 @@ public class EnemyRespawner : MonoBehaviour
 
     void RespawnEnemy(SaveAndLoad pSaveAndLoad)
     {
+        // Replaced this line with the use of an object pool
+        if (_killOnLoad) Destroy(this.gameObject);
+
         transform.position = spawnPosition;
         transform.rotation = spawnRotation;
         GetComponent<IAttributes>().Respawn();
