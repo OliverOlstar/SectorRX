@@ -22,6 +22,7 @@ public class Fireball : MonoBehaviour, IState
     [SerializeField] private float _fireballSpeed = 1000;
 
     [Space]
+    [SerializeField] [Range(0,1)] private float _oddsOfSkipOver = 0;
     [SerializeField] private bool _enabled = false;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
@@ -54,7 +55,7 @@ public class Fireball : MonoBehaviour, IState
 
         //Can shoot if cooldown is up and player is in range
         if (Time.time >= _nextEnterTime && pDistance < _fireballRangeMax && pDistance > _fireballRangeMin) 
-            return true;
+            return CheckForSkipOver();
 
         return false;
     }
@@ -68,6 +69,23 @@ public class Fireball : MonoBehaviour, IState
     public void Tick()
     {
         
+    }
+
+    // Additional Functions /////////
+    private bool CheckForSkipOver()
+    {
+        // Randomization that prevents Enemy acting the same way everytime
+        if (Random.value > _oddsOfSkipOver)
+        {
+            // Return don't skip over
+            return true;
+        }
+        else
+        {
+            // Return skip over + put on cooldown
+            _nextEnterTime = Time.time + (_cooldown / 2);
+            return false;
+        }
     }
 
     //Animation Events //////////////
