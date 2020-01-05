@@ -19,8 +19,7 @@ public class Summon : MonoBehaviour, IState
     [SerializeField] private float _summonRangeMax;
     [SerializeField] private float _summonRangeMin;
 
-    public static int _gruntCount = 0;
-    private bool _allGruntsSummoned = false;
+    private int _gruntCount = 0;
 
     [SerializeField] private bool _enabled = false;
 
@@ -49,6 +48,10 @@ public class Summon : MonoBehaviour, IState
         //If target is a gonner don't enter
         if (_target == null || _target.gameObject.activeSelf == false) return false;
 
+        //Summon Grunt Limit
+        if (_gruntCount >= 2)
+            return false;
+
         //Can shoot if cooldown is up and player is in range
         if (Time.time >= _nextEnterTime && pDistance < _summonRangeMax && pDistance > _summonRangeMin)
             return true;
@@ -66,16 +69,22 @@ public class Summon : MonoBehaviour, IState
 
     }
 
-    //Animation Events //////////////
+    // Additional Functions //////////
+    public void GruntDied()
+    {
+        _gruntCount--;
+    }
+
+    // Animation Events //////////////
     public void AESummonGrunts()
     {
-        if (_gruntCount != 3 && !_allGruntsSummoned)
+        //Debug.Log("Fireball: AESummonGrunts");
+        foreach (Transform spot in summonSpots)
         {
-            foreach (Transform spot in summonSpots)
-            {
-                Instantiate(gruntPrefab, spot.position, spot.rotation).GetComponent<Decision>().target = _target; ;
-                ++_gruntCount;
-            }
+            GameObject summonedGrunt = Instantiate(gruntPrefab, spot.position, spot.rotation);
+            summonedGrunt.GetComponent<Decision>().target = _target;
+            summonedGrunt.GetComponent<EnemyAttributes>().SetSummonedGrunt(this);
+            ++_gruntCount;
         }
     }
 
@@ -84,10 +93,5 @@ public class Summon : MonoBehaviour, IState
         //Debug.Log("Fireball: AEDoneShooting");
         _enabled = false;
         _nextEnterTime = Time.time + _cooldown;
-
-        if (_gruntCount == 3)
-        {
-            _allGruntsSummoned = true;
-        }
     }
 }

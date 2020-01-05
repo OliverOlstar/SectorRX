@@ -17,7 +17,7 @@ public class StunnedState : BaseState
 
     public override void Enter()
     {
-        Debug.Log("StunnedState: Enter");
+        // Debug.Log("StunnedState: Enter");
         _leaveStateTime = Time.time + _cooldown;
         stateController.Stunned = false;
         stateController._hitboxComponent.gameObject.SetActive(false);
