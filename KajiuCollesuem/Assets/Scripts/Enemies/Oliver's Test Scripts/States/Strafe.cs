@@ -37,7 +37,6 @@ public class Strafe : MonoBehaviour, IState
         direction = GetStrafeDirection();
         timer = 0;
         _agent.Stop();
-        
     }
 
     public void Exit()

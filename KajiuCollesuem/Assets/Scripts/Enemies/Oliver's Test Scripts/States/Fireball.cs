@@ -22,7 +22,7 @@ public class Fireball : MonoBehaviour, IState
     [SerializeField] private float _fireballSpeed = 1000;
 
     [Space]
-    [SerializeField] [Range(0,1)] private float _oddsOfSkipOver = 0;
+    [SerializeField] [Range(0,1)] private float _oddsOfSkipOver = 0, maxRightDir, maxLeftDir;
     [SerializeField] private bool _enabled = false;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
@@ -68,7 +68,8 @@ public class Fireball : MonoBehaviour, IState
 
     public void Tick()
     {
-        
+        maxLeftDir = _fireballSpawnpoint.position.x - 5;
+        maxRightDir = _fireballSpawnpoint.position.x + 5;
     }
 
     // Additional Functions /////////
@@ -98,6 +99,17 @@ public class Fireball : MonoBehaviour, IState
         direction = (_target.position - _fireballSpawnpoint.position).normalized;
         fireballInstance = Instantiate(_fireballPrefab) as Rigidbody;
         fireballInstance.transform.position = _fireballSpawnpoint.position;
+
+        //Get the raycast of the Wolf's forward direction, and apply the following code if the raycast doesn't hit the player
+        if (_target.position.x > transform.position.x && transform.position.x < maxRightDir)
+        {
+            fireballInstance.transform.Translate(Vector3.right * 1.5f);
+        }
+
+        else if (_target.position.x < transform.position.x && transform.position.x > maxLeftDir)
+        {
+            fireballInstance.transform.Translate(Vector3.left * 1.5f);
+        }
         fireballInstance.AddForce(direction * _fireballSpeed);
     }
 
