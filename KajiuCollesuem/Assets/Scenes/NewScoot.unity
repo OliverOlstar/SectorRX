@@ -150,20 +150,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d84d9a668651854da50ad10f54cef49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &17874588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 17874585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c3e08219d68e6046b3eb1bb29cb7110, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tutorialUI: {fileID: 427807797}
-  tutorialText: {fileID: 427807796}
 --- !u!114 &17874594 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5397536735001967586, guid: 8e7d410007ab955488e1c836a456382a,
@@ -352,6 +338,66 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c93a1204adcedc42bc480501dad9dce, type: 3}
+--- !u!1 &98672374
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 98672375}
+  - component: {fileID: 98672377}
+  - component: {fileID: 98672376}
+  m_Layer: 0
+  m_Name: AttackTutorial1
+  m_TagString: LockOnTutorial
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &98672375
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98672374}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.39, y: -3.08, z: 14.41}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 266653733}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &98672376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98672374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c3e08219d68e6046b3eb1bb29cb7110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialUI: {fileID: 427807797}
+  tutorialText: {fileID: 427807796}
+  myText: Left Click or Press "X" for a Quick Attack
+--- !u!65 &98672377
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98672374}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6.450062, y: 1.2191739, z: 5.798437}
+  m_Center: {x: 0.60282326, y: -0.9084623, z: -0.07462978}
 --- !u!1001 &193079680
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -482,6 +528,8 @@ Transform:
   m_Children:
   - {fileID: 317737111}
   - {fileID: 835325573}
+  - {fileID: 98672375}
+  - {fileID: 330606638}
   m_Father: {fileID: 0}
   m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -495,6 +543,7 @@ GameObject:
   m_Component:
   - component: {fileID: 317737111}
   - component: {fileID: 317737112}
+  - component: {fileID: 317737113}
   m_Layer: 0
   m_Name: DashTutorial
   m_TagString: DashTutorial
@@ -529,6 +578,81 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 6.450062, y: 1.2191739, z: 3.4738483}
   m_Center: {x: 0.60282314, y: -0.9084623, z: -1.2369242}
+--- !u!114 &317737113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317737110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c3e08219d68e6046b3eb1bb29cb7110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialUI: {fileID: 427807797}
+  tutorialText: {fileID: 427807796}
+  myText: Press Space or "A" to Dash
+--- !u!1 &330606637
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 330606638}
+  - component: {fileID: 330606640}
+  - component: {fileID: 330606639}
+  m_Layer: 0
+  m_Name: AttackTutorial2
+  m_TagString: LockOnTutorial
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &330606638
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330606637}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.56, y: -5.23, z: 20.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 266653733}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &330606639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330606637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c3e08219d68e6046b3eb1bb29cb7110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialUI: {fileID: 427807797}
+  tutorialText: {fileID: 427807796}
+  myText: Hold Left Click or "X" for a Strong Attack
+--- !u!65 &330606640
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330606637}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.364374, y: 2.3284163, z: 4.310652}
+  m_Center: {x: 0.05997944, y: -1.4630835, z: -1.8961725}
 --- !u!1 &399587069
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,6 +793,11 @@ PrefabInstance:
       propertyPath: input
       value: 
       objectReference: {fileID: 17874596}
+    - target: {fileID: 306094400943283155, guid: e749edb956cb680429bf63991e3bda43,
+        type: 3}
+      propertyPath: delay
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 383972715770982531, guid: e749edb956cb680429bf63991e3bda43,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -687,6 +816,11 @@ PrefabInstance:
     - target: {fileID: 383972717494358941, guid: e749edb956cb680429bf63991e3bda43,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1139469601864301458, guid: e749edb956cb680429bf63991e3bda43,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1774573749155763818, guid: e749edb956cb680429bf63991e3bda43,
@@ -703,6 +837,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067527168412850232, guid: e749edb956cb680429bf63991e3bda43,
+        type: 3}
+      propertyPath: delay
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5707252306971773305, guid: e749edb956cb680429bf63991e3bda43,
         type: 3}
@@ -980,7 +1119,7 @@ PrefabInstance:
         type: 3}
       propertyPath: powerPrompt
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1139513781}
     - target: {fileID: 5397536735001967586, guid: 8e7d410007ab955488e1c836a456382a,
         type: 3}
       propertyPath: _healthSlider
@@ -1241,6 +1380,7 @@ GameObject:
   m_Component:
   - component: {fileID: 835325573}
   - component: {fileID: 835325575}
+  - component: {fileID: 835325574}
   m_Layer: 0
   m_Name: LockOnTutorial
   m_TagString: LockOnTutorial
@@ -1262,6 +1402,21 @@ Transform:
   m_Father: {fileID: 266653733}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &835325574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835325572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c3e08219d68e6046b3eb1bb29cb7110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialUI: {fileID: 427807797}
+  tutorialText: {fileID: 427807796}
+  myText: Right Click or Press the Right Stick to lock on to enemies
 --- !u!65 &835325575
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1616,6 +1771,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1139513781 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5707252306971773305, guid: e749edb956cb680429bf63991e3bda43,
+    type: 3}
+  m_PrefabInstance: {fileID: 427807795}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1226918238
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2952,7 +3113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02f77a3aaf9234e40a6134b81187d052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _target: {fileID: 17874601}
+  target: {fileID: 0}
 --- !u!114 &2977550622771118897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4394,6 +4555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   homeReachedDistance: 1
+  _enabled: 0
 --- !u!114 &7172934806259402550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4406,6 +4568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf3bbb397904f534e97d5862ff64e334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _killOnLoad: 0
 --- !u!114 &7172934806259402552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4418,6 +4581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99a4d45b359b1fa4aba984ae0f0a0aab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enabled: 0
 --- !u!114 &7172934806259402555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4430,6 +4594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c94cf9f1451994a4a815672d89d7e8b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enabled: 0
 --- !u!1 &7573159603310190903
 GameObject:
   m_ObjectHideFlags: 0

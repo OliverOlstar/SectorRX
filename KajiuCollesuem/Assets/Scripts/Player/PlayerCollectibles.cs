@@ -40,20 +40,14 @@ public class PlayerCollectibles : MonoBehaviour
             }
         }
 
-        //if (collision.gameObject.tag == "Cell")
-        //{
-        //    playerHUD.cellUIOn = true;
-        //    Destroy(collision.gameObject);
-        //    playerHUD.cellUI.SetActive(true);
-        //    playerHUD.cellCounter = playerHUD.cellCounter + 1;
-        //    playerHUD.SetCellCount();
-
         //Show tutorial after obtaining first Cells
-        //if (firstCell == false)
-        //{
-        //    cellPrompt.SetActive(true);
-        //    firstCore = true;
-        //}
-        //}
+        if (playerHUD.cellCounter == 150)
+        {
+            if (firstCell == false)
+            {
+                cellPrompt.SetActive(true);
+                firstCell = true;
+            }
+        }
     }
 }

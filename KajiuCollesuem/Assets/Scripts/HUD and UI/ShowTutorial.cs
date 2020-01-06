@@ -9,6 +9,8 @@ public class ShowTutorial : MonoBehaviour
     public Text tutorialText;
     PauseMenu pauseMenu;
 
+    [SerializeField] [TextArea] private string myText;
+
     private void Start()
     {
         tutorialUI.SetActive(false);
@@ -26,21 +28,16 @@ public class ShowTutorial : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "DashTutorial")
+        if(other.tag == "Player")
         {
             tutorialUI.SetActive(true);
-            tutorialText.text = "Press Space or 'B' to Dash";
-        }
-        if(other.tag == "LockOnTutorial")
-        {
-            tutorialUI.SetActive(true);
-            tutorialText.text = "Right Click or Press the Right Stick to lock on to enemies";
+            tutorialText.text = myText;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "DashTutorial")
+        if (other.tag == "Player")
         {
             tutorialUI.SetActive(false);
         }
