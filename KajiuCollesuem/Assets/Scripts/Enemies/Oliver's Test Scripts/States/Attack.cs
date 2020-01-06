@@ -32,7 +32,7 @@ public class Attack : MonoBehaviour, IState
         _enabled = true;
         //_agent.isStopped = true;
         transform.LookAt(_target.position);
-        _hitbox = GetComponentInChildren<AttackHitbox>();
+        _hitbox = GetComponentInChildren<AttackHitbox>().gameObject;
         _anim.SetBool("Attacking", true);
     }
 
