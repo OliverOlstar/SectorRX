@@ -61,6 +61,7 @@ public class JumpBack : MonoBehaviour, IState
         if (_enabled)
         {
             transform.Translate(Vector3.back * 2);
+            transform.Translate(Vector3.up);
         }
     }
 }
