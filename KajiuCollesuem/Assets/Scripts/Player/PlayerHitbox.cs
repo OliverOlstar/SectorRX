@@ -16,9 +16,9 @@ public class PlayerHitbox : MonoBehaviour
     [Space]
     [SerializeField] private int powerRecivedOnHit = 20;
 
-    [Header("Time Slow")]
-    [SerializeField] private float timeSlowSeconds = 1f;
-    [SerializeField] private float timeSlowAmount = 1f;
+    //[Header("Time Slow")]
+    //[SerializeField] private float timeSlowSeconds = 1f;
+    //[SerializeField] private float timeSlowAmount = 1f;
 
     private PlayerAttributes playerAttributes;
     private PlayerLockOnScript lockOnScript;
@@ -58,12 +58,12 @@ public class PlayerHitbox : MonoBehaviour
         }
     }
 
-    private IEnumerator SlowTime()
-    {
-        Time.timeScale = timeSlowAmount;
-        yield return new WaitForSeconds(timeSlowSeconds * timeSlowAmount);
-        Time.timeScale = 1;
-    }
+    //private IEnumerator SlowTime()
+    //{
+    //    Time.timeScale = timeSlowAmount;
+    //    yield return new WaitForSeconds(timeSlowSeconds * timeSlowAmount);
+    //    Time.timeScale = 1;
+    //}
 
     public void SetDamage(int pIndex)
     {
