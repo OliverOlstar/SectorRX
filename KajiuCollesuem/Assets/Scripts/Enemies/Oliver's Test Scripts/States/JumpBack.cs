@@ -16,7 +16,7 @@ public class JumpBack : MonoBehaviour, IState
     [SerializeField] private float _jumpBackRange = 1;
     Rigidbody rb;
 
-    public bool _enabled = false;
+    [SerializeField] private bool _enabled = false;
 
     public void Start()
     {
@@ -37,7 +37,7 @@ public class JumpBack : MonoBehaviour, IState
         //_agent.isStopped = true;
         originalPosition = transform.position.y;
         transform.LookAt(_target.position);
-        _agent.Stop();
+        _agent.isStopped = true;
     }
 
     public void Exit()

@@ -16,9 +16,11 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
     private bool isDead;
 
     private Decision _decision;
-    HUDManager _playerHUD;
+    private HUDManager _playerHUD;
     private IState _deadState;
     private IState _stunnedState;
+
+    private Summon _mySummoner;
 
     public bool IsDead() { return isDead; }
 
@@ -80,6 +82,15 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         _playerHUD.cellUI.SetActive(true);
         _playerHUD.cellCounter = _playerHUD.cellCounter + 150;
         _playerHUD.SetCellCount();
+
+        // If I was summoned
+        if (_mySummoner != null)
+            _mySummoner.GruntDied();
+    }
+
+    public void SetSummonedGrunt(Summon pSummon)
+    {
+        _mySummoner = pSummon;
     }
 
     public void Respawn()
@@ -89,5 +100,9 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
 
         if (enemyHealthBar)
             enemyHealthBar.SetActive(false);
+
+        // If I was summoned
+        if (_mySummoner != null)
+            _mySummoner.GruntDied();
     }
 }

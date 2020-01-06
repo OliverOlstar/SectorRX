@@ -32,7 +32,7 @@ public class HUDManager : MonoBehaviour
 
     private void Update()
     {
-        if(cellUIOn)
+        if (cellUIOn)
         {
             StartCoroutine("CellUIOff");
         }
@@ -41,7 +41,7 @@ public class HUDManager : MonoBehaviour
             cellUI.SetActive(false);
         }
 
-        if(coreUIOn)
+        if (coreUIOn)
         {
             StartCoroutine("CoreUIOff");
         }
@@ -73,7 +73,7 @@ public class HUDManager : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         coreUI.SetActive(false);
         coreUIOn = false;
-    }
+    }   
 
     //Navigate between upgrade Menus
     public void goPowUpgrade()

@@ -164,6 +164,10 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
     public bool TakeDamage(int pAmount, bool pReact)
     {
+        // Return if already dead
+        if (_health <= 0)
+            return true;
+
         Debug.Log("Damaging Player " + pAmount);
 
         if (_shield >= pAmount)
@@ -258,8 +262,8 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     {
         while (_power > 0)
         {
-            modifyPower(-_powerLossAmount);
             //Debug.Log("Power lost: " + _power);
+            modifyPower(-_powerLossAmount);
             yield return new WaitForSeconds(_powerLossDelaySeconds);
         }
     }

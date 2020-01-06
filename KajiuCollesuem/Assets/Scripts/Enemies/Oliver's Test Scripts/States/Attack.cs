@@ -14,15 +14,16 @@ public class Attack : MonoBehaviour, IState
 
     [SerializeField] private float _attackRange = 1;
 
-    [SerializeField] private AttackHitbox _hitbox;
+    [SerializeField] private GameObject _hitbox;
 
-    private bool _enabled = false;
+    [SerializeField] private bool _enabled = false;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
     {
         _anim = pAnim;
         _agent = pAgent;
         _target = pTarget;
+        _hitbox.SetActive(false);
     }
 
     public void Enter()
@@ -68,17 +69,18 @@ public class Attack : MonoBehaviour, IState
     //Animation Events //////////////
     public void AEEnableHitbox()
     {
-        _hitbox.enabled = true;
+        _hitbox.SetActive(true);
     }
 
     public void AEDisableHitbox()
     {
-        _hitbox.enabled = false;
+        _hitbox.SetActive(false);
     }
 
     public void AEDoneAttack()
     {
         GetComponent<Decision>().ForceStateSwitch((IState)GetComponent<JumpBack>());
         _enabled = false;
+        _nextEnterTime = Time.time + _cooldown;
     }
 }
