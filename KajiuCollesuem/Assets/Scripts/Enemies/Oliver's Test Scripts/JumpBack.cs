@@ -10,11 +10,18 @@ public class JumpBack : MonoBehaviour, IState
     private Transform _target;
 
     [SerializeField] private float _cooldown = 1.0f;
-    private float _nextEnterTime = 0.0f;
+    private float _nextEnterTime = 0.0f, originalPosition, jumpTime = 0;
+    public float jumpSpeed = 0;
 
     [SerializeField] private float _jumpBackRange = 1;
+    Rigidbody rb;
 
     public bool _enabled = false;
+
+    public void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
     {
@@ -28,6 +35,7 @@ public class JumpBack : MonoBehaviour, IState
         //Debug.Log("Jump back: Enter");
         _enabled = true;
         //_agent.isStopped = true;
+        originalPosition = transform.position.y;
         transform.LookAt(_target.position);
         _agent.Stop();
     }
@@ -60,8 +68,11 @@ public class JumpBack : MonoBehaviour, IState
     {
         if (_enabled)
         {
-            transform.Translate(Vector3.back * 2);
-            transform.Translate(Vector3.up);
+            //transform.Translate(Vector3.back * 2);
+            //transform.Translate(Vector3.up);
+            jumpTime += Time.deltaTime;
+            float newYposition = (originalPosition * jumpSpeed * jumpTime) + (0.5f * -9.8f * jumpSpeed * jumpTime * jumpTime);
+            rb.MovePosition(new Vector3(0, newYposition, 0));
         }
     }
 }
