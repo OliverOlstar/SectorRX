@@ -9,13 +9,16 @@ public class PlayerCollectibles : MonoBehaviour
 
     //public GameObject cell;
     public GameObject core;
-    public GameObject tutorialPrompt;
+    public GameObject powerPrompt;
+    public GameObject cellPrompt;
     public bool firstCore;
+    public bool firstCell;
 
     private void Start()
     {
         playerHUD = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>();
         firstCore = false;
+        firstCell = false;
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -29,10 +32,10 @@ public class PlayerCollectibles : MonoBehaviour
             playerHUD.coreCounter = playerHUD.coreCounter + 1;
             playerHUD.SetCoreCount();
             
-            //Show tutorial for upgrading after 
+            //Show tutorial after collecting first Core
             if(firstCore == false)
             {
-                tutorialPrompt.SetActive(true);
+                powerPrompt.SetActive(true);
                 firstCore = true;
             }
         }
@@ -44,6 +47,13 @@ public class PlayerCollectibles : MonoBehaviour
         //    playerHUD.cellUI.SetActive(true);
         //    playerHUD.cellCounter = playerHUD.cellCounter + 1;
         //    playerHUD.SetCellCount();
+
+        //Show tutorial after obtaining first Cells
+        //if (firstCell == false)
+        //{
+        //    cellPrompt.SetActive(true);
+        //    firstCore = true;
+        //}
         //}
     }
 }

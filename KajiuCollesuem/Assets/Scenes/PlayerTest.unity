@@ -649,6 +649,14 @@ PrefabInstance:
       propertyPath: input
       value: 
       objectReference: {fileID: 17874596}
+    - target: {fileID: 263040158, guid: e749edb956cb680429bf63991e3bda43, type: 3}
+      propertyPath: cellCounter
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263040158, guid: e749edb956cb680429bf63991e3bda43, type: 3}
+      propertyPath: coreCounter
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 761940988, guid: e749edb956cb680429bf63991e3bda43, type: 3}
       propertyPath: mainCam
       value: 
@@ -809,6 +817,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e749edb956cb680429bf63991e3bda43, type: 3}
+--- !u!1 &493767250 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5707252306971773305, guid: e749edb956cb680429bf63991e3bda43,
+    type: 3}
+  m_PrefabInstance: {fileID: 427807795}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &535751903 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1237920365928341922, guid: 5deb8eb00fd21854bbaba0af6c141e0a,
@@ -936,6 +950,21 @@ PrefabInstance:
       propertyPath: core
       value: 
       objectReference: {fileID: 1296172329}
+    - target: {fileID: 4086892133307703399, guid: 8e7d410007ab955488e1c836a456382a,
+        type: 3}
+      propertyPath: tutorialPrompt
+      value: 
+      objectReference: {fileID: 493767250}
+    - target: {fileID: 4086892133307703399, guid: 8e7d410007ab955488e1c836a456382a,
+        type: 3}
+      propertyPath: cellPrompt
+      value: 
+      objectReference: {fileID: 1320268655}
+    - target: {fileID: 4086892133307703399, guid: 8e7d410007ab955488e1c836a456382a,
+        type: 3}
+      propertyPath: powerPrompt
+      value: 
+      objectReference: {fileID: 493767250}
     - target: {fileID: 5397536735001967586, guid: 8e7d410007ab955488e1c836a456382a,
         type: 3}
       propertyPath: _healthSlider
@@ -1671,6 +1700,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1339724864}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1320268655 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5789055488787821219, guid: e749edb956cb680429bf63991e3bda43,
+    type: 3}
+  m_PrefabInstance: {fileID: 427807795}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1339724864
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2359,6 +2394,16 @@ PrefabInstance:
       propertyPath: _target
       value: 
       objectReference: {fileID: 17874601}
+    - target: {fileID: 6055264871157978371, guid: 50d8984fea0fcda439b0c9192f5bf725,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6055264871157978371, guid: 50d8984fea0fcda439b0c9192f5bf725,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8872662308017337307, guid: 50d8984fea0fcda439b0c9192f5bf725,
         type: 3}
       propertyPath: m_Name
