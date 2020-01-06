@@ -31,6 +31,7 @@ public class Attack : MonoBehaviour, IState
         _enabled = true;
         //_agent.isStopped = true;
         transform.LookAt(_target.position);
+        _hitbox = GetComponentInChildren<AttackHitbox>();
         _anim.SetBool("Attacking", true);
     }
 
@@ -77,6 +78,7 @@ public class Attack : MonoBehaviour, IState
 
     public void AEDoneAttack()
     {
+        GetComponent<Decision>().ForceStateSwitch((IState)GetComponent<JumpBack>());
         _enabled = false;
     }
 }

@@ -54,6 +54,7 @@ public class Decision : MonoBehaviour
     private void Update()
     {
         _currentState.Tick();
+        Debug.Log(_currentState);
     }
 
     private void CheckStates()

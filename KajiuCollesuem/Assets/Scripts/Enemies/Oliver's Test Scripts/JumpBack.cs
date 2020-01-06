@@ -12,7 +12,7 @@ public class JumpBack : MonoBehaviour, IState
     [SerializeField] private float _cooldown = 1.0f;
     private float _nextEnterTime = 0.0f;
 
-    [SerializeField] private float _fireballRange = 1;
+    [SerializeField] private float _jumpBackRange = 1;
 
     public bool _enabled = false;
 
@@ -25,7 +25,7 @@ public class JumpBack : MonoBehaviour, IState
 
     public void Enter()
     {
-        //Debug.Log("Fireball: Enter");
+        //Debug.Log("Jump back: Enter");
         _enabled = true;
         //_agent.isStopped = true;
         transform.LookAt(_target.position);
@@ -34,7 +34,7 @@ public class JumpBack : MonoBehaviour, IState
 
     public void Exit()
     {
-        //Debug.Log("Fireball: Exit");
+        //Debug.Log("Jump back: Exit");
         _enabled = false;
     }
 
@@ -44,7 +44,7 @@ public class JumpBack : MonoBehaviour, IState
         if (_target == null || _target.gameObject.activeSelf == false) return false;
 
         //Can shoot if cooldown is up and player is in range
-        if (Time.time >= _nextEnterTime && pDistance < _fireballRange)
+        if (Time.time >= _nextEnterTime && pDistance < _jumpBackRange)
             return true;
 
         return false;
@@ -52,15 +52,15 @@ public class JumpBack : MonoBehaviour, IState
 
     public bool CanExit(float pDistance)
     {
-        //Debug.Log("Fireball: CanExit - " + (_enabled == false));
-        return (_enabled == false);
+        //Debug.Log("Jump back: CanExit - " + (_enabled == false));
+        return pDistance > _jumpBackRange;
     }
 
     public void Tick()
     {
         if (_enabled)
         {
-            transform.Translate(Vector3.back);
+            transform.Translate(Vector3.back * 2);
         }
     }
 }
