@@ -144,4 +144,12 @@ public class ChaseState : MonoBehaviour
         transform.up = Vector3.Slerp(transform.up, toUpPos, 5 * Time.deltaTime);
 
     }
+
+    public Vector3 GetQuadraticCurvePoint(float t, Vector3 p0, Vector3 p1, Vector3 p2)
+    {
+        float u = 1 - t;
+        float tt = t * t;
+        float uu = u * u;
+        return (uu * p0) + (2 * u * t * p1) + (tt * p2);
+    }
 }

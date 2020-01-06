@@ -117,4 +117,12 @@ public class TestChase : MonoBehaviour
         forwardDirection = sharkModel.transform.forward;
         transform.position += forwardDirection * Time.deltaTime * speed;
     }
+
+    public Vector3 GetQuadraticCurvePoint(float t, Vector3 p0, Vector3 p1, Vector3 p2)
+    {
+        float u = 1 - t;
+        float tt = t * t;
+        float uu = u * u;
+        return (uu * p0) + (2 * u * t * p1) + (tt * p2);
+    }
 }
