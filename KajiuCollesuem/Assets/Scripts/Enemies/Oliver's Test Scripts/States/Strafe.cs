@@ -86,7 +86,7 @@ public class Strafe : MonoBehaviour, IState
     public Vector3 GetStrafeDirection()
     {
         strafeDecision = Random.Range(0, 2);
-        return strafeDecision == 0 ? Vector3.left * .005f : Vector3.right * .005f;
+        return strafeDecision == 0 ? Vector3.left * .035f : Vector3.right * .035f;
     }
 
     /*IEnumerator StrafeMovement()

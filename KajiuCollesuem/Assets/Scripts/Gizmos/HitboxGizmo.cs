@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColliderGizmo : MonoBehaviour
+public class HitboxGizmo : MonoBehaviour
 {
     [SerializeField] private Color color;
 
     private void OnDrawGizmos()
     {
         Gizmos.color = color;
-        Gizmos.DrawWireCube(transform.position + GetComponent<BoxCollider>().center, GetComponent<BoxCollider>().size);
+        Gizmos.DrawWireSphere(transform.position, 0.1f);
     }
 }

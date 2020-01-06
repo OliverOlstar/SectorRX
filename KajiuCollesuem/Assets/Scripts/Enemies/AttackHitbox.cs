@@ -4,24 +4,16 @@ using UnityEngine;
 
 public class AttackHitbox : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] private int damage = 40;
 
     private void OnTriggerEnter(Collider other)
     {
+        IAttributes otherAttributes = other.gameObject.GetComponent<PlayerAttributes>();
+
         //If collided with the player model, player takes damage
-        if (other.gameObject.GetComponent<PlayerAttributes>() != null)
+        if (otherAttributes != null)
         {
-            other.gameObject.GetComponent<PlayerAttributes>().TakeDamage(40, true);
+            otherAttributes.TakeDamage(damage, true);
         }
     }
 }
