@@ -150,6 +150,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d84d9a668651854da50ad10f54cef49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &17874588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17874585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c3e08219d68e6046b3eb1bb29cb7110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialUI: {fileID: 427807797}
+  tutorialText: {fileID: 427807796}
 --- !u!114 &17874594 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5397536735001967586, guid: 8e7d410007ab955488e1c836a456382a,
@@ -481,10 +495,9 @@ GameObject:
   m_Component:
   - component: {fileID: 317737111}
   - component: {fileID: 317737112}
-  - component: {fileID: 317737113}
   m_Layer: 0
   m_Name: DashTutorial
-  m_TagString: Untagged
+  m_TagString: DashTutorial
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -516,19 +529,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 6.450062, y: 1.2191739, z: 3.4738483}
   m_Center: {x: 0.60282314, y: -0.9084623, z: -1.2369242}
---- !u!114 &317737113
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 317737110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c3e08219d68e6046b3eb1bb29cb7110, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tutorialUI: {fileID: 1845407982}
 --- !u!1 &399587069
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,7 +655,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 263040158, guid: e749edb956cb680429bf63991e3bda43, type: 3}
       propertyPath: coreCounter
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263040158, guid: e749edb956cb680429bf63991e3bda43, type: 3}
+      propertyPath: powerSelect
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 761940988, guid: e749edb956cb680429bf63991e3bda43, type: 3}
       propertyPath: mainCam
@@ -817,9 +821,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e749edb956cb680429bf63991e3bda43, type: 3}
---- !u!1 &493767250 stripped
+--- !u!114 &427807796 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3449156642007552517, guid: e749edb956cb680429bf63991e3bda43,
+    type: 3}
+  m_PrefabInstance: {fileID: 427807795}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &427807797 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 5707252306971773305, guid: e749edb956cb680429bf63991e3bda43,
+  m_CorrespondingSourceObject: {fileID: 1139469601864301458, guid: e749edb956cb680429bf63991e3bda43,
     type: 3}
   m_PrefabInstance: {fileID: 427807795}
   m_PrefabAsset: {fileID: 0}
@@ -954,7 +970,7 @@ PrefabInstance:
         type: 3}
       propertyPath: tutorialPrompt
       value: 
-      objectReference: {fileID: 493767250}
+      objectReference: {fileID: 0}
     - target: {fileID: 4086892133307703399, guid: 8e7d410007ab955488e1c836a456382a,
         type: 3}
       propertyPath: cellPrompt
@@ -964,7 +980,7 @@ PrefabInstance:
         type: 3}
       propertyPath: powerPrompt
       value: 
-      objectReference: {fileID: 493767250}
+      objectReference: {fileID: 0}
     - target: {fileID: 5397536735001967586, guid: 8e7d410007ab955488e1c836a456382a,
         type: 3}
       propertyPath: _healthSlider
@@ -1225,10 +1241,9 @@ GameObject:
   m_Component:
   - component: {fileID: 835325573}
   - component: {fileID: 835325575}
-  - component: {fileID: 835325574}
   m_Layer: 0
   m_Name: LockOnTutorial
-  m_TagString: Untagged
+  m_TagString: LockOnTutorial
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1247,19 +1262,6 @@ Transform:
   m_Father: {fileID: 266653733}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &835325574
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 835325572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c3e08219d68e6046b3eb1bb29cb7110, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tutorialUI: {fileID: 1453084988}
 --- !u!65 &835325575
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1775,12 +1777,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24ec6bec39e3a084a93132a9b996760e, type: 3}
---- !u!1 &1453084988 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5698139036369584679, guid: e749edb956cb680429bf63991e3bda43,
-    type: 3}
-  m_PrefabInstance: {fileID: 427807795}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1456368076
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2273,12 +2269,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c93a1204adcedc42bc480501dad9dce, type: 3}
---- !u!1 &1845407982 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1189504552692787901, guid: e749edb956cb680429bf63991e3bda43,
-    type: 3}
-  m_PrefabInstance: {fileID: 427807795}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1960704972
 GameObject:
   m_ObjectHideFlags: 0
