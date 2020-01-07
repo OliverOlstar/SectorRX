@@ -10,24 +10,20 @@ public class JumpBack : MonoBehaviour, IState
     private Transform _target;
 
     [SerializeField] private float _cooldown = 1.0f;
-    private float _nextEnterTime = 0.0f, originalPosition, jumpTime = 0;
-    public float jumpSpeed = 0;
+    private float _nextEnterTime = 0.0f, _originalPosition, _jumpTime = 0;
+    public float jumpSpeed = 0, speed = 0, halfPlayerHeight;
 
     [SerializeField] private float _jumpBackRange = 1;
     Rigidbody rb;
 
-    [SerializeField] private bool _enabled = false;
-
-    public void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
+    [SerializeField] private bool _enabled = false, _isTouchingGround = false;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
     {
         _anim = pAnim;
         _agent = pAgent;
         _target = pTarget;
+        rb = GetComponent<Rigidbody>();
     }
 
     public void Enter()
@@ -35,7 +31,7 @@ public class JumpBack : MonoBehaviour, IState
         //Debug.Log("Jump back: Enter");
         _enabled = true;
         //_agent.isStopped = true;
-        originalPosition = transform.position.y;
+        _originalPosition = transform.position.y;
         transform.LookAt(_target.position);
         _agent.isStopped = true;
     }
@@ -70,9 +66,43 @@ public class JumpBack : MonoBehaviour, IState
         {
             //transform.Translate(Vector3.back * 2);
             //transform.Translate(Vector3.up);
-            jumpTime += Time.deltaTime;
-            float newYposition = (originalPosition * jumpSpeed * jumpTime) + (0.5f * -9.8f * jumpSpeed * jumpTime * jumpTime);
-            rb.MovePosition(new Vector3(0, newYposition, 0));
+
+            //Calculate end jump position
+            Vector3 move = Vector3.right * speed;
+            move += Vector3.forward * speed;
+            move.y = 0;
+            Vector3 targetPosition = transform.position + move;
+            //_isTouchingGround = _isOnGround();
+
+            float newYposition = targetPosition.y;
+            _jumpTime += Time.deltaTime;
+            newYposition = _originalPosition + (jumpSpeed * _jumpTime) + (0.5f * -9.8f * jumpSpeed * _jumpTime * _jumpTime);
+            targetPosition.y = newYposition;
+            rb.MovePosition(targetPosition);
+            Debug.Log("Jump back");
         }
+    }
+
+    private bool _isOnGround()
+    {
+        float lengthToSearch = 0.8f;
+        float colliderThreshold = 0.001f;
+
+        Vector3 lineStart = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        Vector3 vectorToSearch = new Vector3(this.transform.position.x, lineStart.y - lengthToSearch, this.transform.position.z);
+
+        Color color = new Color(0.0f, 0.0f, 1.0f);
+        Debug.DrawLine(lineStart, vectorToSearch, color);
+
+        RaycastHit hitInfo;
+        if (Physics.Linecast(this.transform.position, vectorToSearch, out hitInfo))
+        {
+            if (hitInfo.distance < halfPlayerHeight)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
