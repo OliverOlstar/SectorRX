@@ -41,7 +41,7 @@ public class PlayerCollectibles : MonoBehaviour
         }
 
         //Show tutorial after obtaining first Cells
-        if (playerHUD.cellCounter == 150)
+        if (playerHUD.cellCounter >= 150)
         {
             if (firstCell == false)
             {
