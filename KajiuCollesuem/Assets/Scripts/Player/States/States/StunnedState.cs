@@ -7,8 +7,8 @@ public class StunnedState : BaseState
 {
     PlayerStateController stateController;
 
-     private float stunnedLength = 0.8f;
-     private float timer = 0;
+    private float _leaveStateTime;
+    private float _cooldown = 0.5f;
 
     public StunnedState(PlayerStateController controller) : base(controller.gameObject)
     {
@@ -17,9 +17,10 @@ public class StunnedState : BaseState
 
     public override void Enter()
     {
-        timer = 0;
-        stateController._animHandler.Stunned(true);
+        // Debug.Log("StunnedState: Enter");
+        _leaveStateTime = Time.time + _cooldown;
         stateController.Stunned = false;
+        stateController._hitboxComponent.gameObject.SetActive(false);
     }
 
     public override void Exit()
@@ -29,9 +30,11 @@ public class StunnedState : BaseState
 
     public override Type Tick()
     {
-        timer += Time.deltaTime;
+        // Probably not optimal but frequently the hitbox doesn't stay active
+        if (stateController._hitboxComponent.gameObject.activeSelf)
+            stateController._hitboxComponent.gameObject.SetActive(false);
 
-        if (timer >= stunnedLength)
+        if (Time.time >= _leaveStateTime)
         {
             return typeof(MovementState);
         }

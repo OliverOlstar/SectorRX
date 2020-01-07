@@ -15,10 +15,15 @@ public class Fireball : MonoBehaviour, IState
     [SerializeField] private Rigidbody _fireballPrefab;
     [SerializeField] private Transform _fireballSpawnpoint;
 
+    [Space]
     [SerializeField] private float _fireballRangeMax = 10;
     [SerializeField] private float _fireballRangeMin = 3;
 
-    private bool _enabled = false;
+    [SerializeField] private float _fireballSpeed = 1000;
+
+    [Space]
+    [SerializeField] [Range(0,1)] private float _oddsOfSkipOver = 0;
+    [SerializeField] private bool _enabled = false;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
     {
@@ -50,7 +55,7 @@ public class Fireball : MonoBehaviour, IState
 
         //Can shoot if cooldown is up and player is in range
         if (Time.time >= _nextEnterTime && pDistance < _fireballRangeMax && pDistance > _fireballRangeMin) 
-            return true;
+            return CheckForSkipOver();
 
         return false;
     }
@@ -66,14 +71,34 @@ public class Fireball : MonoBehaviour, IState
         
     }
 
+    // Additional Functions /////////
+    private bool CheckForSkipOver()
+    {
+        // Randomization that prevents Enemy acting the same way everytime
+        if (Random.value > _oddsOfSkipOver)
+        {
+            // Return don't skip over
+            return true;
+        }
+        else
+        {
+            // Return skip over + put on cooldown
+            _nextEnterTime = Time.time + (_cooldown / 2);
+            return false;
+        }
+    }
+
     //Animation Events //////////////
     public void AEShootFireball()
     {
         //Debug.Log("Fireball: AEShootFireball");
-        Rigidbody FireballInstance;
+        Rigidbody fireballInstance;
+        Vector3 direction;
 
-        FireballInstance = Instantiate(_fireballPrefab, _fireballSpawnpoint.position, _fireballSpawnpoint.rotation) as Rigidbody;
-        FireballInstance.AddForce(_fireballSpawnpoint.forward * 1000);
+        direction = (_target.position - _fireballSpawnpoint.position).normalized;
+        fireballInstance = Instantiate(_fireballPrefab) as Rigidbody;
+        fireballInstance.transform.position = _fireballSpawnpoint.position;
+        fireballInstance.AddForce(direction * _fireballSpeed);
     }
 
     public void AEDoneShooting()

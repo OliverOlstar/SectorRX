@@ -14,7 +14,7 @@ public class Guard : MonoBehaviour, IState
     private int _subState = 0;
     private float _stateChangeTime = 0;
 
-    private bool _enabled = false;
+    [SerializeField] private bool _enabled = false;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
     {
@@ -65,7 +65,8 @@ public class Guard : MonoBehaviour, IState
                 {
                     //Debug.Log("Guard: Switch to moving");
                     _subState = 1;
-                    _agent.isStopped = false;
+                    if (_agent != null)
+                        _agent.isStopped = false;
                     _agent.SetDestination(_home);
                 }
                 break;
@@ -77,7 +78,8 @@ public class Guard : MonoBehaviour, IState
                 {
                     //Debug.Log("Guard: Switch to idle");
                     _subState = 2;
-                    _agent.isStopped = true;
+                    if (_agent != null)
+                        _agent.isStopped = true;
                     _anim.SetFloat("Speed", 0);
                 }
                 break;

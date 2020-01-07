@@ -6,7 +6,7 @@ public class AnimHandler : MonoBehaviour
 {
     //Animation Handling for the player model - Oliver
 
-    private PlayerStateController _stateController;
+    [HideInInspector] public PlayerStateController _stateController;
     private Animator _anim;
 
     [HideInInspector] public int attackState = 0;
@@ -93,7 +93,7 @@ public class AnimHandler : MonoBehaviour
 
     public void Dead()
     {
-        _anim.SetBool("Dead", true);
+        _anim.SetBool("IsDead", true);
         _anim.SetTrigger("Died");
     }
 
@@ -117,12 +117,12 @@ public class AnimHandler : MonoBehaviour
             return;
 
         LeaveAttackState();
-        _anim.SetInteger("Combo", 0);
     }
 
     public void LeaveAttackState()
     {
         attackState = 2;
+        _anim.SetInteger("Combo", 0);
     }
 
     public int GetCurrentCombo()
@@ -137,10 +137,12 @@ public class AnimHandler : MonoBehaviour
     {
         _anim.SetBool("ReactLeft", pLeft);
         _anim.SetTrigger("React");
+        _stateController.Stunned = true;
     }
     
     public void Respawn()
     {
+        _stateController.Stunned = false;
         _anim.SetTrigger("Respawn");
         _anim.SetBool("IsDead", false);
     }
