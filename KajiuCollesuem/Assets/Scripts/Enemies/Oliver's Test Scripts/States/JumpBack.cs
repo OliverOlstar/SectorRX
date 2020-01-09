@@ -9,7 +9,7 @@ public class JumpBack : MonoBehaviour, IState
     private NavMeshAgent _agent;
     private Transform _target;
 
-    [SerializeField] private float _cooldown = 1.0f;
+    [SerializeField] private float _cooldown = 1.0f, y, z;
     private float _nextEnterTime = 0.0f, _originalPosition, _jumpTime = 0;
     public float jumpSpeed = 0, speed = 0, halfPlayerHeight;
 
@@ -33,6 +33,8 @@ public class JumpBack : MonoBehaviour, IState
         //_agent.isStopped = true;
         _originalPosition = transform.position.y;
         transform.LookAt(_target.position);
+        y = transform.position.y;
+        z = transform.position.z;
         _agent.isStopped = true;
     }
 
@@ -57,29 +59,44 @@ public class JumpBack : MonoBehaviour, IState
     public bool CanExit(float pDistance)
     {
         //Debug.Log("Jump back: CanExit - " + (_enabled == false));
-        return pDistance > _jumpBackRange;
+        return pDistance > _jumpBackRange && _isTouchingGround;
     }
 
     public void Tick()
     {
+        
+    }
+
+    public void FixedUpdate()
+    {
         if (_enabled)
         {
-            //transform.Translate(Vector3.back * 2);
-            //transform.Translate(Vector3.up);
+            //Alternate jump solution
+            /*y += Time.deltaTime;
+            z += Time.deltaTime;
+            float time = Time.deltaTime * 25;
+
+            if (transform.position.y > 1)
+                transform.Translate(new Vector3(0, -1 * y * time, z * time));
+            else
+                transform.Translate(new Vector3(0, y * time, z * time));*/
 
             //Calculate end jump position
-            Vector3 move = Vector3.right * speed;
-            move += Vector3.forward * speed;
+            Vector3 move = Vector3.right;
+            move += Vector3.forward;
             move.y = 0;
-            Vector3 targetPosition = transform.position + move;
+            Vector3 targetPosition = rb.position + move;
             //_isTouchingGround = _isOnGround();
 
             float newYposition = targetPosition.y;
-            _jumpTime += Time.deltaTime;
-            newYposition = _originalPosition + (jumpSpeed * _jumpTime) + (0.5f * -9.8f * jumpSpeed * _jumpTime * _jumpTime);
+            _jumpTime += Time.fixedDeltaTime;
+            newYposition = _originalPosition + (jumpSpeed * _jumpTime) + (0.5f * -9.8f * _jumpTime * _jumpTime);
             targetPosition.y = newYposition;
+            Debug.Log(targetPosition);
+            
             rb.MovePosition(targetPosition);
-            Debug.Log("Jump back");
+            //transform.Translate(targetPosition);
+            _isTouchingGround = _isOnGround();
         }
     }
 
@@ -99,6 +116,7 @@ public class JumpBack : MonoBehaviour, IState
         {
             if (hitInfo.distance < halfPlayerHeight)
             {
+                _jumpTime = 0;
                 return true;
             }
         }
