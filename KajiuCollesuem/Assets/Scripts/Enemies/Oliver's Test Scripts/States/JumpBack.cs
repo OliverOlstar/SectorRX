@@ -64,7 +64,7 @@ public class JumpBack : MonoBehaviour, IState
 
     public void Tick()
     {
-        
+       
     }
 
     public void FixedUpdate()
@@ -83,7 +83,7 @@ public class JumpBack : MonoBehaviour, IState
 
             //Calculate end jump position
             Vector3 move = Vector3.right;
-            move += Vector3.forward;
+            move += Vector3.back;
             move.y = 0;
             Vector3 targetPosition = rb.position + move;
             //_isTouchingGround = _isOnGround();
