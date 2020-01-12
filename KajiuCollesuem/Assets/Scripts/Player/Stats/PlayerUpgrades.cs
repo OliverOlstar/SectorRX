@@ -86,7 +86,7 @@ public class PlayerUpgrades : MonoBehaviour
         {
             //Magma
             case 'M':
-                //_attributes.setMaxHealth(Powers[pIndex].values[_statLevels[pIndex]]);
+                //_attributes.unlockPower(Powers[pIndex].values[_powerLevels[pIndex]]);
                 break;
 
             //Ice

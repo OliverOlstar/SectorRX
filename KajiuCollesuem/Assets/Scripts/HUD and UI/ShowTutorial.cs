@@ -6,10 +6,24 @@ using UnityEngine.UI;
 public class ShowTutorial : MonoBehaviour
 {
     public GameObject tutorialUI = null;
+    public Text tutorialText;
+    PauseMenu pauseMenu;
+
+    [SerializeField] [TextArea] private string myText;
 
     private void Start()
     {
         tutorialUI.SetActive(false);
+        pauseMenu = GameObject.FindGameObjectWithTag("HUD").GetComponent<PauseMenu>();
+    }
+
+    private void Update()
+    {
+        if(pauseMenu.pause)
+        {
+            tutorialUI.SetActive(false);
+            tutorialText.gameObject.SetActive(false);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -17,6 +31,7 @@ public class ShowTutorial : MonoBehaviour
         if(other.tag == "Player")
         {
             tutorialUI.SetActive(true);
+            tutorialText.text = myText;
         }
     }
 
