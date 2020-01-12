@@ -10,7 +10,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject powUpgrade;
     public GameObject statUpgrade;
     [SerializeField] private PlayerCamera mainCam;
-    [SerializeField] private PlayerInputHandler input;
+    //[SerializeField] private PlayerInputHandler input;
 
     // Use this for initialization
     void Start()
@@ -45,6 +45,6 @@ public class PauseMenu : MonoBehaviour
         pauseScreen.SetActive(pause);
         Cursor.lockState = pause ? CursorLockMode.None : CursorLockMode.Locked;
         mainCam.CameraDisabled = pause;
-        input.inputDisabled = pause;
+        //input.inputDisabled = pause;
     }
 }

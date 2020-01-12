@@ -51,28 +51,28 @@ public class PlayerLockOnScript : MonoBehaviour
         }
 
         //Toggle LockOn Camera
-        if (_stateController.lockOnInput == true)
-        {
-            _stateController.lockOnInput = false;
-            //Start LockOn
-            if (_cameraScript.lockOnTarget == null)
-            {
-                Transform target = pickTarget();
+        //if (_stateController.lockOnInput == true)
+        //{
+        //    _stateController.lockOnInput = false;
+        //    //Start LockOn
+        //    if (_cameraScript.lockOnTarget == null)
+        //    {
+        //        Transform target = pickTarget();
 
-                //If Target Found
-                if (target != null)
-                {
-                    _cameraScript.lockOnTarget = target;
-                    _cameraScript.ChangePlayerCamera(lockOnPreset, cameraTransSpeed);
-                }
-            }
-            else
-            {
-                //Leave LockOn
-                _cameraScript.lockOnTarget = null;
-                _cameraScript.ReturnToDefaultPlayerCamera(cameraTransSpeed);
-            }
-        }
+        //        //If Target Found
+        //        if (target != null)
+        //        {
+        //            _cameraScript.lockOnTarget = target;
+        //            _cameraScript.ChangePlayerCamera(lockOnPreset, cameraTransSpeed);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        //Leave LockOn
+        //        _cameraScript.lockOnTarget = null;
+        //        _cameraScript.ReturnToDefaultPlayerCamera(cameraTransSpeed);
+        //    }
+        //}
     }
 
     //Function To Find Intial Target

@@ -22,28 +22,30 @@ public class AnimHandler : MonoBehaviour
         _anim = GetComponentInChildren<Animator>();
 
         //Temp (animation's origins are slightly off (my b))
-        transform.GetChild(0).localPosition = new Vector3(0, -1.05f, 0);
+        transform.GetChild(0).localPosition = new Vector3(0, 0, 0);
     }
     
     void Update()
     {
+        Vector3 moveDirection = new Vector3(_stateController._movementComponent.moveInput.x, 0, _stateController._movementComponent.moveInput.y);
+
         //If Movement isn't disabled
         if (_stateController._movementComponent.disableMovement == false)
         {
             //If Movement Inputed
-            if (_stateController._movementComponent.moveDirection != Vector3.zero)
+            if (moveDirection != Vector3.zero)
             {
                 //Lerp Player Model Rotation
-                Vector3 dir = _stateController._movementComponent.moveDirection;
+                Vector3 dir = moveDirection;
 
-                if (transform.forward.normalized == -_stateController._movementComponent.moveDirection.normalized)
+                if (transform.forward.normalized == -moveDirection.normalized)
                     dir += new Vector3(Random.value / 15f, 0, Random.value / 15f);
 
                 transform.forward = Vector3.Lerp(transform.forward, dir, Time.deltaTime * _rotationDampening);
             }
 
             //Set Anim
-            _anim.SetFloat("Speed", Mathf.Lerp(_anim.GetFloat("Speed"), _stateController._movementComponent.moveDirection.magnitude, Time.deltaTime * _animSpeedDampening));
+            _anim.SetFloat("Speed", Mathf.Lerp(_anim.GetFloat("Speed"), moveDirection.magnitude, Time.deltaTime * _animSpeedDampening));
         }
         else
         {

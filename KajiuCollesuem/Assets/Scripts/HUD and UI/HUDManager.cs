@@ -16,7 +16,6 @@ public class HUDManager : MonoBehaviour
 
     public PauseMenu pauseMenu;
     [SerializeField] private PlayerCamera mainCam;
-    [SerializeField] private PlayerInputHandler input;
 
     private void Start()
     {
@@ -149,7 +148,7 @@ public class HUDManager : MonoBehaviour
         Time.timeScale = 1;
         pauseMenu.pause = !pauseMenu.pause;
         mainCam.CameraDisabled = !pause;
-        input.inputDisabled = !pause;
+        //input.inputDisabled = !pause;
         Cursor.lockState = CursorLockMode.Locked;
     }
 }

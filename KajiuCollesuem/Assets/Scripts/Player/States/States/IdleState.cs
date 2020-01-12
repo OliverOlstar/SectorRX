@@ -3,40 +3,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementState : BaseState
+public class IdleState : BaseState
 {
     PlayerStateController stateController;
 
-    public MovementState(PlayerStateController controller) : base(controller.gameObject)
+    public IdleState(PlayerStateController controller) : base(controller.gameObject)
     {
         stateController = controller;
     }
 
     public override void Enter()
     {
-        Debug.Log("MoveState: Enter");
+        Debug.Log("IdleState: Enter");
         stateController._movementComponent.disableMovement = false;
+        stateController._playerCamera.Idle = true;
     }
 
     public override void Exit()
     {
-        Debug.Log("MoveState: Exit");
+        Debug.Log("IdleState: Exit");
         stateController._movementComponent.disableMovement = true;
+        stateController._playerCamera.Idle = false;
     }
 
     public override Type Tick()
     {
+        // TODO Add Taunt system
+
         // Idle
-        if (stateController._movementComponent.moveInput.magnitude == 0)
+        if (stateController._movementComponent.moveInput.magnitude > 0)
         {
-            return typeof(IdleState);
+            return typeof(MovementState);
         }
 
         //Dodge
-        if (stateController._dodgeComponent.dodgeInput != -1)
-        {
-            return typeof(DodgeState);
-        }
+        //if (stateController.longDodgeInput || stateController.shortDodgeInput)
+        //{
+        //    return typeof(DodgeState);
+        //}
 
         ////Attack
         //if (stateController.heavyAttackInput || stateController.quickAttackInput || stateController.powerInput > 0)
