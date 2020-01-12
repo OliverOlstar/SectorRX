@@ -9,9 +9,7 @@ public class PlayerLockOnScript : MonoBehaviour
 
     private PlayerStateController _stateController;
     private PlayerCamera _cameraScript;
-    private CameraPivot _cameraPivotScript;
 
-    [SerializeField] private SOCamera defaultPreset;
     [SerializeField] private float cameraTransSpeed = 1;
 
     [Header("LockOn")]
@@ -30,12 +28,7 @@ public class PlayerLockOnScript : MonoBehaviour
     void Start()
     {
         _cameraScript = Camera.main.GetComponentInParent<PlayerCamera>();
-        _cameraScript.GiveLockOnScript(this);
-        _cameraPivotScript = _cameraScript.transform.parent.GetComponent<CameraPivot>();
         _stateController = GetComponent<PlayerStateController>();
-
-        //Start Camera on preset
-        _cameraPivotScript.ChangePlayerCamera(defaultPreset, 9999);
     }
     
     void Update()
@@ -47,14 +40,14 @@ public class PlayerLockOnScript : MonoBehaviour
             if (_cameraScript.Idle == false && _cameraScript.lockOnTarget == null)
             {
                 _cameraScript.Idle = true;
-                _cameraPivotScript.ChangePlayerCamera(idlePreset, cameraTransSpeed);
+                _cameraScript.ChangePlayerCamera(idlePreset, cameraTransSpeed);
             }
         }
         else if (_cameraScript.Idle == true && _cameraScript.lockOnTarget == null)
         {
             //Leave Idle Camera
             _cameraScript.Idle = false;
-            _cameraPivotScript.ChangePlayerCamera(defaultPreset, cameraTransSpeed);
+            _cameraScript.ReturnToDefaultPlayerCamera(cameraTransSpeed);
         }
 
         //Toggle LockOn Camera
@@ -70,14 +63,14 @@ public class PlayerLockOnScript : MonoBehaviour
                 if (target != null)
                 {
                     _cameraScript.lockOnTarget = target;
-                    _cameraPivotScript.ChangePlayerCamera(lockOnPreset, cameraTransSpeed);
+                    _cameraScript.ChangePlayerCamera(lockOnPreset, cameraTransSpeed);
                 }
             }
             else
             {
                 //Leave LockOn
                 _cameraScript.lockOnTarget = null;
-                _cameraPivotScript.ChangePlayerCamera(defaultPreset, cameraTransSpeed);
+                _cameraScript.ReturnToDefaultPlayerCamera(cameraTransSpeed);
             }
         }
     }
@@ -152,7 +145,7 @@ public class PlayerLockOnScript : MonoBehaviour
         if (pTarget == _cameraScript.lockOnTarget)
         {
             _cameraScript.lockOnTarget = null;
-            _cameraPivotScript.ChangePlayerCamera(defaultPreset, cameraTransSpeed);
+            _cameraScript.ReturnToDefaultPlayerCamera(cameraTransSpeed);
         }
     }
 }
