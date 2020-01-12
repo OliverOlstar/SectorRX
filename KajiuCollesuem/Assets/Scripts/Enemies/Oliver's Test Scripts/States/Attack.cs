@@ -12,7 +12,7 @@ public class Attack : MonoBehaviour, IState
     [SerializeField] private float _cooldown = 1.0f;
     private float _nextEnterTime = 0.0f;
 
-    [SerializeField] private float _attackRange = 1;
+    [SerializeField] private float _maxAttackRange = 1, _minAttackRange;
 
     [SerializeField] private GameObject _hitbox;
 
@@ -48,7 +48,7 @@ public class Attack : MonoBehaviour, IState
         if (_target == null || _target.gameObject.activeSelf == false) return false;
 
         //Can shoot if cooldown is up and player is in range
-        if (Time.time >= _nextEnterTime && pDistance < _attackRange)
+        if (Time.time >= _nextEnterTime && pDistance < _maxAttackRange && pDistance > _minAttackRange)
             return true;
 
         return false;
@@ -79,6 +79,7 @@ public class Attack : MonoBehaviour, IState
     public void AEDoneAttack()
     {
         //GetComponent<Decision>().ForceStateSwitch((IState)GetComponent<JumpBack>());
+        GetComponent<Decision>().ForceStateSwitch((IState)GetComponent<JumpBack>());
         _enabled = false;
         _nextEnterTime = Time.time + _cooldown;
     }

@@ -9,25 +9,21 @@ public class JumpBack : MonoBehaviour, IState
     private NavMeshAgent _agent;
     private Transform _target;
 
-    [SerializeField] private float _cooldown = 1.0f;
-    private float _nextEnterTime = 0.0f, originalPosition, jumpTime = 0;
-    public float jumpSpeed = 0;
+    [SerializeField] private float _cooldown = 1.0f, y, z;
+    private float _nextEnterTime = 0.0f, _originalPosition, _jumpTime = 0;
+    public float jumpSpeed = 0, speed = 0, halfPlayerHeight;
 
     [SerializeField] private float _jumpBackRange = 1;
     Rigidbody rb;
 
-    [SerializeField] private bool _enabled = false;
-
-    public void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
+    [SerializeField] private bool _enabled = false, _isTouchingGround = false;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
     {
         _anim = pAnim;
         _agent = pAgent;
         _target = pTarget;
+        rb = GetComponent<Rigidbody>();
     }
 
     public void Enter()
@@ -35,8 +31,10 @@ public class JumpBack : MonoBehaviour, IState
         //Debug.Log("Jump back: Enter");
         _enabled = true;
         //_agent.isStopped = true;
-        originalPosition = transform.position.y;
+        _originalPosition = transform.position.y;
         transform.LookAt(_target.position);
+        y = transform.position.y;
+        z = transform.position.z;
         _agent.isStopped = true;
     }
 
@@ -61,18 +59,68 @@ public class JumpBack : MonoBehaviour, IState
     public bool CanExit(float pDistance)
     {
         //Debug.Log("Jump back: CanExit - " + (_enabled == false));
-        return pDistance > _jumpBackRange;
+        return pDistance > _jumpBackRange && _isTouchingGround;
     }
 
     public void Tick()
     {
+       
+    }
+
+    public void FixedUpdate()
+    {
         if (_enabled)
         {
-            //transform.Translate(Vector3.back * 2);
-            //transform.Translate(Vector3.up);
-            jumpTime += Time.deltaTime;
-            float newYposition = (originalPosition * jumpSpeed * jumpTime) + (0.5f * -9.8f * jumpSpeed * jumpTime * jumpTime);
-            rb.MovePosition(new Vector3(0, newYposition, 0));
+            //Alternate jump solution
+            /*y += Time.deltaTime;
+            z += Time.deltaTime;
+            float time = Time.deltaTime * 25;
+
+            if (transform.position.y > 1)
+                transform.Translate(new Vector3(0, -1 * y * time, z * time));
+            else
+                transform.Translate(new Vector3(0, y * time, z * time));*/
+
+            //Calculate end jump position
+            Vector3 move = Vector3.right;
+            move += Vector3.back;
+            move.y = 0;
+            Vector3 targetPosition = rb.position + move;
+            //_isTouchingGround = _isOnGround();
+
+            float newYposition = targetPosition.y;
+            _jumpTime += Time.fixedDeltaTime;
+            newYposition = _originalPosition + (jumpSpeed * _jumpTime) + (0.5f * -9.8f * _jumpTime * _jumpTime);
+            targetPosition.y = newYposition;
+            Debug.Log(targetPosition);
+            
+            rb.MovePosition(targetPosition);
+            //transform.Translate(targetPosition);
+            _isTouchingGround = _isOnGround();
         }
+    }
+
+    private bool _isOnGround()
+    {
+        float lengthToSearch = 0.8f;
+        float colliderThreshold = 0.001f;
+
+        Vector3 lineStart = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        Vector3 vectorToSearch = new Vector3(this.transform.position.x, lineStart.y - lengthToSearch, this.transform.position.z);
+
+        Color color = new Color(0.0f, 0.0f, 1.0f);
+        Debug.DrawLine(lineStart, vectorToSearch, color);
+
+        RaycastHit hitInfo;
+        if (Physics.Linecast(this.transform.position, vectorToSearch, out hitInfo))
+        {
+            if (hitInfo.distance < halfPlayerHeight)
+            {
+                _jumpTime = 0;
+                return true;
+            }
+        }
+
+        return false;
     }
 }
