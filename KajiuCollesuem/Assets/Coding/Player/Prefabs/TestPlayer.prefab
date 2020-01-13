@@ -204,7 +204,6 @@ GameObject:
   - component: {fileID: 806430457}
   - component: {fileID: 4086892133307703399}
   - component: {fileID: 806430449}
-  - component: {fileID: 4175341088977248878}
   m_Layer: 8
   m_Name: TestPlayer
   m_TagString: Player
@@ -273,7 +272,9 @@ MonoBehaviour:
   Stunned: 0
   AttackStateReturnDelay: 0
   LastInputTime: 0
+  moveInput: {x: 0, y: 0}
   LastMoveDirection: {x: 0, y: 0}
+  dodgeInput: -1
   _stateMachine: {fileID: 0}
   _dodgeComponent: {fileID: 0}
   _powerComponent: {fileID: 0}
@@ -308,8 +309,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee92f20ca394cc4ea8aefa00433d0d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 54
-  _maxShield: 50
+  _maxHealth: 100
+  _maxShield: 100
   _maxPower: 100
   _shieldRegenStartDelaySeconds: 6
   _shieldRegenDelaySeconds: 1
@@ -333,13 +334,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c082e8adf3df254ab5ebf0be114fd1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveAcceleration: 2200
-  maxSpeed: 10
+  _moveAcceleration: 4000
+  maxSpeed: 6
   inputInfluence: 1
-  jumpForceUp: 14
+  _jumpForceUp: 12
+  _jumpForceVelocityMult: 2
   OnGround: 0
   disableMovement: 0
-  moveInput: {x: 0, y: 0}
 --- !u!114 &806430450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,7 +354,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doneDodge: 0
-  dodgeInput: 0
   shortDodgeCooldown: 0.3
   longDodgeCooldown: 0.3
   shortDodgeMaxSpeed: 30
@@ -384,7 +384,7 @@ MonoBehaviour:
   _inputInfluenceInAir: 0.7
   _influenceUpdateRate: 1
   _downForceRate: 5
-  _downForceTerminal: 7
+  _downForceTerminal: 8
 --- !u!114 &806430457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,25 +440,6 @@ MonoBehaviour:
   _model: {fileID: 1349403617}
   AddPowerTest: {fileID: 11400000, guid: 6d6ea06f8d5b49949899e4db9e49897f, type: 2}
   AddPowerTestActivate: 0
---- !u!114 &4175341088977248878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8582934654442581043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c082e8adf3df254ab5ebf0be114fd1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveAcceleration: 1
-  maxSpeed: 4
-  inputInfluence: 1
-  jumpForceUp: 4
-  OnGround: 0
-  disableMovement: 0
-  moveInput: {x: 0, y: 0}
 --- !u!1001 &1349502261
 PrefabInstance:
   m_ObjectHideFlags: 0

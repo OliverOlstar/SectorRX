@@ -7,7 +7,6 @@ public class DodgeComponent : MonoBehaviour
     //Oliver
 
     [HideInInspector] public bool doneDodge = false;
-    [HideInInspector] public float dodgeInput = -1.0f;
 
     public float shortDodgeCooldown = 1.0f;
     public float longDodgeCooldown = 1.0f;
@@ -23,15 +22,11 @@ public class DodgeComponent : MonoBehaviour
     [SerializeField] private float longDodgeDuration = 0.3f;
     [SerializeField] private float longDodgeAcceleration = 100;
 
-    private Rigidbody _rb;
-    private PlayerStateController _stateController;
+    private PlayerStateController _StateController;
 
     void Start()
     {
-        _rb = GetComponent<Rigidbody>();
-        _stateController = GetComponent<PlayerStateController>();
-        _stateController.inputActions.Player.Dodge.performed += ctx => dodgeInput = ctx.ReadValue<float>();
-        dodgeInput = -1.0f;
+        _StateController = GetComponent<PlayerStateController>();
     }
 
     public bool Dodge(bool pShortDodge, Vector2 pDirection)
@@ -75,9 +70,9 @@ public class DodgeComponent : MonoBehaviour
             //Move player
             Vector3 dodgeVector = new Vector3(pDirection.x, 0, pDirection.y).normalized * pAcceleration * Time.deltaTime;
 
-            if (new Vector3(_rb.velocity.x, 0, _rb.velocity.z).magnitude < pMaxSpeed)
+            if (new Vector3(_StateController._rb.velocity.x, 0, _StateController._rb.velocity.z).magnitude < pMaxSpeed)
             {
-                _rb.AddForce(dodgeVector);
+                _StateController._rb.AddForce(dodgeVector);
             }
 
             yield return null;

@@ -8,7 +8,6 @@ public class PlayerLockOnScript : MonoBehaviour
     // OLIVER - This script tells the PlayerCamera Script wether to be locked on or not and who to lock on too.
 
     private PlayerStateController _stateController;
-    private PlayerCamera _cameraScript;
 
     [SerializeField] private float cameraTransSpeed = 1;
 
@@ -16,7 +15,7 @@ public class PlayerLockOnScript : MonoBehaviour
     [SerializeField] private SOCamera lockOnPreset;
     [SerializeField] private LayerMask enemiesLayer;
     [SerializeField] private float lockOnRange = 10.0f;
-    [SerializeField] [Range(0, 359)] private float lockOnAngle = 45;
+    [SerializeField] [Range(0, 359.9999f)] private float lockOnAngle = 45;
     
     [HideInInspector] public bool focusedOnScreen = false;
     [HideInInspector] public bool unfocusedOnScreen = false;
@@ -27,7 +26,6 @@ public class PlayerLockOnScript : MonoBehaviour
     
     void Start()
     {
-        _cameraScript = Camera.main.GetComponentInParent<PlayerCamera>();
         _stateController = GetComponent<PlayerStateController>();
     }
     
@@ -37,17 +35,17 @@ public class PlayerLockOnScript : MonoBehaviour
         //Toggle Idle Camera
         if (Time.time - _stateController.LastInputTime > TimeUntilIdle)
         {
-            if (_cameraScript.Idle == false && _cameraScript.lockOnTarget == null)
+            if (_stateController._playerCamera.Idle == false && _stateController._playerCamera.lockOnTarget == null)
             {
-                _cameraScript.Idle = true;
-                _cameraScript.ChangePlayerCamera(idlePreset, cameraTransSpeed);
+                _stateController._playerCamera.Idle = true;
+                _stateController._playerCamera.ChangePlayerCamera(idlePreset, cameraTransSpeed);
             }
         }
-        else if (_cameraScript.Idle == true && _cameraScript.lockOnTarget == null)
+        else if (_stateController._playerCamera.Idle == true && _stateController._playerCamera.lockOnTarget == null)
         {
             //Leave Idle Camera
-            _cameraScript.Idle = false;
-            _cameraScript.ReturnToDefaultPlayerCamera(cameraTransSpeed);
+            _stateController._playerCamera.Idle = false;
+            _stateController._playerCamera.ReturnToDefaultPlayerCamera(cameraTransSpeed);
         }
 
         //Toggle LockOn Camera
@@ -79,16 +77,16 @@ public class PlayerLockOnScript : MonoBehaviour
     public Transform pickTarget()
     {
         //Get Possible Targets
-        List<Collider> possibleTargets = Physics.OverlapSphere(_cameraScript.transform.position + _cameraScript.transform.forward * lockOnRange / 2, lockOnRange, enemiesLayer).ToList();
+        List<Collider> possibleTargets = Physics.OverlapSphere(_stateController._playerCamera.transform.position + _stateController._playerCamera.transform.forward * lockOnRange / 2, lockOnRange, enemiesLayer).ToList();
 
         //Return NULL if no targets
         if (possibleTargets.Count == 0)
             return null;
 
-        Vector3 forwardVector = _cameraScript.transform.forward;
+        Vector3 forwardVector = _stateController._playerCamera.transform.forward;
 
         //Sort Targets
-        possibleTargets.Sort((col1, col2) => (Vector3.Dot(col2.transform.position - _cameraScript.transform.position, forwardVector)).CompareTo(Vector3.Dot(col1.transform.position - _cameraScript.transform.position, forwardVector)));
+        possibleTargets.Sort((col1, col2) => (Vector3.Dot(col2.transform.position - _stateController._playerCamera.transform.position, forwardVector)).CompareTo(Vector3.Dot(col1.transform.position - _stateController._playerCamera.transform.position, forwardVector)));
 
         //for (int i = 0; i < possibleTargets.Count; i++)
         //{
@@ -103,37 +101,37 @@ public class PlayerLockOnScript : MonoBehaviour
     public Transform changeTarget(Vector2 pInput)
     {
         //Get Possible Targets
-        List<Collider> possibleTargets = (Physics.OverlapSphere(_cameraScript.transform.position, lockOnRange * 2, enemiesLayer)).ToList();
+        List<Collider> possibleTargets = (Physics.OverlapSphere(_stateController._playerCamera.transform.position, lockOnRange * 2, enemiesLayer)).ToList();
 
         //No other targets than the one already locked onto
         if (possibleTargets.Count == 1)
             return possibleTargets[0].transform;
 
-        Vector3 forwardVector = _cameraScript.transform.forward;
-        Vector3 InputVector = _cameraScript.transform.right * pInput.x + _cameraScript.transform.up * pInput.y;
+        Vector3 forwardVector = _stateController._playerCamera.transform.forward;
+        Vector3 InputVector = _stateController._playerCamera.transform.right * pInput.x + _stateController._playerCamera.transform.up * pInput.y;
         InputVector.Normalize();
         //Debug.DrawLine(_cameraScript.transform.position, _cameraScript.transform.forward + _cameraScript.transform.position, Color.blue, 20);
         //Debug.DrawLine(_cameraScript.transform.position, _cameraScript.transform.position + InputVector, Color.green, 20);
 
         float lockOnRad = lockOnAngle * Mathf.Deg2Rad;
-        Vector3 ConeVector = Mathf.Cos(lockOnRad) * _cameraScript.transform.forward + Mathf.Sin(lockOnRad) * InputVector;
+        Vector3 ConeVector = Mathf.Cos(lockOnRad) * _stateController._playerCamera.transform.forward + Mathf.Sin(lockOnRad) * InputVector;
         //Debug.DrawLine(_cameraScript.transform.position, _cameraScript.transform.position + ConeVector, Color.red, 20);
 
-        Vector3 halfwayVector = (ConeVector + _cameraScript.transform.forward).normalized;
+        Vector3 halfwayVector = (ConeVector + _stateController._playerCamera.transform.forward).normalized;
         //Debug.DrawLine(_cameraScript.transform.position, _cameraScript.transform.position + halfwayVector, Color.yellow, 20);
 
         //Remove Non Options
         for (int i = possibleTargets.Count - 1; i >= 0; i--)
         {
-            if (Vector3.Dot((possibleTargets[i].transform.position - _cameraScript.transform.position).normalized, halfwayVector) < Mathf.Cos(lockOnRad / 2))
+            if (Vector3.Dot((possibleTargets[i].transform.position - _stateController._playerCamera.transform.position).normalized, halfwayVector) < Mathf.Cos(lockOnRad / 2))
                 possibleTargets.Remove(possibleTargets[i]);
         }
 
         //Sort Targets
-        possibleTargets.Sort((col1, col2) => (Vector3.Dot(col2.transform.position - _cameraScript.transform.position, forwardVector)).CompareTo(Vector3.Dot(col1.transform.position - _cameraScript.transform.position, forwardVector)));
+        possibleTargets.Sort((col1, col2) => (Vector3.Dot(col2.transform.position - _stateController._playerCamera.transform.position, forwardVector)).CompareTo(Vector3.Dot(col1.transform.position - _stateController._playerCamera.transform.position, forwardVector)));
 
         //Dont Return Same Target
-        if (_cameraScript.lockOnTarget == possibleTargets[0].transform)
+        if (_stateController._playerCamera.lockOnTarget == possibleTargets[0].transform)
             return possibleTargets[1].transform;
 
         return possibleTargets[0].transform;
@@ -142,10 +140,10 @@ public class PlayerLockOnScript : MonoBehaviour
     public void TargetDead(Transform pTarget)
     {
         //If LockOn Target dies return to default camera
-        if (pTarget == _cameraScript.lockOnTarget)
+        if (pTarget == _stateController._playerCamera.lockOnTarget)
         {
-            _cameraScript.lockOnTarget = null;
-            _cameraScript.ReturnToDefaultPlayerCamera(cameraTransSpeed);
+            _stateController._playerCamera.lockOnTarget = null;
+            _stateController._playerCamera.ReturnToDefaultPlayerCamera(cameraTransSpeed);
         }
     }
 }

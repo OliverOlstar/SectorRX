@@ -18,6 +18,7 @@ public class AttackState : BaseState
 
     public override void Enter()
     {
+        Debug.Log("AttackState: Enter");
         //stateController._hitboxComponent.gameObject.SetActive(true); /* Handled by animation events */
         combo = 0;
 
@@ -27,6 +28,7 @@ public class AttackState : BaseState
 
     public override void Exit()
     {
+        Debug.Log("AttackState: Exit");
         //stateController._hitboxComponent.gameObject.SetActive(false); /* Handled by animation events */
         stateController.AttackStateReturnDelay = Time.time + AttackStateReturnDelayLength;
         //stateController._animHandler.LeaveAttackState();
@@ -40,7 +42,7 @@ public class AttackState : BaseState
         switch (stateController._animHandler.attackState)
         {
             case 0:
-                //ClearAttackInputs();
+                ClearInputs();
                 break;
 
             case 1:
@@ -78,21 +80,19 @@ public class AttackState : BaseState
 
     private void Attack()
     {
-        //if (stateController.quickAttackInput && combo < 3)
-        //{
-        //    //Debug.Log("AttackState: Attack");
-        //    combo++;
-        //    ClearAttackInputs();
-        //    stateController._animHandler.StartAttack(false, combo);
-        //}
+        if (stateController.lightAttackinput == 1 && combo < 3)
+        {
+            combo++;
+            ClearInputs();
+            stateController._animHandler.StartAttack(false, combo);
+        }
 
-        //if (stateController.heavyAttackInput && combo < 3)
-        //{
-        //    //Debug.Log("AttackState: Attack");
-        //    combo++;
-        //    ClearAttackInputs();
-        //    stateController._animHandler.StartAttack(true, combo);
-        //}
+        if (stateController.heavyAttackinput == 0 && combo < 3)
+        {
+            combo++;
+            ClearInputs();
+            stateController._animHandler.StartAttack(true, combo);
+        }
 
         //if (stateController.powerInput > 0)
         //{
@@ -115,5 +115,12 @@ public class AttackState : BaseState
         //        combo = 3;
         //    }
         //}
+    }
+
+    private void ClearInputs()
+    {
+        stateController.lightAttackinput = -1.0f;
+        stateController.heavyAttackinput = -1.0f;
+        stateController.heavyAttackReleaseinput = -1.0f;
     }
 }

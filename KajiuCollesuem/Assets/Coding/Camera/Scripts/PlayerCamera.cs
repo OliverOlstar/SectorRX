@@ -2,9 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+Oliver
+3rd Person Camera
+*/
+
 public class PlayerCamera : MonoBehaviour
 {
-    public GameObject target;
+    public GameObject targetPlayer;
+    private PlayerStateController _StateController;
 
     private Transform _ParentTransform;
     private Vector3 _LocalRotation;
@@ -12,11 +18,10 @@ public class PlayerCamera : MonoBehaviour
 
     public Transform lockOnTarget;
 
-    public bool Inverted = false;
+    public bool inverted = false;
 
     [Header("Idle")]
     [SerializeField] private float idleSpinSpeed = 1;
-    [SerializeField] private float idleSpinY = 40;
 
     [Header("LockOn")]
     [SerializeField] private float _lockOnXOffset = 0;
@@ -52,20 +57,20 @@ public class PlayerCamera : MonoBehaviour
 
     void Start()
     {
-        //Set Camera to default values
+        // Get Input
+        _StateController = targetPlayer.GetComponent<PlayerStateController>();
+
+        // Set Camera to default values
         ResetCameraVars();
 
-        //Getting Transforms
+        // Getting Transforms
         _ParentTransform = transform.parent;
 
-        //Maintaining Starting Rotation
+        // Maintaining Starting Rotation
         _LocalRotation.x = _ParentTransform.eulerAngles.y;
         _LocalRotation.y = _ParentTransform.eulerAngles.x;
 
-        //Locking cursor
-        //Cursor.lockState = CursorLockMode.Locked;
-
-        //Setting camera distance
+        // Setting camera distance
         _TargetLocalPosition = new Vector3(-_offSetLeft, 0f, _cameraDistance * -1f);
         transform.localPosition = _TargetLocalPosition;
     }
@@ -111,7 +116,7 @@ public class PlayerCamera : MonoBehaviour
         _ParentTransform.rotation = Quaternion.Lerp(_ParentTransform.rotation, TargetQ, Time.deltaTime * _turnDampening);
 
         //Position the camera pivot on the player
-        _ParentTransform.position = target.transform.position + (Vector3.up * _offSetUp);
+        _ParentTransform.position = targetPlayer.transform.position + (Vector3.up * _offSetUp);
 
         //Camera Collision
         CameraCollision();
@@ -120,10 +125,10 @@ public class PlayerCamera : MonoBehaviour
     void DefaultCameraMovement(float pInputModifier = 1f)
     {
         //Rotation of the camera based on mouse movement
-        if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
+        if (_StateController.mouseInput.magnitude != 0)
         {
-            _LocalRotation.x += Input.GetAxis("Mouse X") * _mouseSensitivity * _mouseSensitivityMult * pInputModifier;
-            _LocalRotation.y -= Input.GetAxis("Mouse Y") * _mouseSensitivity * _mouseSensitivityMult * pInputModifier * (Inverted ? -1 : 1);
+            _LocalRotation.x += _StateController.mouseInput.x * _mouseSensitivity * _mouseSensitivityMult * pInputModifier;
+            _LocalRotation.y -= _StateController.mouseInput.y * _mouseSensitivity * _mouseSensitivityMult * pInputModifier * (inverted ? -1 : 1);
 
             //Clamping the y rotation to horizon and not flipping over at the top
             if (_LocalRotation.y < _cameraMinHeight)
@@ -162,9 +167,10 @@ public class PlayerCamera : MonoBehaviour
     {
         //Slowly Rotate
         _LocalRotation.x += idleSpinSpeed * Time.deltaTime;
-        _LocalRotation.y = Mathf.Lerp(_LocalRotation.y, idleSpinY, Time.deltaTime);
+        _LocalRotation.y = Mathf.Lerp(_LocalRotation.y, (_cameraMaxHeight + _cameraMinHeight) / 2, Time.deltaTime);
     }
 
+    #region Collision
     // Camera Collision //////////////
     void CameraCollision()
     {
@@ -184,7 +190,9 @@ public class PlayerCamera : MonoBehaviour
             transform.localPosition = Vector3.Lerp(transform.localPosition, _TargetLocalPosition * 0.5f, Time.deltaTime * _cameraCollisionDampening);
         }
     }
+    #endregion
 
+    #region Transitions
     // Camera Transition ////////////// Lerp camera variables
     public void ChangePlayerCamera(float pOffSetUp, float pOffSetLeft, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pSensitivityMult, float pTransitionSpeed)
     {
@@ -266,4 +274,5 @@ public class PlayerCamera : MonoBehaviour
         }
         while (done != 6);
     }
+    #endregion
 }

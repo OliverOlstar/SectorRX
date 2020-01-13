@@ -21,13 +21,13 @@ public class AnimHandler : MonoBehaviour
         _stateController = GetComponentInParent<PlayerStateController>();
         _anim = GetComponentInChildren<Animator>();
 
-        //Temp (animation's origins are slightly off (my b))
+        // TODO Temp (animation's origins are slightly off (my b))
         transform.GetChild(0).localPosition = new Vector3(0, 0, 0);
     }
     
     void Update()
     {
-        Vector3 moveDirection = new Vector3(_stateController._movementComponent.moveInput.x, 0, _stateController._movementComponent.moveInput.y);
+        Vector3 moveDirection = new Vector3(_stateController.LastMoveDirection.x, 0, _stateController.LastMoveDirection.y);
 
         //If Movement isn't disabled
         if (_stateController._movementComponent.disableMovement == false)
@@ -45,7 +45,7 @@ public class AnimHandler : MonoBehaviour
             }
 
             //Set Anim
-            _anim.SetFloat("Speed", Mathf.Lerp(_anim.GetFloat("Speed"), moveDirection.magnitude, Time.deltaTime * _animSpeedDampening));
+            _anim.SetFloat("Speed", _stateController._rb.velocity.magnitude / _stateController._movementComponent.maxSpeed);
         }
         else
         {

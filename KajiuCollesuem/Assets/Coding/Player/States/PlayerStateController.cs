@@ -16,8 +16,16 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public bool OnGround = false;
     [HideInInspector] public bool Stunned = false;
     [HideInInspector] public float AttackStateReturnDelay = 0;
+
+    // Inputs
     [HideInInspector] public float LastInputTime = 0;
+    [HideInInspector] public Vector2 mouseInput;
+    [HideInInspector] public Vector2 moveInput = new Vector2(0,0);
     [HideInInspector] public Vector2 LastMoveDirection = new Vector2(0,0);
+    [HideInInspector] public float dodgeInput = -1.0f;
+    [HideInInspector] public float lightAttackinput = -1.0f;
+    [HideInInspector] public float heavyAttackinput = -1.0f;
+    [HideInInspector] public float heavyAttackReleaseinput = -1.0f;
 
     [HideInInspector] public InputPlayer inputActions;
 
@@ -59,7 +67,27 @@ public class PlayerStateController : MonoBehaviour
 
         _rb = GetComponent<Rigidbody>();
         _Camera = Camera.main.transform;
+        _playerCamera = _Camera.GetComponentInParent<PlayerCamera>();
         inputActions = new InputPlayer();
+
+        // Setup Inputs
+        inputActions.Player.Camera.performed += ctx => mouseInput = ctx.ReadValue<Vector2>();
+        inputActions.Player.Movement.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
+        inputActions.Player.Dodge.performed += ctx => dodgeInput = ctx.ReadValue<float>();
+        inputActions.Player.LightAttack.performed += ctx => lightAttackinput = ctx.ReadValue<float>();
+        inputActions.Player.HeavyAttack.performed += ctx => heavyAttackinput = ctx.ReadValue<float>();
+        inputActions.Player.HeavyAttackRelease.performed += ctx => heavyAttackReleaseinput = ctx.ReadValue<float>();
+
+        // Last Input Time
+        inputActions.Player.AnyInput.performed += ctx => LastInputTime = Time.time;
+    }
+
+    private void FixedUpdate()
+    {
+        if (moveInput.magnitude != 0 || mouseInput.magnitude != 0)
+        {
+            LastInputTime = Time.time;
+        }
     }
 
     private void OnEnable()
