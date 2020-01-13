@@ -6,14 +6,10 @@ public class RollAttackTest : MonoBehaviour
 {
     [SerializeField] private float SecBeforeJump = 1;
     [SerializeField] [Range(0, 1)] private float PushOnCol_DirToVelocityRatio = 1;
-    [SerializeField] private float JumpForce = 600;
-    [SerializeField] private float InitialPushForce = 1;
-    [SerializeField] private float moveUpSpeed;
+    [SerializeField] private float InitialPushForce = 600;
     [SerializeField] private float RollAttackTime = 4;
     [SerializeField] private float PushBackForce = 100;
     [SerializeField] private int Damage = 10;
-    [SerializeField] private int RotateDamping = 10;
-    [SerializeField] private LayerMask DestroyableLayer;
     [SerializeField] private GameObject RollVisual;
     [SerializeField] private GameObject JumpToDirection;
     private bool MoveUp;
@@ -21,6 +17,8 @@ public class RollAttackTest : MonoBehaviour
     private float SecBeforeJumpTimer;
     private float RollAttackTimer;
     Rigidbody rb;
+    CapsuleCollider capsule;
+    SphereCollider sphere;
     private bool standUp = false;
     private Quaternion desiredRotQ;
 
@@ -32,6 +30,8 @@ public class RollAttackTest : MonoBehaviour
         gameObject.GetComponent<CapsuleCollider>().enabled = true;
         gameObject.GetComponent<SphereCollider>().enabled = false;
         rb = GetComponent<Rigidbody>();
+        capsule = GetComponent<CapsuleCollider>();
+        sphere = GetComponent<SphereCollider>();
     }
 
     // Update is called once per frame
@@ -41,15 +41,6 @@ public class RollAttackTest : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             RollAttackStart();
-        }
-
-        if (Input.GetKey(KeyCode.B))
-        {
-            StandUp();
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            print(new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized);
         }
 
         if (AttackActive)
@@ -71,8 +62,8 @@ public class RollAttackTest : MonoBehaviour
         AttackActive = true;
         SecBeforeJumpTimer = Time.time + SecBeforeJump;
         RollAttackTimer = Time.time + RollAttackTime;
-        gameObject.GetComponent<CapsuleCollider>().enabled = false;
-        gameObject.GetComponent<SphereCollider>().enabled = true;
+        capsule.enabled = false;
+        sphere.enabled = true;
         RollVisual.SetActive(true);
     }
     //while roll attack is active
@@ -85,7 +76,7 @@ public class RollAttackTest : MonoBehaviour
             {
                 MoveUp = false;
                 //jump in the calculated direction with set force
-                rb.AddForce((JumpToDirection.transform.position - transform.position).normalized * JumpForce);
+                rb.AddForce((JumpToDirection.transform.position - transform.position).normalized * InitialPushForce);
             }
         }
         //check if the Attack is over or not
@@ -97,48 +88,41 @@ public class RollAttackTest : MonoBehaviour
     //function to call when ending attack
     private void RollAttackEnd()
     {
-        //rb.isKinematic = true;
         RollVisual.SetActive(false);
         AttackActive = false;
         standUp = true;
         rb.freezeRotation = true;
-        gameObject.GetComponent<CapsuleCollider>().enabled = true;
-        gameObject.GetComponent<SphereCollider>().enabled = false;
-        //transform.forward = rb.velocity;
-        //rb.velocity = Vector3.zero;
-        y = rb.velocity;
-        print(new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized);
-        
+        capsule.enabled = true;
+        sphere.enabled = false;
     }
 
     private void StandUp()
     {
-        if (transform.rotation != desiredRotQ)
-        {
-            Vector3 newDirection = Vector3.RotateTowards(transform.forward, new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized, singleStep, 0.0f);
-            transform.rotation = Quaternion.LookRotation(newDirection);
-        }
-        else
+        
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized, singleStep,0);
+        transform.rotation = Quaternion.LookRotation(newDirection);
+        if(transform.forward == new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized)
         {
             rb.freezeRotation = false;
-            transform.rotation = desiredRotQ;
+            rb.velocity = Vector3.zero;
             standUp = false;
-            print("pls");
         }
     }
 
     private Vector3 calcPushBackDir(GameObject enemy)
     {
+        //calculate direction based on where enemy hit the player
         Vector3 dirRatio = ((enemy.gameObject.transform.position - transform.position).normalized * PushOnCol_DirToVelocityRatio);
+        //calculate direction based on players movement direction
         Vector3 VelocityRatio = (rb.velocity.normalized * (1 - PushOnCol_DirToVelocityRatio));
-        Vector3 final = dirRatio + VelocityRatio;
-        return final;
+        //add the 2 ratios together
+        return dirRatio + VelocityRatio;
     }
     
     private void OnCollisionEnter(Collision collision)
     {
         //if collided object is in destroyable layer
-        if(collision.gameObject.layer == DestroyableLayer)
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             collision.gameObject.GetComponent<Rigidbody>().AddForce(calcPushBackDir(collision.gameObject) * PushBackForce);
             IAttributes cIA = collision.gameObject.GetComponent<IAttributes>();
