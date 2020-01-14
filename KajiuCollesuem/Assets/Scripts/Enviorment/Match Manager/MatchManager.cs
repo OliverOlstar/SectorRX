@@ -10,9 +10,9 @@ using UnityEngine;
 
 public class MatchManager : MonoBehaviour
 {
-
     public SpawnRandomPlayers spawnPlayerScript;
     public SpawnRandomEnemies[] spawnEnemyScript;
+    public SpawnEditLava spawnLavaScript;
 
     public void Awake()
     {
@@ -25,6 +25,11 @@ public class MatchManager : MonoBehaviour
     public void Start()
     {
         spawnPlayerScript.SpawnPlayers();
+    }
+
+    public void Update()
+    {
+        spawnLavaScript.lavaTimer();
     }
 }
     
