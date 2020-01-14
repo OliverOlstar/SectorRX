@@ -104,18 +104,9 @@ public class AnimHandler : MonoBehaviour
         _anim.SetTrigger("Died");
     }
 
-    public void StartAttack(bool pHeavy, int pCombo)
+    public void StartAttack(string pBoolName)
     {
-        _anim.SetBool("Heavy Attack", pHeavy);
-        _anim.SetInteger("Combo", pCombo);
-        attackState = 0;
-    }
-
-    public void StartPower(int pPowerIndex)
-    {
-        _anim.SetInteger("WhichPower", pPowerIndex);
-        _anim.SetTrigger("Power");
-        attackState = 0;
+        _anim.SetBool(pBoolName, true);
     }
 
     public void StopAttacking()
@@ -132,12 +123,14 @@ public class AnimHandler : MonoBehaviour
         _anim.SetInteger("Combo", 0);
     }
 
-    public int GetCurrentCombo()
+    public void ClearAttackBools()
     {
-        if (_anim.GetBool("Heavy Attack"))
-            return 4;
-        else
-            return _anim.GetInteger("Combo");
+        _anim.SetBool("Square1", false);
+        _anim.SetBool("Square2", false);
+        _anim.SetBool("Square3", false);
+        _anim.SetBool("Triangle1", false);
+        _anim.SetBool("Triangle2", false);
+        _anim.SetBool("Triangle3", false);
     }
 
     public void Stunned(bool pLeft)

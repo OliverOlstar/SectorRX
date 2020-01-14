@@ -23,7 +23,8 @@ public class PlayerAnimEventHandler : MonoBehaviour
     public void AEActivateHitbox()
     {
         hitbox.SetActive(true);
-        playerHitbox.SetDamage(animHandler.GetCurrentCombo());
+        // TODO Change This later :D
+        playerHitbox.SetDamage(0);
     }
 
     // Attack State
