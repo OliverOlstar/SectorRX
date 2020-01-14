@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Coding/Inputs/InputPlayer.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Code/Inputs/InputPlayer.inputactions'
 
 using System;
 using System.Collections;

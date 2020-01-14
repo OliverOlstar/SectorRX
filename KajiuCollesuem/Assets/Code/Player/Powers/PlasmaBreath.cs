@@ -25,7 +25,7 @@ public class PlasmaBreath : MonoBehaviour
     private float _RotateDampening = 5.0f;
 
     //To access outside variables
-    PlayerMovement _PlayerMov;
+    MovementComponent _PlayerMov;
     EnemyAttributes _EnemyTest;
 
     // Start is called before the first frame update
@@ -33,7 +33,7 @@ public class PlasmaBreath : MonoBehaviour
     {
         _SpawnedLaser = Instantiate(laserPrefab, spawnPoint.transform) as GameObject;
         chargeTimer = 0;
-        _PlayerMov = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        _PlayerMov = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementComponent>();
         _EnemyTest = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyAttributes>();
     }
 
