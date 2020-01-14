@@ -1,0 +1,125 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AttackState : BaseState
+{
+    PlayerStateController stateController;
+    
+    private int combo = 0;
+    private float AttackStateReturnDelayLength = 0.6f;
+    private bool done = false;
+
+    public AttackState(PlayerStateController controller) : base(controller.gameObject)
+    {
+        stateController = controller;
+    }
+
+    public override void Enter()
+    {
+        Debug.Log("AttackState: Enter");
+        //stateController._hitboxComponent.gameObject.SetActive(true); /* Handled by animation events */
+        combo = 0;
+
+        //Run attack
+        Attack();
+    }
+
+    public override void Exit()
+    {
+        Debug.Log("AttackState: Exit");
+        //stateController._hitboxComponent.gameObject.SetActive(false); /* Handled by animation events */
+        stateController.AttackStateReturnDelay = Time.time + AttackStateReturnDelayLength;
+        //stateController._animHandler.LeaveAttackState();
+        //stateController._animHandler.StopAttacking();
+        stateController._hitboxComponent.gameObject.SetActive(false);
+    }
+
+    public override Type Tick()
+    {
+        // State Switched with Animation Events
+        switch (stateController._animHandler.attackState)
+        {
+            case 0:
+                ClearInputs();
+                break;
+
+            case 1:
+                Attack();
+                break;
+
+            case 2:
+                done = true;
+                break;
+        }
+
+        //Done Attack
+        if (done)
+        {
+            done = false;
+            return typeof(MovementState);
+        }
+
+        //Stunned
+        if (stateController.Stunned)
+        {
+            return typeof(StunnedState);
+        }
+
+        //Respawn
+        if (stateController.Respawn)
+        {
+            stateController.Respawn = false;
+            stateController._animHandler.Respawn();
+            return typeof(MovementState);
+        }
+
+        return null;
+    }
+
+    private void Attack()
+    {
+        if (stateController.lightAttackinput == 1 && combo < 3)
+        {
+            combo++;
+            ClearInputs();
+            stateController._animHandler.StartAttack(false, combo);
+        }
+
+        if (stateController.heavyAttackinput == 1 && combo < 3)
+        {
+            combo++;
+            ClearInputs();
+            stateController._animHandler.StartAttack(true, combo);
+        }
+
+        //if (stateController.powerInput > 0)
+        //{
+        //    // run code from the power component
+        //    int whichPower = stateController._powerComponent.UsingPower(stateController.powerInput);
+
+        //    if (whichPower == -1)
+        //    {
+        //        done = true;
+        //        Debug.Log("No In Slot Power");
+        //    }
+        //    else if (whichPower == -2)
+        //    {
+        //        done = true;
+        //        Debug.Log("Not Enough Power");
+        //    }
+        //    else
+        //    {
+        //        stateController._animHandler.StartPower(whichPower);
+        //        combo = 3;
+        //    }
+        //}
+    }
+
+    private void ClearInputs()
+    {
+        stateController.lightAttackinput = -1.0f;
+        stateController.heavyAttackinput = -1.0f;
+    }
+}
