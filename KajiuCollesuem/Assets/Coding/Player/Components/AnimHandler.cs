@@ -69,9 +69,9 @@ public class AnimHandler : MonoBehaviour
         }
     }
 
-    public void StartDodge(Vector3 pFacing)
+    public void StartDodge(/*Vector3 pFacing*/)
     {
-        transform.forward = pFacing;
+        //transform.forward = pFacing;
         _anim.SetBool("Dodge", true);
         _anim.SetFloat("Speed", 0);
     }
@@ -81,11 +81,16 @@ public class AnimHandler : MonoBehaviour
         _anim.SetBool("Dodge", false);
     }
 
-    public void StartJump(Vector3 pFacing)
+    public void StartJump(/*Vector3 pFacing*/)
     {
-        transform.forward = pFacing;
+        //transform.forward = pFacing;
         _anim.SetTrigger("Jump");
         _anim.SetFloat("Speed", 0);
+    }
+
+    public void ResetJump()
+    {
+        _anim.ResetTrigger("Jump");
     }
 
     public void SetOnGround(bool pOnGround)

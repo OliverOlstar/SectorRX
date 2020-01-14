@@ -57,9 +57,11 @@ public class DodgeComponent : MonoBehaviour
 
     IEnumerator DodgeRoutine(float pMaxSpeed, float pDuration, float pAcceleration, Vector2 pDirection, float pCooldown)
     {
-        //Setting Delay
+        // Setting Delay
         _dodgeDelay = Time.time + pCooldown + pDuration;
         float dodgeEndTime = Time.time + pDuration;
+
+        Vector3 dodgeVector = new Vector3(pDirection.x, 0, pDirection.y).normalized * pAcceleration * Time.deltaTime;
 
         //Run Dodge Force
         while (Time.time <= dodgeEndTime)
@@ -68,7 +70,6 @@ public class DodgeComponent : MonoBehaviour
             if (doneDodge) break;
 
             //Move player
-            Vector3 dodgeVector = new Vector3(pDirection.x, 0, pDirection.y).normalized * pAcceleration * Time.deltaTime;
 
             if (new Vector3(_StateController._rb.velocity.x, 0, _StateController._rb.velocity.z).magnitude < pMaxSpeed)
             {

@@ -54,15 +54,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""name"": ""HeavyAttack"",
                     ""type"": ""Button"",
                     ""id"": ""9b765394-f307-472f-8bcd-bb1aba812e6e"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""HeavyAttackRelease"",
-                    ""type"": ""Button"",
-                    ""id"": ""3d752f75-8eea-481a-9411-fb011429f1ed"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
@@ -374,7 +366,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""619c7297-af91-4108-8017-e71a137f2d71"",
                     ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": ""Tap,Hold"",
+                    ""interactions"": ""Press(behavior=2)"",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""HeavyAttack"",
@@ -385,32 +377,10 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""5744db95-db65-43d2-8f77-997aa7ce3d45"",
                     ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": ""Tap,Hold"",
+                    ""interactions"": ""Press(behavior=2)"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""HeavyAttack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""49010269-ee33-4828-be4f-3ff8b95f872f"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": ""Press(behavior=1)"",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""HeavyAttackRelease"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d936ecb1-189e-46a8-a691-2047fdb07685"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": ""Press(behavior=1)"",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""HeavyAttackRelease"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -454,7 +424,6 @@ public class @InputPlayer : IInputActionCollection, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_LightAttack = m_Player.FindAction("LightAttack", throwIfNotFound: true);
         m_Player_HeavyAttack = m_Player.FindAction("HeavyAttack", throwIfNotFound: true);
-        m_Player_HeavyAttackRelease = m_Player.FindAction("HeavyAttackRelease", throwIfNotFound: true);
         m_Player_Dodge = m_Player.FindAction("Dodge", throwIfNotFound: true);
         m_Player_AnyInput = m_Player.FindAction("AnyInput", throwIfNotFound: true);
     }
@@ -511,7 +480,6 @@ public class @InputPlayer : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_LightAttack;
     private readonly InputAction m_Player_HeavyAttack;
-    private readonly InputAction m_Player_HeavyAttackRelease;
     private readonly InputAction m_Player_Dodge;
     private readonly InputAction m_Player_AnyInput;
     public struct PlayerActions
@@ -523,7 +491,6 @@ public class @InputPlayer : IInputActionCollection, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @LightAttack => m_Wrapper.m_Player_LightAttack;
         public InputAction @HeavyAttack => m_Wrapper.m_Player_HeavyAttack;
-        public InputAction @HeavyAttackRelease => m_Wrapper.m_Player_HeavyAttackRelease;
         public InputAction @Dodge => m_Wrapper.m_Player_Dodge;
         public InputAction @AnyInput => m_Wrapper.m_Player_AnyInput;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -550,9 +517,6 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 @HeavyAttack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHeavyAttack;
                 @HeavyAttack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHeavyAttack;
                 @HeavyAttack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHeavyAttack;
-                @HeavyAttackRelease.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHeavyAttackRelease;
-                @HeavyAttackRelease.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHeavyAttackRelease;
-                @HeavyAttackRelease.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHeavyAttackRelease;
                 @Dodge.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodge;
                 @Dodge.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodge;
                 @Dodge.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodge;
@@ -578,9 +542,6 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 @HeavyAttack.started += instance.OnHeavyAttack;
                 @HeavyAttack.performed += instance.OnHeavyAttack;
                 @HeavyAttack.canceled += instance.OnHeavyAttack;
-                @HeavyAttackRelease.started += instance.OnHeavyAttackRelease;
-                @HeavyAttackRelease.performed += instance.OnHeavyAttackRelease;
-                @HeavyAttackRelease.canceled += instance.OnHeavyAttackRelease;
                 @Dodge.started += instance.OnDodge;
                 @Dodge.performed += instance.OnDodge;
                 @Dodge.canceled += instance.OnDodge;
@@ -616,7 +577,6 @@ public class @InputPlayer : IInputActionCollection, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnLightAttack(InputAction.CallbackContext context);
         void OnHeavyAttack(InputAction.CallbackContext context);
-        void OnHeavyAttackRelease(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
         void OnAnyInput(InputAction.CallbackContext context);
     }

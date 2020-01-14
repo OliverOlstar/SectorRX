@@ -35,16 +35,6 @@ public class MovementComponent : MonoBehaviour
         Move();
     }
 
-    private void Jump()
-    {
-        if (OnGround && disableMovement == false)
-        {
-            //Add force
-            _StateController._rb.velocity = new Vector3(_StateController._rb.velocity.x * _jumpForceVelocityMult, 0, _StateController._rb.velocity.z * _jumpForceVelocityMult);
-            _StateController._rb.AddForce(_jumpForceUp * Vector3.up, ForceMode.Impulse);
-        }
-    }
-
     private void Move()
     {
         //Move Vector
@@ -59,5 +49,16 @@ public class MovementComponent : MonoBehaviour
 
         if (move.magnitude != 0)
             _StateController.LastMoveDirection = new Vector2(move.x, move.z).normalized;
+    }
+
+    private void Jump()
+    {
+        if (OnGround && disableMovement == false)
+        {
+            //Add force
+            _StateController._rb.velocity = new Vector3(_StateController._rb.velocity.x * _jumpForceVelocityMult, 0, _StateController._rb.velocity.z * _jumpForceVelocityMult);
+            _StateController._rb.AddForce(_jumpForceUp * Vector3.up, ForceMode.Impulse);
+            _StateController._animHandler.StartJump();
+        }
     }
 }

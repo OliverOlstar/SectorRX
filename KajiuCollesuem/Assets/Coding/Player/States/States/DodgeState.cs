@@ -21,19 +21,21 @@ public class DodgeState : BaseState
 
         //Start Dodge
         stateController._dodgeComponent.Dodge(stateController.dodgeInput == 0, direction);
-        //    stateController._animHandler.StartDodge(vec);
+        stateController._animHandler.StartDodge();
 
         //Remove Input
-        stateController.dodgeInput = -1;
+        stateController.dodgeInput = -1.0f;
     }
 
     public override void Exit()
     {
         Debug.Log("DodgeState: Exit");
 
-        //Stop Anim Dodge
-        //stateController._animHandler.StopDodge();
-        stateController.dodgeInput = -1;
+        //Stop Dodge
+        stateController._animHandler.StopDodge();
+
+        //Remove Input
+        stateController.dodgeInput = -1.0f;
     }
 
     public override Type Tick()

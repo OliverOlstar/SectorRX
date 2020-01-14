@@ -22,6 +22,7 @@ public class MovementState : BaseState
     {
         Debug.Log("MoveState: Exit");
         stateController._movementComponent.disableMovement = true;
+        stateController._animHandler.ResetJump();
     }
 
     public override Type Tick()

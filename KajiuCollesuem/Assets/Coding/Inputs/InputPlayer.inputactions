@@ -41,15 +41,7 @@
                     "name": "HeavyAttack",
                     "type": "Button",
                     "id": "9b765394-f307-472f-8bcd-bb1aba812e6e",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "HeavyAttackRelease",
-                    "type": "Button",
-                    "id": "3d752f75-8eea-481a-9411-fb011429f1ed",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
@@ -361,7 +353,7 @@
                     "name": "",
                     "id": "619c7297-af91-4108-8017-e71a137f2d71",
                     "path": "<Mouse>/rightButton",
-                    "interactions": "Tap,Hold",
+                    "interactions": "Press(behavior=2)",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "HeavyAttack",
@@ -372,32 +364,10 @@
                     "name": "",
                     "id": "5744db95-db65-43d2-8f77-997aa7ce3d45",
                     "path": "<Gamepad>/buttonEast",
-                    "interactions": "Tap,Hold",
+                    "interactions": "Press(behavior=2)",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "HeavyAttack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "49010269-ee33-4828-be4f-3ff8b95f872f",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "Press(behavior=1)",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "HeavyAttackRelease",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d936ecb1-189e-46a8-a691-2047fdb07685",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "Press(behavior=1)",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "HeavyAttackRelease",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

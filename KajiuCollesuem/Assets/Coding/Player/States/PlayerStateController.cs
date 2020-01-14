@@ -22,10 +22,11 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public Vector2 mouseInput;
     [HideInInspector] public Vector2 moveInput = new Vector2(0,0);
     [HideInInspector] public Vector2 LastMoveDirection = new Vector2(0,0);
+    // 0 - Tapped, 1 - Held
     [HideInInspector] public float dodgeInput = -1.0f;
     [HideInInspector] public float lightAttackinput = -1.0f;
+    // 0 - Released, 1 - Pressed
     [HideInInspector] public float heavyAttackinput = -1.0f;
-    [HideInInspector] public float heavyAttackReleaseinput = -1.0f;
 
     [HideInInspector] public InputPlayer inputActions;
 
@@ -76,7 +77,6 @@ public class PlayerStateController : MonoBehaviour
         inputActions.Player.Dodge.performed += ctx => dodgeInput = ctx.ReadValue<float>();
         inputActions.Player.LightAttack.performed += ctx => lightAttackinput = ctx.ReadValue<float>();
         inputActions.Player.HeavyAttack.performed += ctx => heavyAttackinput = ctx.ReadValue<float>();
-        inputActions.Player.HeavyAttackRelease.performed += ctx => heavyAttackReleaseinput = ctx.ReadValue<float>();
 
         // Last Input Time
         inputActions.Player.AnyInput.performed += ctx => LastInputTime = Time.time;

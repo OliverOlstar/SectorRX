@@ -87,7 +87,7 @@ public class AttackState : BaseState
             stateController._animHandler.StartAttack(false, combo);
         }
 
-        if (stateController.heavyAttackinput == 0 && combo < 3)
+        if (stateController.heavyAttackinput == 1 && combo < 3)
         {
             combo++;
             ClearInputs();
@@ -121,6 +121,5 @@ public class AttackState : BaseState
     {
         stateController.lightAttackinput = -1.0f;
         stateController.heavyAttackinput = -1.0f;
-        stateController.heavyAttackReleaseinput = -1.0f;
     }
 }
