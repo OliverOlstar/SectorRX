@@ -6,5 +6,6 @@ public interface IAttributes
 {
     bool IsDead();
     bool TakeDamage(int damage, bool react);
+    //void AddKnockback(Vector3 pForce);
     void Respawn();
 }
