@@ -372,7 +372,7 @@ MonoBehaviour:
   _moveAcceleration: 4000
   maxSpeed: 6
   inputInfluence: 1
-  _jumpForceUp: 12
+  _jumpForceUp: 10
   _jumpForceVelocityMult: 2
   OnGround: 0
   disableMovement: 0
@@ -487,6 +487,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a8316655d9c0f64fbfaf3df571d7a19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doGroundPound: 0
+  isGroundPounding: 0
+  _StopTime: 0
+  _DropForce: 20
 --- !u!114 &17874586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,12 +506,12 @@ MonoBehaviour:
   laserPrefab: {fileID: 1601903843534470252, guid: dc52f3e137c83ac4494fcd01d6979b85,
     type: 3}
   playerPos: {fileID: 1184346003}
-  spawnPoint: {fileID: 0}
+  spawnPoint: {fileID: 960917303}
   mainCam: {fileID: 0}
   chargeTimer: 0
   laserOn: 0
   firstPersonOn: 0
-  _RotateDampening: 5
+  _RotateDampening: 1
 --- !u!1001 &1349502261
 PrefabInstance:
   m_ObjectHideFlags: 0
