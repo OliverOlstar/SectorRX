@@ -82,33 +82,99 @@ public class PlayerControllerR : MonoBehaviour
             anim.SetBool("Square1", false);
             anim.SetBool("Square2", false);
             anim.SetBool("Square3", false);
+            anim.SetBool("Triangle1", false);
+            anim.SetBool("Triangle2", false);
+            anim.SetBool("Triangle3", false);
         }
 
-        if(Input.GetMouseButtonDown(0))
-        {
-            lastClickedTime = Time.time;
-            numberOfClicks++;
 
-            if(numberOfClicks == 1)
+        if (numberOfClicks == 0)
+        {
+            //anim.speed = 2.0f;
+
+            if (Input.GetMouseButtonUp(0))
             {
-                //anim.speed = 2.0f;
-             
+                lastClickedTime = Time.time;
+                numberOfClicks++;
+
                 anim.SetBool("Square1", true);
                 anim.SetBool("Square2", false);
                 anim.SetBool("Square3", false);
+                anim.SetBool("Triangle1", false);
+                anim.SetBool("Triangle2", false);
+                anim.SetBool("Triangle3", false);
             }
-            else if(numberOfClicks == 2 )
+
+            else if (Input.GetMouseButtonUp(1))
             {
-                anim.SetBool("Square2", true);
-                anim.SetBool("Square1", false);
-                anim.SetBool("Square3", false);
-            }
-            else if(numberOfClicks == 3)
-            {
-                anim.SetBool("Square3", true);
+                lastClickedTime = Time.time;
+                numberOfClicks++;
+
                 anim.SetBool("Square1", false);
                 anim.SetBool("Square2", false);
+                anim.SetBool("Square3", false);
+                anim.SetBool("Triangle1", true);
+                anim.SetBool("Triangle2", false);
+                anim.SetBool("Triangle3", false);
             }
+        }
+
+        else if (numberOfClicks == 1)
+        {
+            if (Input.GetMouseButtonUp(0))
+            {
+                lastClickedTime = Time.time;
+                numberOfClicks++;
+
+                anim.SetBool("Square1", false);
+                anim.SetBool("Square2", true);
+                anim.SetBool("Square3", false);
+                anim.SetBool("Triangle1", false);
+                anim.SetBool("Triangle2", false);
+                anim.SetBool("Triangle3", false);
+            }
+
+            else if (Input.GetMouseButtonUp(1))
+            {
+                lastClickedTime = Time.time;
+                numberOfClicks++;
+
+                anim.SetBool("Square1", false);
+                anim.SetBool("Square2", false);
+                anim.SetBool("Square3", false);
+                anim.SetBool("Triangle1", false);
+                anim.SetBool("Triangle2", true);
+                anim.SetBool("Triangle3", false);
+            }
+        }
+        else if (numberOfClicks == 2)
+        {
+            if (Input.GetMouseButtonUp(0))
+            {
+                lastClickedTime = Time.time;
+                numberOfClicks++;
+
+                anim.SetBool("Square1", false);
+                anim.SetBool("Square2", false);
+                anim.SetBool("Square3", true);
+                anim.SetBool("Triangle1", false);
+                anim.SetBool("Triangle2", false);
+                anim.SetBool("Triangle3", false);
+            }
+
+            else if (Input.GetMouseButtonUp(1))
+            {
+                lastClickedTime = Time.time;
+                numberOfClicks++;
+
+                anim.SetBool("Square1", false);
+                anim.SetBool("Square2", false);
+                anim.SetBool("Square3", false);
+                anim.SetBool("Triangle1", false);
+                anim.SetBool("Triangle2", false);
+                anim.SetBool("Triangle3", true);
+            }
+        }
 
             //numberOfClicks = Mathf.Clamp(numberOfClicks, 0, 3);
             
@@ -143,41 +209,41 @@ public class PlayerControllerR : MonoBehaviour
             //numberOfClicks = 0;
     }
 
-    public void returnSquare1()
-    {
-        if(numberOfClicks >= 2)
-        {
-            anim.SetBool("Square2", true);
-        }
+    //public void returnSquare1()
+    //{
+    //    if(numberOfClicks >= 2)
+    //    {
+    //        anim.SetBool("Square2", true);
+    //    }
         
-        else
-        {
-            anim.SetBool("Square1", false);
-            numberOfClicks = 0;
-        }
-    }
+    //    else
+    //    {
+    //        anim.SetBool("Square1", false);
+    //        numberOfClicks = 0;
+    //    }
+    //}
 
-    public void returnSquare2()
-    {
-        if (numberOfClicks >= 3)
-        {
-            anim.SetBool("Square3", true);
-        }
+    //public void returnSquare2()
+    //{
+    //    if (numberOfClicks >= 3)
+    //    {
+    //        anim.SetBool("Square3", true);
+    //    }
 
-        else
-        {
-            anim.SetBool("Square2", false);
-            numberOfClicks = 0;
-        }
-    }
+    //    else
+    //    {
+    //        anim.SetBool("Square2", false);
+    //        numberOfClicks = 0;
+    //    }
+    //}
 
-    public void returnSquare3()
-    {
-        anim.SetBool("Square1", false);
-        anim.SetBool("Square2", false);
-        anim.SetBool("Square3", false);
-        numberOfClicks = 0;
-    }
+    //public void returnSquare3()
+    //{
+    //    anim.SetBool("Square1", false);
+    //    anim.SetBool("Square2", false);
+    //    anim.SetBool("Square3", false);
+    //    numberOfClicks = 0;
+    //}
 
     //private void OnControllerColliderHit(ControllerColliderHit hit)
     //{
@@ -194,5 +260,5 @@ public class PlayerControllerR : MonoBehaviour
     //    }
 
     //}
-}
+
 
