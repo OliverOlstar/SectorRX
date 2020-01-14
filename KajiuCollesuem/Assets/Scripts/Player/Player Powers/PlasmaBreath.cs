@@ -20,6 +20,9 @@ public class PlasmaBreath : MonoBehaviour
 
     //GameObject to Instantiate
     private GameObject _SpawnedLaser;
+    
+    [SerializeField]
+    private float _RotateDampening = 5.0f;
 
     //To access outside variables
     PlayerMovement _PlayerMov;
@@ -34,6 +37,14 @@ public class PlasmaBreath : MonoBehaviour
         _EnemyTest = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyAttributes>();
     }
 
+    //Get a normalized horizontal Vector
+    private Vector3 Horizontalize(Vector3 pVector)
+    {
+        pVector.y = 0;
+        pVector.Normalize();
+        return pVector;
+    }
+
     // Update is called once per frame
     void Update()
     {   
@@ -42,7 +53,7 @@ public class PlasmaBreath : MonoBehaviour
         {
             chargeTimer += 0.6f * Time.deltaTime;
             _PlayerMov.disableMovement = true;
-            playerPos.transform.rotation = Quaternion.Slerp(playerPos.transform.rotation, mainCam.transform.rotation, 0.01f);
+            playerPos.forward = Vector3.Slerp(Horizontalize(playerPos.forward), Horizontalize(mainCam.transform.forward), Time.deltaTime * _RotateDampening);
         }
 
         //If at anytime while charging and not attacking the key is no longer being pressed, timer resets to zero.
@@ -75,11 +86,13 @@ public class PlasmaBreath : MonoBehaviour
             }
         }
 
+        //Allows player to aim the beam while it is firing
         if(firstPersonOn)
         {
             _SpawnedLaser.transform.Rotate(Input.GetAxis("Mouse X") * 0.5f, 0, 0);
             _SpawnedLaser.transform.Rotate(0, Input.GetAxis("Mouse Y") * 0.5f, 0);
-            playerPos.transform.rotation = mainCam.transform.rotation;
+            playerPos.transform.eulerAngles = new Vector3(0, mainCam.transform.eulerAngles.y, 0);
+            //playerPos.forward = Vector3.Slerp(Horizontalize(playerPos.forward), Horizontalize(mainCam.transform.forward), Time.deltaTime * _RotateDampening);
         }
 
         //When timer has counted down to zero, beam particle turns off. Timer resets to zero if value is lower. 
