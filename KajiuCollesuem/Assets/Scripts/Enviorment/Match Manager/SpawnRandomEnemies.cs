@@ -12,21 +12,30 @@ public class SpawnRandomEnemies : MonoBehaviour
 {
     public GameObject enemyToSpawn;
 
-    public List<Transform> enemySpawnPoints = new List<Transform>();
+    private List<Transform> _enemySpawnPoints = new List<Transform>();
 
     public int enemySpawnCount = 12;
     
     private int _enemyIndex;
     private int _enemySpawnPointIndex;
 
+    private void Start()
+    {
+        foreach (Transform children in GetComponentInChildren<Transform>())
+        {
+            _enemySpawnPoints.Add(children);
+        }
+    }
+
     public void SpawnEnemies()
     {
+        enemySpawnCount = Random.Range(4, 7);
+
         for (int i = 0; i < enemySpawnCount; i++)
         {
-            enemySpawnCount = Random.Range(4, 7);
-            _enemySpawnPointIndex = Random.Range(0, enemySpawnPoints.Count);
-            Instantiate(enemyToSpawn, enemySpawnPoints[_enemySpawnPointIndex].position, Quaternion.identity);
-            enemySpawnPoints.Remove(enemySpawnPoints[_enemySpawnPointIndex]);
+            _enemySpawnPointIndex = Random.Range(0, _enemySpawnPoints.Count);
+            Instantiate(enemyToSpawn, _enemySpawnPoints[_enemySpawnPointIndex].position, Quaternion.identity);
+            _enemySpawnPoints.Remove(_enemySpawnPoints[_enemySpawnPointIndex]);
         }
     }
 }
