@@ -48,7 +48,7 @@ public class OnGroundComponent : MonoBehaviour
         //Damage player if they fall for too long and teleport them back to ground
         CheckFellTeleport();
     }
-    
+
     private void CheckGrounded()
     {
         //Raycast to check for if grounded
@@ -61,6 +61,7 @@ public class OnGroundComponent : MonoBehaviour
 
             CheckFellLanding();
             _terminalFallingTimer = 0;
+            _rb.drag = 2;
         }
         else
         {
@@ -69,6 +70,8 @@ public class OnGroundComponent : MonoBehaviour
 
             if (_downForce >= _downForceTerminal)
                 _terminalFallingTimer += Time.deltaTime;
+
+            _rb.drag = 0.3f;
         }
     }
 
