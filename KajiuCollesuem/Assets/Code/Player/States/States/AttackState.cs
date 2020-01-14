@@ -31,7 +31,7 @@ public class AttackState : BaseState
         Debug.Log("AttackState: Exit");
         //stateController._hitboxComponent.gameObject.SetActive(false); /* Handled by animation events */
         stateController.AttackStateReturnDelay = Time.time + AttackStateReturnDelayLength;
-        stateController._hitboxComponent.gameObject.SetActive(false);
+        //stateController._hitboxComponent.gameObject.SetActive(false);
         numberOfClicks = 0;
         stateController._animHandler.ClearAttackBools();
     }

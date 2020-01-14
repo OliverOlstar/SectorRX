@@ -70,6 +70,7 @@ public class PlayerStateController : MonoBehaviour
         _Camera = Camera.main.transform;
         _playerCamera = _Camera.GetComponentInParent<PlayerCamera>();
         inputActions = new InputPlayer();
+        inputActions.
 
         // Setup Inputs
         inputActions.Player.Camera.performed += ctx => mouseInput = ctx.ReadValue<Vector2>();
