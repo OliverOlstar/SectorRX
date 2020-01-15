@@ -7,7 +7,7 @@ public class AnimHandler : MonoBehaviour
     //Animation Handling for the player model - Oliver
 
     [HideInInspector] public PlayerStateController _stateController;
-    private Animator _anim;
+    public Animator _anim;
 
     [HideInInspector] public int attackState = 0;
 
@@ -125,6 +125,7 @@ public class AnimHandler : MonoBehaviour
 
     public void ClearAttackBools()
     {
+        Debug.Log("AnimHandler: ClearAttackBools");
         _anim.SetBool("Square1", false);
         _anim.SetBool("Square2", false);
         _anim.SetBool("Square3", false);
