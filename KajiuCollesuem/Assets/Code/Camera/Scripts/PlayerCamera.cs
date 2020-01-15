@@ -116,7 +116,8 @@ public class PlayerCamera : MonoBehaviour
         _ParentTransform.rotation = Quaternion.Lerp(_ParentTransform.rotation, TargetQ, Time.deltaTime * _turnDampening);
 
         //Position the camera pivot on the player
-        _ParentTransform.position = targetPlayer.transform.position + (Vector3.up * _offSetUp);
+        if (targetPlayer != null)
+            _ParentTransform.position = targetPlayer.transform.position + (Vector3.up * _offSetUp);
 
         //Camera Collision
         CameraCollision();

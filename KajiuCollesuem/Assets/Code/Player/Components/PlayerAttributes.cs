@@ -11,7 +11,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     [Header("Maxes")]
     [SerializeField] private int _maxHealth = 100;
     [SerializeField] private int _maxShield = 100;
-    [SerializeField] private int _maxPower = 10;
+    [SerializeField] private int _maxPower = 100;
 
     private int _health;
     private int _shield;
@@ -41,7 +41,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
     public bool IsDead() { return true; }
 
-    void Start()
+    void Awake()
     {
         _anim = GetComponentInChildren<AnimHandler>();
 
