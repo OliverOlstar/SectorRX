@@ -103,6 +103,7 @@ public class Decision : MonoBehaviour
             }
 
             else
+                //Ensures that hellhound doesn't continue current when out of range
                 SwitchState(GetComponent<Guard>());
         }
         Debug.Log(distance);
