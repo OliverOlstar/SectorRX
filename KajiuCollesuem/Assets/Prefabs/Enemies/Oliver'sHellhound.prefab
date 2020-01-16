@@ -306,6 +306,7 @@ GameObject:
   - component: {fileID: 6055264869548468583}
   - component: {fileID: 995882804}
   - component: {fileID: 6055264869548468579}
+  - component: {fileID: 1328787253039488700}
   m_Layer: 9
   m_Name: Oliver'sHellhound
   m_TagString: Enemy
@@ -393,10 +394,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldown: 1
-  jumpSpeed: 1
+  y: 0
+  z: 0
+  jumpSpeed: 5
   speed: 1
   halfPlayerHeight: 0.52
-  _jumpBackRange: 1
+  _jumpBackRange: 1.3
   _enabled: 0
   _isTouchingGround: 0
 --- !u!114 &2220731904774253932
@@ -412,7 +415,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldown: 1
-  _attackRange: 1.5
+  _maxAttackRange: 1.5
+  _minAttackRange: 1.4
   _hitbox: {fileID: 6055264869934658799}
   _enabled: 0
 --- !u!114 &4888040742626211138
@@ -467,6 +471,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enabled: 0
+  retribution: 0
+  scanVision: 30
   agroRange: 12
   agroLostRange: 16
 --- !u!114 &2112717384075363666
@@ -523,6 +529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enabled: 0
+  cell: {fileID: 0}
 --- !u!114 &6055264869548468582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -586,6 +593,18 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 3
+--- !u!114 &1328787253039488700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2220731904774253922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7172b68f291f6b142b20d0ea3692a5b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2464890274862249807
 GameObject:
   m_ObjectHideFlags: 0

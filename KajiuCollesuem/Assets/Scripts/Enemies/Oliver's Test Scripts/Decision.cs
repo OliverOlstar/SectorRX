@@ -3,26 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/*
+ * Programmer: Mugiesshan Anandarajah
+ * Description: Edited to complete the following tasks:
+ *      Task 1: Grunts targeting is updated to allow for switching between targets
+ *      Task 2: Grunts have a harder time detecting a player
+ * */
 public class Decision : MonoBehaviour
 {
     private IState[] _states;
     private IState _currentState;
 
     public Transform target;
+    private GameObject[] _players;
+
+    public float fScanVision = 30;
 
     void Start()
     {
         //Get States
         _states = GetComponents<IState>();
 
-        //Setup States
-        NavMeshAgent agent = GetComponent<NavMeshAgent>();
-        Animator anim = GetComponent<Animator>();
+        //Get players in the level
+        _players = GameObject.FindGameObjectsWithTag("Player");
 
-        foreach(IState state in _states)
-        {
-            state.Setup(target, anim, agent);
-        }
+        //Setup States
+        SetupStates();
 
         //Start on least priority State that can be entered
         StartLastState();
@@ -49,11 +55,24 @@ public class Decision : MonoBehaviour
     private void FixedUpdate()
     {
         CheckStates();
+        CheckAndUpdateTarget();
     }
 
     private void Update()
     {
         _currentState.Tick();
+    }
+
+    public void SetupStates()
+    {
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        Animator anim = GetComponent<Animator>();
+
+        foreach (IState state in _states)
+        {
+            state.Setup(target, anim, agent);
+        }
+        //transform.LookAt(target);
     }
 
     private void CheckStates()
@@ -75,12 +94,43 @@ public class Decision : MonoBehaviour
                     continue;
             }
 
-            //Check if state can be entered
-            if (state.CanEnter(distance))
+            //Check if state can be entered. Task 2: Grunts have a harder time detecting a player
+            if (state.CanEnter(distance)
+                && Vector3.Angle(transform.forward, target.position - transform.position) < fScanVision)
             {
                 SwitchState(state);
                 break;
             }
+
+            else
+                SwitchState(GetComponent<Guard>());
+        }
+        Debug.Log(distance);
+    }
+
+    /*Calculate the distance between itself and the player, and updates its target to the nearest player,
+    and update the target setup
+    Task 1: Grunts targeting is updated to allow for switching of targets*/
+    private void CheckAndUpdateTarget()
+    {
+        float smallest_distance = 9999;
+        int index = -1;
+
+        for (int i = 0; i < _players.Length; ++i)
+        {
+            float distance = Vector3.Distance(transform.position, _players[i].transform.position);
+
+            if (distance < smallest_distance)
+            {
+                smallest_distance = distance;
+                index = i;
+            }
+        }
+
+        if (_currentState.CanEnter(smallest_distance))
+        {
+            target = _players[index].transform;
+            SetupStates();
         }
     }
 

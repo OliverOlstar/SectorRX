@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/*
+ * Programmer: Mugiesshan Anandarajah
+ * Description: Edited this script to allow enemy to immediately pursue player after stun animation is done playing
+ * */
 public class Stunned : MonoBehaviour, IState
 {
+    private Transform _target;
     private Animator _anim;
     private NavMeshAgent _agent;
 
@@ -12,6 +17,7 @@ public class Stunned : MonoBehaviour, IState
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
     {
+        _target = pTarget;
         _anim = pAnim;
         _agent = pAgent;
     }
@@ -47,6 +53,8 @@ public class Stunned : MonoBehaviour, IState
     public void AEDoneStunned()
     {
         //Debug.Log("Stunned: AEDoneStunned");
+        GetComponent<AlwaysSeek>().retribution = true;
+        GetComponent<Decision>().ForceStateSwitch(GetComponent<Seek>());
         _enabled = false;
     }
 }

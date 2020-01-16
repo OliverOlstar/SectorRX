@@ -14,7 +14,7 @@ public class Seek : AlwaysSeek
         if (_target == null || _target.gameObject.activeSelf == false) return false;
 
         //If in agro range
-        if (pDistance <= (_enabled ? agroLostRange : agroRange))
+        if (pDistance <= (_enabled ? agroLostRange : agroRange) || retribution)
             return true;
         
         return false;

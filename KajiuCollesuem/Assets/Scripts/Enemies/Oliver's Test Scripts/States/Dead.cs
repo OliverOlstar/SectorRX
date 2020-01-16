@@ -10,6 +10,8 @@ public class Dead : MonoBehaviour, IState
     private Transform _target;
 
     [SerializeField] private bool _enabled = false;
+    [SerializeField] private GameObject cell;
+    int noOfMonsterCells = 5;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
     {
@@ -47,5 +49,18 @@ public class Dead : MonoBehaviour, IState
     public void Tick()
     {
 
+    }
+
+    public void AEDeadDone()
+    {
+        for (int i = 0; i < noOfMonsterCells; ++i)
+        {
+            GameObject tmp = Instantiate(cell);
+            float bounds1 = Random.Range(-0.5f, 0.5f), bounds2 = Random.Range(-0.5f, 0.5f);
+            tmp.transform.position = transform.position;
+            //tmp.transform.Translate(Vector3.back);
+            tmp.transform.Translate(new Vector3(bounds1, bounds2));
+        }
+        Destroy(this.gameObject);
     }
 }
