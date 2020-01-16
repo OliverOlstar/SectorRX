@@ -35,16 +35,16 @@ public class PlayerLockOnScript : MonoBehaviour
         //Toggle Idle Camera
         if (Time.time - _stateController.LastInputTime > TimeUntilIdle)
         {
-            if (_stateController._playerCamera.Idle == false && _stateController._playerCamera.lockOnTarget == null)
+            if (_stateController._playerCamera.targetIdle == false && _stateController._playerCamera.lockOnTarget == null)
             {
-                _stateController._playerCamera.Idle = true;
+                _stateController._playerCamera.targetIdle = true;
                 _stateController._playerCamera.ChangePlayerCamera(idlePreset, cameraTransSpeed);
             }
         }
-        else if (_stateController._playerCamera.Idle == true && _stateController._playerCamera.lockOnTarget == null)
+        else if (_stateController._playerCamera.targetIdle == true && _stateController._playerCamera.lockOnTarget == null)
         {
             //Leave Idle Camera
-            _stateController._playerCamera.Idle = false;
+            _stateController._playerCamera.targetIdle = false;
             _stateController._playerCamera.ReturnToDefaultPlayerCamera(cameraTransSpeed);
         }
 

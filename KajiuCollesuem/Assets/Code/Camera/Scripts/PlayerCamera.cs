@@ -9,12 +9,12 @@ Oliver
 
 public class PlayerCamera : MonoBehaviour
 {
-    public GameObject targetPlayer;
+    public Transform targetPlayer;
     private PlayerStateController _StateController;
 
     private Transform _ParentTransform;
-    private Vector3 _LocalRotation;
-    private Vector3 _TargetLocalPosition;
+    private Vector2 _LocalRotation;
+    private Vector2 _TargetLocalPosition;
 
     public Transform lockOnTarget;
 
@@ -51,14 +51,16 @@ public class PlayerCamera : MonoBehaviour
 
     [Space]
     public bool CameraDisabled = false;
-    public bool Idle = false;
+    public bool targetDead = false;
+    public bool targetIdle = false;
     
     private Coroutine _transRoutine;
 
     void Start()
     {
         // Get Input
-        _StateController = targetPlayer.GetComponent<PlayerStateController>();
+        if (targetPlayer != null)
+            _StateController = targetPlayer.GetComponent<PlayerStateController>();
 
         // Set Camera to default values
         ResetCameraVars();
@@ -94,6 +96,9 @@ public class PlayerCamera : MonoBehaviour
 
     void Update()
     {
+        if (targetPlayer == null)
+            return;
+
         //Getting Mouse Movement
         if (!CameraDisabled)
         {
@@ -101,9 +106,13 @@ public class PlayerCamera : MonoBehaviour
             {
                 LockOnCameraMovement();
             }
-            else if (Idle == true)
+            else if (targetIdle == true)
             {
                 IdleCameraMovement();
+            }
+            else if (targetDead == true)
+            {
+                DeadCameraMovement();
             }
             else
             {
@@ -116,8 +125,8 @@ public class PlayerCamera : MonoBehaviour
         _ParentTransform.rotation = Quaternion.Lerp(_ParentTransform.rotation, TargetQ, Time.deltaTime * _turnDampening);
 
         //Position the camera pivot on the player
-        if (targetPlayer != null)
-            _ParentTransform.position = targetPlayer.transform.position + (Vector3.up * _offSetUp);
+        if (targetDead == false)
+            _ParentTransform.position = targetPlayer.position + (Vector3.up * _offSetUp);
 
         //Camera Collision
         CameraCollision();
@@ -169,6 +178,12 @@ public class PlayerCamera : MonoBehaviour
         //Slowly Rotate
         _LocalRotation.x += idleSpinSpeed * Time.deltaTime;
         _LocalRotation.y = Mathf.Lerp(_LocalRotation.y, (_cameraMaxHeight + _cameraMinHeight) / 2, Time.deltaTime);
+    }
+
+    void DeadCameraMovement()
+    {
+        //Slowly Rotate
+        transform.LookAt(targetPlayer.position);
     }
 
     #region Collision

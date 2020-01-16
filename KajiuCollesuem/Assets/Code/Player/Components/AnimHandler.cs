@@ -16,7 +16,7 @@ public class AnimHandler : MonoBehaviour
 
     private float offGroundTimer = 0;
 
-    void Start()
+    void Awake()
     {
         _stateController = GetComponentInParent<PlayerStateController>();
         _anim = GetComponentInChildren<Animator>();
