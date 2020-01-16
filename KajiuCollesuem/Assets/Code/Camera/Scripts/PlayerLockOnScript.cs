@@ -31,6 +31,8 @@ public class PlayerLockOnScript : MonoBehaviour
     
     void Update()
     {
+        if (_stateController._playerCamera == null) return;
+
         // TODO make work with pause screen
         //Toggle Idle Camera
         if (Time.time - _stateController.LastInputTime > TimeUntilIdle)
