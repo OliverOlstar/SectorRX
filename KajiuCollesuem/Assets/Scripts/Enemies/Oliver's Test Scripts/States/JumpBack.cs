@@ -77,9 +77,9 @@ public class JumpBack : MonoBehaviour, IState
             float time = Time.deltaTime * speed;
 
             if (transform.position.y > 1)
-                transform.Translate(new Vector3(0, -1 * y * time, z * time));
+                transform.Translate(new Vector3(0, -2 * y * time, z * time));
             else
-                transform.Translate(new Vector3(0, y * time, z * time));
+                transform.Translate(new Vector3(0, 2 * y * time, z * time));
 
             /*transform.position = Vector3.Lerp(transform.position, transform.position + Vector3.forward, 
                 Time.deltaTime * 5);*/

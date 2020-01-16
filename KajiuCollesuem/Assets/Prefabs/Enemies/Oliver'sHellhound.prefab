@@ -297,6 +297,7 @@ GameObject:
   - component: {fileID: 2220731904774253932}
   - component: {fileID: 4888040742626211138}
   - component: {fileID: 8496819161713853905}
+  - component: {fileID: 698450505057935209}
   - component: {fileID: 2220731904774253928}
   - component: {fileID: 2112717384075363666}
   - component: {fileID: 4944307402221784857}
@@ -457,6 +458,22 @@ MonoBehaviour:
   strafeMax: 5
   strafeMin: 3
   _nextEnterTime: 0
+  _fStrafeSpeed: 0
+  _enabled: 0
+--- !u!114 &698450505057935209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2220731904774253922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30def98264adacc4b83a5c17bb7de2ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fMaxDashRange: 2
+  _fMinDashRange: 1.6
   _enabled: 0
 --- !u!114 &2220731904774253928
 MonoBehaviour:
@@ -472,7 +489,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enabled: 0
   retribution: 0
-  scanVision: 30
   agroRange: 12
   agroLostRange: 16
 --- !u!114 &2112717384075363666
@@ -543,6 +559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  fScanVision: 30
 --- !u!114 &6055264869548468583
 MonoBehaviour:
   m_ObjectHideFlags: 0

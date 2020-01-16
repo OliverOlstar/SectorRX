@@ -8,6 +8,7 @@ using UnityEngine.AI;
  * Description: Edited to complete the following tasks:
  *      Task 1: Grunts targeting is updated to allow for switching between targets
  *      Task 2: Grunts have a harder time detecting a player
+ *      Task 3: Grunt rotation is smooth
  * */
 public class Decision : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class Decision : MonoBehaviour
     private GameObject[] _players;
 
     public float fScanVision = 30;
+
+    private bool _targetSwitch = false;
 
     void Start()
     {
@@ -106,7 +109,7 @@ public class Decision : MonoBehaviour
                 //Ensures that hellhound doesn't continue current when out of range
                 SwitchState(GetComponent<Guard>());
         }
-        Debug.Log(distance);
+        //Debug.Log(distance);
     }
 
     /*Calculate the distance between itself and the player, and updates its target to the nearest player,
@@ -127,12 +130,28 @@ public class Decision : MonoBehaviour
                 index = i;
             }
         }
-
+        
         if (_currentState.CanEnter(smallest_distance))
         {
+            if (target != _players[index].transform)
+            {
+                GetComponent<Strafe>().Pause();
+                _targetSwitch = true;
+            }
             target = _players[index].transform;
             SetupStates();
         }
+        
+        if (Vector3.Angle(transform.forward, target.position - transform.position) < 1
+            && _targetSwitch)
+        {
+            GetComponent<Strafe>().Resume();
+            _targetSwitch = false;
+        }
+        else if (_targetSwitch)
+            transform.rotation = Quaternion.Lerp(transform.rotation,
+                Quaternion.LookRotation(target.position - transform.position),
+                Time.deltaTime * 5);
     }
 
     //Exit old state and Enter new state

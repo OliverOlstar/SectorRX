@@ -94,4 +94,14 @@ public class Summon : MonoBehaviour, IState
         _enabled = false;
         _nextEnterTime = Time.time + _cooldown;
     }
+
+    public void Pause()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Resume()
+    {
+        throw new System.NotImplementedException();
+    }
 }

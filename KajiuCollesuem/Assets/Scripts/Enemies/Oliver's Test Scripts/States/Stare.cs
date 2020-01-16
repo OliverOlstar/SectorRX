@@ -53,4 +53,14 @@ public class Stare : MonoBehaviour, IState
     {
         
     }
+
+    public void Pause()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Resume()
+    {
+        throw new System.NotImplementedException();
+    }
 }
