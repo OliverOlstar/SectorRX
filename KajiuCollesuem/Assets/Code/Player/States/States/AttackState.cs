@@ -77,6 +77,9 @@ public class AttackState : BaseState
 
         return null;
     }
+    public bool attacking = false;
+    private bool heldAttack = false;
+    float animSpeed = 0f;
 
     private void CheckForAttack()
     {
@@ -92,7 +95,8 @@ public class AttackState : BaseState
                 string boolName = "Square" + (numberOfClicks).ToString();
                 stateController._animHandler.StartAttack(boolName);
             }
-            else if (stateController.heavyAttackinput == 1)
+
+            if (stateController.heavyAttackinput == 1)
             {
                 lastClickedTime = Time.time;
                 numberOfClicks++;
@@ -102,6 +106,42 @@ public class AttackState : BaseState
                 string boolName = "Triangle" + (numberOfClicks).ToString();
                 stateController._animHandler.StartAttack(boolName);
             }
+
+            //else if (stateController.heavyAttackinput == 1 && heldAttack == false)
+            //{
+            //    lastClickedTime = Time.time;
+            //    numberOfClicks++;
+
+
+            //    stateController._animHandler.ClearAttackBools();
+            //    string boolName = "Triangle" + (numberOfClicks).ToString();
+            //    stateController._animHandler.StartAttack(boolName);
+
+            //    heldAttack = true;
+            //    animSpeed = stateController._animHandler._anim.speed;
+            //}
+            //else if(stateController.heavyAttackinput == 1 && heldAttack == true)
+            //{
+            //    Debug.Log("HELD ATTACK");
+            //    //count here
+            //    if(stateController._animHandler._anim.speed > 0.1f)
+            //    {
+            //        stateController._animHandler._anim.speed -= 0.5f * Time.deltaTime;
+            //        //count reaches certain point
+            //        //slow animation till certain point
+            //    }
+            //}
+
+            //else if (stateController.heavyAttackinput == 0)
+            //{
+            //    stateController._animHandler._anim.speed = animSpeed;
+            //    animSpeed = 0f;
+            //    heldAttack = false;
+
+            //    ClearInputs();
+            //}
+
+
         }
 
         //if (stateController.powerInput > 0)

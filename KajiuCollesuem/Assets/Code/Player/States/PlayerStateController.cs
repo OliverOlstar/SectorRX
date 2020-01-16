@@ -27,7 +27,7 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public float dodgeInput = -1.0f;
     [HideInInspector] public float lightAttackinput = -1.0f;
     // 0 - Released, 1 - Pressed
-    [HideInInspector] public float heavyAttackinput = -1.0f;
+    public float heavyAttackinput = -1.0f;
 
     [Header("State Components")]
     [HideInInspector] public PlayerStateMachine _stateMachine;
