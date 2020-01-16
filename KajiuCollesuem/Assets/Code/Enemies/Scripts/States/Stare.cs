@@ -51,7 +51,6 @@ public class Stare : MonoBehaviour, IState
 
     public void Tick()
     {
-        Vector3 lookAtTarget = new Vector3(_target.position.x, 0, _target.position.z);
-        transform.LookAt(lookAtTarget);
+        
     }
 }

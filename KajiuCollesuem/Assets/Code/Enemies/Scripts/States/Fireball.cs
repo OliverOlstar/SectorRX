@@ -20,6 +20,7 @@ public class Fireball : MonoBehaviour, IState
     [SerializeField] private float _fireballRangeMin = 3;
 
     [SerializeField] private float _fireballSpeed = 1000;
+    private float _fFireballTimer = 0;
 
     [Space]
     [SerializeField] [Range(0,1)] private float _oddsOfSkipOver = 0, maxRightDir, maxLeftDir;
@@ -68,8 +69,8 @@ public class Fireball : MonoBehaviour, IState
 
     public void Tick()
     {
-        maxLeftDir = _fireballSpawnpoint.position.x - 5;
-        maxRightDir = _fireballSpawnpoint.position.x + 5;
+        maxLeftDir = _fireballSpawnpoint.position.x - 2;
+        maxRightDir = _fireballSpawnpoint.position.x + 2;
     }
 
     // Additional Functions /////////
@@ -100,15 +101,22 @@ public class Fireball : MonoBehaviour, IState
         fireballInstance = Instantiate(_fireballPrefab) as Rigidbody;
         fireballInstance.transform.position = _fireballSpawnpoint.position;
 
-        //Get the raycast of the Wolf's forward direction, and apply the following code if the raycast doesn't hit the player
-        if (_target.position.x > transform.position.x && transform.position.x < maxRightDir)
-        {
-            fireballInstance.transform.Translate(Vector3.right * 1.5f);
-        }
+        _fFireballTimer += Time.deltaTime;
 
-        else if (_target.position.x < transform.position.x && transform.position.x > maxLeftDir)
+        if (_fFireballTimer > 1)
         {
-            fireballInstance.transform.Translate(Vector3.left * 1.5f);
+            //Get the raycast of the Wolf's forward direction, and apply the following code if the raycast doesn't hit the player
+            if (_target.position.x > transform.position.x && transform.position.x < maxRightDir 
+                && transform.position.x > maxLeftDir)
+            {
+                fireballInstance.transform.Translate(Vector3.right * 1.5f);
+            }
+
+            else if (_target.position.x < transform.position.x && transform.position.x > maxLeftDir 
+                && transform.position.x < maxRightDir)
+            {
+                fireballInstance.transform.Translate(Vector3.left * 1.5f);
+            }
         }
         fireballInstance.AddForce(direction * _fireballSpeed);
     }
@@ -118,5 +126,6 @@ public class Fireball : MonoBehaviour, IState
         //Debug.Log("Fireball: AEDoneShooting");
         _enabled = false;
         _nextEnterTime = Time.time + _cooldown;
+        _fFireballTimer = 0;
     }
 }

@@ -15,6 +15,7 @@ public class Strafe : MonoBehaviour, IState
     [SerializeField] private int strafeMax = 5, strafeMin = 3;
 
     [SerializeField] private float _nextEnterTime = 0.0f;
+    [SerializeField] private float _fStrafeSpeed;
 
     [SerializeField] private bool _enabled = false;
 
@@ -85,7 +86,7 @@ public class Strafe : MonoBehaviour, IState
     public Vector3 GetStrafeDirection()
     {
         strafeDecision = Random.Range(0, 2);
-        return strafeDecision == 0 ? Vector3.left * .035f : Vector3.right * .035f;
+        return strafeDecision == 0 ? Vector3.left * _fStrafeSpeed : Vector3.right * _fStrafeSpeed;
     }
 
     /*IEnumerator StrafeMovement()
