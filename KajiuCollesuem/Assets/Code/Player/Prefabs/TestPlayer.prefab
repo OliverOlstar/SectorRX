@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stateController: {fileID: 0}
+  _anim: {fileID: 0}
   attackState: 0
   _rotationDampening: 11
   _animSpeedDampening: 5
@@ -232,7 +233,6 @@ GameObject:
   - component: {fileID: 806430450}
   - component: {fileID: 17874600}
   - component: {fileID: 806430457}
-  - component: {fileID: 4086892133307703399}
   - component: {fileID: 806430449}
   - component: {fileID: 17874588}
   - component: {fileID: 17874586}
@@ -444,23 +444,6 @@ MonoBehaviour:
   unfocusedOnScreen: 0
   idlePreset: {fileID: 11400000, guid: 67ad0d9b288e04043ae10b57d85fe6c2, type: 2}
   TimeUntilIdle: 30
---- !u!114 &4086892133307703399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8582934654442581043}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57df21d598cd16c4983cce38a4b7e9a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  core: {fileID: 0}
-  powerPrompt: {fileID: 0}
-  cellPrompt: {fileID: 0}
-  firstCore: 0
-  firstCell: 0
 --- !u!114 &806430449
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -125,7 +125,6 @@ public class AnimHandler : MonoBehaviour
 
     public void ClearAttackBools()
     {
-        Debug.Log("AnimHandler: ClearAttackBools");
         _anim.SetBool("Square1", false);
         _anim.SetBool("Square2", false);
         _anim.SetBool("Square3", false);

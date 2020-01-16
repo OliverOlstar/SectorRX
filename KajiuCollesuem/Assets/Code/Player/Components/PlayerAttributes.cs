@@ -169,6 +169,8 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
     public bool TakeDamage(int pAmount, bool pReact)
     {
+        Debug.Log("PlayerAttributes: TakeDamage");
+
         // Return if already dead
         if (_health <= 0)
             return true;

@@ -17,21 +17,29 @@ public class PlayerHitbox : MonoBehaviour
     [SerializeField] private int powerRecivedOnHit = 20;
 
     private PlayerAttributes playerAttributes;
+    private IAttributes playerIAttributes;
     private PlayerLockOnScript lockOnScript;
 
     private void Start()
     {
         playerAttributes = GetComponentInParent<PlayerAttributes>();
+        playerIAttributes = playerAttributes.GetComponent<IAttributes>();
         lockOnScript = playerAttributes.GetComponent<PlayerLockOnScript>();
     }
 
     private void OnTriggerEnter (Collider other)
     {
+        Debug.Log("Hitbox: OnTriggerEnter");
+
         //Check if collided with an Attributes Script
         IAttributes otherAttributes = other.GetComponent<IAttributes>();
+        if (otherAttributes == null)
+            otherAttributes = other.GetComponentInParent<IAttributes>();
 
-        if (otherAttributes != null && otherAttributes.IsDead() == false)
+        if (otherAttributes != null && otherAttributes.IsDead() == false && otherAttributes != playerIAttributes)
         {
+            Debug.Log("Hitbox: OnTriggerEnter hit");
+
             //Damage other
             if (otherAttributes.TakeDamage(damage, true))
                 //If other died and is lockOn target return camera to default
@@ -44,9 +52,11 @@ public class PlayerHitbox : MonoBehaviour
             CameraShaker.Instance.ShakeOnce(1, 0.5f, 0.2f, 0.1f);
         }
 
+        // TODO Get rid of this
         if (other.gameObject.name.Equals("Fireball"))
         {
-            playerAttributes.TakeDamage(damage, true);
+            Rigidbody otherRb = other.GetComponent<Rigidbody>();
+            otherRb.velocity = -otherRb.velocity;
         }
     }
 

@@ -13,8 +13,8 @@ public class PlayerCamera : MonoBehaviour
     private PlayerStateController _StateController;
 
     private Transform _ParentTransform;
-    private Vector2 _LocalRotation;
-    private Vector2 _TargetLocalPosition;
+    private Vector3 _LocalRotation;
+    private Vector3 _TargetLocalPosition;
 
     public Transform lockOnTarget;
 
@@ -26,10 +26,10 @@ public class PlayerCamera : MonoBehaviour
     [Header("LockOn")]
     [SerializeField] private float _lockOnXOffset = 0;
     [SerializeField] private float _lockOnInputInfluence = 0.2f;
-    private float _timeToChangeTarget = 0.0f;
-    [SerializeField] private float _lockOnChangeDelay = 1.0f;
-    [SerializeField] private float _lockOnChangeAmount_KB = 10.0f;
-    [SerializeField] private float _lockOnChangeAmount_GP = 1.5f;
+    //private float _timeToChangeTarget = 0.0f;
+    //[SerializeField] private float _lockOnChangeDelay = 1.0f;
+    //[SerializeField] private float _lockOnChangeAmount_KB = 10.0f;
+    //[SerializeField] private float _lockOnChangeAmount_GP = 1.5f;
 
     [Header("Camera Collision")]
     [SerializeField] private LayerMask _cameraCollisionLayers = new LayerMask();
