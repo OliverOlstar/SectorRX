@@ -39,7 +39,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     const int BAR_HEIGHT = 20;
     public float barLengthMultiplier = 1.5f;
 
-    public bool IsDead() { return true; }
+    public bool IsDead() { return false; }
 
     void Awake()
     {

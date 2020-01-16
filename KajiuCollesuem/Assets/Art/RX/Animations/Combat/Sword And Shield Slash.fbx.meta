@@ -1,170 +1,11 @@
 fileFormatVersion: 2
-guid: 5b232b33adb8afc49bfa0ad2e92d8a3e
+guid: 85baa45a1f1a6e04ab3609c5bcd2b164
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable:
   - first:
-      1: 100000
-    second: mixamorig:Head
-  - first:
-      1: 100002
-    second: mixamorig:HeadTop_End
-  - first:
-      1: 100004
-    second: mixamorig:Hips
-  - first:
-      1: 100006
-    second: mixamorig:LeftArm
-  - first:
-      1: 100008
-    second: mixamorig:LeftFoot
-  - first:
-      1: 100010
-    second: mixamorig:LeftForeArm
-  - first:
-      1: 100012
-    second: mixamorig:LeftHand
-  - first:
-      1: 100014
-    second: mixamorig:LeftLeg
-  - first:
-      1: 100016
-    second: mixamorig:LeftShoulder
-  - first:
-      1: 100018
-    second: mixamorig:LeftToe_End
-  - first:
-      1: 100020
-    second: mixamorig:LeftToeBase
-  - first:
-      1: 100022
-    second: mixamorig:LeftUpLeg
-  - first:
-      1: 100024
-    second: mixamorig:Neck
-  - first:
-      1: 100026
-    second: mixamorig:RightArm
-  - first:
-      1: 100028
-    second: mixamorig:RightFoot
-  - first:
-      1: 100030
-    second: mixamorig:RightForeArm
-  - first:
-      1: 100032
-    second: mixamorig:RightHand
-  - first:
-      1: 100034
-    second: mixamorig:RightLeg
-  - first:
-      1: 100036
-    second: mixamorig:RightShoulder
-  - first:
-      1: 100038
-    second: mixamorig:RightToe_End
-  - first:
-      1: 100040
-    second: mixamorig:RightToeBase
-  - first:
-      1: 100042
-    second: mixamorig:RightUpLeg
-  - first:
-      1: 100044
-    second: mixamorig:Spine
-  - first:
-      1: 100046
-    second: mixamorig:Spine1
-  - first:
-      1: 100048
-    second: mixamorig:Spine2
-  - first:
-      1: 100050
-    second: //RootNode
-  - first:
-      4: 400000
-    second: mixamorig:Head
-  - first:
-      4: 400002
-    second: mixamorig:HeadTop_End
-  - first:
-      4: 400004
-    second: mixamorig:Hips
-  - first:
-      4: 400006
-    second: mixamorig:LeftArm
-  - first:
-      4: 400008
-    second: mixamorig:LeftFoot
-  - first:
-      4: 400010
-    second: mixamorig:LeftForeArm
-  - first:
-      4: 400012
-    second: mixamorig:LeftHand
-  - first:
-      4: 400014
-    second: mixamorig:LeftLeg
-  - first:
-      4: 400016
-    second: mixamorig:LeftShoulder
-  - first:
-      4: 400018
-    second: mixamorig:LeftToe_End
-  - first:
-      4: 400020
-    second: mixamorig:LeftToeBase
-  - first:
-      4: 400022
-    second: mixamorig:LeftUpLeg
-  - first:
-      4: 400024
-    second: mixamorig:Neck
-  - first:
-      4: 400026
-    second: mixamorig:RightArm
-  - first:
-      4: 400028
-    second: mixamorig:RightFoot
-  - first:
-      4: 400030
-    second: mixamorig:RightForeArm
-  - first:
-      4: 400032
-    second: mixamorig:RightHand
-  - first:
-      4: 400034
-    second: mixamorig:RightLeg
-  - first:
-      4: 400036
-    second: mixamorig:RightShoulder
-  - first:
-      4: 400038
-    second: mixamorig:RightToe_End
-  - first:
-      4: 400040
-    second: mixamorig:RightToeBase
-  - first:
-      4: 400042
-    second: mixamorig:RightUpLeg
-  - first:
-      4: 400044
-    second: mixamorig:Spine
-  - first:
-      4: 400046
-    second: mixamorig:Spine1
-  - first:
-      4: 400048
-    second: mixamorig:Spine2
-  - first:
-      4: 400050
-    second: //RootNode
-  - first:
-      74: 7400000
-    second: React Left
-  - first:
-      95: 9500000
-    second: //RootNode
+      74: -203655887218126122
+    second: mixamo.com
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -185,7 +26,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -194,11 +35,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: React Left
+      name: mixamo.com
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 31
+      lastFrame: 49
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -217,7 +58,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.4521964
+        functionName: AEActivateHitbox
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.58397937
+        functionName: AEDeactivateHitbox
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

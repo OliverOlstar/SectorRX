@@ -23,7 +23,7 @@ public class PlayerHitbox : MonoBehaviour
     private void Start()
     {
         playerAttributes = GetComponentInParent<PlayerAttributes>();
-        playerIAttributes = playerAttributes.GetComponent<IAttributes>();
+        //playerIAttributes = playerAttributes.GetComponent<IAttributes>();
         lockOnScript = playerAttributes.GetComponent<PlayerLockOnScript>();
     }
 
