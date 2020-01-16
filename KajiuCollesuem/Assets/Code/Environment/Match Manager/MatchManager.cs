@@ -14,16 +14,13 @@ public class MatchManager : MonoBehaviour
     public SpawnRandomEnemies[] spawnEnemyScript;
     public SpawnEditLava spawnLavaScript;
 
-    public void Awake()
+    public void Start()
     {
         foreach (SpawnRandomEnemies cluster in spawnEnemyScript)
         {
             cluster.SpawnEnemies();
         }
-    }
 
-    public void Start()
-    {
         spawnPlayerScript.SpawnPlayers();
     }
 

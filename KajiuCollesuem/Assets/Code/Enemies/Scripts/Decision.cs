@@ -15,7 +15,7 @@ public class Decision : MonoBehaviour
     private IState _currentState;
 
     public Transform target;
-    private GameObject[] _players;
+    private LayerMask _playerLayer;
 
     public float fScanVision = 30;
 
@@ -23,9 +23,6 @@ public class Decision : MonoBehaviour
     {
         //Get States
         _states = GetComponents<IState>();
-
-        //Get players in the level
-        _players = GameObject.FindGameObjectsWithTag("Player");
 
         //Setup States
         SetupStates();
@@ -40,7 +37,7 @@ public class Decision : MonoBehaviour
         for (int i = _states.Length - 1; i >= 0; i--)
         {
             //Get distance to target
-            float distance = Vector3.Distance(transform.position, target.position);
+            float distance = (target == null ? 999999 : Vector3.Distance(transform.position, target.position));
 
             //Check if can Enter
             if (_states[i].CanEnter(distance))
@@ -72,13 +69,12 @@ public class Decision : MonoBehaviour
         {
             state.Setup(target, anim, agent);
         }
-        //transform.LookAt(target);
     }
 
     private void CheckStates()
     {
         //Get distance to target
-        float distance = Vector3.Distance(transform.position, target.position);
+        float distance = (target == null ? 999999 : Vector3.Distance(transform.position, target.position));
 
         //Return if you can't Exit current state
         if (_currentState.CanExit(distance) == false) return;
@@ -106,7 +102,6 @@ public class Decision : MonoBehaviour
                 //Ensures that hellhound doesn't continue current when out of range
                 SwitchState(GetComponent<Guard>());
         }
-        Debug.Log(distance);
     }
 
     /*Calculate the distance between itself and the player, and updates its target to the nearest player,
@@ -115,24 +110,22 @@ public class Decision : MonoBehaviour
     private void CheckAndUpdateTarget()
     {
         float smallest_distance = 9999;
-        int index = -1;
 
-        for (int i = 0; i < _players.Length; ++i)
+        Collider[] players = Physics.OverlapSphere(transform.position, 20, _playerLayer);
+
+        for (int i = 0; i < players.Length; ++i)
         {
-            float distance = Vector3.Distance(transform.position, _players[i].transform.position);
+            float distance = Vector3.Distance(transform.position, players[i].transform.position);
 
             if (distance < smallest_distance)
             {
                 smallest_distance = distance;
-                index = i;
+                target = players[i].transform;
             }
         }
 
-        if (_currentState.CanEnter(smallest_distance))
-        {
-            target = _players[index].transform;
-            SetupStates();
-        }
+        if (players.Length == 0)
+            target = null;
     }
 
     //Exit old state and Enter new state

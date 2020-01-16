@@ -12,14 +12,13 @@ public class SpawnRandomEnemies : MonoBehaviour
 {
     public GameObject enemyToSpawn;
 
-    private List<Transform> _enemySpawnPoints = new List<Transform>();
+    [SerializeField] private List<Transform> _enemySpawnPoints = new List<Transform>();
 
-    public int enemySpawnCount = 12;
+    [SerializeField] private int enemySpawnCount = 12;
     
-    private int _enemyIndex;
     private int _enemySpawnPointIndex;
 
-    private void Start()
+    private void Awake()
     {
         foreach (Transform children in GetComponentInChildren<Transform>())
         {
@@ -29,7 +28,8 @@ public class SpawnRandomEnemies : MonoBehaviour
 
     public void SpawnEnemies()
     {
-        enemySpawnCount = Random.Range(4, 7);
+        if (enemySpawnCount > _enemySpawnPoints.Count - 1)
+            enemySpawnCount = _enemySpawnPoints.Count - 1;
 
         for (int i = 0; i < enemySpawnCount; i++)
         {

@@ -28,19 +28,22 @@ public class SpawnEditLava : MonoBehaviour
     {
         if (nextActionTime <= Time.time && nextActionTime != -1)
         {
+            // Move lava
             lavaRise();
 
+            // Check if reached target height
             if (transform.position.y >= _heightTransforms[_index].transform.position.y)
             {
                 _index++;
 
                 if (_heightTransforms.Length == _index)
                 {
-                    // Done Move all together
+                    // Reached Last target height
                     nextActionTime = -1;
                 }
                 else
                 {
+                    // Move to next target height after delay
                     nextActionTime = Time.time + _riseStoppedTimes[_index];
                     _velocity = (_heightTransforms[_index].position.y - transform.position.y) / _riseLength[_index];
                 }
@@ -50,7 +53,7 @@ public class SpawnEditLava : MonoBehaviour
 
     public void lavaRise()
     {
-
+        // Lava Movement
         transform.Translate(Vector3.up * _velocity * Time.deltaTime, Space.World);
     }
 }
