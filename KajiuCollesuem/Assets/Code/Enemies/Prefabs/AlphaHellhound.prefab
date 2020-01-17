@@ -293,9 +293,10 @@ GameObject:
   - component: {fileID: 4631561734333330293}
   - component: {fileID: 6055264870543736800}
   - component: {fileID: 8505643812736150526}
+  - component: {fileID: 4300269538923112270}
   - component: {fileID: 2220731904774253932}
+  - component: {fileID: 600237993579588973}
   - component: {fileID: 4888040742626211138}
-  - component: {fileID: 1792442234081811884}
   - component: {fileID: 2220731904774253928}
   - component: {fileID: 2112717384075363666}
   - component: {fileID: 4944307402221784857}
@@ -305,6 +306,7 @@ GameObject:
   - component: {fileID: 6055264869548468583}
   - component: {fileID: 995882804}
   - component: {fileID: 6055264869548468579}
+  - component: {fileID: -869661661656181754}
   m_Layer: 9
   m_Name: Oliver'sAlphaHellhound
   m_TagString: Enemy
@@ -321,7 +323,7 @@ Transform:
   m_GameObject: {fileID: 2220731904774253922}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3.231746, y: 3.231746, z: 3.231746}
   m_Children:
   - {fileID: 3709837229259375349}
   - {fileID: 3750426237684769331}
@@ -382,6 +384,27 @@ CapsuleCollider:
   m_Height: 1.1905245
   m_Direction: 2
   m_Center: {x: 0, y: 0.399, z: 0.19738394}
+--- !u!114 &4300269538923112270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2220731904774253922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b83753b55aad7df4cbc2aec978d99000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cooldown: 1
+  y: 0
+  z: 0
+  jumpSpeed: 5
+  speed: 1
+  halfPlayerHeight: 0
+  _jumpBackRange: 1.3
+  _enabled: 0
+  _isTouchingGround: 0
 --- !u!114 &2220731904774253932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,8 +418,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldown: 1
-  _attackRange: 1.5
+  _maxAttackRange: 1
+  _minAttackRange: 0
   _hitbox: {fileID: 6055264869934658799}
+  _enabled: 0
+--- !u!114 &600237993579588973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2220731904774253922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e397c3cde415364cb2400cb6d4ecd0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strafeMax: 5
+  strafeMin: 3
+  _nextEnterTime: 0
   _enabled: 0
 --- !u!114 &4888040742626211138
 MonoBehaviour:
@@ -418,28 +458,8 @@ MonoBehaviour:
   _fireballRangeMin: 3
   _fireballSpeed: 900
   _oddsOfSkipOver: 0.5
-  _enabled: 0
---- !u!114 &1792442234081811884
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2220731904774253922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 348280d13dbbc3b4f876548f1fee47a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cooldown: 1
-  summonSpots:
-  - {fileID: 6055264869651418221}
-  - {fileID: 6055264870016337778}
-  - {fileID: 6055264870014892492}
-  gruntPrefab: {fileID: 2220731904774253922, guid: 583a8068feec8f44cbd9483840e78a3e,
-    type: 3}
-  _summonRangeMax: 10
-  _summonRangeMin: 8
+  maxRightDir: 0
+  maxLeftDir: 0
   _enabled: 0
 --- !u!114 &2220731904774253928
 MonoBehaviour:
@@ -454,6 +474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enabled: 0
+  retribution: 0
   agroRange: 12
   agroLostRange: 16
 --- !u!114 &2112717384075363666
@@ -510,6 +531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enabled: 0
+  cell: {fileID: 7865935160635239468, guid: 8991995bcdcc5f9448ce755d60709332, type: 3}
 --- !u!114 &6055264869548468582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -522,7 +544,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02f77a3aaf9234e40a6134b81187d052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 8582934654442581039, guid: 8e7d410007ab955488e1c836a456382a, type: 3}
+  scanVision: 30
 --- !u!114 &6055264869548468583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -535,7 +558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af05573836c31bc498a615a7193d76b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startHealth: 25
+  startHealth: 100
   healthDisplayLength: 2
   enemyHealthBar: {fileID: 6055264869823495981}
 --- !u!114 &995882804
@@ -573,6 +596,18 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 3
+--- !u!114 &-869661661656181754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2220731904774253922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7172b68f291f6b142b20d0ea3692a5b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2464890274862249807
 GameObject:
   m_ObjectHideFlags: 0

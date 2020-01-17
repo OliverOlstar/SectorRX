@@ -31,10 +31,10 @@ public class PlasmaBreath : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _SpawnedLaser = Instantiate(laserPrefab, spawnPoint.transform) as GameObject;
         chargeTimer = 0;
+        _SpawnedLaser = Instantiate(laserPrefab, spawnPoint.transform) as GameObject;
         _PlayerMov = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementComponent>();
-        _EnemyTest = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyAttributes>();
+        //_EnemyTest = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyAttributes>();
     }
 
     //Get a normalized horizontal Vector
@@ -51,8 +51,8 @@ public class PlasmaBreath : MonoBehaviour
         //If assigned key is pressed and not attacking, a timer starts to increase.
         if(Input.GetKey(KeyCode.Z) && laserOn == false)
         {
-            chargeTimer += 0.6f * Time.deltaTime;
             _PlayerMov.disableMovement = true;
+            chargeTimer += 0.6f * Time.deltaTime;
             playerPos.forward = Vector3.Slerp(Horizontalize(playerPos.forward), Horizontalize(mainCam.transform.forward), Time.deltaTime * _RotateDampening);
         }
 
@@ -99,9 +99,9 @@ public class PlasmaBreath : MonoBehaviour
         if (chargeTimer <= 0)
         {
             DisableLaser();
+            chargeTimer = 0;
             laserOn = false;
             firstPersonOn = false;
-            chargeTimer = 0;
             _PlayerMov.disableMovement = false;
         }
     }
@@ -138,10 +138,10 @@ public class PlasmaBreath : MonoBehaviour
     //Enemies caught within the beam take damage.
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Enemy")
-        {
-            Debug.Log("Enemy Blasted");
-            _EnemyTest.TakeDamage(25, true);
-        }
+        //if (other.gameObject.tag == "Enemy")
+        //{
+        //    Debug.Log("Enemy Blasted");
+        //    _EnemyTest.TakeDamage(25, true);
+        //}
     }
 }

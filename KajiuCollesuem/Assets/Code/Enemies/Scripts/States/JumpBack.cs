@@ -26,6 +26,8 @@ public class JumpBack : MonoBehaviour, IState
         rb = GetComponent<Rigidbody>();
     }
 
+    public void UpdateTarget(Transform pTarget) => _target = pTarget;
+
     public void Enter()
     {
         //Debug.Log("Jump back: Enter");
@@ -59,7 +61,7 @@ public class JumpBack : MonoBehaviour, IState
     public bool CanExit(float pDistance)
     {
         //Debug.Log("Jump back: CanExit - " + (_enabled == false));
-        return pDistance > _jumpBackRange && _isTouchingGround;
+        return pDistance > _jumpBackRange;
     }
 
     public void Tick()
@@ -72,17 +74,20 @@ public class JumpBack : MonoBehaviour, IState
         if (_enabled)
         {
             //Alternate jump solution
-            /*y += Time.deltaTime;
+            y += Time.deltaTime;
             z += Time.deltaTime;
-            float time = Time.deltaTime * 25;
+            float time = Time.deltaTime * speed;
 
             if (transform.position.y > 1)
                 transform.Translate(new Vector3(0, -1 * y * time, z * time));
             else
-                transform.Translate(new Vector3(0, y * time, z * time));*/
+                transform.Translate(new Vector3(0, y * time, z * time));
+
+            /*transform.position = Vector3.Lerp(transform.position, transform.position + Vector3.forward, 
+                Time.deltaTime * 5);*/
 
             //Calculate end jump position
-            Vector3 move = Vector3.right;
+            /*Vector3 move = Vector3.right;
             move += Vector3.back;
             move.y = 0;
             Vector3 targetPosition = rb.position + move;
@@ -96,7 +101,7 @@ public class JumpBack : MonoBehaviour, IState
             
             rb.MovePosition(targetPosition);
             //transform.Translate(targetPosition);
-            _isTouchingGround = _isOnGround();
+            _isTouchingGround = _isOnGround();*/
         }
     }
 

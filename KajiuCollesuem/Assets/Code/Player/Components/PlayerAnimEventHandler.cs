@@ -24,7 +24,7 @@ public class PlayerAnimEventHandler : MonoBehaviour
     {
         hitbox.SetActive(true);
         // TODO Change This later :D
-        playerHitbox.SetDamage(0);
+        playerHitbox.SetDamage(1);
     }
 
     // Attack State
