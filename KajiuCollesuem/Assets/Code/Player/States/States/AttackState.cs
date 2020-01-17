@@ -13,6 +13,9 @@ public class AttackState : BaseState
 
     private float AttackStateReturnDelayLength = 0.6f;
 
+    private bool onHolding = false;
+    
+
     public AttackState(PlayerStateController controller) : base(controller.gameObject)
     {
         stateController = controller;
@@ -78,13 +81,15 @@ public class AttackState : BaseState
         return null;
     }
     public bool attacking = false;
-    private bool heldAttack = false;
+    private bool heldAttack = true;
     float animSpeed = 0f;
+    Animation animmmm;
 
     private void CheckForAttack()
     {
         if (numberOfClicks <= 2)
         {
+
             if (stateController.lightAttackinput == 1)
             {
                 lastClickedTime = Time.time;
@@ -96,7 +101,43 @@ public class AttackState : BaseState
                 stateController._animHandler.StartAttack(boolName);
             }
 
-            if (stateController.heavyAttackinput == 1)
+            else if (numberOfClicks <= 2)
+            {
+                // On Pressed
+                if (stateController.heavyAttackinput == 1 && onHolding == false)
+                {
+                    lastClickedTime = Time.time;
+                    numberOfClicks++;
+
+                    ClearInputs();
+                    stateController._animHandler.ClearAttackBools();
+                    string boolName = "Triangle" + (numberOfClicks).ToString();
+                    stateController._animHandler.StartAttack(boolName);
+                    onHolding = true;
+                    
+                    //animmmm["Triangle Attack"].speed = 0.1f;
+                }
+                // On Hold
+                else if (stateController.heavyAttackinput == 1)
+                {
+
+                }
+                // On Release
+                else if (stateController.heavyAttackinput == 0 && onHolding == true)
+                {
+                   
+
+                    ClearInputs();
+                    stateController._animHandler.ClearAttackBools();
+                    string boolName = "Triangle" + (numberOfClicks).ToString();
+                    stateController._animHandler.StartAttack(boolName);
+                    onHolding = false;
+                   
+                    //animmmm["Triangle Attack"].speed = 1;
+                }
+            }
+
+            else if (stateController.heavyAttackinput == 1 && onHolding == false)
             {
                 lastClickedTime = Time.time;
                 numberOfClicks++;
@@ -106,6 +147,8 @@ public class AttackState : BaseState
                 string boolName = "Triangle" + (numberOfClicks).ToString();
                 stateController._animHandler.StartAttack(boolName);
             }
+
+
 
             //else if (stateController.heavyAttackinput == 1 && heldAttack == false)
             //{
