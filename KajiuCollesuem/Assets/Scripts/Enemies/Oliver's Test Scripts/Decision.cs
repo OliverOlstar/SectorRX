@@ -142,7 +142,7 @@ public class Decision : MonoBehaviour
             SetupStates();
         }
         
-        if (Vector3.Angle(transform.forward, target.position - transform.position) < 1
+        /*if (Vector3.Angle(transform.forward, target.position - transform.position) < 1
             && _targetSwitch)
         {
             GetComponent<Strafe>().Resume();
@@ -151,7 +151,7 @@ public class Decision : MonoBehaviour
         else if (_targetSwitch)
             transform.rotation = Quaternion.Lerp(transform.rotation,
                 Quaternion.LookRotation(target.position - transform.position),
-                Time.deltaTime * 5);
+                Time.deltaTime * 5);*/
     }
 
     //Exit old state and Enter new state
