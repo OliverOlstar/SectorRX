@@ -26,6 +26,8 @@ public class JumpBack : MonoBehaviour, IState
         rb = GetComponent<Rigidbody>();
     }
 
+    public void UpdateTarget(Transform pTarget) => _target = pTarget;
+
     public void Enter()
     {
         //Debug.Log("Jump back: Enter");

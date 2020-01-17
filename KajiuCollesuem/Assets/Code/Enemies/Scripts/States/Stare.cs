@@ -20,6 +20,8 @@ public class Stare : MonoBehaviour, IState
         _target = pTarget;
     }
 
+    public void UpdateTarget(Transform pTarget) => _target = pTarget;
+
     public void Enter()
     {
         _enabled = true;

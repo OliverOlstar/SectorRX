@@ -15,7 +15,7 @@ public class Decision : MonoBehaviour
     private IState _currentState;
 
     public Transform target;
-    private LayerMask _playerLayer;
+    [SerializeField] private LayerMask _playerLayer;
 
     public float fScanVision = 30;
 
@@ -109,23 +109,39 @@ public class Decision : MonoBehaviour
     Task 1: Grunts targeting is updated to allow for switching of targets*/
     private void CheckAndUpdateTarget()
     {
-        float smallest_distance = 9999;
-
+        Transform previousTarget = target;
+        float smallestDistance = 999999;
         Collider[] players = Physics.OverlapSphere(transform.position, 20, _playerLayer);
 
-        for (int i = 0; i < players.Length; ++i)
+        if (players.Length > 0)
         {
-            float distance = Vector3.Distance(transform.position, players[i].transform.position);
+            target = players[0].transform;
 
-            if (distance < smallest_distance)
+            for (int i = 0; i < players.Length; ++i)
             {
-                smallest_distance = distance;
-                target = players[i].transform;
+                float distance = Vector3.Distance(transform.position, players[i].transform.position);
+
+                if (distance < smallestDistance)
+                {
+                    smallestDistance = distance;
+                    target = players[i].transform;
+                }
             }
         }
-
-        if (players.Length == 0)
+        else
+        {
             target = null;
+        }
+           
+        if (previousTarget != target)
+        {
+            foreach (IState state in _states)
+            {
+                state.UpdateTarget(target);
+            }
+
+            previousTarget = target;
+        }
     }
 
     //Exit old state and Enter new state

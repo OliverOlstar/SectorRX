@@ -33,6 +33,8 @@ public class Fireball : MonoBehaviour, IState
         _target = pTarget;
     }
 
+    public void UpdateTarget(Transform pTarget) => _target = pTarget;
+
     public void Enter()
     {
         //Debug.Log("Fireball: Enter");

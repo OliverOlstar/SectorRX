@@ -19,6 +19,15 @@ public class Strafe : MonoBehaviour, IState
 
     [SerializeField] private bool _enabled = false;
 
+    public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
+    {
+        _target = pTarget;
+        _anim = pAnim;
+        _agent = pAgent;
+    }
+
+    public void UpdateTarget(Transform pTarget) => _target = pTarget;
+
     public bool CanEnter(float pDistance)
     {
        if (Time.time >= _nextEnterTime && pDistance < strafeMax && pDistance > strafeMin)
@@ -44,13 +53,6 @@ public class Strafe : MonoBehaviour, IState
     {
         _enabled = false;
         StopCoroutine("StrafeMovement");
-    }
-
-    public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
-    {
-        _target = pTarget;
-        _anim = pAnim;
-        _agent = pAgent;
     }
 
     public void Tick()

@@ -24,6 +24,8 @@ public class Guard : MonoBehaviour, IState
         _home = transform.position;
     }
 
+    public void UpdateTarget(Transform pTarget) { }
+
     public void Enter()
     {
         _enabled = true;
