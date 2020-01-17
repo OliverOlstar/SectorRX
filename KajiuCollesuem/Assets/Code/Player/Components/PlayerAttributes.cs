@@ -80,6 +80,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         setPower(0);
     }
 
+    #region Get & Sets
     //GET
     public int getHealth() { return _health; }
     public int getShield() { return _shield; }
@@ -89,7 +90,9 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     public void setHealth(int pHealth) { modifyHealth(pHealth - _health); }
     public void setShield(int pShield) { modifyShield(pShield - _shield); }
     public void setPower(int pPower) { modifyPower(pPower - _power); }
+    #endregion
 
+    #region Modify Vars
     //MODIFY VARS ///////////////////////////////////////////////////////////////////////////////////////////
     public void modifyHealth(int x)
     {
@@ -160,7 +163,9 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             powerRect.sizeDelta = new Vector2(_maxPower * barLengthMultiplier, BAR_HEIGHT);
         _powerSlider.maxValue = _maxPower;
     }
+    #endregion
 
+    #region General Functions
     //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
     public bool TakeDamage(int pAmount, bool pReact)
     {
@@ -233,7 +238,9 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             StartCoroutine("powerLossStartDelay");
         }
     }
+    #endregion
 
+    #region Coroutines
     //COROUTINES ///////////////////////////////////////////////////////////////////////////////////////////
     //Shield
     private IEnumerator shieldRegenStartDelay()
@@ -267,4 +274,5 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             yield return new WaitForSeconds(_powerLossDelaySeconds);
         }
     }
+    #endregion
 }
