@@ -37,7 +37,7 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         _decision = GetComponent<Decision>();
         _deadState = GetComponent<Dead>();
         _stunnedState = GetComponent<Stunned>();
-        _playerHUD = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>();
+        //_playerHUD = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>();
     }
 
     public bool TakeDamage(int pAmount, bool pReact)

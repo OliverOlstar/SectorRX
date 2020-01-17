@@ -41,6 +41,8 @@ public class Patrol : MonoBehaviour, IState
         _currentPatrolDest = _patrolGraph.GetNodes()[0].GetData();
     }
 
+    public void UpdateTarget(Transform pTarget) { }
+
     public void Enter()
     {
         _enabled = true;

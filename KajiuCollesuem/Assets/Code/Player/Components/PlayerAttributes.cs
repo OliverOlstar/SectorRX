@@ -11,7 +11,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     [Header("Maxes")]
     [SerializeField] private int _maxHealth = 100;
     [SerializeField] private int _maxShield = 100;
-    [SerializeField] private int _maxPower = 10;
+    [SerializeField] private int _maxPower = 100;
 
     private int _health;
     private int _shield;
@@ -39,9 +39,9 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     const int BAR_HEIGHT = 20;
     public float barLengthMultiplier = 1.5f;
 
-    public bool IsDead() { return true; }
+    public bool IsDead() { return false; }
 
-    void Start()
+    void Awake()
     {
         _anim = GetComponentInChildren<AnimHandler>();
 
@@ -80,6 +80,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         setPower(0);
     }
 
+    #region Get & Sets
     //GET
     public int getHealth() { return _health; }
     public int getShield() { return _shield; }
@@ -89,7 +90,9 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     public void setHealth(int pHealth) { modifyHealth(pHealth - _health); }
     public void setShield(int pShield) { modifyShield(pShield - _shield); }
     public void setPower(int pPower) { modifyPower(pPower - _power); }
+    #endregion
 
+    #region Modify Vars
     //MODIFY VARS ///////////////////////////////////////////////////////////////////////////////////////////
     public void modifyHealth(int x)
     {
@@ -160,10 +163,14 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             powerRect.sizeDelta = new Vector2(_maxPower * barLengthMultiplier, BAR_HEIGHT);
         _powerSlider.maxValue = _maxPower;
     }
+    #endregion
 
+    #region General Functions
     //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
     public bool TakeDamage(int pAmount, bool pReact)
     {
+        Debug.Log("PlayerAttributes: TakeDamage");
+
         // Return if already dead
         if (_health <= 0)
             return true;
@@ -233,7 +240,9 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             StartCoroutine("powerLossStartDelay");
         }
     }
+    #endregion
 
+    #region Coroutines
     //COROUTINES ///////////////////////////////////////////////////////////////////////////////////////////
     //Shield
     private IEnumerator shieldRegenStartDelay()
@@ -267,4 +276,5 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             yield return new WaitForSeconds(_powerLossDelaySeconds);
         }
     }
+    #endregion
 }

@@ -138,10 +138,10 @@ public class PlasmaBreath : MonoBehaviour
     //Enemies caught within the beam take damage.
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Enemy")
-        {
-            Debug.Log("Enemy Blasted");
-            _EnemyTest.TakeDamage(25, true);
-        }
+        //if (other.gameObject.tag == "Enemy")
+        //{
+        //    Debug.Log("Enemy Blasted");
+        //    _EnemyTest.TakeDamage(25, true);
+        //}
     }
 }

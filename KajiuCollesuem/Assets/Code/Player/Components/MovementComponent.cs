@@ -23,7 +23,6 @@ public class MovementComponent : MonoBehaviour
     void Start()
     {
         _StateController = GetComponent<PlayerStateController>();
-        _StateController.inputActions.Player.Jump.performed += ctx => Jump();
     }
 
     void Update()
@@ -51,7 +50,7 @@ public class MovementComponent : MonoBehaviour
             _StateController.LastMoveDirection = new Vector2(move.x, move.z).normalized;
     }
 
-    private void Jump()
+    private void OnJump()
     {
         if (OnGround && disableMovement == false)
         {

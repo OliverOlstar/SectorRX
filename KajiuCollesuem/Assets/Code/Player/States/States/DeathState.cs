@@ -14,12 +14,14 @@ public class DeathState : BaseState
 
     public override void Enter()
     {
+        Debug.Log("DeathState: Enter");
         //stateController._respawnComponent.Dead();
         stateController._animHandler.Dead();
     }
 
     public override void Exit()
     {
+        Debug.Log("DeathState: Exit");
         stateController._animHandler.Respawn();
     }
 

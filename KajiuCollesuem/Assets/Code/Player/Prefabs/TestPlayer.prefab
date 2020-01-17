@@ -48,7 +48,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1048502806
 Transform:
   m_ObjectHideFlags: 0
@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stateController: {fileID: 0}
+  _anim: {fileID: 0}
   attackState: 0
   _rotationDampening: 11
   _animSpeedDampening: 5
@@ -232,10 +233,10 @@ GameObject:
   - component: {fileID: 806430450}
   - component: {fileID: 17874600}
   - component: {fileID: 806430457}
-  - component: {fileID: 4086892133307703399}
   - component: {fileID: 806430449}
   - component: {fileID: 17874588}
   - component: {fileID: 17874586}
+  - component: {fileID: 7060295865598958045}
   m_Layer: 8
   m_Name: TestPlayer
   m_TagString: Player
@@ -443,23 +444,6 @@ MonoBehaviour:
   unfocusedOnScreen: 0
   idlePreset: {fileID: 11400000, guid: 67ad0d9b288e04043ae10b57d85fe6c2, type: 2}
   TimeUntilIdle: 30
---- !u!114 &4086892133307703399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8582934654442581043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57df21d598cd16c4983cce38a4b7e9a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  core: {fileID: 0}
-  powerPrompt: {fileID: 0}
-  cellPrompt: {fileID: 0}
-  firstCore: 0
-  firstCell: 0
 --- !u!114 &806430449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -482,7 +466,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8582934654442581043}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a8316655d9c0f64fbfaf3df571d7a19, type: 3}
   m_Name: 
@@ -498,7 +482,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8582934654442581043}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d08451b80cca4e498186f24c8477e76, type: 3}
   m_Name: 
@@ -511,7 +495,35 @@ MonoBehaviour:
   chargeTimer: 0
   laserOn: 0
   firstPersonOn: 0
-  _RotateDampening: 1
+  _RotateDampening: 5
+--- !u!114 &7060295865598958045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8582934654442581043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 8bd9e9c7448227e43855aac63b198dd4,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1001 &1349502261
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerStateController : MonoBehaviour
 {
@@ -27,8 +28,6 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public float lightAttackinput = -1.0f;
     // 0 - Released, 1 - Pressed
     [HideInInspector] public float heavyAttackinput = -1.0f;
-
-    [HideInInspector] public InputPlayer inputActions;
 
     [Header("State Components")]
     [HideInInspector] public PlayerStateMachine _stateMachine;
@@ -69,18 +68,15 @@ public class PlayerStateController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _Camera = Camera.main.transform;
         _playerCamera = _Camera.GetComponentInParent<PlayerCamera>();
-        inputActions = new InputPlayer();
-
-        // Setup Inputs
-        inputActions.Player.Camera.performed += ctx => mouseInput = ctx.ReadValue<Vector2>();
-        inputActions.Player.Movement.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
-        inputActions.Player.Dodge.performed += ctx => dodgeInput = ctx.ReadValue<float>();
-        inputActions.Player.LightAttack.performed += ctx => lightAttackinput = ctx.ReadValue<float>();
-        inputActions.Player.HeavyAttack.performed += ctx => heavyAttackinput = ctx.ReadValue<float>();
-
-        // Last Input Time
-        inputActions.Player.AnyInput.performed += ctx => LastInputTime = Time.time;
     }
+
+    // List for inputs
+    private void OnCamera(InputValue ctx) => mouseInput = ctx.Get<Vector2>();
+    private void OnMovement(InputValue ctx) => moveInput = ctx.Get<Vector2>();
+    private void OnDodge(InputValue ctx) => dodgeInput = ctx.Get<float>();
+    private void OnLightAttack(InputValue ctx) => lightAttackinput = ctx.Get<float>();
+    private void OnHeavyAttack(InputValue ctx) => heavyAttackinput = ctx.Get<float>();
+    private void OnAnyInput() => LastInputTime = Time.time;
 
     private void FixedUpdate()
     {
@@ -92,12 +88,12 @@ public class PlayerStateController : MonoBehaviour
 
     private void OnEnable()
     {
-        inputActions.Enable();
+        //inputActions.Enable();
     }
 
     private void OnDisable()
     {
-        inputActions.Disable();
+        //inputActions.Disable();
     }
 
     void InitializeStateMachine()
