@@ -6,7 +6,7 @@ using UnityEngine;
 public class AttackState : BaseState
 {
     PlayerStateController stateController;
-    
+
     [SerializeField] private int numberOfClicks = 0;
     [SerializeField] private float lastClickedTime = 0;
     [SerializeField] private float maxComboDelay = 0.9f;
@@ -14,7 +14,8 @@ public class AttackState : BaseState
     private float AttackStateReturnDelayLength = 0.6f;
 
     private bool onHolding = false;
-    
+    public float chargeTimer = 0f;
+
 
     public AttackState(PlayerStateController controller) : base(controller.gameObject)
     {
@@ -26,6 +27,7 @@ public class AttackState : BaseState
         Debug.Log("AttackState: Enter");
         //stateController._hitboxComponent.gameObject.SetActive(true); /* Handled by animation events */
 
+        chargeTimer = 0f;
         CheckForAttack();
     }
 
@@ -95,49 +97,32 @@ public class AttackState : BaseState
                 lastClickedTime = Time.time;
                 numberOfClicks++;
 
-                ClearInputs();
+                
                 stateController._animHandler.ClearAttackBools();
                 string boolName = "Square" + (numberOfClicks).ToString();
                 stateController._animHandler.StartAttack(boolName);
+                ClearInputs();
             }
 
-            else if (numberOfClicks <= 2)
+            //else if (stateController.heavyAttackinput == 1 && onHolding == false)
+            //{
+            //    lastClickedTime = Time.time;
+            //    numberOfClicks++;
+
+            //    ClearInputs();
+            //    stateController._animHandler.ClearAttackBools();
+            //    string boolName = "Triangle" + (numberOfClicks).ToString();
+            //    stateController._animHandler.StartAttack(boolName);
+            //}
+
+            // On Pressed
+            if (stateController.heavyAttackinput == 1)
             {
-                // On Pressed
-                if (stateController.heavyAttackinput == 1 && onHolding == false)
-                {
-                    lastClickedTime = Time.time;
-                    numberOfClicks++;
+                chargeTimer += Time.deltaTime;
 
-                    ClearInputs();
-                    stateController._animHandler.ClearAttackBools();
-                    string boolName = "Triangle" + (numberOfClicks).ToString();
-                    stateController._animHandler.StartAttack(boolName);
-                    onHolding = true;
-                    
-                    //animmmm["Triangle Attack"].speed = 0.1f;
-                }
-                // On Hold
-                else if (stateController.heavyAttackinput == 1)
-                {
-
-                }
-                // On Release
-                else if (stateController.heavyAttackinput == 0 && onHolding == true)
-                {
-                   
-
-                    ClearInputs();
-                    stateController._animHandler.ClearAttackBools();
-                    string boolName = "Triangle" + (numberOfClicks).ToString();
-                    stateController._animHandler.StartAttack(boolName);
-                    onHolding = false;
-                   
-                    //animmmm["Triangle Attack"].speed = 1;
-                }
             }
 
-            else if (stateController.heavyAttackinput == 1 && onHolding == false)
+            else if (stateController.heavyAttackinput == 1 && chargeTimer >= 2f)
             {
                 lastClickedTime = Time.time;
                 numberOfClicks++;
@@ -146,69 +131,43 @@ public class AttackState : BaseState
                 stateController._animHandler.ClearAttackBools();
                 string boolName = "Triangle" + (numberOfClicks).ToString();
                 stateController._animHandler.StartAttack(boolName);
+
+                chargeTimer = 0;
             }
+            // On Release
+            if (stateController.heavyAttackinput == 0 && chargeTimer <= 0.2f)
+                {
+                    lastClickedTime = Time.time;
+                    numberOfClicks++;
+
+                    ClearInputs();
+                    stateController._animHandler.ClearAttackBools();
+                    string boolName = "Triangle" + (numberOfClicks).ToString();
+                    stateController._animHandler.StartAttack(boolName);
+
+                    chargeTimer = 0;
 
 
+                    //animmmm["Triangle Attack"].speed = 1;
+                }
 
-            //else if (stateController.heavyAttackinput == 1 && heldAttack == false)
-            //{
-            //    lastClickedTime = Time.time;
-            //    numberOfClicks++;
+                else if (stateController.heavyAttackinput == 0 && chargeTimer > 0.2f)
+                {
+                    if (chargeTimer < 0.8f)
+                    {
+                        ClearInputs();
+                        chargeTimer = 0;
+                    }
+                    //animmmm["Triangle Attack"].speed = 1;
+                }
 
-
-            //    stateController._animHandler.ClearAttackBools();
-            //    string boolName = "Triangle" + (numberOfClicks).ToString();
-            //    stateController._animHandler.StartAttack(boolName);
-
-            //    heldAttack = true;
-            //    animSpeed = stateController._animHandler._anim.speed;
-            //}
-            //else if(stateController.heavyAttackinput == 1 && heldAttack == true)
-            //{
-            //    Debug.Log("HELD ATTACK");
-            //    //count here
-            //    if(stateController._animHandler._anim.speed > 0.1f)
-            //    {
-            //        stateController._animHandler._anim.speed -= 0.5f * Time.deltaTime;
-            //        //count reaches certain point
-            //        //slow animation till certain point
-            //    }
-            //}
-
-            //else if (stateController.heavyAttackinput == 0)
-            //{
-            //    stateController._animHandler._anim.speed = animSpeed;
-            //    animSpeed = 0f;
-            //    heldAttack = false;
-
-            //    ClearInputs();
-            //}
-
+            
+            
 
         }
 
-        //if (stateController.powerInput > 0)
-        //{
-        //    // run code from the power component
-        //    int whichPower = stateController._powerComponent.UsingPower(stateController.powerInput);
-
-        //    if (whichPower == -1)
-        //    {
-        //        done = true;
-        //        Debug.Log("No In Slot Power");
-        //    }
-        //    else if (whichPower == -2)
-        //    {
-        //        done = true;
-        //        Debug.Log("Not Enough Power");
-        //    }
-        //    else
-        //    {
-        //        stateController._animHandler.StartPower(whichPower);
-        //        combo = 3;
-        //    }
-        //}
     }
+
 
     private void ClearInputs()
     {

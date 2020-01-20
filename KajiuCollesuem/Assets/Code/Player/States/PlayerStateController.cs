@@ -89,6 +89,7 @@ public class PlayerStateController : MonoBehaviour
     private void OnEnable()
     {
         //inputActions.Enable();
+
     }
 
     private void OnDisable()
