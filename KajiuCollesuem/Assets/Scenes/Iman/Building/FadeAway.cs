@@ -13,7 +13,7 @@ public class FadeAway : MonoBehaviour
 
     IEnumerator Fade()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(SecondsBeforeFade);
         for (float ft = 1f; ft >= 0; ft -= 0.01f)
         {
             Color c = GetComponent<Renderer>().material.color;
