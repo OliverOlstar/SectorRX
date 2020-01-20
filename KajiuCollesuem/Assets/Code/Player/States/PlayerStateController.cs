@@ -41,6 +41,7 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public PlayerAttributes _playerAttributes;
     [HideInInspector] public AnimHandler _animHandler;
     [HideInInspector] public PlayerCamera _playerCamera;
+    [HideInInspector] public PauseMenu _pauseMenu;
 
     [HideInInspector] public Rigidbody _rb;
     [HideInInspector] public Transform _Camera;
@@ -68,6 +69,8 @@ public class PlayerStateController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _Camera = transform.parent.GetComponentInChildren<Camera>().transform;
         _playerCamera = _Camera.GetComponentInParent<PlayerCamera>();
+
+        _pauseMenu = transform.parent.GetComponentInChildren<PauseMenu>();
     }
 
     // List for inputs
@@ -77,6 +80,8 @@ public class PlayerStateController : MonoBehaviour
     private void OnLightAttack(InputValue ctx) => lightAttackinput = ctx.Get<float>();
     private void OnHeavyAttack(InputValue ctx) => heavyAttackinput = ctx.Get<float>();
     private void OnAnyInput() => LastInputTime = Time.time;
+
+    private void OnPause() => _pauseMenu.TogglePause();
 
     private void FixedUpdate()
     {
