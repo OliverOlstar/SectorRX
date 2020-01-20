@@ -148,7 +148,7 @@ public class HUDManager : MonoBehaviour
         Time.timeScale = 1;
         pauseMenu.pause = !pauseMenu.pause;
         mainCam.CameraDisabled = !pause;
-        //input.inputDisabled = !pause;
+        pauseMenu._PInput.enabled = !pauseMenu._PInput.enabled;
         Cursor.lockState = CursorLockMode.Locked;
     }
 }

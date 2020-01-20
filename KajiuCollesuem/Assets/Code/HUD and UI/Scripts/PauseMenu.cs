@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -10,15 +11,16 @@ public class PauseMenu : MonoBehaviour
     public GameObject powUpgrade;
     public GameObject statUpgrade;
     [SerializeField] private PlayerCamera mainCam;
-    //[SerializeField] private PlayerInputHandler input;
-
+    public PlayerInput _PInput;
+    
     // Use this for initialization
     void Start()
     {
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
         pause = false;
         pauseScreen.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
+        _PInput = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>();
     }
 
     // Update is called once per frame
@@ -32,6 +34,7 @@ public class PauseMenu : MonoBehaviour
                 powUpgrade.SetActive(false);
                 statUpgrade.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;
+                _PInput.enabled = _PInput.enabled;
             }
         }
 
@@ -41,10 +44,10 @@ public class PauseMenu : MonoBehaviour
     {
         pause = !pause;
 
-        Time.timeScale = pause ? 0 : 1;
+        //Time.timeScale = pause ? 0 : 1;
         pauseScreen.SetActive(pause);
         Cursor.lockState = pause ? CursorLockMode.None : CursorLockMode.Locked;
         mainCam.CameraDisabled = pause;
-        //input.inputDisabled = pause;
+        _PInput.enabled = !_PInput.enabled;
     }
 }

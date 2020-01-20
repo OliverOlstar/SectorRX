@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class MatchManager : MonoBehaviour
 {
-    public SpawnRandomPlayers spawnPlayerScript;
+    public PlayerSpawn spawnPlayerScript;
     public SpawnRandomEnemies[] spawnEnemyScript;
     public SpawnEditLava spawnLavaScript;
 
@@ -21,7 +21,7 @@ public class MatchManager : MonoBehaviour
             cluster.SpawnEnemies();
         }
 
-        spawnPlayerScript.SpawnPlayers();
+        spawnPlayerScript.SpawnPlayer();
     }
 
     public void Update()
