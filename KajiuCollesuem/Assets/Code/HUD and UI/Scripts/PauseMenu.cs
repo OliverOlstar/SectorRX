@@ -19,7 +19,7 @@ public class PauseMenu : MonoBehaviour
         //Time.timeScale = 1;
         pause = false;
         pauseScreen.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
         _PInput = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>();
     }
 

@@ -66,7 +66,7 @@ public class PlayerStateController : MonoBehaviour
         InitializeStateMachine();
 
         _rb = GetComponent<Rigidbody>();
-        _Camera = Camera.main.transform;
+        _Camera = transform.parent.GetComponentInChildren<Camera>().transform;
         _playerCamera = _Camera.GetComponentInParent<PlayerCamera>();
     }
 
