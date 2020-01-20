@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {
-    public RectTransform mainMenu, optionsMenu, audioMenu, gameplayMenu, videoMenu;
+    public RectTransform mainMenu, optionsMenu, audioMenu, gameplayMenu, videoMenu, playerInputMenu;
 
     public void Start()
     {
@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour
         videoMenu.DOAnchorPos(new Vector2(1225, -755), 0.4f);
         gameplayMenu.DOAnchorPos(new Vector2(2450, 0), 0.4f);
         mainMenu.DOAnchorPos(new Vector2(44, 0), 0.4f);
+        playerInputMenu.DOAnchorPos(new Vector2(44, 755), 0.4f);
     }
 
     public void GoToOptions()
@@ -58,5 +59,11 @@ public class UIManager : MonoBehaviour
         videoMenu.DOAnchorPos(new Vector2(44, 0), 0.4f);
         gameplayMenu.DOAnchorPos(new Vector2(1225, 755), 0.4f);
         mainMenu.DOAnchorPos(new Vector2(-1225, 755), 0.4f);
+    }
+
+    public void GoToPlayer()
+    {
+        playerInputMenu.DOAnchorPos(new Vector2(44, 0), 0.4f);
+        mainMenu.DOAnchorPos(new Vector2(44, -755), 0.4f);
     }
 }
