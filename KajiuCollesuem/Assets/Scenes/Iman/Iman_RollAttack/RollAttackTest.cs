@@ -32,6 +32,7 @@ public class RollAttackTest : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
         sphere = GetComponent<SphereCollider>();
+        RollVisual.SetActive(false);
     }
 
     // Update is called once per frame
