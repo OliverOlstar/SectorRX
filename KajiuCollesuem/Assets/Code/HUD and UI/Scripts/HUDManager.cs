@@ -105,34 +105,6 @@ public class HUDManager : MonoBehaviour
         powerUpgrade.SetActive(true);
     }
 
-    //Menus and Settings Management
-    public void GoToOptions()
-    {
-        pause.SetActive(false);
-        //option.SetActive(true);
-        //ability.SetActive(false);
-        //videoOP.SetActive(false);
-        //audioOP.SetActive(false);
-    }
-
-    //public void GoToVideoOP()
-    //{
-    //    option.SetActive(false);
-    //    videoOP.SetActive(true);
-    //}
-
-    //public void GoToAudioOP()
-    //{
-    //    option.SetActive(false);
-    //    audioOP.SetActive(true);
-    //}
-
-    //public void GoToSkills()
-    //{
-    //    pause.SetActive(false);
-    //    ability.SetActive(true);
-    //}
-
     public void BackToPause()
     {
         pause.SetActive(true);
