@@ -71,7 +71,6 @@ public class AttackState : BaseState
     public bool attacking = false;
     private bool heldAttack = true;
     float animSpeed = 0f;
-    Animation animmmm;
     
 
     //private void CheckForAttack2()
@@ -90,7 +89,7 @@ public class AttackState : BaseState
 
     
 
-    private void CheckForAttack()
+    public void CheckForAttack()
     {
         if (numberOfClicks <= 2)
         {
@@ -104,7 +103,7 @@ public class AttackState : BaseState
 
                 onHolding = false;
 
-                animSpeed = 1f;
+                stateController._animHandler.changeAnimSpeed(1.0f);
             }
 
             // On Holding Heavy
@@ -114,11 +113,9 @@ public class AttackState : BaseState
 
                 if (chargeTimer >= 0.1f)
                 {
-                    string animBoolName = "Vertical" + (numberOfClicks + 1).ToString();
-                    animmmm[animBoolName].speed = 0f;
+                    //string animBoolName = "Vertical" + (numberOfClicks + 1).ToString();
+                    stateController._animHandler.changeAnimSpeed(0.0f);
                 }    
-                
-                // Animation speed = 0;
             }
 
             // On Pressed Heavy (Called Once)

@@ -250,7 +250,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""619c7297-af91-4108-8017-e71a137f2d71"",
                     ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": ""Hold(duration=2)"",
+                    ""interactions"": ""Press(behavior=2)"",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""HeavyAttack"",
