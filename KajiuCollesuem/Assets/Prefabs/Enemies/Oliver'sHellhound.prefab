@@ -460,6 +460,7 @@ MonoBehaviour:
   _nextEnterTime: 0
   _fStrafeSpeed: 0
   _enabled: 0
+  _pause: 0
 --- !u!114 &698450505057935209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -474,6 +475,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fMaxDashRange: 2
   _fMinDashRange: 1.6
+  _fForce: 0
   _enabled: 0
 --- !u!114 &2220731904774253928
 MonoBehaviour:
@@ -559,7 +561,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  fScanVision: 30
+  fScanVision: 60
+  _fRadius: 15
 --- !u!114 &6055264869548468583
 MonoBehaviour:
   m_ObjectHideFlags: 0

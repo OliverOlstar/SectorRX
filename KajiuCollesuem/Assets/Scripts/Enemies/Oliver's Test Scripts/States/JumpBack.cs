@@ -113,7 +113,7 @@ public class JumpBack : MonoBehaviour, IState
 
         Color color = new Color(0.0f, 0.0f, 1.0f);
         Debug.DrawLine(lineStart, vectorToSearch, color);
-
+        
         RaycastHit hitInfo;
         if (Physics.Linecast(this.transform.position, vectorToSearch, out hitInfo))
         {

@@ -16,19 +16,17 @@ public class Decision : MonoBehaviour
     private IState _currentState;
 
     public Transform target;
-    private GameObject[] _players;
 
     public float fScanVision = 30;
+    [SerializeField] private float _fRadius;
+    private float rotSpeed;
 
-    private bool _targetSwitch = false;
+    private bool _targetSwitch = false, _raycastHit = false;
 
     void Start()
     {
         //Get States
         _states = GetComponents<IState>();
-
-        //Get players in the level
-        _players = GameObject.FindGameObjectsWithTag("Player");
 
         //Setup States
         SetupStates();
@@ -50,6 +48,7 @@ public class Decision : MonoBehaviour
             {
                 _currentState = _states[i];
                 _currentState.Enter();
+                target = null;
                 break;
             }
         }
@@ -63,7 +62,8 @@ public class Decision : MonoBehaviour
 
     private void Update()
     {
-        _currentState.Tick();
+        if (target != null)
+            _currentState.Tick();
     }
 
     public void SetupStates()
@@ -80,36 +80,39 @@ public class Decision : MonoBehaviour
 
     private void CheckStates()
     {
-        //Get distance to target
-        float distance = Vector3.Distance(transform.position, target.position);
-
-        //Return if you can't Exit current state
-        if (_currentState.CanExit(distance) == false) return;
-
-        foreach (IState state in _states)
+        if (target != null)
         {
-            //Check if can stay in same state
-            if (_currentState == state)
+            //Get distance to target
+            float distance = Vector3.Distance(transform.position, target.position);
+            bool retribution = GetComponent<AlwaysSeek>().retribution;
+
+            //Return if you can't Exit current state
+            if (_currentState.CanExit(distance) == false && !retribution) return;
+
+            foreach (IState state in _states)
             {
-                if (state.CanEnter(distance))
+                //Check if can stay in same state
+                if (_currentState == state)
+                {
+                    if (state.CanEnter(distance))
+                        break;
+                    else
+                        continue;
+                }
+
+                //Check if state can be entered. Task 2: Grunts have a harder time detecting a player
+                if ((state.CanEnter(distance) && _IsPlayerInRange()) || retribution)
+                {
+                    SwitchState(state);
                     break;
-                else
-                    continue;
-            }
+                }
 
-            //Check if state can be entered. Task 2: Grunts have a harder time detecting a player
-            if (state.CanEnter(distance)
-                && Vector3.Angle(transform.forward, target.position - transform.position) < fScanVision)
-            {
-                SwitchState(state);
-                break;
+                else if (!retribution)
+                    //Ensures that hellhound doesn't continue current when out of range
+                    SwitchState(GetComponent<Guard>());
             }
-
-            else
-                //Ensures that hellhound doesn't continue current when out of range
-                SwitchState(GetComponent<Guard>());
+            //Debug.Log(distance);
         }
-        //Debug.Log(distance);
     }
 
     /*Calculate the distance between itself and the player, and updates its target to the nearest player,
@@ -117,21 +120,87 @@ public class Decision : MonoBehaviour
     Task 1: Grunts targeting is updated to allow for switching of targets*/
     private void CheckAndUpdateTarget()
     {
-        float smallest_distance = 9999;
-        int index = -1;
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _fRadius);
+        RaycastHit hit;
+        bool retribution = GetComponent<AlwaysSeek>().retribution;
 
-        for (int i = 0; i < _players.Length; ++i)
+        if (colliders.Length == 2)
+            target = null;
+        if (target != null 
+            && Vector3.Dot(transform.forward.normalized, (target.position - transform.position).normalized) < 0.9f
+            && !_currentState.Equals(GetComponent<Stunned>())
+            && !retribution)
+            target = null;
+
+        if (colliders.Length == 3)
         {
-            float distance = Vector3.Distance(transform.position, _players[i].transform.position);
-
-            if (distance < smallest_distance)
+            for (int i = 0; i < colliders.Length; ++i)
             {
-                smallest_distance = distance;
-                index = i;
+                if (colliders[i].gameObject.tag.Equals("Player") 
+                    && colliders[i].gameObject.transform != target
+                    && !retribution)
+                {
+                    target = colliders[i].gameObject.transform;
+
+                    if (!_IsPlayerInRange())
+                        target = null;
+                    else
+                        break;
+                }
             }
         }
-        
-        if (_currentState.CanEnter(smallest_distance))
+
+        else
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+            for (int i = 0; i < players.Length; ++i)
+            {
+                float dot = Vector3.Dot(transform.forward.normalized, 
+                    (players[i].transform.position - transform.position).normalized);
+
+                if (target == null && dot > 0.9f && !retribution)
+                {
+                    target = players[i].transform;
+                    Debug.Log("Target in range");
+                    break;
+                }
+            }
+        }
+        //Debug.Log(GameObject.Find("TestPlayer") + " " + Vector3.Dot(transform.TransformDirection(Vector3.forward).normalized, (GameObject.Find("TestPlayer").transform.position - transform.position).normalized));
+
+        /*if (target == null)
+        {
+            for (int i = 0; i < colliders.Length; ++i)
+            {
+                if (colliders[i].gameObject.tag.Equals("Player"))
+                {
+                    target = colliders[i].gameObject.transform;
+                    break;
+                }
+            }
+        }*/
+
+        /*else if (target == null && Physics.Raycast(transform.position, transform.forward, out hit, 16))
+        {
+            target = hit.collider.gameObject.tag.Equals("Player") ? hit.collider.gameObject.transform : null;
+            _raycastHit = true;
+        }*/
+
+        if (target != null && colliders.Length > 2 && !retribution)
+        {
+            /*if (Vector3.Angle(transform.forward, target.position - transform.position) > fScanVision * 2)
+                rotSpeed = 5;
+            else
+                rotSpeed = 3;*/
+
+            transform.rotation = Quaternion.Lerp(transform.rotation,
+                Quaternion.LookRotation(target.position - transform.position),
+                Time.deltaTime * 5);
+        }
+        SetupStates();
+
+        /*if (_currentState.CanEnter(smallest_distance))
         {
             if (target != _players[index].transform)
             {
@@ -142,7 +211,7 @@ public class Decision : MonoBehaviour
             SetupStates();
         }
         
-        /*if (Vector3.Angle(transform.forward, target.position - transform.position) < 1
+        if (Vector3.Angle(transform.forward, target.position - transform.position) < 1
             && _targetSwitch)
         {
             GetComponent<Strafe>().Resume();
@@ -174,5 +243,13 @@ public class Decision : MonoBehaviour
     {
         _currentState.Exit();
         StartLastState();
+    }
+
+    private bool _IsPlayerInRange()
+    {
+        if (target != null && Vector3.Angle(transform.forward, target.position - transform.position) < fScanVision)
+            return true;
+
+        return false;
     }
 }

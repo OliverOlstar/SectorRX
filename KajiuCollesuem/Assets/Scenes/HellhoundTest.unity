@@ -273,7 +273,7 @@ PrefabInstance:
     - target: {fileID: 2220731904774253922, guid: d2be8c7dd5221b64983e0414c458c286,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8721761962871962747, guid: d2be8c7dd5221b64983e0414c458c286,
         type: 3}
@@ -343,12 +343,12 @@ PrefabInstance:
     - target: {fileID: 6055264871157978371, guid: d2be8c7dd5221b64983e0414c458c286,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6055264871157978371, guid: d2be8c7dd5221b64983e0414c458c286,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4300269538923112270, guid: d2be8c7dd5221b64983e0414c458c286,
         type: 3}
@@ -399,6 +399,11 @@ PrefabInstance:
         type: 3}
       propertyPath: fScanVision
       value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 6055264869548468582, guid: d2be8c7dd5221b64983e0414c458c286,
+        type: 3}
+      propertyPath: _fRadius
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2220731904774253928, guid: d2be8c7dd5221b64983e0414c458c286,
         type: 3}
@@ -6359,7 +6364,7 @@ PrefabInstance:
     - target: {fileID: 2220731904774253922, guid: 50d8984fea0fcda439b0c9192f5bf725,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2220731904774253932, guid: 50d8984fea0fcda439b0c9192f5bf725,
         type: 3}
@@ -6406,15 +6411,25 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 704148075}
+    - target: {fileID: 6055264869548468582, guid: 50d8984fea0fcda439b0c9192f5bf725,
+        type: 3}
+      propertyPath: _fRadius
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6055264869548468582, guid: 50d8984fea0fcda439b0c9192f5bf725,
+        type: 3}
+      propertyPath: fScanVision
+      value: 70
+      objectReference: {fileID: 0}
     - target: {fileID: 6055264871157978371, guid: 50d8984fea0fcda439b0c9192f5bf725,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6055264871157978371, guid: 50d8984fea0fcda439b0c9192f5bf725,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8721761962871962747, guid: 50d8984fea0fcda439b0c9192f5bf725,
         type: 3}

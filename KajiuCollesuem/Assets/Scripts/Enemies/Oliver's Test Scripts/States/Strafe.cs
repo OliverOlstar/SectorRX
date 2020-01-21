@@ -60,7 +60,7 @@ public class Strafe : MonoBehaviour, IState
     {
         if (_enabled && !_pause)
         {
-            transform.LookAt(_target);
+            //transform.LookAt(_target);
 
             if (timer > 5)
             {
