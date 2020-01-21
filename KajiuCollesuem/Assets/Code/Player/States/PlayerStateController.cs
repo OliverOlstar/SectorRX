@@ -48,7 +48,10 @@ public class PlayerStateController : MonoBehaviour
 
     //Reset Player
     [HideInInspector] public bool Respawn = false;
-    
+
+    //[HideInInspector] public InputPlayer inputs;
+    //[HideInInspector] public InputAction.CallbackContext ctx;
+
     void Awake()
     {
         _movementComponent = GetComponent<MovementComponent>();
@@ -91,16 +94,6 @@ public class PlayerStateController : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        //inputActions.Enable();
-    }
-
-    private void OnDisable()
-    {
-        //inputActions.Disable();
-    }
-
     void InitializeStateMachine()
     {
         var states = new Dictionary<Type, BaseState>()
@@ -115,4 +108,6 @@ public class PlayerStateController : MonoBehaviour
 
         _stateMachine.SetStates(states);
     }
+
+    
 }
