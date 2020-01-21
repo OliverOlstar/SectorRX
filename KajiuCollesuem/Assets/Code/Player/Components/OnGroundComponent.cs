@@ -23,7 +23,7 @@ public class OnGroundComponent : MonoBehaviour
     [Space]
     [SerializeField] private float _downForceRate = 6f;
     [SerializeField] private float _downForceTerminal = 4f;
-    private float _downForce = 0;
+    public float _downForce = 0;
 
     private MovementComponent _moveComponent;
     private PlayerStateController _stateController;
