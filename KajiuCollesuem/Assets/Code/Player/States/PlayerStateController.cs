@@ -47,7 +47,10 @@ public class PlayerStateController : MonoBehaviour
 
     //Reset Player
     [HideInInspector] public bool Respawn = false;
-    
+
+    //[HideInInspector] public InputPlayer inputs;
+    //[HideInInspector] public InputAction.CallbackContext ctx;
+
     void Awake()
     {
         _movementComponent = GetComponent<MovementComponent>();
@@ -68,6 +71,8 @@ public class PlayerStateController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _Camera = Camera.main.transform;
         _playerCamera = _Camera.GetComponentInParent<PlayerCamera>();
+
+        //inputs = new InputPlayer();
     }
 
     // List for inputs
@@ -77,6 +82,8 @@ public class PlayerStateController : MonoBehaviour
     private void OnLightAttack(InputValue ctx) => lightAttackinput = ctx.Get<float>();
     private void OnHeavyAttack(InputValue ctx) => heavyAttackinput = ctx.Get<float>();
     private void OnAnyInput() => LastInputTime = Time.time;
+
+
 
     private void FixedUpdate()
     {
@@ -88,13 +95,13 @@ public class PlayerStateController : MonoBehaviour
 
     private void OnEnable()
     {
-        //inputActions.Enable();
+        //inputs.Player.Enable();
 
     }
 
     private void OnDisable()
     {
-        //inputActions.Disable();
+        //inputs.Player.Disable();
     }
 
     void InitializeStateMachine()
@@ -111,4 +118,6 @@ public class PlayerStateController : MonoBehaviour
 
         _stateMachine.SetStates(states);
     }
+
+    
 }

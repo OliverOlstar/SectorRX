@@ -11,10 +11,11 @@ public class AttackState : BaseState
     [SerializeField] private float lastClickedTime = 0;
     [SerializeField] private float maxComboDelay = 0.9f;
 
-    private float AttackStateReturnDelayLength = 0.6f;
+    private float AttackStateReturnDelayLength = 0.2f;
 
     private bool onHolding = false;
     public float chargeTimer = 0f;
+  
 
 
     public AttackState(PlayerStateController controller) : base(controller.gameObject)
@@ -27,7 +28,7 @@ public class AttackState : BaseState
         Debug.Log("AttackState: Enter");
         //stateController._hitboxComponent.gameObject.SetActive(true); /* Handled by animation events */
 
-        chargeTimer = 0f;
+        onHolding = false;
         CheckForAttack();
     }
 
@@ -43,28 +44,13 @@ public class AttackState : BaseState
 
     public override Type Tick()
     {
-        if (Time.time - lastClickedTime > maxComboDelay)
+        if (Time.time - lastClickedTime > maxComboDelay && onHolding == false)
         {
             return typeof(MovementState);
         }
 
+        //CheckForAttack2();
         CheckForAttack();
-
-        // State Switched with Animation Events
-        //switch (stateController._animHandler.attackState)
-        //{
-        //    case 0:
-        //        ClearInputs();
-        //        break;
-
-        //    case 1:
-        //        Attack();
-        //        break;
-
-        //    case 2:
-        //        done = true;
-        //        break;
-        //}
 
         //Stunned
         if (stateController.Stunned)
@@ -86,86 +72,79 @@ public class AttackState : BaseState
     private bool heldAttack = true;
     float animSpeed = 0f;
     Animation animmmm;
+    
+
+    //private void CheckForAttack2()
+    //{
+    //    // When Heavy Attack has been held for a set duration
+    //    if (stateController.ctx.performed)
+    //    {
+    //        Debug.Log("Fuck");
+    //    }
+    //    // If Heavy Attack input is withdrawn before reaching duration
+    //    else if (stateController.ctx.canceled)
+    //    {
+    //        Debug.Log("Bitch");
+    //    }
+    //}
+
+    
 
     private void CheckForAttack()
     {
         if (numberOfClicks <= 2)
         {
+            // On Release Heavy (Called Once)
+            if ((stateController.heavyAttackinput == 0 || chargeTimer >= 2) && onHolding == true)
+            {
+                ClearInputs();
+                lastClickedTime = Time.time;
 
-            if (stateController.lightAttackinput == 1)
+                numberOfClicks++;
+
+                onHolding = false;
+
+                animSpeed = 1f;
+            }
+
+            // On Holding Heavy
+            else if (onHolding)
+            {
+                chargeTimer += Time.deltaTime;
+
+                if (chargeTimer >= 0.1f)
+                {
+                    string animBoolName = "Vertical" + (numberOfClicks + 1).ToString();
+                    animmmm[animBoolName].speed = 0f;
+                }    
+                
+                // Animation speed = 0;
+            }
+
+            // On Pressed Heavy (Called Once)
+            else if (stateController.heavyAttackinput == 1)
+            {
+                stateController._animHandler.ClearAttackBools();
+                string boolName = "Triangle" + (numberOfClicks + 1).ToString();
+                stateController._animHandler.StartAttack(boolName);
+
+                chargeTimer = 0;
+                onHolding = true;
+            }
+
+            // On Pressed Light Attack (Called Once)
+            else if (stateController.lightAttackinput == 1)
             {
                 lastClickedTime = Time.time;
                 numberOfClicks++;
 
-                
+
                 stateController._animHandler.ClearAttackBools();
                 string boolName = "Square" + (numberOfClicks).ToString();
                 stateController._animHandler.StartAttack(boolName);
                 ClearInputs();
             }
-
-            //else if (stateController.heavyAttackinput == 1 && onHolding == false)
-            //{
-            //    lastClickedTime = Time.time;
-            //    numberOfClicks++;
-
-            //    ClearInputs();
-            //    stateController._animHandler.ClearAttackBools();
-            //    string boolName = "Triangle" + (numberOfClicks).ToString();
-            //    stateController._animHandler.StartAttack(boolName);
-            //}
-
-            // On Pressed
-            if (stateController.heavyAttackinput == 1)
-            {
-                chargeTimer += Time.deltaTime;
-
-            }
-
-            else if (stateController.heavyAttackinput == 1 && chargeTimer >= 2f)
-            {
-                lastClickedTime = Time.time;
-                numberOfClicks++;
-
-                ClearInputs();
-                stateController._animHandler.ClearAttackBools();
-                string boolName = "Triangle" + (numberOfClicks).ToString();
-                stateController._animHandler.StartAttack(boolName);
-
-                chargeTimer = 0;
-            }
-            // On Release
-            if (stateController.heavyAttackinput == 0 && chargeTimer <= 0.2f)
-                {
-                    lastClickedTime = Time.time;
-                    numberOfClicks++;
-
-                    ClearInputs();
-                    stateController._animHandler.ClearAttackBools();
-                    string boolName = "Triangle" + (numberOfClicks).ToString();
-                    stateController._animHandler.StartAttack(boolName);
-
-                    chargeTimer = 0;
-
-
-                    //animmmm["Triangle Attack"].speed = 1;
-                }
-
-                else if (stateController.heavyAttackinput == 0 && chargeTimer > 0.2f)
-                {
-                    if (chargeTimer < 0.8f)
-                    {
-                        ClearInputs();
-                        chargeTimer = 0;
-                    }
-                    //animmmm["Triangle Attack"].speed = 1;
-                }
-
-            
-            
-
         }
-
     }
 
 
