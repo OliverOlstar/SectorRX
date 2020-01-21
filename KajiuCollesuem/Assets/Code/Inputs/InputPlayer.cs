@@ -455,7 +455,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9c8bd0ac-30b2-477b-9161-4f588bafb1db"",
-                    ""path"": ""<Keyboard>/escape"",
+                    ""path"": ""<Keyboard>/p"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -483,7 +483,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 {
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
-                    ""id"": ""67db017e-4da3-4e85-b853-e6ba94fc6254"",
+                    ""id"": ""8cd59a96-49bd-4ebf-b510-77c3211d8316"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -491,7 +491,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 {
                     ""name"": ""Navigate"",
                     ""type"": ""Value"",
-                    ""id"": ""8cd59a96-49bd-4ebf-b510-77c3211d8316"",
+                    ""id"": ""1913f9d9-f281-47c7-878d-0908b82dfc99"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -581,7 +581,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""98facaef-7c03-4d7b-8ba2-459834617a21"",
-                    ""path"": ""<Keyboard>/escape"",
+                    ""path"": ""<Keyboard>/p"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -646,17 +646,6 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b7501963-a289-45cc-a954-07b8fcb5f533"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Click"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""f2d462e4-2226-4a2f-b2cd-578060878ce7"",
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
@@ -670,6 +659,17 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""22e4a8a4-45d3-4900-ba89-6d4dd92ca45a"",
                     ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eeec6002-f21a-456c-9a9f-243931fd1272"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -745,7 +745,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""Gamepad"",
-                    ""id"": ""f423d6fe-c84d-40e1-a629-3842683f5998"",
+                    ""id"": ""674aad23-6e64-4823-946d-0e2ea90a6fac"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -756,7 +756,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""5ad06268-4778-4a09-8fcb-f436d6b4dbbd"",
+                    ""id"": ""984f2e5b-42ea-46a8-9651-880dcd1d2421"",
                     ""path"": ""<Gamepad>/leftStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -767,7 +767,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""45710a18-8c0d-4eb8-8bea-5475abefa95f"",
+                    ""id"": ""692c336a-b3c1-462a-8e86-d57d4ddf653a"",
                     ""path"": ""<Gamepad>/rightStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -778,7 +778,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""93e9bf8c-b380-465c-950e-6602a3fa1dd4"",
+                    ""id"": ""594619b8-a1aa-4fae-8e51-fe91029dd042"",
                     ""path"": ""<Gamepad>/leftStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -789,7 +789,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""979520b2-a486-49b6-9d74-4f275af86e64"",
+                    ""id"": ""c7cdba79-d0d1-42dd-9f51-f98efe2ddf0b"",
                     ""path"": ""<Gamepad>/rightStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -800,7 +800,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""dcb9d918-9b5d-4479-855d-25361d9ee9c0"",
+                    ""id"": ""74540027-b008-4596-9e53-004fe69c7cc0"",
                     ""path"": ""<Gamepad>/leftStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -811,7 +811,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""adc705d7-3848-4b42-a7b8-5ee23ea4fe30"",
+                    ""id"": ""5af8f346-a1c5-4967-92fb-a72efe731562"",
                     ""path"": ""<Gamepad>/rightStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -822,7 +822,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""a84e2bae-c617-49e3-83c0-9de0bf8071dc"",
+                    ""id"": ""d4f8cfec-a85e-4ffd-8649-2439738512c1"",
                     ""path"": ""<Gamepad>/leftStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -833,7 +833,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""70736007-8cec-48af-b632-4022a0f3d899"",
+                    ""id"": ""0faba58a-06e1-4ca6-9525-fdac7ef73d36"",
                     ""path"": ""<Gamepad>/rightStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -844,7 +844,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4930c727-df2e-486d-ae51-b8b590921b81"",
+                    ""id"": ""60f4775c-881f-4488-8b81-74a0cc0d638e"",
                     ""path"": ""<Gamepad>/dpad"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -854,8 +854,8 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""Keyboard"",
-                    ""id"": ""9419cc43-fe33-4866-898a-b29ec8b2b1ae"",
+                    ""name"": ""Joystick"",
+                    ""id"": ""ecfeec4e-278f-4582-81ef-42450e9b6f79"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -866,7 +866,62 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""0b39e35b-c277-4777-8e94-ddfd881f0c7e"",
+                    ""id"": ""6cf127b0-c57b-4d78-b343-944cb43df492"",
+                    ""path"": ""<Joystick>/stick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Joystick"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""b5bcbdae-0873-4e0e-b7e8-6086629605ae"",
+                    ""path"": ""<Joystick>/stick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Joystick"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""5e72d4ad-c022-450e-b6bb-5b81342544ba"",
+                    ""path"": ""<Joystick>/stick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Joystick"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""ff09b33c-def7-4a89-851f-3f1888afdbef"",
+                    ""path"": ""<Joystick>/stick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Joystick"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""1b731f86-ace5-4e16-9da7-71ad96f408a7"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""c08bd879-bc8c-431d-8b3b-ea7c74217cd1"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -877,7 +932,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""b12bb10d-3cb6-4b9d-a4a3-5c3d6b0646a2"",
+                    ""id"": ""7ad616bf-ba11-43b4-84b6-07e8c6cf20c4"",
                     ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -888,7 +943,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""6f9b83d6-962a-4a15-810a-947ff856c026"",
+                    ""id"": ""88daee1b-7349-4755-a733-4ef029401740"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -899,7 +954,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""2de31d67-9b94-4a43-9578-338202c94719"",
+                    ""id"": ""16606fe5-8c5c-479a-abc0-b364fb217dcb"",
                     ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -910,7 +965,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""e7edd270-7464-4acd-bc72-c4670d79d5c6"",
+                    ""id"": ""50f651db-3aba-48f4-a90d-aed47a49b57f"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -921,7 +976,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""b906d8df-becd-4402-8acc-bf44e4d26780"",
+                    ""id"": ""f26f3bab-0690-4af6-a8be-8ae1454f93f4"",
                     ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -932,7 +987,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""05d2259e-fc77-4829-878d-e0fa4313fa3d"",
+                    ""id"": ""1af7b34d-36bb-4004-9800-56c7993cccc8"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -943,7 +998,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""e3296b41-bb7b-401b-92a9-146a1c1aa6b6"",
+                    ""id"": ""fd2d0cfc-5989-4256-8509-2bd5e11cfe1d"",
                     ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
