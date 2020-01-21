@@ -144,11 +144,6 @@ public class HUDManager : MonoBehaviour
 
     public void ResumeGame()
     {
-        pause.SetActive(false);
-        Time.timeScale = 1;
-        pauseMenu.pause = !pauseMenu.pause;
-        mainCam.CameraDisabled = !pause;
-        pauseMenu._PInput.enabled = !pauseMenu._PInput.enabled;
-        Cursor.lockState = CursorLockMode.Locked;
+        pauseMenu.TogglePause();
     }
 }

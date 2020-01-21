@@ -19,7 +19,8 @@ public class PauseMenu : MonoBehaviour
         //Time.timeScale = 1;
         pause = false;
         pauseScreen.SetActive(false);
-        _PInput = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>();
+        _PInput = transform.parent.GetComponentInChildren<PlayerInput>();
+        Debug.Log(_PInput.currentControlScheme);
     }
 
     public void TogglePause()
@@ -29,20 +30,21 @@ public class PauseMenu : MonoBehaviour
         if (pause)
         {
             _PInput.SwitchCurrentActionMap("PauseScreen");
+            Debug.Log(_PInput.currentActionMap);
 
-            if (Input.GetKey(KeyCode.Escape))
+            if (_PInput.currentControlScheme == "Keyboard&Mouse")
                 Cursor.lockState = CursorLockMode.None;
         }
         else
         {
             _PInput.SwitchCurrentActionMap("Player");
+            Debug.Log(_PInput.currentActionMap);
 
-            if (Input.GetKey(KeyCode.Escape))
+            if (_PInput.currentControlScheme == "Keyboard&Mouse")
                 Cursor.lockState = CursorLockMode.Locked;
         }
 
-
         pauseScreen.SetActive(pause);
-        mainCam.CameraDisabled = pause;
+        //mainCam.CameraDisabled = pause;
     }
 }
