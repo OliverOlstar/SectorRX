@@ -318,6 +318,7 @@ MonoBehaviour:
   _playerAttributes: {fileID: 0}
   _animHandler: {fileID: 0}
   _playerCamera: {fileID: 0}
+  _pauseMenu: {fileID: 0}
   _rb: {fileID: 0}
   _Camera: {fileID: 0}
   Respawn: 0
@@ -421,6 +422,7 @@ MonoBehaviour:
   _influenceUpdateRate: 1
   _downForceRate: 5
   _downForceTerminal: 8
+  _downForce: 0
 --- !u!114 &806430457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,8 +475,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doGroundPound: 0
   isGroundPounding: 0
-  _StopTime: 0
-  _DropForce: 20
+  _StopTime: 1
+  _DropForce: 30
 --- !u!114 &17874586
 MonoBehaviour:
   m_ObjectHideFlags: 0
