@@ -15,7 +15,7 @@ public class Decision : MonoBehaviour
     private IState[] _states;
     private IState _currentState;
 
-    public Transform target;
+    [HideInInspector] public Transform target;
     [SerializeField] private LayerMask _playerLayer;
 
     public float fScanVision = 30;
