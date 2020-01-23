@@ -373,8 +373,8 @@ MonoBehaviour:
   _moveAcceleration: 4000
   maxSpeed: 6
   inputInfluence: 1
-  _jumpForceUp: 10
-  _jumpForceVelocityMult: 2
+  _jumpForceUp: 7
+  _jumpForceVelocityMult: 1.7
   OnGround: 0
   disableMovement: 0
 --- !u!114 &806430450
@@ -417,8 +417,10 @@ MonoBehaviour:
   _fallDamageMax: 40
   _fallDamageMin: 20
   _inputInfluenceGrounded: 1
-  _inputInfluenceInAir: 0.7
+  _inputInfluenceInAir: 0.2
   _influenceUpdateRate: 1
+  _onGroundDrag: 2
+  _offGroundDrag: 0.1
   _downForceRate: 5
   _downForceTerminal: 8
 --- !u!114 &806430457
