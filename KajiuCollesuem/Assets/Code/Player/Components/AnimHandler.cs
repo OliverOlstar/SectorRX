@@ -140,11 +140,15 @@ public class AnimHandler : MonoBehaviour
         _stateController.Stunned = true;
     }
 
-    public void changeAnimSpeed(float pValue)
+    public void modifyAnimSpeed(float pValue)
+    {
+        _anim.speed += pValue;
+    }
+
+    public void setAnimSpeed(float pValue)
     {
         _anim.speed = pValue;
     }
-
 
     public void Respawn()
     {
