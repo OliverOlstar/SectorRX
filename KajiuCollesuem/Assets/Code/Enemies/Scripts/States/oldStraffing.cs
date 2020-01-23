@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Straffing : MonoBehaviour
+public class oldStraffing : MonoBehaviour
 {
     int decision;
     public Transform player;
