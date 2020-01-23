@@ -59,4 +59,14 @@ public class Stunned : MonoBehaviour, IState
         GetComponent<Decision>().ForceStateSwitch(GetComponent<Seek>());
         _enabled = false;
     }
+
+    public void Pause()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Resume()
+    {
+        throw new System.NotImplementedException();
+    }
 }
