@@ -198,7 +198,8 @@ public class Decision : MonoBehaviour
                 Quaternion.LookRotation(target.position - transform.position),
                 Time.deltaTime * 5);
         }
-        SetupStates();
+        //SetupStates();
+        _currentState.UpdateTarget(target);
 
         /*if (_currentState.CanEnter(smallest_distance))
         {
