@@ -18,10 +18,10 @@ public class MatchManager : MonoBehaviour
     {
         foreach (SpawnRandomEnemies cluster in spawnEnemyScript)
         {
-            cluster.SpawnEnemies();
+            //cluster.SpawnEnemies();
         }
 
-        spawnPlayerScript.SpawnPlayer();
+        //spawnPlayerScript.SpawnPlayer();
     }
 
     public void Update()

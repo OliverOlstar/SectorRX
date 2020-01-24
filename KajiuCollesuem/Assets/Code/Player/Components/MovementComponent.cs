@@ -45,12 +45,10 @@ public class MovementComponent : MonoBehaviour
         //Moving the player
         Vector3 horizontalVelocity = new Vector3(_StateController._rb.velocity.x, 0, _StateController._rb.velocity.z);
         float nextMagnitudeWithInput = (horizontalVelocity + move * Time.deltaTime).magnitude;
-        Debug.Log(horizontalVelocity.magnitude + " | " + nextMagnitudeWithInput);
 
         if (horizontalVelocity.magnitude < maxSpeed || nextMagnitudeWithInput <= horizontalVelocity.magnitude)
         {
             _StateController._rb.AddForce(move);
-            Debug.Log("Moving");
         }
 
         if (move.magnitude != 0)

@@ -9,7 +9,7 @@ public class AttackState : BaseState
 
     [SerializeField] private int numberOfClicks = 0;
     [SerializeField] private float lastClickedTime = 0;
-    [SerializeField] private float maxComboDelay = 0.9f;
+    [SerializeField] private float maxComboDelay = 0.8f;
 
     private float AttackStateReturnDelayLength = 0.2f;
 
@@ -25,7 +25,7 @@ public class AttackState : BaseState
 
     public override void Enter()
     {
-        Debug.Log("AttackState: Enter");
+        //Debug.Log("AttackState: Enter");
         //stateController._hitboxComponent.gameObject.SetActive(true); /* Handled by animation events */
 
         onHolding = false;
@@ -34,7 +34,7 @@ public class AttackState : BaseState
 
     public override void Exit()
     {
-        Debug.Log("AttackState: Exit");
+        //Debug.Log("AttackState: Exit");
         //stateController._hitboxComponent.gameObject.SetActive(false); /* Handled by animation events */
         stateController.AttackStateReturnDelay = Time.time + AttackStateReturnDelayLength;
         //stateController._hitboxComponent.gameObject.SetActive(false);
