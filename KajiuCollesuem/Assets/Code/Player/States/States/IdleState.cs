@@ -14,14 +14,14 @@ public class IdleState : BaseState
 
     public override void Enter()
     {
-        Debug.Log("IdleState: Enter");
+        //Debug.Log("IdleState: Enter");
         stateController._movementComponent.disableMovement = false;
         //stateController._playerCamera.Idle = true;
     }
 
     public override void Exit()
     {
-        Debug.Log("IdleState: Exit");
+        //Debug.Log("IdleState: Exit");
         stateController._movementComponent.disableMovement = true;
         //stateController._playerCamera.Idle = false;
     }

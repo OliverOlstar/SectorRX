@@ -22,8 +22,6 @@ public class Stunned : MonoBehaviour, IState
         _agent = pAgent;
     }
 
-    public void UpdateTarget(Transform pTarget) => _target = pTarget;
-
     public void Enter()
     {
         _enabled = true;

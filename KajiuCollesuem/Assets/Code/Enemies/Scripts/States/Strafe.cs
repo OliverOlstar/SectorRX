@@ -26,8 +26,6 @@ public class Strafe : MonoBehaviour, IState
         _agent = pAgent;
     }
 
-    public void UpdateTarget(Transform pTarget) => _target = pTarget;
-
     public bool CanEnter(float pDistance)
     {
        if (Time.time >= _nextEnterTime && pDistance < strafeMax && pDistance > strafeMin)

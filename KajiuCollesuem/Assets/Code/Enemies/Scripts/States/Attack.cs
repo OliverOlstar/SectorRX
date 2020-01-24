@@ -26,8 +26,6 @@ public class Attack : MonoBehaviour, IState
         _hitbox.SetActive(false);
     }
 
-    public void UpdateTarget(Transform pTarget) => _target = pTarget;
-
     public void Enter()
     {
         //Debug.Log("Fireball: Enter");

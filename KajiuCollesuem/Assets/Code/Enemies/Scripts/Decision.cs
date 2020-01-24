@@ -120,7 +120,7 @@ public class Decision : MonoBehaviour
     Task 1: Grunts targeting is updated to allow for switching of targets*/
     private void CheckAndUpdateTarget()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, _fRadius);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _fRadius, _playerLayer);
         RaycastHit hit;
         bool retribution = GetComponent<AlwaysSeek>().retribution;
 

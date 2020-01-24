@@ -2,49 +2,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
+using UnityEngine.EventSystems;
 
 public class PauseMenu : MonoBehaviour
 {
     public bool pause;
+    public bool hasPaused;
     public GameObject pauseScreen;
     public GameObject powUpgrade;
     public GameObject statUpgrade;
+    public GameObject resumeButton;
+    public PlayerInput pInput;
     [SerializeField] private PlayerCamera mainCam;
-    //[SerializeField] private PlayerInputHandler input;
-
+    
     // Use this for initialization
     void Start()
     {
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
         pause = false;
         pauseScreen.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
+        pInput = transform.parent.GetComponentInChildren<PlayerInput>();
+        EventSystem.current.SetSelectedGameObject(resumeButton);
+        Debug.Log(pInput.currentControlScheme);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            TogglePauseGame();
-            if(!pause)
-            {
-                powUpgrade.SetActive(false);
-                statUpgrade.SetActive(false);
-                Cursor.lockState = CursorLockMode.Locked;
-            }
-        }
-
-    }
-
-    private void TogglePauseGame()
+    public void TogglePause()
     {
         pause = !pause;
 
-        Time.timeScale = pause ? 0 : 1;
+        if (pause)
+        {
+            hasPaused = true;
+            pInput.SwitchCurrentActionMap("PauseScreen");
+            Debug.Log(pInput.currentActionMap);
+
+            //if (pInput.currentControlScheme == "Keyboard&Mouse")
+                //Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            pInput.SwitchCurrentActionMap("Player");
+            Debug.Log(pInput.currentActionMap);
+            hasPaused = false;
+            //if (pInput.currentControlScheme == "Keyboard&Mouse")
+                //Cursor.lockState = CursorLockMode.Locked;
+        }
+
         pauseScreen.SetActive(pause);
-        Cursor.lockState = pause ? CursorLockMode.None : CursorLockMode.Locked;
-        mainCam.CameraDisabled = pause;
-        //input.inputDisabled = pause;
+        //mainCam.CameraDisabled = pause;
     }
 }

@@ -9,7 +9,7 @@ public class AttackState : BaseState
 
     [SerializeField] private int numberOfClicks = 0;
     [SerializeField] private float lastClickedTime = 0;
-    [SerializeField] private float maxComboDelay = 0.9f;
+    [SerializeField] private float maxComboDelay = 0.8f;
 
     private float AttackStateReturnDelayLength = 0.2f;
 
@@ -25,7 +25,7 @@ public class AttackState : BaseState
 
     public override void Enter()
     {
-        Debug.Log("AttackState: Enter");
+        //Debug.Log("AttackState: Enter");
         //stateController._hitboxComponent.gameObject.SetActive(true); /* Handled by animation events */
 
         onHolding = false;
@@ -34,7 +34,7 @@ public class AttackState : BaseState
 
     public override void Exit()
     {
-        Debug.Log("AttackState: Exit");
+        //Debug.Log("AttackState: Exit");
         //stateController._hitboxComponent.gameObject.SetActive(false); /* Handled by animation events */
         stateController.AttackStateReturnDelay = Time.time + AttackStateReturnDelayLength;
         //stateController._hitboxComponent.gameObject.SetActive(false);
@@ -71,21 +71,8 @@ public class AttackState : BaseState
     public bool attacking = false;
     private bool heldAttack = true;
     float animSpeed = 0f;
-    
+    public bool clickActive = false;
 
-    //private void CheckForAttack2()
-    //{
-    //    // When Heavy Attack has been held for a set duration
-    //    if (stateController.ctx.performed)
-    //    {
-    //        Debug.Log("Fuck");
-    //    }
-    //    // If Heavy Attack input is withdrawn before reaching duration
-    //    else if (stateController.ctx.canceled)
-    //    {
-    //        Debug.Log("Bitch");
-    //    }
-    //}
 
     
 
@@ -103,7 +90,7 @@ public class AttackState : BaseState
 
                 onHolding = false;
 
-                stateController._animHandler.changeAnimSpeed(1.0f);
+                stateController._animHandler.setAnimSpeed(1f);
             }
 
             // On Holding Heavy
@@ -114,7 +101,7 @@ public class AttackState : BaseState
                 if (chargeTimer >= 0.1f)
                 {
                     //string animBoolName = "Vertical" + (numberOfClicks + 1).ToString();
-                    stateController._animHandler.changeAnimSpeed(0.0f);
+                    stateController._animHandler.modifyAnimSpeed(-4f * Time.deltaTime);
                 }    
             }
 

@@ -23,18 +23,18 @@ public class DetectAttackDirection : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name.Equals("SwordHitBox"))
-        {
-            Transform player = other.gameObject.transform;
+        //if (other.gameObject.name.Equals("SwordHitBox"))
+        //{
+        //    Transform player = other.gameObject.transform;
 
-            while (!player.gameObject.tag.Equals("Player"))
-                player = player.parent;
+        //    while (!player.gameObject.tag.Equals("Player"))
+        //        player = player.parent;
 
-            Decision decision = GetComponent<Decision>();
-            //decision.retribution = true;
-            decision.target = player;
-            decision.SetupStates();
-            //transform.LookAt(player);
-        }
+        //    Decision decision = GetComponent<Decision>();
+        //    //decision.retribution = true;
+        //    decision.target = player;
+        //    decision.SetupStates();
+        //    //transform.LookAt(player);
+        //}
     }
 }
