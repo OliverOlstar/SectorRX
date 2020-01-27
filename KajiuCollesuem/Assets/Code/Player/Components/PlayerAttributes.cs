@@ -217,6 +217,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         {
             //Camera Shake
             CameraShaker.Instance.ShakeOnce(20, 4, 0.4f, 0.3f);
+            connectedPlayers.playersConnected--;
 
             return true;
         }
