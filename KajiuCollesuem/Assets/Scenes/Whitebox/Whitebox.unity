@@ -8665,15 +8665,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28cf854c5e60fdc49ade7aa3d68f6057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playersToSpawn:
-  - {fileID: -927199367670048503, guid: d1be5a9d0ef18e742964a69c20199590, type: 3}
-  playerSpawnPoints:
-  - {fileID: 1907985677}
-  - {fileID: 1884461579}
-  - {fileID: 1736083814}
-  - {fileID: 1199214127}
-  playerSpawnCount: 0
-  spawnedPlayers: []
 --- !u!4 &360331100
 Transform:
   m_ObjectHideFlags: 0
@@ -9615,8 +9606,6 @@ MonoBehaviour:
   cinemaCam: {fileID: 707672572}
   playerPrefab: {fileID: 5010724986721657825, guid: cab3eecb1081b1349848e44cc937b8b0,
     type: 3}
-  victoryMenu: {fileID: 0}
-  resetButton: {fileID: 0}
   musicManager: {fileID: 57633178}
   fourPlayerSpawns:
   - {fileID: 1803758857}
@@ -26949,6 +26938,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2005842923866290703, guid: 50d8984fea0fcda439b0c9192f5bf725,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005842923866290703, guid: 50d8984fea0fcda439b0c9192f5bf725,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2220731904774253922, guid: 50d8984fea0fcda439b0c9192f5bf725,
         type: 3}
       propertyPath: m_Name
@@ -35961,15 +35960,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2005842923866290703, guid: 50d8984fea0fcda439b0c9192f5bf725,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005842923866290703, guid: 50d8984fea0fcda439b0c9192f5bf725,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2220731904774253922, guid: 50d8984fea0fcda439b0c9192f5bf725,
         type: 3}
       propertyPath: m_Name
       value: Hellhound (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6055264870379319337, guid: 50d8984fea0fcda439b0c9192f5bf725,
-        type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6055264871157978371, guid: 50d8984fea0fcda439b0c9192f5bf725,
         type: 3}

@@ -79,9 +79,9 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         //    _powerSlider.maxValue = _maxPower;
         //}
 
-        sliderControl.SetBar(0, _maxHealth);
-        sliderControl.SetBar(1, _maxShield);
-        sliderControl.SetBar(2, _maxPower);
+        sliderControl.SetBars(0, _maxHealth);
+        sliderControl.SetBars(1, _maxShield);
+        sliderControl.SetBars(2, _maxPower);
     }
 
     public void Respawn()
@@ -98,9 +98,9 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     public int getPower() { return _power; }
 
     //SET
-    public void setHealth(int pHealth) { modifyHealth(pHealth - _health); sliderControl.UpdateBar(0, pHealth); }
-    public void setShield(int pShield) { modifyShield(pShield - _shield); sliderControl.UpdateBar(1, pShield); }
-    public void setPower(int pPower) { modifyPower(pPower - _power); sliderControl.UpdateBar(2, pPower); }
+    public void setHealth(int pHealth) { modifyHealth(pHealth - _health); sliderControl.UpdateBars(0, pHealth); }
+    public void setShield(int pShield) { modifyShield(pShield - _shield); sliderControl.UpdateBars(1, pShield); }
+    public void setPower(int pPower) { modifyPower(pPower - _power); sliderControl.UpdateBars(2, pPower); }
     #endregion
 
     #region Modify Vars
@@ -115,7 +115,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         if (sliderControl.RegSlider[0])
         {
             sliderControl.RegSlider[0].value = _health;
-            sliderControl.UpdateBar(0, _health);
+            sliderControl.UpdateBars(0, _health);
         }
     }
 
@@ -128,7 +128,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         if (sliderControl.RegSlider[1])
         {
             sliderControl.RegSlider[1].value = _shield;
-            sliderControl.UpdateBar(1, _shield);
+            sliderControl.UpdateBars(1, _shield);
         }
     }
 
@@ -142,7 +142,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         if (sliderControl.RegSlider[2])
         {
             sliderControl.RegSlider[2].value = _power;
-            sliderControl.UpdateBar(2, _power);
+            sliderControl.UpdateBars(2, _power);
         }
     }
 
@@ -153,7 +153,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _maxHealth = pMaxHealth;
 
         //Change respective bar length
-        sliderControl.SetBar(0, pMaxHealth);
+        sliderControl.SetBars(0, pMaxHealth);
         modifyHealth(_maxHealth);
     }
 
@@ -163,7 +163,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _maxShield = pMaxShield;
 
         //Change respective bar length
-        sliderControl.SetBar(1, pMaxShield);
+        sliderControl.SetBars(1, pMaxShield);
         modifyShield(_maxShield);
     }
 
@@ -173,7 +173,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _maxPower = pMaxPowerGuage;
 
         //Change respective bar length
-        sliderControl.SetBar(2, pMaxPowerGuage);
+        sliderControl.SetBars(2, pMaxPowerGuage);
         sliderControl.RegSlider[2].maxValue = _maxPower;
     }
     #endregion
