@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 /*Programmer: Scott Watman
  Additional Programmer(s): Oliver Loescher, Kavian Kermani
@@ -12,7 +13,6 @@ public class PlayerSpawn : MonoBehaviour
 {
     public Camera cinemaCam;
     public GameObject playerPrefab;
-    public GameObject victoryMenu;
     public GameObject resetButton;
 
     public MusicManager musicManager;
@@ -26,9 +26,7 @@ public class PlayerSpawn : MonoBehaviour
     }
 
     private void Start()
-    {
-        victoryMenu.SetActive(false);
-        
+    {   
         //Sets number of connected players equal to how many need to be spawned. Helps with match restarts after a player wins.
         if(connectedPlayers.playersToSpawn <= 1)
         {
@@ -131,7 +129,7 @@ public class PlayerSpawn : MonoBehaviour
     IEnumerator VictoryReset()
     {
         yield return new WaitForSeconds(4.0f);
-        victoryMenu.SetActive(true);
         musicManager.mainAudio.Stop();
+        SceneManager.LoadScene(2);
     }
 }
