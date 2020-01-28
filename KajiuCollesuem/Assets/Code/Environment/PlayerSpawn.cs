@@ -13,7 +13,6 @@ public class PlayerSpawn : MonoBehaviour
 {
     public Camera cinemaCam;
     public GameObject playerPrefab;
-    public GameObject resetButton;
 
     public MusicManager musicManager;
     public List<Transform> fourPlayerSpawns = new List<Transform>();
