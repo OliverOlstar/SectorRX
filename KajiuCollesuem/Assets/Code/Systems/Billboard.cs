@@ -8,11 +8,11 @@ public class Billboard : MonoBehaviour
 
     void Start()
     {
-        _camera = Camera.main.transform;
+        //_camera = Camera.main.transform;
     }
     
     void Update()
     {
-        transform.rotation = _camera.rotation;
+        //transform.rotation = _camera.rotation;
     }
 }

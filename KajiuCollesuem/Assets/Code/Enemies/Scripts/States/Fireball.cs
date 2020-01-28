@@ -73,6 +73,8 @@ public class Fireball : MonoBehaviour, IState
         maxRightDir = _fireballSpawnpoint.position.x + 2;
     }
 
+    public void UpdateTarget(Transform pTarget) => _target = pTarget;
+
     // Additional Functions /////////
     private bool CheckForSkipOver()
     {

@@ -69,6 +69,8 @@ public class Summon : MonoBehaviour, IState
 
     }
 
+    public void UpdateTarget(Transform pTarget) => _target = pTarget;
+
     // Additional Functions //////////
     public void GruntDied()
     {

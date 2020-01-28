@@ -13,6 +13,7 @@ public class Dash : MonoBehaviour, IState
     private Transform _target;
     
     private float _nextEnterTime = 0.0f;
+    private Rigidbody rb;
 
     [SerializeField] private float _fMaxDashRange = 1, _fMinDashRange, _fForce = 0;
 
@@ -24,13 +25,14 @@ public class Dash : MonoBehaviour, IState
         _anim = pAnim;
         _agent = pAgent;
         _target = pTarget;
+        rb = GetComponent<Rigidbody>();
     }
 
     public void Enter()
     {
         //Debug.Log("Fireball: Enter");
         _enabled = true;
-        //_agent.isStopped = true;
+        _agent.enabled = false;
         float acceleration = _fForce;
         float finalVelocity = transform.position.z + (acceleration /** Time.deltaTime*/);
         _fDistance = (finalVelocity - transform.position.z) /** Time.time*/;
@@ -40,6 +42,7 @@ public class Dash : MonoBehaviour, IState
     public void Exit()
     {
         //Debug.Log("Fireball: Exit");
+        _agent.enabled = true;
         _enabled = false;
     }
 
@@ -63,18 +66,19 @@ public class Dash : MonoBehaviour, IState
 
     public void Tick()
     {
-        if (transform.position.x < _fDistance || transform.position.x > _fDistance
-            && Vector3.Distance(transform.position, _target.position) > 1.5f)
-        {
+        //if (transform.position.x < _fDistance || transform.position.x > _fDistance
+         //   && Vector3.Distance(transform.position, _target.position) > 1.5f)
+       // {
             float Z = Mathf.Abs(transform.position.z), time = Time.deltaTime;
-            Debug.Log(time);
+          //  Debug.Log(time);
 
-            if (time > 0.016f && time < 0.017)
-            {
-                //transform.position = new Vector3(transform.position.x, transform.position.y, Z - (Time.deltaTime * _fForce));
-                transform.Translate(new Vector3(0, 0, Z + (time * _fForce)));
-            }
-        }
+            //if (time > 0.016f && time < 0.01668)
+            //{
+            //transform.position = new Vector3(transform.position.x, transform.position.y, Z - (Time.deltaTime * _fForce));
+            //transform.Translate(new Vector3(0, 0, Z + (time * _fForce)));
+                rb.AddForce(Vector3.forward * time * 600);
+            //}
+        //}
     }
 
     public void Pause()
