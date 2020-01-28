@@ -24,8 +24,8 @@ public class StatUpgrades : MonoBehaviour
 
     void Start()
     {
-        stats = pU.Stats;
-        powers = pU.Powers;
+        //stats = pU.Stats;
+        //powers = pU.Powers;
         hud = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>();
         insufficientCost.gameObject.SetActive(false);
 

@@ -120,19 +120,13 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &17874585 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8582934654442581043, guid: 8e7d410007ab955488e1c836a456382a,
-    type: 3}
-  m_PrefabInstance: {fileID: 579923101}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &17874587 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 806430449, guid: 8e7d410007ab955488e1c836a456382a,
     type: 3}
   m_PrefabInstance: {fileID: 579923101}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 17874585}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d84d9a668651854da50ad10f54cef49, type: 3}
@@ -144,7 +138,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 579923101}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 17874585}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4ee92f20ca394cc4ea8aefa00433d0d1, type: 3}
@@ -3787,6 +3781,28 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 17874600, guid: 8e7d410007ab955488e1c836a456382a, type: 3}
+      propertyPath: _inputInfluenceInAir
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 17874600, guid: 8e7d410007ab955488e1c836a456382a, type: 3}
+      propertyPath: _onGroundDrag
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 17874600, guid: 8e7d410007ab955488e1c836a456382a, type: 3}
+      propertyPath: _offGroundDrag
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1010789244785054995, guid: 8e7d410007ab955488e1c836a456382a,
+        type: 3}
+      propertyPath: _jumpForceUp
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1010789244785054995, guid: 8e7d410007ab955488e1c836a456382a,
+        type: 3}
+      propertyPath: _jumpForceVelocityMult
+      value: 1.7
+      objectReference: {fileID: 0}
     - target: {fileID: 5397536735001967586, guid: 8e7d410007ab955488e1c836a456382a,
         type: 3}
       propertyPath: _healthSlider
@@ -11532,19 +11548,9 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4232252179734827381, guid: 280b55a2e946809418577ba6f4095e90,
         type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 17874585}
-    - target: {fileID: 4232252179734827381, guid: 280b55a2e946809418577ba6f4095e90,
-        type: 3}
       propertyPath: targetPlayer
       value: 
       objectReference: {fileID: 17874601}
-    - target: {fileID: 4232252179734827381, guid: 280b55a2e946809418577ba6f4095e90,
-        type: 3}
-      propertyPath: _mouseSensitivity
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 5688443931053791714, guid: 280b55a2e946809418577ba6f4095e90,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14577,6 +14583,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 17874601}
+  _playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  fScanVision: 30
 --- !u!114 &2977550622771118897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15974,6 +15984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enabled: 0
+  cell: {fileID: 0}
 --- !u!1 &7573159603310190903
 GameObject:
   m_ObjectHideFlags: 0

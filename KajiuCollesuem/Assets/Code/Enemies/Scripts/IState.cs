@@ -6,7 +6,6 @@ using UnityEngine.AI;
 public interface IState
 {
     void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent); // Replacement for Start
-    void UpdateTarget(Transform pTarget);
     void Enter(); // When entering state
     void Exit(); // When Exiting state
     bool CanEnter(float pDistance); // Check if entering is possible

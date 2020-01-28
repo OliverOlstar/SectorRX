@@ -21,9 +21,13 @@ public class OnGroundComponent : MonoBehaviour
     [SerializeField] private float _influenceUpdateRate = 1.0f;
 
     [Space]
+    [SerializeField] private float _onGroundDrag = 2f;
+    [SerializeField] private float _offGroundDrag = 0.1f;
+
+    [Space]
     [SerializeField] private float _downForceRate = 6f;
     [SerializeField] private float _downForceTerminal = 4f;
-    private float _downForce = 0;
+    public float _downForce = 0;
 
     private MovementComponent _moveComponent;
     private PlayerStateController _stateController;
@@ -61,7 +65,7 @@ public class OnGroundComponent : MonoBehaviour
 
             CheckFellLanding();
             _terminalFallingTimer = 0;
-            _rb.drag = 2;
+            _rb.drag = _onGroundDrag;
         }
         else
         {
@@ -71,7 +75,7 @@ public class OnGroundComponent : MonoBehaviour
             if (_downForce >= _downForceTerminal)
                 _terminalFallingTimer += Time.deltaTime;
 
-            _rb.drag = 0.3f;
+            _rb.drag = _offGroundDrag;
         }
     }
 

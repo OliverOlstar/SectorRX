@@ -139,7 +139,17 @@ public class AnimHandler : MonoBehaviour
         _anim.SetTrigger("React");
         _stateController.Stunned = true;
     }
-    
+
+    public void modifyAnimSpeed(float pValue)
+    {
+        _anim.speed += pValue;
+    }
+
+    public void setAnimSpeed(float pValue)
+    {
+        _anim.speed = pValue;
+    }
+
     public void Respawn()
     {
         _stateController.Stunned = false;

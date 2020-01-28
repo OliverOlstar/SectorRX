@@ -30,8 +30,6 @@ public class Summon : MonoBehaviour, IState
         _target = pTarget;
     }
 
-    public void UpdateTarget(Transform pTarget) => _target = pTarget;
-
     public void Enter()
     {
         _enabled = true;
@@ -95,5 +93,15 @@ public class Summon : MonoBehaviour, IState
         //Debug.Log("Fireball: AEDoneShooting");
         _enabled = false;
         _nextEnterTime = Time.time + _cooldown;
+    }
+
+    public void Pause()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Resume()
+    {
+        throw new System.NotImplementedException();
     }
 }

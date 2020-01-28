@@ -17,7 +17,7 @@ public class Strafe : MonoBehaviour, IState
     [SerializeField] private float _nextEnterTime = 0.0f;
     [SerializeField] private float _fStrafeSpeed;
 
-    [SerializeField] private bool _enabled = false;
+    [SerializeField] private bool _enabled = false, _pause = false;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
     {
@@ -25,8 +25,6 @@ public class Strafe : MonoBehaviour, IState
         _anim = pAnim;
         _agent = pAgent;
     }
-
-    public void UpdateTarget(Transform pTarget) => _target = pTarget;
 
     public bool CanEnter(float pDistance)
     {
@@ -38,7 +36,7 @@ public class Strafe : MonoBehaviour, IState
 
     public bool CanExit(float pDistance)
     {
-        return true;
+        return pDistance > strafeMax || pDistance < strafeMin || Time.time < _nextEnterTime;
     }
 
     public void Enter()
@@ -46,6 +44,9 @@ public class Strafe : MonoBehaviour, IState
         _enabled = true;
         direction = GetStrafeDirection();
         timer = 0;
+
+        if (gameObject.name.Contains("Alpha"))
+            transform.Translate(Vector3.forward);
         _agent.Stop();
     }
 
@@ -57,9 +58,9 @@ public class Strafe : MonoBehaviour, IState
 
     public void Tick()
     {
-        if (enabled)
+        if (_enabled && !_pause)
         {
-            transform.LookAt(_target);
+            //transform.LookAt(_target);
 
             if (timer > 5)
             {
@@ -89,6 +90,16 @@ public class Strafe : MonoBehaviour, IState
     {
         strafeDecision = Random.Range(0, 2);
         return strafeDecision == 0 ? Vector3.left * _fStrafeSpeed : Vector3.right * _fStrafeSpeed;
+    }
+
+    public void Pause()
+    {
+        _pause = true;
+    }
+
+    public void Resume()
+    {
+        _pause = false;
     }
 
     /*IEnumerator StrafeMovement()

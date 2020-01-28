@@ -43,8 +43,13 @@ public class MovementComponent : MonoBehaviour
         move = move.normalized * Time.deltaTime * _moveAcceleration * inputInfluence;
 
         //Moving the player
-        if (new Vector3(_StateController._rb.velocity.x, 0, _StateController._rb.velocity.z).magnitude < maxSpeed)
+        Vector3 horizontalVelocity = new Vector3(_StateController._rb.velocity.x, 0, _StateController._rb.velocity.z);
+        float nextMagnitudeWithInput = (horizontalVelocity + move * Time.deltaTime).magnitude;
+
+        if (horizontalVelocity.magnitude < maxSpeed || nextMagnitudeWithInput <= horizontalVelocity.magnitude)
+        {
             _StateController._rb.AddForce(move);
+        }
 
         if (move.magnitude != 0)
             _StateController.LastMoveDirection = new Vector2(move.x, move.z).normalized;
@@ -55,6 +60,7 @@ public class MovementComponent : MonoBehaviour
         if (OnGround && disableMovement == false)
         {
             //Add force
+            Debug.Log("MovementComponent: OnJump");
             _StateController._rb.velocity = new Vector3(_StateController._rb.velocity.x * _jumpForceVelocityMult, 0, _StateController._rb.velocity.z * _jumpForceVelocityMult);
             _StateController._rb.AddForce(_jumpForceUp * Vector3.up, ForceMode.Impulse);
             _StateController._animHandler.StartJump();

@@ -87,7 +87,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -175,23 +175,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b60d3a0c3e72974f90c65fe0e878dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  targetPlayer: {fileID: 0}
   lockOnTarget: {fileID: 0}
-  Inverted: 0
+  inverted: 0
   idleSpinSpeed: 1
-  idleSpinY: 40
   _lockOnXOffset: 0
   _lockOnInputInfluence: 0.2
-  _lockOnChangeDelay: 1
-  _lockOnChangeAmount_KB: 10
-  _lockOnChangeAmount_GP: 1.5
   _cameraCollisionLayers:
     serializedVersion: 2
     m_Bits: 1
   _cameraCollisionDampening: 20
   _cameraCollisionMinDisPercent: 0.1
-  _cameraCollisionOffset: 0.1
-  _mouseSensitivity: 4
+  _cameraCollisionOffset: 0.14
+  _mouseSensitivity: 5
   _defaultPreset: {fileID: 11400000, guid: 0fd6f18ae13c5be4dbf3686890111a6d, type: 2}
   CameraDisabled: 0
-  Idle: 0
+  targetDead: 0
+  targetIdle: 0

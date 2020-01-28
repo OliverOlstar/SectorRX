@@ -26,8 +26,6 @@ public class JumpBack : MonoBehaviour, IState
         rb = GetComponent<Rigidbody>();
     }
 
-    public void UpdateTarget(Transform pTarget) => _target = pTarget;
-
     public void Enter()
     {
         //Debug.Log("Jump back: Enter");
@@ -79,9 +77,9 @@ public class JumpBack : MonoBehaviour, IState
             float time = Time.deltaTime * speed;
 
             if (transform.position.y > 1)
-                transform.Translate(new Vector3(0, -1 * y * time, z * time));
+                transform.Translate(new Vector3(0, -2 * y * time, z * time));
             else
-                transform.Translate(new Vector3(0, y * time, z * time));
+                transform.Translate(new Vector3(0, 2 * y * time, z * time));
 
             /*transform.position = Vector3.Lerp(transform.position, transform.position + Vector3.forward, 
                 Time.deltaTime * 5);*/
@@ -115,7 +113,7 @@ public class JumpBack : MonoBehaviour, IState
 
         Color color = new Color(0.0f, 0.0f, 1.0f);
         Debug.DrawLine(lineStart, vectorToSearch, color);
-
+        
         RaycastHit hitInfo;
         if (Physics.Linecast(this.transform.position, vectorToSearch, out hitInfo))
         {

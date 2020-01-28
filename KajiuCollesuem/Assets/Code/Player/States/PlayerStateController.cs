@@ -41,13 +41,17 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public PlayerAttributes _playerAttributes;
     [HideInInspector] public AnimHandler _animHandler;
     [HideInInspector] public PlayerCamera _playerCamera;
+    [HideInInspector] public PauseMenu _pauseMenu;
 
     [HideInInspector] public Rigidbody _rb;
     [HideInInspector] public Transform _Camera;
 
     //Reset Player
     [HideInInspector] public bool Respawn = false;
-    
+
+    //[HideInInspector] public InputPlayer inputs;
+    //[HideInInspector] public InputAction.CallbackContext ctx;
+
     void Awake()
     {
         _movementComponent = GetComponent<MovementComponent>();
@@ -66,8 +70,10 @@ public class PlayerStateController : MonoBehaviour
         InitializeStateMachine();
 
         _rb = GetComponent<Rigidbody>();
-        _Camera = Camera.main.transform;
+        _Camera = transform.parent.GetComponentInChildren<Camera>().transform;
         _playerCamera = _Camera.GetComponentInParent<PlayerCamera>();
+
+        _pauseMenu = transform.parent.GetComponentInChildren<PauseMenu>();
     }
 
     // List for inputs
@@ -78,22 +84,14 @@ public class PlayerStateController : MonoBehaviour
     private void OnHeavyAttack(InputValue ctx) => heavyAttackinput = ctx.Get<float>();
     private void OnAnyInput() => LastInputTime = Time.time;
 
+    private void OnPause() => _pauseMenu.TogglePause();
+
     private void FixedUpdate()
     {
         if (moveInput.magnitude != 0 || mouseInput.magnitude != 0)
         {
             LastInputTime = Time.time;
         }
-    }
-
-    private void OnEnable()
-    {
-        //inputActions.Enable();
-    }
-
-    private void OnDisable()
-    {
-        //inputActions.Disable();
     }
 
     void InitializeStateMachine()
@@ -110,4 +108,6 @@ public class PlayerStateController : MonoBehaviour
 
         _stateMachine.SetStates(states);
     }
+
+    
 }

@@ -22,8 +22,6 @@ public class Stunned : MonoBehaviour, IState
         _agent = pAgent;
     }
 
-    public void UpdateTarget(Transform pTarget) => _target = pTarget;
-
     public void Enter()
     {
         _enabled = true;
@@ -58,5 +56,15 @@ public class Stunned : MonoBehaviour, IState
         GetComponent<AlwaysSeek>().retribution = true;
         GetComponent<Decision>().ForceStateSwitch(GetComponent<Seek>());
         _enabled = false;
+    }
+
+    public void Pause()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Resume()
+    {
+        throw new System.NotImplementedException();
     }
 }

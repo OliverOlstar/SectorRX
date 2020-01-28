@@ -14,13 +14,13 @@ public class MovementState : BaseState
 
     public override void Enter()
     {
-        Debug.Log("MoveState: Enter");
+        //Debug.Log("MoveState: Enter");
         stateController._movementComponent.disableMovement = false;
     }
 
     public override void Exit()
     {
-        Debug.Log("MoveState: Exit");
+        //Debug.Log("MoveState: Exit");
         stateController._movementComponent.disableMovement = true;
         stateController._animHandler.ResetJump();
     }
@@ -36,7 +36,10 @@ public class MovementState : BaseState
         //Dodge
         if (stateController.dodgeInput != -1)
         {
-            return typeof(DodgeState);
+            if (stateController.OnGround)
+                return typeof(DodgeState);
+            else
+                stateController.dodgeInput = -1;
         }
 
         //Attack
