@@ -71,8 +71,6 @@ public class PlayerStateController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _Camera = Camera.main.transform;
         _playerCamera = _Camera.GetComponentInParent<PlayerCamera>();
-
-        //inputs = new InputPlayer();
     }
 
     // List for inputs
@@ -83,25 +81,12 @@ public class PlayerStateController : MonoBehaviour
     private void OnHeavyAttack(InputValue ctx) => heavyAttackinput = ctx.Get<float>();
     private void OnAnyInput() => LastInputTime = Time.time;
 
-
-
     private void FixedUpdate()
     {
         if (moveInput.magnitude != 0 || mouseInput.magnitude != 0)
         {
             LastInputTime = Time.time;
         }
-    }
-
-    private void OnEnable()
-    {
-        //inputs.Player.Enable();
-
-    }
-
-    private void OnDisable()
-    {
-        //inputs.Player.Disable();
     }
 
     void InitializeStateMachine()
