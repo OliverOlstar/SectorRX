@@ -84,10 +84,10 @@ public class Decision : MonoBehaviour
         {
             //Get distance to target
             float distance = Vector3.Distance(transform.position, target.position);
-            bool retribution = GetComponent<AlwaysSeek>().retribution;
+            //bool retribution = GetComponent<AlwaysSeek>().retribution;
 
             //Return if you can't Exit current state
-            if (_currentState.CanExit(distance) == false && !retribution) return;
+            if (_currentState.CanExit(distance) == false /*&& !retribution*/) return;
 
             foreach (IState state in _states)
             {
@@ -101,15 +101,11 @@ public class Decision : MonoBehaviour
                 }
 
                 //Check if state can be entered. Task 2: Grunts have a harder time detecting a player
-                if ((state.CanEnter(distance) && _IsPlayerInRange()) || retribution)
+                if ((state.CanEnter(distance) && _IsPlayerInRange()) /*|| retribution*/)
                 {
                     SwitchState(state);
                     break;
                 }
-
-                else if (!retribution)
-                    //Ensures that hellhound doesn't continue current when out of range
-                    SwitchState(GetComponent<Guard>());
             }
             //Debug.Log(distance);
         }
@@ -122,14 +118,14 @@ public class Decision : MonoBehaviour
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, _fRadius, _playerLayer);
         RaycastHit hit;
-        bool retribution = GetComponent<AlwaysSeek>().retribution;
+        //bool retribution = GetComponent<AlwaysSeek>().retribution;
 
         if (colliders.Length == 2)
             target = null;
         if (target != null 
             && Vector3.Dot(transform.forward.normalized, (target.position - transform.position).normalized) < 0.9f
             && !_currentState.Equals(GetComponent<Stunned>())
-            && !retribution)
+            )//&& !retribution)
             target = null;
 
         if (colliders.Length == 3)
@@ -138,7 +134,7 @@ public class Decision : MonoBehaviour
             {
                 if (colliders[i].gameObject.tag.Equals("Player") 
                     && colliders[i].gameObject.transform != target
-                    && !retribution)
+                    )//&& !retribution)
                 {
                     target = colliders[i].gameObject.transform;
 
@@ -159,7 +155,7 @@ public class Decision : MonoBehaviour
                 float dot = Vector3.Dot(transform.forward.normalized, 
                     (players[i].transform.position - transform.position).normalized);
 
-                if (target == null && dot > 0.9f && !retribution)
+                if (target == null && dot > 0.9f /*&& !retribution*/)
                 {
                     target = players[i].transform;
                     Debug.Log("Target in range");
@@ -187,7 +183,7 @@ public class Decision : MonoBehaviour
             _raycastHit = true;
         }*/
 
-        if (target != null && colliders.Length > 2 && !retribution)
+        if (target != null && colliders.Length > 2 /* && !retribution */)
         {
             /*if (Vector3.Angle(transform.forward, target.position - transform.position) > fScanVision * 2)
                 rotSpeed = 5;

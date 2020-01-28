@@ -15,9 +15,6 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
     private int _health;
     
     [SerializeField] private float healthDisplayLength = 2f;
-
-    private Slider healthSlider;
-    public Slider healthMaskSlider;
     [SerializeField] private GameObject enemyHealthBar;
 
     private bool isDead;
@@ -34,11 +31,11 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
 
     void Start()
     {
+        sliderControl.SetBar(0, startHealth);
         _health = startHealth;
         
         if (enemyHealthBar)
         {
-            healthSlider = enemyHealthBar.GetComponentInChildren<Slider>();
             enemyHealthBar.SetActive(false);
         }
 
@@ -52,10 +49,7 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
     {
         _health -= pAmount;
 
-        sliderControl.UpdateEnemyBar(_health);
-
-        if (healthSlider)
-            healthSlider.value = (float)_health / startHealth;
+        sliderControl.UpdateBars(0, pAmount);
 
         if (_health <= 0 && !isDead)
             Death();

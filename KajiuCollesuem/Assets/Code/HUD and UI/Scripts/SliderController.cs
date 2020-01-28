@@ -12,8 +12,6 @@ Description: Managing sliders to contain a mask and lower, conveying visual cue 
 
 public class SliderController : MonoBehaviour
 {
-    public PlayerAttributes playerAtt;
-
     const int BAR_HEIGHT = 20;
     public float barLengthMultiplier = 1.5f;
 
@@ -22,7 +20,6 @@ public class SliderController : MonoBehaviour
 
     public Slider[] RegSlider;
     public Slider[] MaskSlider;
-    public Slider EnemySlider;
 
     private Coroutine[] _lerpCoroutineArray = new Coroutine[3];
 
@@ -33,6 +30,11 @@ public class SliderController : MonoBehaviour
     public int lerpSpeed = 1;
     private int sliderIndex;
 
+    public void SetBar(int pIndex, float pValue)
+    {
+        RegSlider[pIndex].maxValue = pValue;
+    }
+
     public void SetBars(int pIndex, float pValue)
     {
         BarRect[pIndex] = BarRect[pIndex].gameObject.GetComponent<RectTransform>();
@@ -42,13 +44,9 @@ public class SliderController : MonoBehaviour
         RegSlider[pIndex].maxValue = pValue;
     }
 
-    public void UpdateEnemyBar(float pValue)
-    {
-        StartCoroutine(LerpMaskSlider(EnemySlider, pValue));
-    }
-
     public void UpdateBars(int pIndex, float pValue)
     {
+        Debug.Log("Hello World");
         if (_lerpCoroutineArray[pIndex] != null)
         {
             StopCoroutine(_lerpCoroutineArray[pIndex]);
