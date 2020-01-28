@@ -104,4 +104,6 @@ public class Smash : MonoBehaviour, IState
     {
         throw new System.NotImplementedException();
     }
+
+    public void UpdateTarget(Transform pTarget) => _target = pTarget;
 }

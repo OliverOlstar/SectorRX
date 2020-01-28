@@ -15,7 +15,7 @@ public class Decision : MonoBehaviour
     private IState[] _states;
     private IState _currentState;
 
-    [HideInInspector] public Transform target;
+    public Transform target;
     [SerializeField] private LayerMask _playerLayer;
 
     public float fScanVision = 30;
@@ -198,7 +198,8 @@ public class Decision : MonoBehaviour
                 Quaternion.LookRotation(target.position - transform.position),
                 Time.deltaTime * 5);
         }
-        SetupStates();
+        //SetupStates();
+        _currentState.UpdateTarget(target);
 
         /*if (_currentState.CanEnter(smallest_distance))
         {
