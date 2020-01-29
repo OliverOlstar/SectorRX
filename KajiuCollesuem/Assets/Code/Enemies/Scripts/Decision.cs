@@ -60,7 +60,7 @@ public class Decision : MonoBehaviour
 
     private void Update()
     {
-        if (target != null)
+        //if (target != null)
             _currentState.Tick();
     }
 

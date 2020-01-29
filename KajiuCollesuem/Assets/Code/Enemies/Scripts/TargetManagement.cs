@@ -24,7 +24,6 @@ public class TargetManagement : MonoBehaviour
         if (_decision.target == null)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, _fRadius, _playerLayer);
-            //float distance = Vector3.Distance(transform.position, _decision.target.position);
 
             if (colliders.Length > 0)
             {
@@ -53,10 +52,9 @@ public class TargetManagement : MonoBehaviour
                     float dot = Vector3.Dot(transform.forward.normalized,
                         (players[i].transform.position - transform.position).normalized);
 
-                    if (_decision.target == null && dot > 0.9f && !retribution)
+                    if (_decision.target == null && dot > 0.9f && !GetComponent<Guard>().IsEnabled() && !retribution)
                     {
                         _decision.target = players[i].transform;
-                        Debug.Log("Target in range");
                         break;
                     }
                 }
