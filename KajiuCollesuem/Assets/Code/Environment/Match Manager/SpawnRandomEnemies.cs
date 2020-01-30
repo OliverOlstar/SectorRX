@@ -1,12 +1,12 @@
-﻿/*
-Programmer: Kavian Kermani
-Additional Programmers: Other people who worked on the script
-Description: Spawns a random number of enemies, in preset locations randomly.
-*/
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+/*
+Programmer: Kavian Kermani
+Additional Programmers: Oliver Loescher
+Description: Spawns a random number of enemies, in preset locations randomly.
+*/
 
 public class SpawnRandomEnemies : MonoBehaviour
 {

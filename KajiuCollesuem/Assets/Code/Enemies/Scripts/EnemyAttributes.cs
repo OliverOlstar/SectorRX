@@ -3,20 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+Programmer: 
+Additional Programmers: Kavian Kermani, Oliver Loescher
+Description: Managing enemy attributes such as damage done and damage taken.
+*/
+
 public class EnemyAttributes : MonoBehaviour, IAttributes
 {
     [SerializeField] private int startHealth = 100;
     private int _health;
     
     [SerializeField] private float healthDisplayLength = 2f;
-
-    private Slider healthSlider;
     [SerializeField] private GameObject enemyHealthBar;
 
     private bool isDead;
 
     private Decision _decision;
     private HUDManager _playerHUD;
+    public SliderController sliderControl;
     private IState _deadState;
     private IState _stunnedState;
 
@@ -26,11 +31,11 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
 
     void Start()
     {
+        sliderControl.SetBar(0, startHealth);
         _health = startHealth;
         
         if (enemyHealthBar)
         {
-            healthSlider = enemyHealthBar.GetComponentInChildren<Slider>();
             enemyHealthBar.SetActive(false);
         }
 
@@ -44,8 +49,7 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
     {
         _health -= pAmount;
 
-        if (healthSlider)
-            healthSlider.value = (float)_health / startHealth;
+        sliderControl.UpdateBars(0, pAmount);
 
         if (_health <= 0 && !isDead)
             Death();

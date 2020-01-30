@@ -81,10 +81,10 @@ public class Decision : MonoBehaviour
         {
             //Get distance to target
             float distance = Vector3.Distance(transform.position, target.position);
-            bool retribution = GetComponent<AlwaysSeek>().retribution;
+            //bool retribution = GetComponent<AlwaysSeek>().retribution;
 
             //Return if you can't Exit current state
-            if (_currentState.CanExit(distance) == false && !retribution) return;
+            if (_currentState.CanExit(distance) == false /*&& !retribution*/) return;
 
             foreach (IState state in _states)
             {
@@ -103,10 +103,6 @@ public class Decision : MonoBehaviour
                     SwitchState(state);
                     break;
                 }
-
-                /*else if (!retribution)
-                    //Ensures that hellhound doesn't continue current when out of range
-                    SwitchState(GetComponent<Guard>());*/
             }
             //Debug.Log(distance);
         }
@@ -117,8 +113,6 @@ public class Decision : MonoBehaviour
     Task 1: Grunts targeting is updated to allow for switching of targets*/
     /*private void CheckAndUpdateTarget()
     {
-        
-
         /*if (_currentState.CanEnter(smallest_distance))
         {
             if (target != _players[index].transform)

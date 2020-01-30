@@ -1,12 +1,12 @@
-﻿/*
-Programmer: Kavian Kermani
-Additional Programmers: Other people who worked on the script
-Description: Spawns lava, which rises to two set heights, with an invisible timer.
-*/
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+/*
+Programmer: Kavian Kermani
+Additional Programmers: Oliver Loescher
+Description: Spawns lava, which rises to two set heights, with an invisible timer.
+*/
 
 public class SpawnEditLava : MonoBehaviour
 {

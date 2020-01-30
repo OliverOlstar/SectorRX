@@ -55,8 +55,8 @@ public class Stunned : MonoBehaviour, IState
     public void AEDoneStunned()
     {
         //Debug.Log("Stunned: AEDoneStunned");
-        GetComponent<AlwaysSeek>().retribution = true;
-        GetComponent<Decision>().ForceStateSwitch(GetComponent<Seek>());
+        //GetComponent<AlwaysSeek>().retribution = true;
+        //GetComponent<Decision>().ForceStateSwitch(GetComponent<Seek>());
         _enabled = false;
     }
 
