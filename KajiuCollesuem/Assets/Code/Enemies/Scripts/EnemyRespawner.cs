@@ -39,7 +39,6 @@ public class EnemyRespawner : MonoBehaviour
         transform.position = spawnPosition;
         transform.rotation = spawnRotation;
         GetComponent<IAttributes>().Respawn();
-        GetComponent<Decision>().Respawn();
         gameObject.SetActive(true);
     }
 }

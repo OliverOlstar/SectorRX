@@ -15,15 +15,11 @@ public class PlayerCollectibles : MonoBehaviour
         //playerHUD = transform.parent.GetComponentInChildren<HUDManager>();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void CollectedCell()
     {
-        if (collision.gameObject.tag == "Cell")
-        {
-            _PlayerHUD.cellUIOn = true;
-            Destroy(collision.gameObject);
-            _PlayerHUD.cellUI.SetActive(true);
-            _PlayerHUD.cellCounter = _PlayerHUD.cellCounter + 100;
-            _PlayerHUD.SetCellCount();
-        }
+        _PlayerHUD.cellUIOn = true;
+        _PlayerHUD.cellUI.SetActive(true);
+        _PlayerHUD.cellCounter = _PlayerHUD.cellCounter + 100;
+        _PlayerHUD.SetCellCount();
     }
 }

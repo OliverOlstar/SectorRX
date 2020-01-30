@@ -31,7 +31,9 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
 
     void Start()
     {
-        sliderControl.SetBar(0, startHealth);
+        if (sliderControl != null)
+            sliderControl.SetBar(0, startHealth);
+
         _health = startHealth;
         
         if (enemyHealthBar)
@@ -49,7 +51,8 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
     {
         _health -= pAmount;
 
-        sliderControl.UpdateBars(0, pAmount);
+        if (sliderControl != null)
+            sliderControl.UpdateBars(0, pAmount);
 
         if (_health <= 0 && !isDead)
             Death();

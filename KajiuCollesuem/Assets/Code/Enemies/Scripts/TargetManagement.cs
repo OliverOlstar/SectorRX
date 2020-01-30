@@ -29,16 +29,13 @@ public class TargetManagement : MonoBehaviour
             {
                 for (int i = 0; i < colliders.Length; ++i)
                 {
-                    if (colliders[i].gameObject.tag.Equals("Player")
-                        && colliders[i].gameObject.transform != _decision.target
-                        && !retribution)
+                    if (colliders[i].gameObject.transform != _decision.target && !retribution)
                     {
-                        _decision.target = colliders[i].gameObject.transform;
-
-                        if (!_IsPlayerInRange())
-                            _decision.target = null;
-                        else
+                        if (_IsPlayerInRange(colliders[i].gameObject.transform))
+                        {
+                            _decision.UpdateTarget(colliders[i].gameObject.transform);
                             break;
+                        }
                     }
                 }
             }
@@ -94,9 +91,9 @@ public class TargetManagement : MonoBehaviour
                 Time.deltaTime * 5);
     }
 
-    private bool _IsPlayerInRange()
+    private bool _IsPlayerInRange(Transform pTarget)
     {
-        if (Vector3.Angle(transform.forward, _decision.target.position - transform.position) < fScanVision)
+        if (Vector3.Angle(transform.forward, pTarget.position - transform.position) < fScanVision)
             return true;
 
         return false;

@@ -55,13 +55,11 @@ public class Decision : MonoBehaviour
     private void FixedUpdate()
     {
         CheckStates();
-        _currentState.UpdateTarget(target);
     }
 
     private void Update()
     {
-        //if (target != null)
-            _currentState.Tick();
+        _currentState.Tick();
     }
 
     public void SetupStates()
@@ -81,10 +79,10 @@ public class Decision : MonoBehaviour
         {
             //Get distance to target
             float distance = Vector3.Distance(transform.position, target.position);
-            //bool retribution = GetComponent<AlwaysSeek>().retribution;
+            bool retribution = GetComponent<AlwaysSeek>().retribution;
 
             //Return if you can't Exit current state
-            if (_currentState.CanExit(distance) == false /*&& !retribution*/) return;
+            if (_currentState.CanExit(distance) == false && !retribution) return;
 
             foreach (IState state in _states)
             {
@@ -103,6 +101,10 @@ public class Decision : MonoBehaviour
                     SwitchState(state);
                     break;
                 }
+
+                /*else if (!retribution)
+                    //Ensures that hellhound doesn't continue current when out of range
+                    SwitchState(GetComponent<Guard>());*/
             }
             //Debug.Log(distance);
         }
@@ -113,6 +115,8 @@ public class Decision : MonoBehaviour
     Task 1: Grunts targeting is updated to allow for switching of targets*/
     /*private void CheckAndUpdateTarget()
     {
+        
+
         /*if (_currentState.CanEnter(smallest_distance))
         {
             if (target != _players[index].transform)
@@ -151,10 +155,16 @@ public class Decision : MonoBehaviour
         SwitchState(pState);
     }
 
-    //Resets the AI for respawning
-    public void Respawn()
+    // Updated target for all of the starts on target change
+    public void UpdateTarget(Transform pNewTarget)
     {
-        _currentState.Exit();
-        StartLastState();
+        // Update this script's target
+        target = pNewTarget;
+
+        // Update state's target
+        foreach (IState state in _states)
+        {
+            state.UpdateTarget(target);
+        }
     }
 }

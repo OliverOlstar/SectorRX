@@ -127,8 +127,14 @@ public class PlayerSpawn : MonoBehaviour
 
     IEnumerator VictoryReset()
     {
+        Debug.Log("I REMOVED THIS");
+
         yield return new WaitForSeconds(4.0f);
-        musicManager.mainAudio.Stop();
-        SceneManager.LoadScene(2);
+        
+        if (connectedPlayers.playersToSpawn > 1)
+        {
+            musicManager.mainAudio.Stop();
+            SceneManager.LoadSceneAsync(2);
+        }
     }
 }
