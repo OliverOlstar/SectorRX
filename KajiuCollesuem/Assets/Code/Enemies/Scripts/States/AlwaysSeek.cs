@@ -62,7 +62,7 @@ public class AlwaysSeek : MonoBehaviour, IState
         /*Prevents Hellhound from moving unless player is within range, then it moves to player
          *      Task: Grunts rotation is smooth 
          */
-        if (Vector3.Angle(transform.forward, _target.position - transform.position) < GetComponent<Decision>().fScanVision)
+        if (Vector3.Angle(transform.forward, _target.position - transform.position) < GetComponent<TargetManagement>().fScanVision)
             _agent.SetDestination(_target.position);
         else
             transform.rotation = Quaternion.Lerp(transform.rotation, 
@@ -81,4 +81,6 @@ public class AlwaysSeek : MonoBehaviour, IState
             _agent.isStopped = false;
         }
     }
+
+    public void UpdateTarget(Transform pTarget) => _target = pTarget;
 }

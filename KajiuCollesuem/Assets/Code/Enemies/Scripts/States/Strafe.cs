@@ -58,9 +58,17 @@ public class Strafe : MonoBehaviour, IState
 
     public void Tick()
     {
-        if (_enabled && !_pause)
+        if (_enabled)
         {
-            //transform.LookAt(_target);
+            if (Vector3.Angle(transform.forward, _target.position - transform.position) > 1)
+            {
+                transform.rotation = Quaternion.Lerp(transform.rotation,
+                Quaternion.LookRotation(_target.position - transform.position),
+                Time.deltaTime * 5);
+            }
+
+            else
+                transform.LookAt(_target);
 
             if (timer > 5)
             {
@@ -85,6 +93,8 @@ public class Strafe : MonoBehaviour, IState
             }
         }
     }
+
+    public void UpdateTarget(Transform pTarget) => _target = pTarget;
 
     public Vector3 GetStrafeDirection()
     {

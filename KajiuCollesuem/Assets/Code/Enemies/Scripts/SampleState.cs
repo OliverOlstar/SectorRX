@@ -42,4 +42,6 @@ public class SampleState : MonoBehaviour, IState
     {
 
     }
+
+    public void UpdateTarget(Transform pTarget) => _target = pTarget;
 }

@@ -305,6 +305,7 @@ GameObject:
   - component: {fileID: 2220731904774253933}
   - component: {fileID: 6055264869548468582}
   - component: {fileID: 6055264869548468583}
+  - component: {fileID: 4818489932192309499}
   - component: {fileID: 6055264869548468579}
   - component: {fileID: 1328787253039488700}
   m_Layer: 9
@@ -564,7 +565,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   fScanVision: 60
-  _fRadius: 15
 --- !u!114 &6055264869548468583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,6 +580,22 @@ MonoBehaviour:
   startHealth: 25
   healthDisplayLength: 2
   enemyHealthBar: {fileID: 6055264869823495981}
+--- !u!114 &4818489932192309499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2220731904774253922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7d9e0e5ddf7b434180e5da24a8504ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fRadius: 15
+  _playerLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!195 &6055264869548468579
 NavMeshAgent:
   m_ObjectHideFlags: 0

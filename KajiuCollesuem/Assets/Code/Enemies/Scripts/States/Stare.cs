@@ -54,6 +54,8 @@ public class Stare : MonoBehaviour, IState
         
     }
 
+    public void UpdateTarget(Transform pTarget) => _target = pTarget;
+
     public void Pause()
     {
         throw new System.NotImplementedException();

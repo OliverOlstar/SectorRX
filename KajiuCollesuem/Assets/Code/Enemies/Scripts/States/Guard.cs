@@ -8,6 +8,8 @@ public class Guard : MonoBehaviour, IState
     private Animator _anim;
     private NavMeshAgent _agent;
 
+    private Decision _decision;
+
     private Vector3 _home;
     [SerializeField] private float homeReachedDistance = 1;
 
@@ -20,7 +22,7 @@ public class Guard : MonoBehaviour, IState
     {
         _anim = pAnim;
         _agent = pAgent;
-
+        _decision = GetComponent<Decision>();
         _home = transform.position;
     }
 
@@ -29,6 +31,8 @@ public class Guard : MonoBehaviour, IState
         _enabled = true;
         _subState = 0;
         _stateChangeTime = Time.time + 1;
+        _decision.target = null;
+        _anim.SetFloat("Speed", 0);
         if (_agent != null)
             _agent.isStopped = true;
         //Debug.Log("Guard: Enter");
@@ -56,6 +60,7 @@ public class Guard : MonoBehaviour, IState
     // Update is called once per frame
     public void Tick()
     {
+        Debug.Log(_stateChangeTime);
         switch (_subState)
         {
             //Idle a bit before moving
@@ -94,4 +99,8 @@ public class Guard : MonoBehaviour, IState
         if (_subState != 2)
             _anim.SetFloat("Speed", _agent.velocity.magnitude / _agent.speed);
     }
+
+    public bool IsEnabled() { return _enabled; }
+
+    public void UpdateTarget(Transform pTarget) { }
 }

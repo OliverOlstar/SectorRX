@@ -63,4 +63,6 @@ public class Dead : MonoBehaviour, IState
         }
         Destroy(this.gameObject);
     }
+
+    public void UpdateTarget(Transform pTarget) => _target = pTarget;
 }

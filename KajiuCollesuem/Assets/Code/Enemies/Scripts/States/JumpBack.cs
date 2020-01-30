@@ -35,12 +35,14 @@ public class JumpBack : MonoBehaviour, IState
         transform.LookAt(_target.position);
         y = transform.position.y;
         z = transform.position.z;
-        _agent.isStopped = true;
+        _agent.enabled = false;
+        //rb.AddForce(-transform.forward * 20 + Vector3.up * 10);
     }
 
     public void Exit()
     {
         //Debug.Log("Jump back: Exit");
+        _agent.enabled = true;
         _enabled = false;
     }
 
@@ -67,6 +69,8 @@ public class JumpBack : MonoBehaviour, IState
        
     }
 
+    public void UpdateTarget(Transform pTarget) => _target = pTarget;
+
     public void FixedUpdate()
     {
         if (_enabled)
@@ -76,10 +80,12 @@ public class JumpBack : MonoBehaviour, IState
             z += Time.deltaTime;
             float time = Time.deltaTime * speed;
 
-            if (transform.position.y > 1)
-                transform.Translate(new Vector3(0, -2 * y * time, z * time));
-            else
-                transform.Translate(new Vector3(0, 2 * y * time, z * time));
+            //if (transform.position.y > 1)
+            //transform.Translate(new Vector3(0, -2 * y * time, z * time));
+            //rb.velocity = -transform.forward * time;
+            //rb.AddForce(Vector3.back);
+            //else
+                //transform.Translate(new Vector3(0, 2 * y * time, z * time));
 
             /*transform.position = Vector3.Lerp(transform.position, transform.position + Vector3.forward, 
                 Time.deltaTime * 5);*/
@@ -125,5 +131,10 @@ public class JumpBack : MonoBehaviour, IState
         }
 
         return false;
+    }
+
+    public void AEJumpBack()
+    {
+
     }
 }

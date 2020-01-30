@@ -49,6 +49,8 @@ public class Stunned : MonoBehaviour, IState
 
     }
 
+    public void UpdateTarget(Transform pTarget) => _target = pTarget;
+
     //Animation Events //////////////
     public void AEDoneStunned()
     {
