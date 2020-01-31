@@ -26,8 +26,15 @@ public class PlayerSpawn : MonoBehaviour
 
     private void Start()
     {   
+        //If no players are entered, automatically set to 1.
+        if(connectedPlayers.playersToSpawn <= 0)
+        {
+            connectedPlayers.playersToSpawn = 1;
+            connectedPlayers.playersConnected = 1;
+        }
+
         //Sets number of connected players equal to how many need to be spawned. Helps with match restarts after a player wins.
-        if(connectedPlayers.playersToSpawn <= 1)
+        if (connectedPlayers.playersToSpawn <= 1)
         {
             connectedPlayers.playersConnected = 1;
         }
