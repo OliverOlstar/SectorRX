@@ -180,7 +180,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1c4beac7-edeb-43c8-8bce-033deb17dd4f"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -224,7 +224,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a593c68e-85cf-4dd7-a256-b234852c6539"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -248,7 +248,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""id"": ""8126ae8b-2c85-485e-abb0-da90efcf4856"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
-                    ""processors"": ""ScaleVector2(y=0.7)"",
+                    ""processors"": ""ScaleVector2(y=0.6)"",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Camera"",
                     ""isComposite"": false,
@@ -268,7 +268,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""5744db95-db65-43d2-8f77-997aa7ce3d45"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": ""Press(behavior=2)"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
