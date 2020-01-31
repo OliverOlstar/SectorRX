@@ -62,7 +62,7 @@ public class JumpBack : MonoBehaviour, IState
     public bool CanExit(float pDistance)
     {
         //Debug.Log("Jump back: CanExit - " + (_enabled == false));
-        return pDistance > _jumpBackRange;
+        return pDistance > _jumpBackRange + 0.3f;
     }
 
     public void Tick()
