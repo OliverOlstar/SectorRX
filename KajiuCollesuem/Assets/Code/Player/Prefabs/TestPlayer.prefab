@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 960917303}
   m_Layer: 8
-  m_Name: SpawnPoint
+  m_Name: BreathSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -347,6 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee92f20ca394cc4ea8aefa00433d0d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sliderControl: {fileID: 0}
   _maxHealth: 100
   _maxShield: 100
   _maxPower: 100
@@ -356,10 +357,6 @@ MonoBehaviour:
   _powerLossStartDelaySeconds: 8
   _powerLossDelaySeconds: 0.3
   _powerLossAmount: 1
-  _healthSlider: {fileID: 0}
-  _shieldSlider: {fileID: 0}
-  _powerSlider: {fileID: 0}
-  barLengthMultiplier: 1.5
 --- !u!114 &1010789244785054995
 MonoBehaviour:
   m_ObjectHideFlags: 0
