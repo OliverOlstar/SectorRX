@@ -297,6 +297,7 @@ GameObject:
   - component: {fileID: 2220731904774253932}
   - component: {fileID: 4888040742626211138}
   - component: {fileID: 8496819161713853905}
+  - component: {fileID: 698450505057935209}
   - component: {fileID: 2220731904774253928}
   - component: {fileID: 2112717384075363666}
   - component: {fileID: 4944307402221784857}
@@ -458,6 +459,23 @@ MonoBehaviour:
   _nextEnterTime: 0
   _fStrafeSpeed: 0
   _enabled: 0
+  _pause: 0
+--- !u!114 &698450505057935209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2220731904774253922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30def98264adacc4b83a5c17bb7de2ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fMaxDashRange: 2
+  _fMinDashRange: 1.6
+  _fForce: 0
+  _enabled: 0
 --- !u!114 &2220731904774253928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -528,7 +546,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enabled: 0
-  cell: {fileID: 2237298644258958753, guid: 24ec6bec39e3a084a93132a9b996760e, type: 3}
+  cell: {fileID: 7865935160635239468, guid: 8991995bcdcc5f9448ce755d60709332, type: 3}
 --- !u!114 &6055264869548468582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,8 +562,9 @@ MonoBehaviour:
   target: {fileID: 0}
   _playerLayer:
     serializedVersion: 2
-    m_Bits: 256
-  fScanVision: 30
+    m_Bits: 0
+  fScanVision: 60
+  _fRadius: 15
 --- !u!114 &6055264869548468583
 MonoBehaviour:
   m_ObjectHideFlags: 0

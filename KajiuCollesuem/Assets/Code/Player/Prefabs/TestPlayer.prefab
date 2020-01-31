@@ -236,10 +236,11 @@ GameObject:
   - component: {fileID: 806430449}
   - component: {fileID: 17874588}
   - component: {fileID: 17874586}
-  - component: {fileID: 7060295865598958045}
+  - component: {fileID: 3055681976545601968}
+  - component: {fileID: 247858587323170109}
   m_Layer: 8
   m_Name: TestPlayer
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -318,6 +319,7 @@ MonoBehaviour:
   _playerAttributes: {fileID: 0}
   _animHandler: {fileID: 0}
   _playerCamera: {fileID: 0}
+  _pauseMenu: {fileID: 0}
   _rb: {fileID: 0}
   _Camera: {fileID: 0}
   Respawn: 0
@@ -373,8 +375,8 @@ MonoBehaviour:
   _moveAcceleration: 4000
   maxSpeed: 6
   inputInfluence: 1
-  _jumpForceUp: 10
-  _jumpForceVelocityMult: 2
+  _jumpForceUp: 7
+  _jumpForceVelocityMult: 1.7
   OnGround: 0
   disableMovement: 0
 --- !u!114 &806430450
@@ -417,10 +419,13 @@ MonoBehaviour:
   _fallDamageMax: 40
   _fallDamageMin: 20
   _inputInfluenceGrounded: 1
-  _inputInfluenceInAir: 0.7
+  _inputInfluenceInAir: 0.2
   _influenceUpdateRate: 1
+  _onGroundDrag: 2
+  _offGroundDrag: 0.1
   _downForceRate: 5
   _downForceTerminal: 8
+  _downForce: 0
 --- !u!114 &806430457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,8 +478,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doGroundPound: 0
   isGroundPounding: 0
-  _StopTime: 0
-  _DropForce: 20
+  _StopTime: 1
+  _DropForce: 30
 --- !u!114 &17874586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,7 +501,7 @@ MonoBehaviour:
   laserOn: 0
   firstPersonOn: 0
   _RotateDampening: 5
---- !u!114 &7060295865598958045
+--- !u!114 &3055681976545601968
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -524,6 +529,19 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &247858587323170109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8582934654442581043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57df21d598cd16c4983cce38a4b7e9a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _PlayerHUD: {fileID: 0}
 --- !u!1001 &1349502261
 PrefabInstance:
   m_ObjectHideFlags: 0

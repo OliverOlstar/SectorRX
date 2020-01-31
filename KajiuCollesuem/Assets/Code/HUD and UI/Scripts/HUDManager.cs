@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem.UI;
+using UnityEngine.EventSystems;
 
 public class HUDManager : MonoBehaviour
 {
     //public RectTransform pauseMenu, optionsMenu, powerMenu, skillMenu;
     public GameObject pause, /*option, ability, videoOP, audioOP gameplayOP,*/ cellUI, coreUI, powerUpgrade, statUpgrade, powerSelect;
+    public GameObject resumeButton;
+    public GameObject targetUI;
     public Text cellCount, coreCount, upCoreCount, upCellCount;
 
     //Booleans to check if Cell UI or Power Core UI are already active when collecting other item
@@ -48,6 +52,19 @@ public class HUDManager : MonoBehaviour
         {
             coreUI.SetActive(false);
         }
+
+        if (targetUI != null)
+        {
+            EventSystem.current.SetSelectedGameObject(targetUI);
+            targetUI = null;
+        }
+
+        ////Controller and Keyboard Input with UI Module
+        if (pauseMenu.hasPaused)
+        {
+            EventSystem.current.SetSelectedGameObject(resumeButton);
+            pauseMenu.hasPaused = false;
+        }
     }
 
     //Collectable UI Management
@@ -75,80 +92,52 @@ public class HUDManager : MonoBehaviour
     }   
 
     //Navigate between upgrade Menus
-    public void goPowUpgrade()
+    public void goPowUpgrade(GameObject pTarget)
     {
         pause.SetActive(false);
         statUpgrade.SetActive(false);
         powerUpgrade.SetActive(true);
         coreCount.gameObject.SetActive(true);
         upCoreCount.text = coreCounter.ToString();
+        targetUI = pTarget;
     }
 
-    public void goStatUpgrade()
+    public void goStatUpgrade(GameObject pTarget)
     {
         pause.SetActive(false);
         powerUpgrade.SetActive(false);
         statUpgrade.SetActive(true);
         cellCount.gameObject.SetActive(true);
         upCellCount.text = cellCounter.ToString();
+        targetUI = pTarget;
     }
 
-    public void PowerToStat()
+    public void PowerToStat(GameObject pTarget)
     {
         powerUpgrade.SetActive(false);
         statUpgrade.SetActive(true);
+        targetUI = pTarget;
     }
 
-    public void StatToPower()
+    public void StatToPower(GameObject pTarget)
     {
         statUpgrade.SetActive(false);
         powerUpgrade.SetActive(true);
+        targetUI = pTarget;
     }
 
-    //Menus and Settings Management
-    public void GoToOptions()
-    {
-        pause.SetActive(false);
-        //option.SetActive(true);
-        //ability.SetActive(false);
-        //videoOP.SetActive(false);
-        //audioOP.SetActive(false);
-    }
-
-    //public void GoToVideoOP()
-    //{
-    //    option.SetActive(false);
-    //    videoOP.SetActive(true);
-    //}
-
-    //public void GoToAudioOP()
-    //{
-    //    option.SetActive(false);
-    //    audioOP.SetActive(true);
-    //}
-
-    //public void GoToSkills()
-    //{
-    //    pause.SetActive(false);
-    //    ability.SetActive(true);
-    //}
-
-    public void BackToPause()
+    public void BackToPause(GameObject pTarget)
     {
         pause.SetActive(true);
         //option.SetActive(false);
         //ability.SetActive(false);
         powerUpgrade.SetActive(false);
         statUpgrade.SetActive(false);
+        targetUI = pTarget;
     }
 
     public void ResumeGame()
     {
-        pause.SetActive(false);
-        Time.timeScale = 1;
-        pauseMenu.pause = !pauseMenu.pause;
-        mainCam.CameraDisabled = !pause;
-        //input.inputDisabled = !pause;
-        Cursor.lockState = CursorLockMode.Locked;
+        pauseMenu.TogglePause();
     }
 }

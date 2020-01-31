@@ -14,11 +14,13 @@ public class GroundPound : MonoBehaviour
     [SerializeField] private float _StopTime = 0.2f;
     [SerializeField] private float _DropForce = 15.0f;
     MovementComponent _PMovement;
+    OnGroundComponent _PFallForce;
 
     // Start is called before the first frame update
     void Start()
     {
         _PMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementComponent>();
+        _PFallForce = GameObject.FindGameObjectWithTag("Player").GetComponent<OnGroundComponent>();
         _PlayerRB = GetComponent<Rigidbody>();
     }
 
@@ -68,6 +70,7 @@ public class GroundPound : MonoBehaviour
     {
         ClearForces();
         _PlayerRB.useGravity = false;
+        _PFallForce._downForce = 0;
     }
 
     //Sets character's velocity and angular velocity to zero.
