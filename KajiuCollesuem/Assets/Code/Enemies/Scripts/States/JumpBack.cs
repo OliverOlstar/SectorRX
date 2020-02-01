@@ -87,9 +87,10 @@ public class JumpBack : MonoBehaviour, IState
                 rb.AddForce(new Vector3(0, y * time, z * time));*/
 
             //This clamps the jump within a specific radius to ensure jump back isn't too long
-            //if (time > 150)
+            if (time > 150)
                 time = 150;
 
+            Debug.Log(time);
             rb.AddForce(-transform.forward * time);
 
             /*transform.position = Vector3.Lerp(transform.position, transform.position + Vector3.forward, 
