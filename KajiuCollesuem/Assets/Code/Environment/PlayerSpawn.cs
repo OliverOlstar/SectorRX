@@ -50,8 +50,8 @@ public class PlayerSpawn : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(connectedPlayers.playersToSpawn);
-        Debug.Log(connectedPlayers.playersConnected);
+        //Debug.Log(connectedPlayers.playersToSpawn);
+        //Debug.Log(connectedPlayers.playersConnected);
 
         if (connectedPlayers.playersConnected <= 1)
         {

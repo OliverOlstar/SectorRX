@@ -46,7 +46,6 @@ public class SliderController : MonoBehaviour
 
     public void UpdateBars(int pIndex, float pValue)
     {
-        Debug.Log("Hello World");
         if (_lerpCoroutineArray[pIndex] != null)
         {
             StopCoroutine(_lerpCoroutineArray[pIndex]);

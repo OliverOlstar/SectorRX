@@ -16,12 +16,8 @@ public class DodgeState : BaseState
     {
         Debug.Log("DodgeState: Enter");
 
-        //Dodge Direction
-        Vector2 direction = stateController.LastMoveDirection.normalized;
-
         //Start Dodge
-        stateController._dodgeComponent.Dodge(stateController.dodgeInput == 0, direction);
-        stateController._animHandler.StartDodge();
+        stateController._dodgeComponent.Dodge(stateController.dodgeInput == 0, stateController.LastMoveDirection.normalized);
 
         //Remove Input
         stateController.dodgeInput = -1.0f;
@@ -32,7 +28,7 @@ public class DodgeState : BaseState
         Debug.Log("DodgeState: Exit");
 
         //Stop Dodge
-        stateController._animHandler.StopDodge();
+        stateController._modelController.DoneDodge();
 
         //Remove Input
         stateController.dodgeInput = -1.0f;
@@ -44,15 +40,6 @@ public class DodgeState : BaseState
         if (stateController._dodgeComponent.doneDodge)
         {
             stateController._dodgeComponent.doneDodge = false;
-            return typeof(MovementState);
-        }
-
-        // Respawn
-        if (stateController.Respawn)
-        {
-            stateController.Respawn = false;
-            //stateController._animHandler.Respawn();
-            stateController._dodgeComponent.StopDodge();
             return typeof(MovementState);
         }
 

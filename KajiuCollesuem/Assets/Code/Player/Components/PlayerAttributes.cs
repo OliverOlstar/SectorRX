@@ -222,8 +222,8 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             StartCoroutine("powerLossStartDelay");
         }
 
-        if (pReact)
-            _anim.Stunned(Random.value < 0.5f);
+        //if (pReact)
+        //    _anim.Stunned(Random.value < 0.5f);
 
         //Return If Dead or Not
         if (_health <= 0)

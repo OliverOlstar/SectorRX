@@ -14,7 +14,7 @@ public class PlayerStateController : MonoBehaviour
          */
 
     // On Ground
-    [HideInInspector] public bool OnGround = false;
+    [HideInInspector] public bool onGround = false;
     [HideInInspector] public bool Stunned = false;
     [HideInInspector] public float AttackStateReturnDelay = 0;
 
@@ -39,15 +39,14 @@ public class PlayerStateController : MonoBehaviour
     //[HideInInspector] public ModelMovement _modelController;
 
     [HideInInspector] public PlayerAttributes _playerAttributes;
-    [HideInInspector] public AnimHandler _animHandler;
+    [HideInInspector] public ModelController _modelController;
     [HideInInspector] public PlayerCamera _playerCamera;
-    [HideInInspector] public PauseMenu _pauseMenu;
 
     [HideInInspector] public Rigidbody _rb;
-    [HideInInspector] public Transform _Camera;
+    public Transform _Camera;
 
-    //Reset Player
-    [HideInInspector] public bool Respawn = false;
+    // Used if it auto calls release when reached maxCharge time & next release input is to be ignored
+    [HideInInspector] public bool ignoreNextHeavyAttackRelease = false;
 
     //[HideInInspector] public InputPlayer inputs;
     //[HideInInspector] public InputAction.CallbackContext ctx;
@@ -64,16 +63,13 @@ public class PlayerStateController : MonoBehaviour
 
         //_respawnComponent = GetComponent<PlayerRespawn>();
         _playerAttributes = GetComponent<PlayerAttributes>();
-        _animHandler = GetComponentInChildren<AnimHandler>();
+        _modelController = GetComponentInChildren<ModelController>();
 
         _stateMachine = GetComponent<PlayerStateMachine>();
         InitializeStateMachine();
 
         _rb = GetComponent<Rigidbody>();
-        _Camera = transform.parent.GetComponentInChildren<Camera>().transform;
         _playerCamera = _Camera.GetComponentInParent<PlayerCamera>();
-
-        _pauseMenu = transform.parent.GetComponentInChildren<PauseMenu>();
     }
 
     // List for inputs
@@ -81,10 +77,17 @@ public class PlayerStateController : MonoBehaviour
     private void OnMovement(InputValue ctx) => moveInput = ctx.Get<Vector2>();
     private void OnDodge(InputValue ctx) => dodgeInput = ctx.Get<float>();
     private void OnLightAttack(InputValue ctx) => lightAttackinput = ctx.Get<float>();
-    private void OnHeavyAttack(InputValue ctx) => heavyAttackinput = ctx.Get<float>();
-    private void OnAnyInput() => LastInputTime = Time.time;
+    private void OnHeavyAttack(InputValue ctx)
+    {
+        heavyAttackinput = ctx.Get<float>();
 
-    private void OnPause() => _pauseMenu.TogglePause();
+        if (ignoreNextHeavyAttackRelease == true && heavyAttackinput == 0)
+        {
+            heavyAttackinput = -1.0f;
+            ignoreNextHeavyAttackRelease = false;
+        }
+    }
+    private void OnAnyInput() => LastInputTime = Time.time;
 
     private void FixedUpdate()
     {

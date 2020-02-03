@@ -5,136 +5,189 @@ using UnityEngine;
 
 public class AttackState : BaseState
 {
-    PlayerStateController stateController;
+    PlayerStateController _stateController;
 
-    [SerializeField] private int numberOfClicks = 0;
-    [SerializeField] private float lastClickedTime = 0;
-    [SerializeField] private float maxComboDelay = 0.8f;
+    private int _numberOfClicks = 0;
+    private float _exitStateTime = 0;
+    private float _addForceTime = 0;
+    private float _stopForceTime = 0;
+    private float _addForceAmount = 0;
 
-    private float AttackStateReturnDelayLength = 0.2f;
+    private float _attackStateReturnDelayLength = 0.2f;
+    private float _maxCharge = 1.0f;
 
-    private bool onHolding = false;
+    private bool _onHolding = false;
     public float chargeTimer = 0f;
-  
-
 
     public AttackState(PlayerStateController controller) : base(controller.gameObject)
     {
-        stateController = controller;
+        _stateController = controller;
     }
 
     public override void Enter()
     {
-        //Debug.Log("AttackState: Enter");
+        Debug.Log("AttackState: Enter");
         //stateController._hitboxComponent.gameObject.SetActive(true); /* Handled by animation events */
-
-        onHolding = false;
+        _exitStateTime = 0;
+        _onHolding = false;
         CheckForAttack();
     }
 
     public override void Exit()
     {
-        //Debug.Log("AttackState: Exit");
+        Debug.Log("AttackState: Exit");
         //stateController._hitboxComponent.gameObject.SetActive(false); /* Handled by animation events */
-        stateController.AttackStateReturnDelay = Time.time + AttackStateReturnDelayLength;
+        _stateController.AttackStateReturnDelay = Time.time + _attackStateReturnDelayLength;
         //stateController._hitboxComponent.gameObject.SetActive(false);
-        numberOfClicks = 0;
-        stateController._animHandler.ClearAttackBools();
+        _numberOfClicks = 0;
+        //stateController._modelController.ClearAttackBools();
+
+        //_stateController._modelController.DoneAttack();
     }
 
     public override Type Tick()
     {
-        if (Time.time - lastClickedTime > maxComboDelay && onHolding == false)
+        // Check for another attack
+        CheckForAttack();
+
+        // Leave state after attack
+        if (Time.time > _exitStateTime && _onHolding == false)
         {
             return typeof(MovementState);
         }
 
-        //CheckForAttack2();
-        CheckForAttack();
+        if (Time.time > _addForceTime && Time.time < _stopForceTime && _onHolding == false)
+        {
+            _stateController._rb.AddForce(_stateController._modelController.transform.forward * _addForceAmount);
+        }
 
-        //Stunned
-        if (stateController.Stunned)
+        // Stunned
+        if (_stateController.Stunned)
         {
             return typeof(StunnedState);
         }
 
-        //Respawn
-        if (stateController.Respawn)
-        {
-            stateController.Respawn = false;
-            stateController._animHandler.Respawn();
-            return typeof(MovementState);
-        }
-
         return null;
     }
-    public bool attacking = false;
-    private bool heldAttack = true;
-    float animSpeed = 0f;
-    public bool clickActive = false;
-
-
-    
 
     public void CheckForAttack()
     {
-        if (numberOfClicks <= 2)
+        // Cannot go beyond combo limit
+        if (_numberOfClicks <= 2)
         {
-            // On Release Heavy (Called Once)
-            if ((stateController.heavyAttackinput == 0 || chargeTimer >= 2) && onHolding == true)
+            // If holding don't listen for more attacks, listen for release else run holding code.
+            if (_onHolding == true)
             {
-                ClearInputs();
-                lastClickedTime = Time.time;
-
-                numberOfClicks++;
-
-                onHolding = false;
-
-                stateController._animHandler.setAnimSpeed(1f);
-            }
-
-            // On Holding Heavy
-            else if (onHolding)
-            {
-                chargeTimer += Time.deltaTime;
-
-                if (chargeTimer >= 0.1f)
+                // ON RELEASE HEAVY (Called Once)
+                if (_stateController.heavyAttackinput == 0)
                 {
-                    //string animBoolName = "Vertical" + (numberOfClicks + 1).ToString();
-                    stateController._animHandler.modifyAnimSpeed(-4f * Time.deltaTime);
-                }    
+                    ReleaseHeavyAttack();
+                    ClearInputs();
+                }
+                // ON HOLDING HEAVY
+                else
+                {
+                    chargeTimer += Time.deltaTime;
+
+                    // If Reached max charge release heavy attack
+                    if (chargeTimer >= _maxCharge)
+                    {
+                        _stateController.ignoreNextHeavyAttackRelease = true;
+                        ReleaseHeavyAttack();
+                    }
+                }
             }
-
-            // On Pressed Heavy (Called Once)
-            else if (stateController.heavyAttackinput == 1)
+            // Can only input for next attack if done previous attack
+            else if (Time.time > _exitStateTime || _exitStateTime == 0)
             {
-                stateController._animHandler.ClearAttackBools();
-                string boolName = "Triangle" + (numberOfClicks + 1).ToString();
-                stateController._animHandler.StartAttack(boolName);
-
-                chargeTimer = 0;
-                onHolding = true;
-            }
-
-            // On Pressed Light Attack (Called Once)
-            else if (stateController.lightAttackinput == 1)
-            {
-                lastClickedTime = Time.time;
-                numberOfClicks++;
-
-
-                stateController._animHandler.ClearAttackBools();
-                string boolName = "Square" + (numberOfClicks).ToString();
-                stateController._animHandler.StartAttack(boolName);
-                ClearInputs();
+                // ON RELEASED HEAVY BEFORE CHARGING STARTED (Called Once)
+                if (_stateController.heavyAttackinput == 0)
+                {
+                    PressedHeavyAttack();
+                    ReleaseHeavyAttack();
+                    ClearInputs();
+                }
+                // ON PRESSED HEAVY (Called Once)
+                else if (_stateController.heavyAttackinput == 1)
+                {
+                    PressedHeavyAttack();
+                    ClearInputs();
+                }
+                // ON PRESSED LIGHT (Called Once)
+                else if (_stateController.lightAttackinput == 1)
+                {
+                    PressedLightAttack();
+                    ClearInputs();
+                }
             }
         }
     }
 
+    #region Pressed & Release
+    private void PressedLightAttack()
+    {
+        SOAttack curAttack = _stateController._modelController.attacks[_numberOfClicks];
+        float PreAttackTime = curAttack.transitionToTime + curAttack.holdStartPosTime;
+        SetAttackValues(curAttack, PreAttackTime);
+
+        _stateController._modelController.PlayAttack(_numberOfClicks, false, false);
+
+        // TODO set player hitbox damage & knockback
+
+        _numberOfClicks++;
+    }
+
+    private void PressedHeavyAttack()
+    {
+        _stateController._modelController.PlayAttack(_numberOfClicks, true, true);
+
+        _exitStateTime = 0;
+
+        chargeTimer = 0;
+        _onHolding = true;
+    }
+
+    private void ReleaseHeavyAttack()
+    {
+        SOAttack curAttack = _stateController._modelController.attacks[_numberOfClicks + 3];
+        SetAttackValues(curAttack);
+
+        // TODO send through how long attack was charged for and use that to know how fast the attack should move.
+        _stateController._modelController.DoneChargingAttack();
+
+        // TODO set player hitbox damage & knockback (including charging)
+
+        _onHolding = false;
+        _numberOfClicks++;
+    }
+
+    private void ReleaseHeavyAttackBeforeCharging()
+    {
+        SOAttack curAttack = _stateController._modelController.attacks[_numberOfClicks + 3];
+        float PreAttackTime = curAttack.transitionToTime + curAttack.holdStartPosTime;
+        SetAttackValues(curAttack, PreAttackTime);
+
+        _stateController._modelController.PlayAttack(_numberOfClicks, true, false);
+
+        // TODO set player hitbox damage & knockback
+
+        _numberOfClicks++;
+    }
+    #endregion
+
+    #region Set & Clear
+    private void SetAttackValues(SOAttack pAttackVars, float pPreAttackTime = 0)
+    {
+        _exitStateTime = Time.time + pAttackVars.attackTime + pPreAttackTime + pAttackVars.holdEndPosTime;
+        _addForceTime = Time.time + pAttackVars.forceForwardTime + pPreAttackTime;
+        _stopForceTime = Time.time + pAttackVars.stopForceForwardTime + pPreAttackTime;
+        _addForceAmount = pAttackVars.forceForwardAmount;
+    }
 
     private void ClearInputs()
     {
-        stateController.lightAttackinput = -1.0f;
-        stateController.heavyAttackinput = -1.0f;
+        _stateController.lightAttackinput = -1.0f;
+        _stateController.heavyAttackinput = -1.0f;
     }
+    #endregion
 }

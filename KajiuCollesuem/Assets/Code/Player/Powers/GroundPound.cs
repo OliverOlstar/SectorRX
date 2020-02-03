@@ -30,11 +30,11 @@ public class GroundPound : MonoBehaviour
         //If key is pressed and not on the ground, begin executing the attack.
         if(Input.GetKeyDown(KeyCode.C) && !isGroundPounding)
         {
-            if(!_PMovement.OnGround)
-            {
-                doGroundPound = true;
-                isGroundPounding = true;
-            }
+            //if(!_PMovement.OnGround)
+            //{
+            //    doGroundPound = true;
+            //    isGroundPounding = true;
+            //}
         }
     }
 
@@ -70,7 +70,7 @@ public class GroundPound : MonoBehaviour
     {
         ClearForces();
         _PlayerRB.useGravity = false;
-        _PFallForce._downForce = 0;
+        //_PFallForce._downForce = 0;
     }
 
     //Sets character's velocity and angular velocity to zero.

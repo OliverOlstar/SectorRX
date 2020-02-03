@@ -60,7 +60,7 @@ public class Guard : MonoBehaviour, IState
     // Update is called once per frame
     public void Tick()
     {
-        Debug.Log(_stateChangeTime);
+        //Debug.Log(_stateChangeTime);
         switch (_subState)
         {
             //Idle a bit before moving
