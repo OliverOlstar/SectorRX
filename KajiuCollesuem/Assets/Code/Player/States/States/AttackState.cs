@@ -13,6 +13,10 @@ public class AttackState : BaseState
     private float _stopForceTime = 0;
     private float _addForceAmount = 0;
 
+    private float _enableHitboxTime = 0;
+    private float _disableHitboxTime = 0;
+    private PlayerHitbox _hitbox = null;
+
     private float _attackStateReturnDelayLength = 0.2f;
     private float _maxCharge = 1.0f;
 
@@ -60,6 +64,8 @@ public class AttackState : BaseState
         {
             _stateController._rb.AddForce(_stateController._modelController.transform.forward * _addForceAmount);
         }
+
+        //if ()
 
         // Stunned
         if (_stateController.Stunned)

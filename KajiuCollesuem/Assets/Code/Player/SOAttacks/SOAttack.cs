@@ -21,7 +21,7 @@ public class SOAttack : ScriptableObject
     [Min(0)] public float stopForceForwardTime = 0.3f;
     public float forceForwardAmount = 50.0f;
 
-    //[Space]
-    //public float enableHitboxTime = 0.2f;
-    //public float disableHitboxTime = 0.4f;
+    [Space]
+    public float enableHitboxTime = 0.2f;
+    public float disableHitboxTime = 0.4f;
 }
