@@ -13,7 +13,7 @@ public class MusicManager : MonoBehaviour
     {
         if (_playMusic)
         {
-            mainAudio.clip = allMusic[0];
+            mainAudio.clip = allMusic[Random.Range(0, allMusic.Count)];
             mainAudio.Play();
         }
     }
