@@ -1004,10 +1004,10 @@ MonoBehaviour:
   - {fileID: 6200741579382770578}
   - {fileID: 6200741579382770577}
   allPlayers:
-  - {fileID: 2020456825}
-  - {fileID: 2020456825}
-  - {fileID: 2020456825}
-  - {fileID: 2020456825}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1195772709
 GameObject:
   m_ObjectHideFlags: 0
@@ -1156,7 +1156,6 @@ GameObject:
   - component: {fileID: 2020456824}
   - component: {fileID: 2020456823}
   - component: {fileID: 2020456822}
-  - component: {fileID: 2020456825}
   m_Layer: 0
   m_Name: InputManager
   m_TagString: Untagged
@@ -1192,7 +1191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NotificationBehavior: 1
   m_MaxPlayerCount: -1
-  m_AllowJoining: 0
+  m_AllowJoining: 1
   m_JoinBehavior: 0
   m_PlayerJoinedEvent:
     m_PersistentCalls:
@@ -1236,34 +1235,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2020456825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2020456821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 8bd9e9c7448227e43855aac63b198dd4,
-    type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 63537857}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Keyboard&Mouse
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 1101546688}
 --- !u!114 &2105171865 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1644097025632614590, guid: c8780718f7106cd418050418dfd84028,
