@@ -29,8 +29,8 @@ public class PlayerSpawn : MonoBehaviour
         //If no players are entered, automatically set to 1.
         if(connectedPlayers.playersToSpawn <= 0)
         {
-            connectedPlayers.playersToSpawn = 1;
-            connectedPlayers.playersConnected = 1;
+            connectedPlayers.playersToSpawn = 2;
+            connectedPlayers.playersConnected = 2;
         }
 
         //Sets number of connected players equal to how many need to be spawned. Helps with match restarts after a player wins.

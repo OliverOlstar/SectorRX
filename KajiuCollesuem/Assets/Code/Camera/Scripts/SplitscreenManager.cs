@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /*Programmer: Scott Watman
  Description: Changes Splitscreen between Horizontal and Vertical*/
@@ -8,6 +9,7 @@ using UnityEngine;
 public class SplitscreenManager : MonoBehaviour
 {
     public Camera[] playerCam;
+    public Image[] borders;
 
     public bool isHorizontalSplit;
 
@@ -27,6 +29,22 @@ public class SplitscreenManager : MonoBehaviour
             
             SetSplitScreen();
         }
+
+        if(playerCam[0])
+        {
+            foreach(Image b in borders)
+            {
+                b.color = Color.red;
+            }
+        }
+        if(playerCam[1])
+        {
+            foreach (Image b in borders)
+            {
+                b.color = Color.yellow;
+            }
+        }
+
     }
 
     public void SetSplitScreen()
