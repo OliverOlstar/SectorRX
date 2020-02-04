@@ -9,7 +9,6 @@ Additional Programmers: Oliver Loescher
 Description: Managing sliders to contain a mask and lower, conveying visual cue of damage done to players
 */
 
-
 public class SliderController : MonoBehaviour
 {
     const int BAR_HEIGHT = 20;
@@ -33,6 +32,7 @@ public class SliderController : MonoBehaviour
     public void SetBar(int pIndex, float pValue)
     {
         RegSlider[pIndex].maxValue = pValue;
+        MaskSlider[pIndex].maxValue = pValue;
     }
 
     public void SetBars(int pIndex, float pValue)
@@ -41,7 +41,7 @@ public class SliderController : MonoBehaviour
         BarRect[pIndex].sizeDelta = new Vector2(pValue * barLengthMultiplier, BAR_HEIGHT);
         MaskBarRect[pIndex] = MaskBarRect[pIndex].gameObject.GetComponent<RectTransform>();
         MaskBarRect[pIndex].sizeDelta = new Vector2(pValue * barLengthMultiplier, BAR_HEIGHT);
-        RegSlider[pIndex].maxValue = pValue;
+        SetBar(pIndex, pValue);
     }
 
     public void UpdateBars(int pIndex, float pValue)

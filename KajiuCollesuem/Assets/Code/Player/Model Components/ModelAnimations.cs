@@ -10,14 +10,17 @@ public class ModelAnimations : MonoBehaviour
 
     [Header("Animation Lengths")]
     [SerializeField] private float _stepMult = 1;
+    [SerializeField] private float _idleMult = 1;
     [SerializeField] private float _fallMult = 1;
 
     private float _stepProgress = 0;
+    private float _idleProgress = 0;
     private float _fallProgress = 0;
     private float _attackProgress = 0;
 
     [Header("Interpolation Graphs")]
     [SerializeField] private SOGraph _stepGraph;
+    [SerializeField] private SOGraph _idleGraph;
     [SerializeField] private SOGraph _fallGraph;
     private SOGraph _attackGraph;
     
@@ -163,6 +166,13 @@ public class ModelAnimations : MonoBehaviour
 
         _anim.SetFloat("Move Direction X", relDirection.x);
         _anim.SetFloat("Move Direction Z", relDirection.z);
+    }
+
+    public void IdleAnim()
+    {
+        // Increase Falling Animation
+        _idleProgress = increaseProgress(_idleProgress, _idleMult);
+        _anim.SetFloat("Idle Progress", _modelController.GetCatmullRomPosition(_idleProgress, _idleGraph).y);
     }
     #endregion
 

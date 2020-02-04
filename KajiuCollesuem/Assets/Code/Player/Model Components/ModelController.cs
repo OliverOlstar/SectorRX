@@ -66,6 +66,7 @@ public class ModelController : MonoBehaviour
         _modelMovement.FacingSelf();
 
         _modelAnimation.SteppingAnim();
+        _modelAnimation.IdleAnim();
         _modelAnimation.JumpingAnim();
     }
 
