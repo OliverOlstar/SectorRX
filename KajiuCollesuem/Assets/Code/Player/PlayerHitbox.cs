@@ -42,7 +42,7 @@ public class PlayerHitbox : MonoBehaviour
         foreach (IAttributes previousAttributes in hitAttributes)
         {
             if (previousAttributes == otherAttributes)
-                break;
+                return;
         }
 
         // Add to list so we can't hit it twice
