@@ -25,7 +25,7 @@ public class FireballHitbox : MonoBehaviour
 
         if (otherAttributes != null)
         {
-            otherAttributes.TakeDamage(damageAmount, true);
+            otherAttributes.TakeDamage(damageAmount, Vector3.zero, true);
             DestroyFireball();
         }
     }

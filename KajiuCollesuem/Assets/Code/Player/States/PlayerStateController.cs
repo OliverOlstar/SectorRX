@@ -44,6 +44,8 @@ public class PlayerStateController : MonoBehaviour
 
     [HideInInspector] public Rigidbody _rb;
     public Transform _Camera;
+    public PlayerHitbox[] hitboxes = new PlayerHitbox[0];
+
 
     // Used if it auto calls release when reached maxCharge time & next release input is to be ignored
     [HideInInspector] public bool ignoreNextHeavyAttackRelease = false;
