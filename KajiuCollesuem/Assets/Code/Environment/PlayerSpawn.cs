@@ -19,15 +19,12 @@ public class PlayerSpawn : MonoBehaviour
     public List<Transform> ninePlayerSpawns = new List<Transform>();
     private int _SpawnPointIndex;
 
-    void Awake()
+    public void MatchStartup()
     {
         StartCoroutine("CameraSwitch");
-    }
 
-    private void Start()
-    {   
         //If no players are entered, automatically set to 1.
-        if(connectedPlayers.playersToSpawn <= 0)
+        if (connectedPlayers.playersToSpawn <= 0)
         {
             connectedPlayers.playersToSpawn = 2;
             connectedPlayers.playersConnected = 2;
@@ -48,7 +45,7 @@ public class PlayerSpawn : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void MatchEnd()
     {
         //Debug.Log(connectedPlayers.playersToSpawn);
         //Debug.Log(connectedPlayers.playersConnected);
@@ -65,8 +62,8 @@ public class PlayerSpawn : MonoBehaviour
         //Wait for three seconds then turn off camera (simulates cinematic camera).
         Cursor.lockState = CursorLockMode.Locked;
         yield return new WaitForSeconds(3.0f);
-        cinemaCam.gameObject.SetActive(false);
-        
+        cinemaCam.gameObject.SetActive(false); 
+
         //Spawn number of connected players.
         Debug.Log("Spawning " + connectedPlayers.playersToSpawn + " players");
         for (int i = 0; i < connectedPlayers.playersToSpawn; i++)
@@ -100,37 +97,37 @@ public class PlayerSpawn : MonoBehaviour
     }
 
     //For when other scripts need to reference.
-    public void SpawnPlayer()
-    {
-        cinemaCam.gameObject.SetActive(false);
+    //public void SpawnPlayer()
+    //{
+    //    cinemaCam.gameObject.SetActive(false);
 
-        Debug.Log("Spawning " + connectedPlayers.playersConnected + " players");
-        for (int i = 0; i < connectedPlayers.playersConnected; i++)
-        {
-            if (fourPlayerSpawns.Count <= 0 || ninePlayerSpawns.Count <= 0)
-            {
-                return;
-            }
+    //    Debug.Log("Spawning " + connectedPlayers.playersConnected + " players");
+    //    for (int i = 0; i < connectedPlayers.playersConnected; i++)
+    //    {
+    //        if (fourPlayerSpawns.Count <= 0 || ninePlayerSpawns.Count <= 0)
+    //        {
+    //            return;
+    //        }
 
-            //If 4 or less players connected, access the list of 4 spawn points and randomly spawn players at those listed locations.
-            if (connectedPlayers.playersConnected <= 4)
-            {
-                _SpawnPointIndex = Random.Range(0, fourPlayerSpawns.Count);
-                Transform _FourSpawnPos = fourPlayerSpawns[_SpawnPointIndex];
-                fourPlayerSpawns.RemoveAt(_SpawnPointIndex);
-                Instantiate(playerPrefab, _FourSpawnPos.position, _FourSpawnPos.rotation);
-            }
+    //        //If 4 or less players connected, access the list of 4 spawn points and randomly spawn players at those listed locations.
+    //        if (connectedPlayers.playersConnected <= 4)
+    //        {
+    //            _SpawnPointIndex = Random.Range(0, fourPlayerSpawns.Count);
+    //            Transform _FourSpawnPos = fourPlayerSpawns[_SpawnPointIndex];
+    //            fourPlayerSpawns.RemoveAt(_SpawnPointIndex);
+    //            Instantiate(playerPrefab, _FourSpawnPos.position, _FourSpawnPos.rotation);
+    //        }
 
-            //If 5 or more players connected, access the list of 8 spawn points and randomly spawn players at those listed locations.
-            else if (connectedPlayers.playersConnected >= 5)
-            {
-                _SpawnPointIndex = Random.Range(0, ninePlayerSpawns.Count);
-                Transform _EightSpawnPos = ninePlayerSpawns[_SpawnPointIndex];
-                ninePlayerSpawns.RemoveAt(_SpawnPointIndex);
-                Instantiate(playerPrefab, _EightSpawnPos.position, _EightSpawnPos.rotation);
-            }
-        }
-    }
+    //        //If 5 or more players connected, access the list of 8 spawn points and randomly spawn players at those listed locations.
+    //        else if (connectedPlayers.playersConnected >= 5)
+    //        {
+    //            _SpawnPointIndex = Random.Range(0, ninePlayerSpawns.Count);
+    //            Transform _EightSpawnPos = ninePlayerSpawns[_SpawnPointIndex];
+    //            ninePlayerSpawns.RemoveAt(_SpawnPointIndex);
+    //            Instantiate(playerPrefab, _EightSpawnPos.position, _EightSpawnPos.rotation);
+    //        }
+    //    }
+    //}
 
     IEnumerator VictoryReset()
     {

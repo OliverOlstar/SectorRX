@@ -9,14 +9,13 @@ using UnityEngine.UI;
 public class SplitscreenManager : MonoBehaviour
 {
     public Camera[] playerCam;
-    public Image[] borders;
 
     public bool isHorizontalSplit;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerCam = GameObject.FindObjectsOfType<Camera>();
+        
     }
 
     // Update is called once per frame
@@ -29,22 +28,6 @@ public class SplitscreenManager : MonoBehaviour
             
             SetSplitScreen();
         }
-
-        if(playerCam[0])
-        {
-            foreach(Image b in borders)
-            {
-                b.color = Color.red;
-            }
-        }
-        if(playerCam[1])
-        {
-            foreach (Image b in borders)
-            {
-                b.color = Color.yellow;
-            }
-        }
-
     }
 
     public void SetSplitScreen()
