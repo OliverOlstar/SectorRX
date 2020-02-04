@@ -16,24 +16,17 @@ public class DeathState : BaseState
     {
         Debug.Log("DeathState: Enter");
         //stateController._respawnComponent.Dead();
-        stateController._animHandler.Dead();
+        //stateController._modelController.Dead();
     }
 
     public override void Exit()
     {
         Debug.Log("DeathState: Exit");
-        stateController._animHandler.Respawn();
+        //stateController._modelController.Respawn();
     }
 
     public override Type Tick()
     {
-        //Respawn
-        if (stateController.Respawn)
-        {
-            stateController.Respawn = false;
-            return typeof(MovementState);
-        }
-
         return null;
     }
 }

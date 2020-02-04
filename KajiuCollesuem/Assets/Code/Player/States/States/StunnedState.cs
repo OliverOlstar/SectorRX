@@ -8,7 +8,7 @@ public class StunnedState : BaseState
     PlayerStateController stateController;
 
     private float _leaveStateTime;
-    private float _cooldown = 0.2f;
+    private float _cooldown = 0.1f;
 
     public StunnedState(PlayerStateController controller) : base(controller.gameObject)
     {
@@ -31,14 +31,6 @@ public class StunnedState : BaseState
     {
         if (Time.time >= _leaveStateTime)
         {
-            return typeof(MovementState);
-        }
-
-        //Respawn
-        if (stateController.Respawn)
-        {
-            stateController.Respawn = false;
-            stateController._animHandler.Respawn();
             return typeof(MovementState);
         }
 

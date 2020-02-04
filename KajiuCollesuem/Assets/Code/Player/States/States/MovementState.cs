@@ -22,7 +22,7 @@ public class MovementState : BaseState
     {
         //Debug.Log("MoveState: Exit");
         stateController._movementComponent.disableMovement = true;
-        stateController._animHandler.ResetJump();
+        //stateController._modelController.ResetJump();
     }
 
     public override Type Tick()
@@ -36,7 +36,7 @@ public class MovementState : BaseState
         //Dodge
         if (stateController.dodgeInput != -1)
         {
-            if (stateController.OnGround)
+            if (stateController.onGround)
                 return typeof(DodgeState);
             else
                 stateController.dodgeInput = -1;
@@ -67,13 +67,6 @@ public class MovementState : BaseState
         if (stateController.Stunned)
         {
             return typeof(StunnedState);
-        }
-
-        //Respawn (Already in the respawn to state)
-        if (stateController.Respawn)
-        {
-            stateController._animHandler.Respawn();
-            stateController.Respawn = false;
         }
 
         return null;

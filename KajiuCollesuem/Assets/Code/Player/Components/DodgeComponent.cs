@@ -22,11 +22,17 @@ public class DodgeComponent : MonoBehaviour
     [SerializeField] private float longDodgeDuration = 0.3f;
     [SerializeField] private float longDodgeAcceleration = 100;
 
-    private PlayerStateController _StateController;
+    [Header("Dodge Movement Anim")]
+    [SerializeField] private float shortDodgeAnimSpeed = 1;
+    [SerializeField] private float longDodgeAnimSpeed = 1;
+
+    private Rigidbody _rb;
+    private PlayerStateController _stateController;
 
     void Start()
     {
-        _StateController = GetComponent<PlayerStateController>();
+        _rb = GetComponent<Rigidbody>();
+        _stateController = GetComponent<PlayerStateController>();
     }
 
     public bool Dodge(bool pShortDodge, Vector2 pDirection)
@@ -38,11 +44,13 @@ public class DodgeComponent : MonoBehaviour
             {
                 //Short Dodge
                 StartCoroutine(DodgeRoutine(shortDodgeMaxSpeed, shortDodgeDuration, shortDodgeAcceleration, pDirection, shortDodgeCooldown));
+                _stateController._modelController.PlayDodge(_stateController.LastMoveDirection, shortDodgeAnimSpeed);
             }
             else
             {
                 //Long Dodge
                 StartCoroutine(DodgeRoutine(longDodgeMaxSpeed, longDodgeDuration, longDodgeAcceleration, pDirection, longDodgeCooldown));
+                _stateController._modelController.PlayDodge(_stateController.LastMoveDirection, longDodgeAnimSpeed);
             }
 
             return true;
@@ -57,11 +65,9 @@ public class DodgeComponent : MonoBehaviour
 
     IEnumerator DodgeRoutine(float pMaxSpeed, float pDuration, float pAcceleration, Vector2 pDirection, float pCooldown)
     {
-        // Setting Delay
+        //Setting Delay
         _dodgeDelay = Time.time + pCooldown + pDuration;
         float dodgeEndTime = Time.time + pDuration;
-
-        Vector3 dodgeVector = new Vector3(pDirection.x, 0, pDirection.y).normalized * pAcceleration * Time.deltaTime;
 
         //Run Dodge Force
         while (Time.time <= dodgeEndTime)
@@ -70,10 +76,11 @@ public class DodgeComponent : MonoBehaviour
             if (doneDodge) break;
 
             //Move player
+            Vector3 dodgeVector = new Vector3(pDirection.x, 0, pDirection.y).normalized * pAcceleration * Time.deltaTime;
 
-            if (new Vector3(_StateController._rb.velocity.x, 0, _StateController._rb.velocity.z).magnitude < pMaxSpeed)
+            if (new Vector3(_rb.velocity.x, 0, _rb.velocity.z).magnitude < pMaxSpeed)
             {
-                _StateController._rb.AddForce(dodgeVector);
+                _rb.AddForce(dodgeVector);
             }
 
             yield return null;
