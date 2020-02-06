@@ -21,7 +21,9 @@ public class ModelMovement : MonoBehaviour
 
     private Quaternion _parentDefaultRotation;
 
-    public bool DisableRotation;
+    [Space]
+    public bool disableRotation;
+    public Transform facingTarget;
 
     public void Init(ModelController pController)
     {
@@ -31,16 +33,28 @@ public class ModelMovement : MonoBehaviour
 
     public void FacingSelf()
     {
-        if (Input.GetKeyDown(KeyCode.U))
-            DisableRotation = !DisableRotation;
+        //if (Input.GetKeyDown(KeyCode.U))
+        //    disableRotation = !disableRotation;
 
-        if (DisableRotation) 
+        if (disableRotation) 
             return;
 
         // Facing Velocity
         if (_modelController.horizontalVelocity.magnitude > _rotationDeadzone)
         {
-            Quaternion targetQuaternion = Quaternion.LookRotation(new Vector3(_modelController.horizontalVelocity.z, 0, -_modelController.horizontalVelocity.x), Vector3.up);
+            Vector3 facingDirection;
+
+            if (facingTarget == null)
+            {
+                facingDirection = new Vector3(_modelController.horizontalVelocity.z, 0, -_modelController.horizontalVelocity.x);
+            }
+            else
+            {
+                facingDirection = transform.position - facingTarget.position;
+                facingDirection = transform.parent.TransformDirection(new Vector3(facingDirection.x, 0, facingDirection.z).normalized);
+            }
+
+            Quaternion targetQuaternion = Quaternion.LookRotation(facingDirection, Vector3.up);
             transform.localRotation = Quaternion.Slerp(transform.localRotation, targetQuaternion, Time.deltaTime * _rotationDampening);
         }
     }
@@ -77,7 +91,7 @@ public class ModelMovement : MonoBehaviour
 
     IEnumerator FlipParentRoutine(float pSpeed)
     {
-        DisableRotation = true;
+        disableRotation = true;
 
         // Setup for Flip
         Quaternion originalRotation = transform.localRotation;
@@ -100,6 +114,6 @@ public class ModelMovement : MonoBehaviour
         transform.parent.eulerAngles = new Vector3(0, -90, 0);
         transform.localRotation = originalRotation;
 
-        DisableRotation = false;
+        disableRotation = false;
     }
 }

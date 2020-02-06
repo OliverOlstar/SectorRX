@@ -91,7 +91,7 @@ public class ModelController : MonoBehaviour
 
         _AttackingDirection = pIndex == 1 ? false : true;
         _doneAttackDelay = curAttack.holdEndPosTime;
-        _modelMovement.DisableRotation = true;
+        _modelMovement.disableRotation = true;
         _modelWeights.SetWeights(0, 0, 1, 0);
         _modelAnimation.StartAttack(pIndex, pHeavy);
     }
@@ -113,7 +113,7 @@ public class ModelController : MonoBehaviour
     public void DoneAttack()
     {
         _AttackingState = 0;
-        _modelMovement.DisableRotation = false;
+        _modelMovement.disableRotation = false;
         _modelWeights.SetWeights(0, 0, 0, 0);
     }
 
@@ -143,6 +143,13 @@ public class ModelController : MonoBehaviour
     public void AddCrouching(float pValue, float pGoingToLength, float pGoingAwayLength)
     {
         _modelWeights.AddCrouching(pValue, pGoingToLength, pGoingAwayLength);
+    }
+    #endregion
+
+    #region LockOn
+    public void SetLockOn(Transform pTarget)
+    {
+        _modelMovement.facingTarget = pTarget;
     }
     #endregion
 
