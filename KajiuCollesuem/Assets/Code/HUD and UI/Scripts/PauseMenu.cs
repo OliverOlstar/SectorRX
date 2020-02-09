@@ -38,16 +38,16 @@ public class PauseMenu : MonoBehaviour
             pInput.SwitchCurrentActionMap("PauseScreen");
             Debug.Log(pInput.currentActionMap);
 
-            //if (pInput.currentControlScheme == "Keyboard&Mouse")
-                //Cursor.lockState = CursorLockMode.None;
+            if (pInput.currentControlScheme == "Keyboard&Mouse")
+                Cursor.lockState = CursorLockMode.None;
         }
         else
         {
             pInput.SwitchCurrentActionMap("Player");
             Debug.Log(pInput.currentActionMap);
             hasPaused = false;
-            //if (pInput.currentControlScheme == "Keyboard&Mouse")
-                //Cursor.lockState = CursorLockMode.Locked;
+            if (pInput.currentControlScheme == "Keyboard&Mouse")
+                Cursor.lockState = CursorLockMode.Locked;
         }
 
         pauseScreen.SetActive(pause);

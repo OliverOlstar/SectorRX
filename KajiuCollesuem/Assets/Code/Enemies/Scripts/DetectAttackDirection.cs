@@ -9,32 +9,27 @@ using UnityEngine;
  * */
 public class DetectAttackDirection : MonoBehaviour
 {
+    private Decision _decision;
+
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        _decision = GetComponent<Decision>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        //if (other.gameObject.name.Equals("SwordHitBox"))
-        //{
-        //    Transform player = other.gameObject.transform;
+        if (other.gameObject.name.Equals("SwordHitBox"))
+        {
+            Transform player = other.gameObject.transform;
 
-        //    while (!player.gameObject.tag.Equals("Player"))
-        //        player = player.parent;
+            while (!player.gameObject.tag.Equals("Player"))
+                player = player.parent;
 
-        //    Decision decision = GetComponent<Decision>();
-        //    //decision.retribution = true;
-        //    decision.target = player;
-        //    decision.SetupStates();
+            //decision.retribution = true;
+            _decision.UpdateTarget(player);
+            //decision.SetupStates();
         //    //transform.LookAt(player);
-        //}
+        }
     }
 }

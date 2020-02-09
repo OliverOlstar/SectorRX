@@ -10,7 +10,7 @@ public class JumpBack : MonoBehaviour, IState
     private Transform _target;
 
     [SerializeField] private float _cooldown = 1.0f, y, z;
-    private float _nextEnterTime = 0.0f, _originalPosition, _jumpTime = 0;
+    private float _nextEnterTime = 0.0f, _jumpTime = 0;
     public float jumpSpeed = 0, speed = 0, halfPlayerHeight;
 
     [SerializeField] private float _jumpBackRange = 1;
@@ -31,16 +31,19 @@ public class JumpBack : MonoBehaviour, IState
         //Debug.Log("Jump back: Enter");
         _enabled = true;
         //_agent.isStopped = true;
-        _originalPosition = transform.position.y;
+        //originalPosition = transform.position;
         transform.LookAt(_target.position);
         y = transform.position.y;
         z = transform.position.z;
-        _agent.isStopped = true;
+        //transform.Translate(Vector3.back / 2);
+        _agent.enabled = false;
+        //rb.AddForce(-transform.forward * 20 + Vector3.up * 10);
     }
 
     public void Exit()
     {
         //Debug.Log("Jump back: Exit");
+        _agent.enabled = true;
         _enabled = false;
     }
 
@@ -59,7 +62,7 @@ public class JumpBack : MonoBehaviour, IState
     public bool CanExit(float pDistance)
     {
         //Debug.Log("Jump back: CanExit - " + (_enabled == false));
-        return pDistance > _jumpBackRange;
+        return pDistance > _jumpBackRange + 0.3f;
     }
 
     public void Tick()
@@ -67,19 +70,22 @@ public class JumpBack : MonoBehaviour, IState
        
     }
 
+    public void UpdateTarget(Transform pTarget) => _target = pTarget;
+
     public void FixedUpdate()
     {
         if (_enabled)
         {
             //Alternate jump solution
-            y += Time.deltaTime;
-            z += Time.deltaTime;
-            float time = Time.deltaTime * speed;
+            y += Time.time;
+            z += Time.time;
+            float time = Time.time * speed;
 
-            if (transform.position.y > 1)
-                transform.Translate(new Vector3(0, -2 * y * time, z * time));
+            /*if (transform.position.y > 1)
+                rb.AddForce(new Vector3(0, -y * time, z * time));
             else
-                transform.Translate(new Vector3(0, 2 * y * time, z * time));
+                rb.AddForce(new Vector3(0, y * time, z * time));*/
+            rb.AddForce(-transform.forward * time);
 
             /*transform.position = Vector3.Lerp(transform.position, transform.position + Vector3.forward, 
                 Time.deltaTime * 5);*/
@@ -96,7 +102,7 @@ public class JumpBack : MonoBehaviour, IState
             newYposition = _originalPosition + (jumpSpeed * _jumpTime) + (0.5f * -9.8f * _jumpTime * _jumpTime);
             targetPosition.y = newYposition;
             Debug.Log(targetPosition);
-            
+
             rb.MovePosition(targetPosition);
             //transform.Translate(targetPosition);
             _isTouchingGround = _isOnGround();*/
@@ -125,5 +131,10 @@ public class JumpBack : MonoBehaviour, IState
         }
 
         return false;
+    }
+
+    public void AEJumpBack()
+    {
+
     }
 }

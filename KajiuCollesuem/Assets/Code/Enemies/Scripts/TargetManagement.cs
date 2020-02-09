@@ -5,32 +5,97 @@ using UnityEngine.AI;
 
 public class TargetManagement : MonoBehaviour
 {
-    private GameObject[] _players;
-    private NavMeshAgent _agent;
+    private Decision _decision;
+    [SerializeField] private float _fRadius;
+    [SerializeField] private LayerMask _playerLayer;
+    public float fScanVision = 30;
 
     // Start is called before the first frame update
     void Start()
     {
-        _players = GameObject.FindGameObjectsWithTag("Player");
+        _decision = GetComponent<Decision>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        float smallest_distance = 9999;
-        int index = -1;
+        bool retribution = GetComponent<AlwaysSeek>().retribution;
 
-        for (int i = 0; i < _players.Length; ++i)
+        if (_decision.target == null)
         {
-            float distance = Vector3.Distance(transform.position, _players[i].transform.position);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, _fRadius, _playerLayer);
 
-            if (distance < smallest_distance)
+            if (colliders.Length > 0)
             {
-                smallest_distance = distance;
-                index = i;
+                for (int i = 0; i < colliders.Length; ++i)
+                {
+                    if (colliders[i].gameObject.transform != _decision.target && !retribution)
+                    {
+                        if (_IsPlayerInRange(colliders[i].gameObject.transform))
+                        {
+                            _decision.UpdateTarget(colliders[i].gameObject.transform);
+                            break;
+                        }
+                    }
+                }
             }
+
+            else
+            {
+                GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+                for (int i = 0; i < players.Length; ++i)
+                {
+                    float dot = Vector3.Dot(transform.forward.normalized,
+                        (players[i].transform.position - transform.position).normalized);
+
+                    if (_decision.target == null && dot > 0.9f && !GetComponent<Guard>().IsEnabled() && !retribution)
+                    {
+                        _decision.target = players[i].transform;
+                        break;
+                    }
+                }
+            }
+            //Debug.Log(GameObject.Find("TestPlayer") + " " + Vector3.Dot(transform.TransformDirection(Vector3.forward).normalized, (GameObject.Find("TestPlayer").transform.position - transform.position).normalized));
+
+            /*if (_decision.target == null)
+            {
+                for (int i = 0; i < colliders.Length; ++i)
+                {
+                    if (colliders[i].gameObject.tag.Equals("Player"))
+                    {
+                        _decision.target = colliders[i].gameObject.transform;
+                        break;
+                    }
+                }
+            }*/
+
+            /*else if (_decision.target == null && Physics.Raycast(transform.position, transform.forward, out hit, 16))
+            {
+                _decision.target = hit.collider.gameObject.tag.Equals("Player") ? hit.collider.gameObject.transform : null;
+                _raycastHit = true;
+            }*/
+
+            //if (colliders.Length > 0 && !retribution)
+            //{
+                /*if (Vector3.Angle(transform.forward, _decision.target.position - transform.position) > fScanVision * 2)
+                    rotSpeed = 5;
+                else
+                    rotSpeed = 3;*/
+            //}
         }
-        transform.LookAt(_players[index].transform);
-        _agent.SetDestination(_players[index].transform.position);
+
+        if (_decision.target != null && !retribution)
+            transform.rotation = Quaternion.Lerp(transform.rotation,
+                Quaternion.LookRotation(_decision.target.position - transform.position),
+                Time.deltaTime * 5);
+    }
+
+    private bool _IsPlayerInRange(Transform pTarget)
+    {
+        if (Vector3.Angle(transform.forward, pTarget.position - transform.position) < fScanVision)
+            return true;
+
+        return false;
     }
 }

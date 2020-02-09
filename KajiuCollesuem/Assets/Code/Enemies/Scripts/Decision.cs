@@ -15,11 +15,8 @@ public class Decision : MonoBehaviour
     private IState[] _states;
     private IState _currentState;
 
-    [HideInInspector] public Transform target;
-    [SerializeField] private LayerMask _playerLayer;
+    public Transform target;
 
-    public float fScanVision = 30;
-    [SerializeField] private float _fRadius;
     private float rotSpeed;
 
     private bool _targetSwitch = false, _raycastHit = false;
@@ -58,13 +55,11 @@ public class Decision : MonoBehaviour
     private void FixedUpdate()
     {
         CheckStates();
-        CheckAndUpdateTarget();
     }
 
     private void Update()
     {
-        if (target != null)
-            _currentState.Tick();
+        _currentState.Tick();
     }
 
     public void SetupStates()
@@ -101,15 +96,15 @@ public class Decision : MonoBehaviour
                 }
 
                 //Check if state can be entered. Task 2: Grunts have a harder time detecting a player
-                if ((state.CanEnter(distance) && _IsPlayerInRange()) || retribution)
+                if (state.CanEnter(distance) || retribution)
                 {
                     SwitchState(state);
                     break;
                 }
 
-                else if (!retribution)
+                /*else if (!retribution)
                     //Ensures that hellhound doesn't continue current when out of range
-                    SwitchState(GetComponent<Guard>());
+                    SwitchState(GetComponent<Guard>());*/
             }
             //Debug.Log(distance);
         }
@@ -118,87 +113,9 @@ public class Decision : MonoBehaviour
     /*Calculate the distance between itself and the player, and updates its target to the nearest player,
     and update the target setup
     Task 1: Grunts targeting is updated to allow for switching of targets*/
-    private void CheckAndUpdateTarget()
+    /*private void CheckAndUpdateTarget()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, _fRadius, _playerLayer);
-        RaycastHit hit;
-        bool retribution = GetComponent<AlwaysSeek>().retribution;
-
-        if (colliders.Length == 2)
-            target = null;
-        if (target != null 
-            && Vector3.Dot(transform.forward.normalized, (target.position - transform.position).normalized) < 0.9f
-            && !_currentState.Equals(GetComponent<Stunned>())
-            && !retribution)
-            target = null;
-
-        if (colliders.Length == 3)
-        {
-            for (int i = 0; i < colliders.Length; ++i)
-            {
-                if (colliders[i].gameObject.tag.Equals("Player") 
-                    && colliders[i].gameObject.transform != target
-                    && !retribution)
-                {
-                    target = colliders[i].gameObject.transform;
-
-                    if (!_IsPlayerInRange())
-                        target = null;
-                    else
-                        break;
-                }
-            }
-        }
-
-        else
-        {
-            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-
-            for (int i = 0; i < players.Length; ++i)
-            {
-                float dot = Vector3.Dot(transform.forward.normalized, 
-                    (players[i].transform.position - transform.position).normalized);
-
-                if (target == null && dot > 0.9f && !retribution)
-                {
-                    target = players[i].transform;
-                    Debug.Log("Target in range");
-                    break;
-                }
-            }
-        }
-        //Debug.Log(GameObject.Find("TestPlayer") + " " + Vector3.Dot(transform.TransformDirection(Vector3.forward).normalized, (GameObject.Find("TestPlayer").transform.position - transform.position).normalized));
-
-        /*if (target == null)
-        {
-            for (int i = 0; i < colliders.Length; ++i)
-            {
-                if (colliders[i].gameObject.tag.Equals("Player"))
-                {
-                    target = colliders[i].gameObject.transform;
-                    break;
-                }
-            }
-        }*/
-
-        /*else if (target == null && Physics.Raycast(transform.position, transform.forward, out hit, 16))
-        {
-            target = hit.collider.gameObject.tag.Equals("Player") ? hit.collider.gameObject.transform : null;
-            _raycastHit = true;
-        }*/
-
-        if (target != null && colliders.Length > 2 && !retribution)
-        {
-            /*if (Vector3.Angle(transform.forward, target.position - transform.position) > fScanVision * 2)
-                rotSpeed = 5;
-            else
-                rotSpeed = 3;*/
-
-            transform.rotation = Quaternion.Lerp(transform.rotation,
-                Quaternion.LookRotation(target.position - transform.position),
-                Time.deltaTime * 5);
-        }
-        SetupStates();
+        
 
         /*if (_currentState.CanEnter(smallest_distance))
         {
@@ -220,8 +137,8 @@ public class Decision : MonoBehaviour
         else if (_targetSwitch)
             transform.rotation = Quaternion.Lerp(transform.rotation,
                 Quaternion.LookRotation(target.position - transform.position),
-                Time.deltaTime * 5);*/
-    }
+                Time.deltaTime * 5);
+    }*/
 
     //Exit old state and Enter new state
     private void SwitchState(IState pState)
@@ -238,18 +155,16 @@ public class Decision : MonoBehaviour
         SwitchState(pState);
     }
 
-    //Resets the AI for respawning
-    public void Respawn()
+    // Updated target for all of the starts on target change
+    public void UpdateTarget(Transform pNewTarget)
     {
-        _currentState.Exit();
-        StartLastState();
-    }
+        // Update this script's target
+        target = pNewTarget;
 
-    private bool _IsPlayerInRange()
-    {
-        if (target != null && Vector3.Angle(transform.forward, target.position - transform.position) < fScanVision)
-            return true;
-
-        return false;
+        // Update state's target
+        foreach (IState state in _states)
+        {
+            state.UpdateTarget(target);
+        }
     }
 }

@@ -4,9 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using EZCameraShake;
 
+/*
+Programmer: Robert Fowley
+Additional Programmers: Oliver Loescher, Kavian Kermani
+Description: Managing player attributes such as health, shield, and power.
+*/
+
 public class PlayerAttributes : MonoBehaviour, IAttributes
 {
     private AnimHandler _anim;
+    public SliderController sliderControl;
 
     [Header("Maxes")]
     [SerializeField] private int _maxHealth = 100;
@@ -28,16 +35,16 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     [SerializeField] private int _powerLossAmount = 1;
 
     [Header("HUD")]
-    [SerializeField] private Slider _healthSlider;
-    [SerializeField] private Slider _shieldSlider;
-    [SerializeField] private Slider _powerSlider;
+    //[SerializeField] private Slider _healthSlider;
+    //[SerializeField] private Slider _shieldSlider;
+    //[SerializeField] private Slider _powerSlider;
 
     private RectTransform healthRect;
     private RectTransform shieldRect;
     private RectTransform powerRect;
 
-    const int BAR_HEIGHT = 20;
-    public float barLengthMultiplier = 1.5f;
+    //const int BAR_HEIGHT = 20;
+    //public float barLengthMultiplier = 1.5f;
 
     public bool IsDead() { return false; }
 
@@ -51,26 +58,30 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         modifyPower(0);
 
         //Set the length of the bars to their respective maxes
-        if (_healthSlider)
-        {
-            healthRect = _healthSlider.gameObject.GetComponent<RectTransform>();
-            healthRect.sizeDelta = new Vector2(_maxHealth * barLengthMultiplier, BAR_HEIGHT);
-            _healthSlider.maxValue = _maxHealth;
-        }
+        //if (_healthSlider)
+        //{
+        //    healthRect = _healthSlider.gameObject.GetComponent<RectTransform>();
+        //    healthRect.sizeDelta = new Vector2(_maxHealth * barLengthMultiplier, BAR_HEIGHT);
+        //    _healthSlider.maxValue = _maxHealth;
+        //}
 
-        if (_shieldSlider)
-        {
-            shieldRect = _shieldSlider.gameObject.GetComponent<RectTransform>();
-            shieldRect.sizeDelta = new Vector2(_maxShield * barLengthMultiplier, BAR_HEIGHT);
-            _shieldSlider.maxValue = _maxShield;
-        }
+        //if (_shieldSlider)
+        //{
+        //    shieldRect = _shieldSlider.gameObject.GetComponent<RectTransform>();
+        //    shieldRect.sizeDelta = new Vector2(_maxShield * barLengthMultiplier, BAR_HEIGHT);
+        //    _shieldSlider.maxValue = _maxShield;
+        //}
 
-        if (_powerSlider)
-        {
-            powerRect = _powerSlider.gameObject.GetComponent<RectTransform>();
-            powerRect.sizeDelta = new Vector2(_maxPower * barLengthMultiplier, BAR_HEIGHT);
-            _powerSlider.maxValue = _maxPower;
-        }
+        //if (_powerSlider)
+        //{
+        //    powerRect = _powerSlider.gameObject.GetComponent<RectTransform>();
+        //    powerRect.sizeDelta = new Vector2(_maxPower * barLengthMultiplier, BAR_HEIGHT);
+        //    _powerSlider.maxValue = _maxPower;
+        //}
+
+        sliderControl.SetBars(0, _maxHealth);
+        sliderControl.SetBars(1, _maxShield);
+        sliderControl.SetBars(2, _maxPower);
     }
 
     public void Respawn()
@@ -87,9 +98,9 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     public int getPower() { return _power; }
 
     //SET
-    public void setHealth(int pHealth) { modifyHealth(pHealth - _health); }
-    public void setShield(int pShield) { modifyShield(pShield - _shield); }
-    public void setPower(int pPower) { modifyPower(pPower - _power); }
+    public void setHealth(int pHealth) { modifyHealth(pHealth - _health); sliderControl.UpdateBars(0, pHealth); }
+    public void setShield(int pShield) { modifyShield(pShield - _shield); sliderControl.UpdateBars(1, pShield); }
+    public void setPower(int pPower) { modifyPower(pPower - _power); sliderControl.UpdateBars(2, pPower); }
     #endregion
 
     #region Modify Vars
@@ -101,8 +112,11 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _health = Mathf.Clamp(_health, 0, _maxHealth);
 
         //Changing Visuals
-        if (_healthSlider)
-            _healthSlider.value = _health;
+        if (sliderControl.RegSlider[0])
+        {
+            sliderControl.RegSlider[0].value = _health;
+            sliderControl.UpdateBars(0, _health);
+        }
     }
 
     public void modifyShield(int x)
@@ -111,8 +125,11 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _shield = Mathf.Clamp(_shield, 0, _maxShield);
 
         //Changing Visuals
-        if (_shieldSlider)
-            _shieldSlider.value = _shield;
+        if (sliderControl.RegSlider[1])
+        {
+            sliderControl.RegSlider[1].value = _shield;
+            sliderControl.UpdateBars(1, _shield);
+        }
     }
 
     public void modifyPower(int x)
@@ -122,8 +139,11 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _power = Mathf.Clamp(_power, 0, _maxPower);
 
         //Changing Visuals
-        if (_powerSlider)
-            _powerSlider.value = _power;
+        if (sliderControl.RegSlider[2])
+        {
+            sliderControl.RegSlider[2].value = _power;
+            sliderControl.UpdateBars(2, _power);
+        }
     }
 
     //MODIFY MAXES
@@ -133,10 +153,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _maxHealth = pMaxHealth;
 
         //Change respective bar length
-        if (healthRect)
-            healthRect.sizeDelta = new Vector2(_maxHealth * barLengthMultiplier, BAR_HEIGHT);
-        _healthSlider.maxValue = _maxHealth;
-
+        sliderControl.SetBars(0, pMaxHealth);
         modifyHealth(_maxHealth);
     }
 
@@ -146,10 +163,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _maxShield = pMaxShield;
 
         //Change respective bar length
-        if (shieldRect)
-            shieldRect.sizeDelta = new Vector2(_maxShield * barLengthMultiplier, BAR_HEIGHT);
-        _shieldSlider.maxValue = _maxShield;
-
+        sliderControl.SetBars(1, pMaxShield);
         modifyShield(_maxShield);
     }
 
@@ -159,9 +173,8 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _maxPower = pMaxPowerGuage;
 
         //Change respective bar length
-        if (powerRect)
-            powerRect.sizeDelta = new Vector2(_maxPower * barLengthMultiplier, BAR_HEIGHT);
-        _powerSlider.maxValue = _maxPower;
+        sliderControl.SetBars(2, pMaxPowerGuage);
+        sliderControl.RegSlider[2].maxValue = _maxPower;
     }
     #endregion
 
@@ -217,6 +230,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         {
             //Camera Shake
             CameraShaker.Instance.ShakeOnce(20, 4, 0.4f, 0.3f);
+            connectedPlayers.playersConnected--;
 
             return true;
         }

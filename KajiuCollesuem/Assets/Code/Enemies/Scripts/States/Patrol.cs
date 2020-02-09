@@ -106,4 +106,6 @@ public class Patrol : MonoBehaviour, IState
         //Set Anim Speed
         _anim.SetFloat("Speed", _agent.velocity.magnitude/ _agent.speed);
     }
+
+    public void UpdateTarget(Transform pTarget) { }
 }

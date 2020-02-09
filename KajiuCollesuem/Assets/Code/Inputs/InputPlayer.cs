@@ -180,7 +180,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1c4beac7-edeb-43c8-8bce-033deb17dd4f"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -224,7 +224,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a593c68e-85cf-4dd7-a256-b234852c6539"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -248,7 +248,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""id"": ""8126ae8b-2c85-485e-abb0-da90efcf4856"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
-                    ""processors"": ""ScaleVector2(y=0.7)"",
+                    ""processors"": ""ScaleVector2(y=0.6)"",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Camera"",
                     ""isComposite"": false,
@@ -268,7 +268,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""5744db95-db65-43d2-8f77-997aa7ce3d45"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": ""Press(behavior=2)"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -490,7 +490,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""Navigate"",
-                    ""type"": ""Value"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""1913f9d9-f281-47c7-878d-0908b82dfc99"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
@@ -625,21 +625,10 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""0459efdc-a379-44ce-b71f-9b011e8b66bf"",
-                    ""path"": ""<Pointer>/position"",
+                    ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Point"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""96b7bcbf-b9fd-4fbb-8dac-a30db1220be0"",
-                    ""path"": ""<Touchscreen>/touch*/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Touch"",
                     ""action"": ""Point"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -716,7 +705,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""path"": ""<XRController>/devicePosition"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""XR"",
+                    ""groups"": ""XR;Gamepad"",
                     ""action"": ""TrackedDevicePosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -727,7 +716,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""path"": ""<XRController>/deviceRotation"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""XR"",
+                    ""groups"": ""XR;Gamepad"",
                     ""action"": ""TrackedDeviceOrientation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -738,7 +727,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""path"": ""<XRController>/trigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""XR"",
+                    ""groups"": ""XR;Gamepad"",
                     ""action"": ""TrackedDeviceSelect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -766,31 +755,9 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""up"",
-                    ""id"": ""692c336a-b3c1-462a-8e86-d57d4ddf653a"",
-                    ""path"": ""<Gamepad>/rightStick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Navigate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""down"",
                     ""id"": ""594619b8-a1aa-4fae-8e51-fe91029dd042"",
                     ""path"": ""<Gamepad>/leftStick/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Navigate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""c7cdba79-d0d1-42dd-9f51-f98efe2ddf0b"",
-                    ""path"": ""<Gamepad>/rightStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
@@ -810,31 +777,9 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""left"",
-                    ""id"": ""5af8f346-a1c5-4967-92fb-a72efe731562"",
-                    ""path"": ""<Gamepad>/rightStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Navigate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""right"",
                     ""id"": ""d4f8cfec-a85e-4ffd-8649-2439738512c1"",
                     ""path"": ""<Gamepad>/leftStick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Navigate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""0faba58a-06e1-4ca6-9525-fdac7ef73d36"",
-                    ""path"": ""<Gamepad>/rightStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",

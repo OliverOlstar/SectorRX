@@ -4,41 +4,18 @@ using UnityEngine;
 
 public class CellCollect : MonoBehaviour
 {
-    HUDManager playerHUD;
-    public GameObject cell;
-    [SerializeField] private float fMaxHeight;
-    private bool maxHeightReached = false;
-
-    private void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        playerHUD = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>();
-    }
+        Debug.Log("Collision");
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (transform.position.y < fMaxHeight && !maxHeightReached)
+        if (other.tag == "Player")
         {
-            transform.Translate(Vector3.back * 0.5f);
-        }
+            PlayerCollectibles playerCollectibles = other.GetComponent<PlayerCollectibles>();
+            if (playerCollectibles == null)
+                playerCollectibles = other.GetComponentInParent<PlayerCollectibles>();
 
-        else
-        {
-            maxHeightReached = true;
-        }
-    }
-
-    private void OnTriggerEnter(Collider collision)
-    {
-        Vector3 cellOriginalPos = playerHUD.cellUI.transform.position;
-
-        if (collision.gameObject.tag == "Player")
-        {
-            playerHUD.cellUIOn = true;
-            Destroy(this.gameObject);
-            playerHUD.cellUI.SetActive(true);
-            playerHUD.cellCounter = playerHUD.cellCounter + 1;
-            playerHUD.SetCellCount();
+            playerCollectibles.CollectedCell();
+            Destroy(transform.parent.gameObject);
         }
     }
 }

@@ -65,6 +65,8 @@ public class Attack : MonoBehaviour, IState
         
     }
 
+    public void UpdateTarget(Transform pTarget) => _target = pTarget;
+
     //Animation Events //////////////
     public void AEEnableHitbox()
     {

@@ -13,6 +13,7 @@ public class AlwaysSeek : MonoBehaviour, IState
     private Animator _anim;
     private NavMeshAgent _agent;
     protected Transform _target;
+    private TargetManagement _targetManager;
 
     [SerializeField] protected bool _enabled = false;
     [HideInInspector] public bool retribution = false;
@@ -22,6 +23,7 @@ public class AlwaysSeek : MonoBehaviour, IState
         _anim = pAnim;
         _agent = pAgent;
         _target = pTarget;
+        _targetManager = GetComponent<TargetManagement>();
     }
 
     public void Enter()
@@ -49,25 +51,25 @@ public class AlwaysSeek : MonoBehaviour, IState
 
     public void Tick()
     {
-        //Vector3 direction = (target.position - transform.position).normalized;
-        //direction.y = 0;
+        Vector3 direction = (_target.position - transform.position).normalized;
+        direction.y = 0;
 
-        //Quaternion targetRot = Quaternion.LookRotation(direction);
-        //targetRot = Quaternion.Lerp(transform.rotation, targetRot, Time.deltaTime * rotation);
-        //transform.rotation = targetRot;
+        Quaternion targetRot = Quaternion.LookRotation(direction);
+        targetRot = Quaternion.Lerp(transform.rotation, targetRot, Time.deltaTime * 5);
+        transform.rotation = targetRot;
 
-        //Move to player
-        //_agent.SetDestination(_target.position);
+        // Move to player
+        _agent.SetDestination(_target.position);
 
         /*Prevents Hellhound from moving unless player is within range, then it moves to player
          *      Task: Grunts rotation is smooth 
          */
-        if (Vector3.Angle(transform.forward, _target.position - transform.position) < GetComponent<Decision>().fScanVision)
-            _agent.SetDestination(_target.position);
-        else
-            transform.rotation = Quaternion.Lerp(transform.rotation, 
-                Quaternion.LookRotation(_target.position - transform.position), 
-                Time.deltaTime * 5);
+        //if (Vector3.Angle(transform.forward, _target.position - transform.position) < _targetManager.fScanVision)
+        //    _agent.SetDestination(_target.position);
+        //else
+        //    transform.rotation = Quaternion.Lerp(transform.rotation, 
+        //        Quaternion.LookRotation(_target.position - transform.position), 
+        //        Time.deltaTime * 5);
 
         //Set Anim Speed
         _anim.SetFloat("Speed", _agent.velocity.magnitude / _agent.speed);
@@ -81,4 +83,6 @@ public class AlwaysSeek : MonoBehaviour, IState
             _agent.isStopped = false;
         }
     }
+
+    public void UpdateTarget(Transform pTarget) => _target = pTarget;
 }
