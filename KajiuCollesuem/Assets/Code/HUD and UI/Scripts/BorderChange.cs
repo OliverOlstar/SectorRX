@@ -5,13 +5,15 @@ using UnityEngine.UI;
 
 public class BorderChange : MonoBehaviour
 {
-    public Image[] borders;
+    public Text[] playerLabel;
 
-    public void SetBorderColor(Color pColor)
+    public void SetBorderColor(Color p1Color, Color p2Color)
     {
-        foreach(Image b in borders)
+        for(int i = 0; i < playerLabel.Length; i++)
         {
-            b.color = pColor;
+            playerLabel[1].gameObject.SetActive(false);
+            playerLabel[2].gameObject.SetActive(false);
+            playerLabel[3].gameObject.SetActive(false);
         }
     }
 }
