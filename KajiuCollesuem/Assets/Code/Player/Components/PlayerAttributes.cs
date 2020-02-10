@@ -114,7 +114,6 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         //Changing Visuals
         if (sliderControl.RegSlider[0])
         {
-            sliderControl.RegSlider[0].value = _health;
             sliderControl.UpdateBars(0, _health);
         }
     }
@@ -127,7 +126,6 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         //Changing Visuals
         if (sliderControl.RegSlider[1])
         {
-            sliderControl.RegSlider[1].value = _shield;
             sliderControl.UpdateBars(1, _shield);
         }
     }
@@ -141,7 +139,6 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         //Changing Visuals
         if (sliderControl.RegSlider[2])
         {
-            sliderControl.RegSlider[2].value = _power;
             sliderControl.UpdateBars(2, _power);
         }
     }

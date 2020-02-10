@@ -22,9 +22,9 @@ public class PauseMenu : MonoBehaviour
     {
         //Time.timeScale = 1;
         pause = false;
-        pauseScreen.SetActive(false);
+        //pauseScreen.SetActive(false);
         pInput = transform.parent.GetComponentInChildren<PlayerInput>();
-        EventSystem.current.SetSelectedGameObject(resumeButton);
+        //EventSystem.current.SetSelectedGameObject(resumeButton);
         Debug.Log(pInput.currentControlScheme);
     }
 
@@ -35,7 +35,6 @@ public class PauseMenu : MonoBehaviour
         if (pause)
         {
             hasPaused = true;
-            pInput.SwitchCurrentActionMap("PauseScreen");
             Debug.Log(pInput.currentActionMap);
 
             if (pInput.currentControlScheme == "Keyboard&Mouse")

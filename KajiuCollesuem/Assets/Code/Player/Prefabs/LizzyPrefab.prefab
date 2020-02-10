@@ -477,8 +477,8 @@ MonoBehaviour:
   _fallDamageStartTime: 1
   _inputInfluenceGrounded: 1
   _inputInfluenceInAir: 0.7
-  _downForceRate: 6
-  _downForceTerminal: 4
+  _downForceRate: 45
+  _downForceTerminal: 60
 --- !u!114 &351982311724213597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -517,8 +517,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sliderControl: {fileID: 0}
   _maxHealth: 100
-  _maxShield: 100
-  _maxPower: 50
+  _maxShield: 50
+  _maxPower: 100
   _shieldRegenStartDelaySeconds: 6
   _shieldRegenDelaySeconds: 1
   _shieldRegenAmount: 4
@@ -566,6 +566,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _PlayerHUD: {fileID: 0}
+  _SlideControl: {fileID: 0}
 --- !u!1001 &6791725013134994061
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -578,11 +579,6 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 855237c99c4188f4693dff1b0a98f1b9, type: 2}
-    - target: {fileID: -5324672767735438684, guid: 7ed2f2e2eac7b1948a0a3fa7cd9cc837,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 7ed2f2e2eac7b1948a0a3fa7cd9cc837,
         type: 3}
       propertyPath: m_LocalPosition.x

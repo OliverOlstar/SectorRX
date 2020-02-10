@@ -8,7 +8,8 @@ using UnityEngine.UI;
 
 public class PlayerCollectibles : MonoBehaviour
 {
-    [SerializeField] private HUDManager _PlayerHUD;
+    private float cellAmount = 10.0f;
+    [SerializeField] private SliderController _SlideControl;
 
     private void Start()
     {
@@ -17,9 +18,13 @@ public class PlayerCollectibles : MonoBehaviour
 
     public void CollectedCell()
     {
-        _PlayerHUD.cellUIOn = true;
-        _PlayerHUD.cellUI.SetActive(true);
-        _PlayerHUD.cellCounter = _PlayerHUD.cellCounter + 100;
-        _PlayerHUD.SetCellCount();
+        cellAmount += 10;
+        
+        if(cellAmount >= 100)
+        {
+            cellAmount = 100;
+        }
+
+        _SlideControl.UpdateBars(3, cellAmount);
     }
 }

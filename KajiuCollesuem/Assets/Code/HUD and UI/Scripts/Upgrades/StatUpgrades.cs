@@ -97,31 +97,31 @@ public class StatUpgrades : MonoBehaviour
     //    }
     //}
 
-    public void ClickButtonPower(int pIndex, int pLevel, Button pButton)
-    {
-        if(hud.coreCounter >= powers[pIndex].cost[pLevel])
-        {
-            if(pU.PowerUpgrade(pIndex, pLevel + 1))
-            {
-                hud.coreCounter -= powers[pIndex].cost[pLevel];
-                hud.upCoreCount.text = hud.coreCounter.ToString();
-                pButton.GetComponent<Image>().color = powerColors[pIndex];
-                pButton.interactable = false;
-            }
-            else
-            {
-                insufficientCost.text = "Can't do level";
-                insufficientCost.gameObject.SetActive(false);
-                insufficientCost.gameObject.SetActive(true);
-            }
-        }
-        else
-        {
-            insufficientCost.text = "Not enough cores";
-            insufficientCost.gameObject.SetActive(false);
-            insufficientCost.gameObject.SetActive(true);
-        }
-    }
+    //public void ClickButtonPower(int pIndex, int pLevel, Button pButton)
+    //{
+    //    if(hud.coreCounter >= powers[pIndex].cost[pLevel])
+    //    {
+    //        if(pU.PowerUpgrade(pIndex, pLevel + 1))
+    //        {
+    //            hud.coreCounter -= powers[pIndex].cost[pLevel];
+    //            hud.upCoreCount.text = hud.coreCounter.ToString();
+    //            pButton.GetComponent<Image>().color = powerColors[pIndex];
+    //            pButton.interactable = false;
+    //        }
+    //        else
+    //        {
+    //            insufficientCost.text = "Can't do level";
+    //            insufficientCost.gameObject.SetActive(false);
+    //            insufficientCost.gameObject.SetActive(true);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        insufficientCost.text = "Not enough cores";
+    //        insufficientCost.gameObject.SetActive(false);
+    //        insufficientCost.gameObject.SetActive(true);
+    //    }
+    //}
 
     public void ClickButtonStat(int pIndex, int pLevel, Button pButton)
     {
