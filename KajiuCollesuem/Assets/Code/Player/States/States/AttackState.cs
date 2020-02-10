@@ -30,7 +30,7 @@ public class AttackState : BaseState
 
     public override void Enter()
     {
-        Debug.Log("AttackState: Enter");
+        //Debug.Log("AttackState: Enter");
         //stateController._hitboxComponent.gameObject.SetActive(true); /* Handled by animation events */
         _exitStateTime = 0;
         _onHolding = false;
@@ -39,14 +39,16 @@ public class AttackState : BaseState
 
     public override void Exit()
     {
-        Debug.Log("AttackState: Exit");
-        //stateController._hitboxComponent.gameObject.SetActive(false); /* Handled by animation events */
+        //Debug.Log("AttackState: Exit");
         _stateController.AttackStateReturnDelay = Time.time + _attackStateReturnDelayLength;
-        //stateController._hitboxComponent.gameObject.SetActive(false);
         _numberOfClicks = 0;
-        //stateController._modelController.ClearAttackBools();
 
-        //_stateController._modelController.DoneAttack();
+        // If leaving state before disabling hitbox, disable hitbox
+        if (_hitbox != null)
+        {
+            _hitbox.gameObject.SetActive(false);
+            _hitbox = null;
+        }
     }
 
     public override Type Tick()
@@ -60,12 +62,25 @@ public class AttackState : BaseState
             return typeof(MovementState);
         }
 
+        // Forward stepping force
         if (Time.time > _addForceTime && Time.time < _stopForceTime && _onHolding == false)
         {
             _stateController._rb.AddForce(_stateController._modelController.transform.forward * _addForceAmount);
         }
 
-        //if ()
+        // Hitbox enable & disable
+        if (_hitbox != null)
+        {
+            if (Time.time >= _disableHitboxTime)
+            {
+                _hitbox.gameObject.SetActive(false);
+                _hitbox = null;
+            }
+            else if (Time.time >= _enableHitboxTime)
+            {
+                _hitbox.gameObject.SetActive(true);
+            }
+        }
 
         // Stunned
         if (_stateController.Stunned)
@@ -138,8 +153,6 @@ public class AttackState : BaseState
 
         _stateController._modelController.PlayAttack(_numberOfClicks, false, false);
 
-        // TODO set player hitbox damage & knockback
-
         _numberOfClicks++;
     }
 
@@ -148,7 +161,6 @@ public class AttackState : BaseState
         _stateController._modelController.PlayAttack(_numberOfClicks, true, true);
 
         _exitStateTime = 0;
-
         chargeTimer = 0;
         _onHolding = true;
     }
@@ -156,12 +168,10 @@ public class AttackState : BaseState
     private void ReleaseHeavyAttack()
     {
         SOAttack curAttack = _stateController._modelController.attacks[_numberOfClicks + 3];
-        SetAttackValues(curAttack);
+        SetAttackValues(curAttack); // TODO Add charging mult to hitbox
 
         // TODO send through how long attack was charged for and use that to know how fast the attack should move.
         _stateController._modelController.DoneChargingAttack();
-
-        // TODO set player hitbox damage & knockback (including charging)
 
         _onHolding = false;
         _numberOfClicks++;
@@ -175,8 +185,6 @@ public class AttackState : BaseState
 
         _stateController._modelController.PlayAttack(_numberOfClicks, true, false);
 
-        // TODO set player hitbox damage & knockback
-
         _numberOfClicks++;
     }
     #endregion
@@ -184,10 +192,19 @@ public class AttackState : BaseState
     #region Set & Clear
     private void SetAttackValues(SOAttack pAttackVars, float pPreAttackTime = 0)
     {
+        // Timings
         _exitStateTime = Time.time + pAttackVars.attackTime + pPreAttackTime + pAttackVars.holdEndPosTime;
         _addForceTime = Time.time + pAttackVars.forceForwardTime + pPreAttackTime;
         _stopForceTime = Time.time + pAttackVars.stopForceForwardTime + pPreAttackTime;
         _addForceAmount = pAttackVars.forceForwardAmount;
+
+        // Hitbox
+        _hitbox = _stateController.hitboxes[pAttackVars.hitboxIndex];
+        Vector3 knockVector = _stateController._modelController.transform.forward * pAttackVars.HitboxKnockback + Vector3.up * pAttackVars.HitboxKnockup;
+        _hitbox.SetDamage(pAttackVars.HitboxDamage, knockVector);
+
+        _enableHitboxTime = Time.time + pAttackVars.enableHitboxTime + pPreAttackTime;
+        _disableHitboxTime = Time.time + pAttackVars.disableHitboxTime + pPreAttackTime;
     }
 
     private void ClearInputs()

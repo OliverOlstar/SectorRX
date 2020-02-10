@@ -12,7 +12,7 @@ Description: Managing player attributes such as health, shield, and power.
 
 public class PlayerAttributes : MonoBehaviour, IAttributes
 {
-    private AnimHandler _anim;
+    private PlayerStateController _stateController;
     public SliderController sliderControl;
 
     [Header("Maxes")]
@@ -50,7 +50,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
     void Awake()
     {
-        _anim = GetComponentInChildren<AnimHandler>();
+        _stateController = GetComponent<PlayerStateController>();
 
         _health = _maxHealth;
         _shield = _maxShield;
@@ -180,7 +180,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
     #region General Functions
     //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
-    public bool TakeDamage(int pAmount, bool pReact)
+    public bool TakeDamage(int pAmount, Vector3 pKnockback, bool pReact)
     {
         Debug.Log("PlayerAttributes: TakeDamage");
 
@@ -192,21 +192,21 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
         if (_shield >= pAmount)
         {
-            //Changing only Shield
+            // Changing only Shield
             modifyShield(-pAmount);
         }
         else
         {
-            //Changing Shield and getting the remainder
+            // Changing Shield and getting the remainder
             pAmount -= _shield;
             modifyShield(-_shield);
 
-            //Changing Health by remainder
+            // Changing Health by remainder
             modifyHealth(-pAmount);
             Debug.Log(pAmount);
         }
 
-        //Restarting Shield Regening
+        // Restarting Shield Regening
         if (_shield < _maxShield)
         {
             StopCoroutine("shieldRegen");
@@ -214,7 +214,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             StartCoroutine("shieldRegenStartDelay");
         }
 
-        //Restarting Power Loss over time
+        // Restarting Power Loss over time
         if (_power > 0)
         {
             StopCoroutine("powerLoss");
@@ -222,10 +222,13 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             StartCoroutine("powerLossStartDelay");
         }
 
+        // Add Knockback
+        _stateController._rb.AddForce(pKnockback, ForceMode.Impulse);
+
         //if (pReact)
         //    _anim.Stunned(Random.value < 0.5f);
 
-        //Return If Dead or Not
+        // Return If Dead or Not
         if (_health <= 0)
         {
             //Camera Shake
@@ -235,8 +238,8 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             return true;
         }
 
-        //Camera Shake
-        CameraShaker.Instance.ShakeOnce(1, 2, 0.2f, 0.1f);
+        // Camera Shake
+        //CameraShaker.Instance.ShakeOnce(1, 2, 0.2f, 0.1f);
 
         return false;
     }
@@ -246,7 +249,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         modifyPower(pPower);
         //Debug.Log("Power Recieved: " + pPower + ", " + _power);
 
-        //Restarting Power Loss over time
+        // Restarting Power Loss over time
         if (_power > 0)
         {
             StopCoroutine("powerLoss");

@@ -120,17 +120,17 @@ public class RollAttackTest : MonoBehaviour
         return dirRatio + VelocityRatio;
     }
     
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision other)
     {
         //if collided object is in destroyable layer
-        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (other.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            collision.gameObject.GetComponent<Rigidbody>().AddForce(calcPushBackDir(collision.gameObject) * PushBackForce);
-            IAttributes cIA = collision.gameObject.GetComponent<IAttributes>();
+            IAttributes otherAttributes = other.gameObject.GetComponent<IAttributes>();
+
             //if object has IAttributes do damage
-            if(cIA != null)
+            if(otherAttributes != null)
             {
-                cIA.TakeDamage(Damage, false);
+                otherAttributes.TakeDamage(Damage, calcPushBackDir(other.gameObject) * PushBackForce, false);
             }
         }
     }

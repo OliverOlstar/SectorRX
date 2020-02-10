@@ -156,7 +156,7 @@ public class PlayerCamera : MonoBehaviour
     {
         //Locked onto Target
         Vector2 direction = new Vector2(lockOnTarget.position.z, lockOnTarget.position.x)  - new Vector2(_ParentTransform.position.z, _ParentTransform.position.x) ;
-        _LocalRotation.x = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + (_lockOnXOffset * _offSetLeft); // Add distance into this line potentially
+        _LocalRotation.x = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + (_lockOnXOffset); // Add distance into this line potentially
         _LocalRotation.y = _ParentTransform.position.y - lockOnTarget.position.y;
 
         Vector3 _RotTarget = _LocalRotation;
@@ -232,8 +232,6 @@ public class PlayerCamera : MonoBehaviour
 
     public IEnumerator CameraVarsTransition(float pOffSetUp, float pOffSetLeft, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pSensitivityMult, float pTransitionSpeed)
     {
-        _mouseSensitivityMult = pSensitivityMult;
-
         short done;
 
         do
@@ -241,6 +239,13 @@ public class PlayerCamera : MonoBehaviour
             done = 0;
 
             //Lerping all of the values
+            _mouseSensitivityMult = Mathf.Lerp(_mouseSensitivityMult, pSensitivityMult, pTransitionSpeed * Time.deltaTime * 4);
+            if (Mathf.Abs(_mouseSensitivityMult - pSensitivityMult) <= 0.01f)
+            {
+                _mouseSensitivityMult = pSensitivityMult;
+                done++;
+            }
+
             _turnDampening = Mathf.Lerp(_turnDampening, pTurnDampening, pTransitionSpeed * Time.deltaTime * 10);
             if (Mathf.Abs(_turnDampening - pTurnDampening) <= 0.01f)
             {
@@ -288,7 +293,7 @@ public class PlayerCamera : MonoBehaviour
 
             yield return null;
         }
-        while (done != 6);
+        while (done != 7);
     }
     #endregion
 }
