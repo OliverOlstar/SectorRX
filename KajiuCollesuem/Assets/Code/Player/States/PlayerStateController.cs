@@ -36,7 +36,7 @@ public class PlayerStateController : MonoBehaviour
     private PlayerLockOnScript _lockOnComponent;
     [HideInInspector] public PlayerPowerHandler _powerComponent;
     [HideInInspector] public PlayerHitbox _hitboxComponent;
-    //[HideInInspector] public ModelMovement _modelController;
+    [HideInInspector] public PauseMenu _PauseMenu;
 
     [HideInInspector] public PlayerAttributes _playerAttributes;
     [HideInInspector] public ModelController _modelController;
@@ -60,6 +60,7 @@ public class PlayerStateController : MonoBehaviour
         _lockOnComponent = GetComponent<PlayerLockOnScript>();
         _powerComponent = GetComponent<PlayerPowerHandler>();
         _hitboxComponent = GetComponentInChildren<PlayerHitbox>();
+        _PauseMenu = transform.parent.GetComponentInChildren<PauseMenu>();
         //_hitboxComponent.gameObject.SetActive(false);
         //_modelController = GetComponentInChildren<ModelMovement>();
 
@@ -89,6 +90,8 @@ public class PlayerStateController : MonoBehaviour
             ignoreNextHeavyAttackRelease = false;
         }
     }
+
+    private void OnPause() => _PauseMenu.TogglePause();
     private void OnAnyInput() => LastInputTime = Time.time;
 
     private void FixedUpdate()
