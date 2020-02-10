@@ -35,7 +35,6 @@ public class PauseMenu : MonoBehaviour
         if (pause)
         {
             hasPaused = true;
-            pInput.SwitchCurrentActionMap("PauseScreen");
             Debug.Log(pInput.currentActionMap);
 
             if (pInput.currentControlScheme == "Keyboard&Mouse")
