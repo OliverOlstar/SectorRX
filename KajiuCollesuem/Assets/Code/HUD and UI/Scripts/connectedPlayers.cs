@@ -27,7 +27,6 @@ public class connectedPlayers : MonoBehaviour
         _AddPlayer.PlayerJoins();
         _AddPlayer.SwitchDefaultScheme();
         Debug.Log("OnPlayerJoined " + playersConnected);
-        Debug.Log(_AddPlayer.allPlayers[playersConnected].currentControlScheme);
         playerCount.text = "Number of Players: " + playersConnected.ToString();
     }
 
