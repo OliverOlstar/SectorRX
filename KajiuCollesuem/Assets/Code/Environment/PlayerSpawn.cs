@@ -20,6 +20,8 @@ public class PlayerSpawn : MonoBehaviour
     public List<Transform> ninePlayerSpawns = new List<Transform>();
     private int _SpawnPointIndex;
 
+    [SerializeField] private Color[] boarderColors = new Color[9];
+
     public void MatchStartup()
     {
         StartCoroutine("CameraSwitch");
@@ -77,7 +79,7 @@ public class PlayerSpawn : MonoBehaviour
 
             //If 4 or less players connected, access the list of 4 spawn points and randomly spawn players at those listed locations.
             if (connectedPlayers.playersConnected <= 4)
-            {                
+            {
                 _SpawnPointIndex = Random.Range(0, fourPlayerSpawns.Count);
                 Transform _FourSpawnPos = fourPlayerSpawns[_SpawnPointIndex];
                 fourPlayerSpawns.RemoveAt(_SpawnPointIndex);
@@ -93,6 +95,17 @@ public class PlayerSpawn : MonoBehaviour
                 ninePlayerSpawns.RemoveAt(_SpawnPointIndex);
                 players.Add(Instantiate(playerPrefab, _EightSpawnPos.position, _EightSpawnPos.rotation));
                 //musicManager.battleMusic[0].Play();
+            }
+        }
+
+        BorderChange border;
+        for (int i  = 0; i < players.Count; i++)
+        {
+            border = players[i].GetComponentInChildren<BorderChange>();
+
+            if(border)
+            {
+                border.SetBoarderColor(boarderColors[i]);
             }
         }
     }
