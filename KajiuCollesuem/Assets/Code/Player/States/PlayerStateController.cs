@@ -35,7 +35,7 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public PlayerStateMachine _stateMachine;
     public MovementComponent _movementComponent { get; private set; } // Player's movement component, access this to move and jump
     [HideInInspector] public DodgeComponent _dodgeComponent; // Player's dodge component, access this to
-    private PlayerLockOnScript _lockOnComponent;
+    //private PlayerLockOnScript _lockOnComponent;
     [HideInInspector] public PlayerPowerHandler _powerComponent;
     [HideInInspector] public PlayerHitbox _hitboxComponent;
     [HideInInspector] public PauseMenu _PauseMenu;
@@ -59,7 +59,7 @@ public class PlayerStateController : MonoBehaviour
     {
         _movementComponent = GetComponent<MovementComponent>();
         _dodgeComponent = GetComponent<DodgeComponent>();
-        _lockOnComponent = GetComponent<PlayerLockOnScript>();
+        //_lockOnComponent = GetComponent<PlayerLockOnScript>();
         _powerComponent = GetComponent<PlayerPowerHandler>();
         _hitboxComponent = GetComponentInChildren<PlayerHitbox>();
         _PauseMenu = transform.parent.GetComponentInChildren<PauseMenu>();
@@ -79,10 +79,7 @@ public class PlayerStateController : MonoBehaviour
 
     // List for inputs
     private void OnCamera(InputValue ctx) => mouseInput = ctx.Get<Vector2>();
-    private void OnMovement(InputValue ctx)
-    {
-        moveRawInput = ctx.Get<Vector2>();
-    }
+    private void OnMovement(InputValue ctx) => moveRawInput = ctx.Get<Vector2>();
     private void OnDodge(InputValue ctx) => dodgeInput = ctx.Get<float>();
     private void OnLightAttack(InputValue ctx) => lightAttackinput = ctx.Get<float>();
     private void OnHeavyAttack(InputValue ctx)

@@ -184,6 +184,7 @@ MonoBehaviour:
   _tiltingMult: 9
   _flipGraph: {fileID: 11400000, guid: 5d40a20a35f8b154e9204417dc7022f5, type: 2}
   disableRotation: 0
+  facingInput: {x: 0, y: 0, z: 0}
   facingTarget: {fileID: 0}
 --- !u!114 &7113333745155857224
 MonoBehaviour:
@@ -388,7 +389,8 @@ MonoBehaviour:
   AttackStateReturnDelay: 0
   LastInputTime: 0
   mouseInput: {x: 0, y: 0}
-  moveInput: {x: 0, y: 0}
+  moveInput: {x: 0, y: 0, z: 0}
+  moveRawInput: {x: 0, y: 0}
   LastMoveDirection: {x: 0, y: 0}
   dodgeInput: -1
   lightAttackinput: -1
@@ -397,10 +399,11 @@ MonoBehaviour:
   _dodgeComponent: {fileID: 0}
   _powerComponent: {fileID: 0}
   _hitboxComponent: {fileID: 0}
+  _PauseMenu: {fileID: 0}
   _playerAttributes: {fileID: 0}
   _modelController: {fileID: 0}
   _playerCamera: {fileID: 0}
-  _rb: {fileID: 0}
+  _Rb: {fileID: 0}
   _Camera: {fileID: 0}
   hitboxes:
   - {fileID: 7054537673967102359}
@@ -550,7 +553,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: 05da82d0-c0bb-4e2c-8875-1aef177e0d8c
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &5855493607624095741
@@ -565,7 +568,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57df21d598cd16c4983cce38a4b7e9a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _PlayerHUD: {fileID: 0}
   _SlideControl: {fileID: 0}
 --- !u!1001 &6791725013134994061
 PrefabInstance:
