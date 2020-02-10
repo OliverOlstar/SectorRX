@@ -20,7 +20,7 @@ public class SliderController : MonoBehaviour
     public Slider[] RegSlider;
     public Slider[] MaskSlider;
 
-    private Coroutine[] _lerpCoroutineArray = new Coroutine[3];
+    private Coroutine[] _lerpCoroutineArray = new Coroutine[4];
 
     public float lerpTimer = 1;
 
@@ -46,6 +46,8 @@ public class SliderController : MonoBehaviour
 
     public void UpdateBars(int pIndex, float pValue)
     {
+        RegSlider[pIndex].value = pValue;
+
         if (_lerpCoroutineArray[pIndex] != null)
         {
             StopCoroutine(_lerpCoroutineArray[pIndex]);

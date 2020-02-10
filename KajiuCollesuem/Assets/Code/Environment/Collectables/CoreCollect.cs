@@ -14,15 +14,15 @@ public class CoreCollect : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        Vector3 coreOriginalPos = playerHUD.coreUI.transform.position;
+        //Vector3 coreOriginalPos = playerHUD.coreUI.transform.position;
 
-        if (collision.gameObject.tag == "Core")
-        {
-            playerHUD.coreUIOn = true;
-            Destroy(collision.gameObject);
-            playerHUD.coreUI.SetActive(true);
-            playerHUD.coreCounter = playerHUD.coreCounter + 1;
-            playerHUD.SetCoreCount();
-        }
+        //if (collision.gameObject.tag == "Core")
+        //{
+        //    playerHUD.coreUIOn = true;
+        //    Destroy(collision.gameObject);
+        //    playerHUD.coreUI.SetActive(true);
+        //    playerHUD.coreCounter = playerHUD.coreCounter + 1;
+        //    playerHUD.SetCoreCount();
+        //}
     }
 }

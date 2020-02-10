@@ -22,10 +22,10 @@ public class LevelButtons : MonoBehaviour
         powerUpgrade.ClickButtonStat(index, level, statButton);
     }
 
-    public void ClickPowerButton()
-    {
-        powerUpgrade.ClickButtonPower(index, level, statButton);
-    }
+    //public void ClickPowerButton()
+    //{
+    //    powerUpgrade.ClickButtonPower(index, level, statButton);
+    //}
 
     public void HoverStatButton()
     {
