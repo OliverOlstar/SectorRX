@@ -223,7 +223,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         }
 
         // Add Knockback
-        _stateController._rb.AddForce(pKnockback, ForceMode.Impulse);
+        _stateController._Rb.AddForce(pKnockback, ForceMode.Impulse);
 
         //if (pReact)
         //    _anim.Stunned(Random.value < 0.5f);

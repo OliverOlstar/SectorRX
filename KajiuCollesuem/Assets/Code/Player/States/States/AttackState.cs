@@ -49,6 +49,8 @@ public class AttackState : BaseState
             _hitbox.gameObject.SetActive(false);
             _hitbox = null;
         }
+
+        _stateController._modelController.SetInputDirection(Vector3.zero);
     }
 
     public override Type Tick()
@@ -62,10 +64,13 @@ public class AttackState : BaseState
             return typeof(MovementState);
         }
 
+        if (Time.time < _addForceTime)
+            _stateController._modelController.SetInputDirection(_stateController.moveInput);
+
         // Forward stepping force
         if (Time.time > _addForceTime && Time.time < _stopForceTime && _onHolding == false)
         {
-            _stateController._rb.AddForce(_stateController._modelController.transform.forward * _addForceAmount);
+            _stateController._Rb.AddForce(_stateController._modelController.transform.forward * _addForceAmount);
         }
 
         // Hitbox enable & disable

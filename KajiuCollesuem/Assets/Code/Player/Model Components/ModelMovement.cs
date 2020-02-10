@@ -23,6 +23,7 @@ public class ModelMovement : MonoBehaviour
 
     [Space]
     public bool disableRotation;
+    public Vector3 facingInput;
     public Transform facingTarget;
 
     public void Init(ModelController pController)
@@ -36,7 +37,7 @@ public class ModelMovement : MonoBehaviour
         //if (Input.GetKeyDown(KeyCode.U))
         //    disableRotation = !disableRotation;
 
-        if (disableRotation) 
+        if (disableRotation && facingInput == Vector3.zero) 
             return;
 
         // Facing Velocity
@@ -44,7 +45,12 @@ public class ModelMovement : MonoBehaviour
         {
             Vector3 facingDirection;
 
-            if (facingTarget == null)
+            if (facingInput != Vector3.zero)
+            {
+                Debug.Log("InputDirection");
+                facingDirection = new Vector3(facingInput.z, 0, -facingInput.x).normalized;
+            }
+            else if (facingTarget == null)
             {
                 facingDirection = new Vector3(_modelController.horizontalVelocity.z, 0, -_modelController.horizontalVelocity.x);
             }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerStateController : MonoBehaviour
 {
@@ -21,8 +22,9 @@ public class PlayerStateController : MonoBehaviour
     // Inputs
     [HideInInspector] public float LastInputTime = 0;
     [HideInInspector] public Vector2 mouseInput;
-    [HideInInspector] public Vector2 moveInput = new Vector2(0,0);
-    [HideInInspector] public Vector2 LastMoveDirection = new Vector2(0,0);
+    [HideInInspector] public Vector3 moveInput = new Vector3(0, 0, 0);
+    [HideInInspector] public Vector2 moveRawInput = new Vector2(0, 0);
+    [HideInInspector] public Vector2 LastMoveDirection = new Vector2(0, 0);
     // 0 - Tapped, 1 - Held
     [HideInInspector] public float dodgeInput = -1.0f;
     [HideInInspector] public float lightAttackinput = -1.0f;
@@ -42,7 +44,7 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public ModelController _modelController;
     [HideInInspector] public PlayerCamera _playerCamera;
 
-    [HideInInspector] public Rigidbody _rb;
+    [HideInInspector] public Rigidbody _Rb;
     public Transform _Camera;
     public PlayerHitbox[] hitboxes = new PlayerHitbox[0];
 
@@ -70,13 +72,16 @@ public class PlayerStateController : MonoBehaviour
         _stateMachine = GetComponent<PlayerStateMachine>();
         InitializeStateMachine();
 
-        _rb = GetComponent<Rigidbody>();
+        _Rb = GetComponent<Rigidbody>();
         _playerCamera = _Camera.GetComponentInParent<PlayerCamera>();
     }
 
     // List for inputs
     private void OnCamera(InputValue ctx) => mouseInput = ctx.Get<Vector2>();
-    private void OnMovement(InputValue ctx) => moveInput = ctx.Get<Vector2>();
+    private void OnMovement(InputValue ctx)
+    {
+        moveRawInput = ctx.Get<Vector2>();
+    }
     private void OnDodge(InputValue ctx) => dodgeInput = ctx.Get<float>();
     private void OnLightAttack(InputValue ctx) => lightAttackinput = ctx.Get<float>();
     private void OnHeavyAttack(InputValue ctx)
@@ -89,14 +94,25 @@ public class PlayerStateController : MonoBehaviour
             ignoreNextHeavyAttackRelease = false;
         }
     }
+    //private void OnPause() => 
     private void OnAnyInput() => LastInputTime = Time.time;
 
     private void FixedUpdate()
     {
+        RotateMoveInputToCamera();
+
         if (moveInput.magnitude != 0 || mouseInput.magnitude != 0)
         {
             LastInputTime = Time.time;
         }
+    }
+
+    public void RotateMoveInputToCamera()
+    {
+        moveInput = new Vector3(moveRawInput.x, 0, moveRawInput.y);
+        moveInput = _Camera.TransformDirection(moveInput);
+        moveInput.y = 0;
+        moveInput.Normalize();
     }
 
     void InitializeStateMachine()

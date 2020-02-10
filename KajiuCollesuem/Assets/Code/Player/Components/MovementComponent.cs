@@ -40,7 +40,7 @@ public class MovementComponent : MonoBehaviour
         if (_stateController.onGround && disableMovement == false)
         {
             //Add force
-            _rb.velocity = new Vector3(_stateController._rb.velocity.x * _jumpForceVelocityMult, 0, _stateController._rb.velocity.z * _jumpForceVelocityMult);
+            _rb.velocity = new Vector3(_stateController._Rb.velocity.x * _jumpForceVelocityMult, 0, _stateController._Rb.velocity.z * _jumpForceVelocityMult);
             _rb.AddForce(_jumpForceUp * Vector3.up, ForceMode.Impulse);
 
             _stateController._modelController.AddCrouching(1, 0.1f, 0.05f);
@@ -50,10 +50,7 @@ public class MovementComponent : MonoBehaviour
     private void Move()
     {
         //Move Vector
-        Vector3 move = new Vector3(_stateController.moveInput.x, 0, _stateController.moveInput.y);
-        move = _stateController._Camera.TransformDirection(move);
-        move.y = 0;
-        move = move.normalized * Time.deltaTime * _moveAcceleration * inputInfluence;
+        Vector3 move = _stateController.moveInput * Time.deltaTime * _moveAcceleration * inputInfluence;
 
         //Moving the player
         Vector3 horizontalVelocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);

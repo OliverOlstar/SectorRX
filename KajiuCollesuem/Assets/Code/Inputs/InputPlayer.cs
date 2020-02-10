@@ -496,7 +496,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b02f9d9e-fa8a-49b4-b740-0d203e848886"",
-                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",

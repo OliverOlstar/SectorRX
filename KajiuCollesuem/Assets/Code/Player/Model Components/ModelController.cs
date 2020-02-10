@@ -122,6 +122,11 @@ public class ModelController : MonoBehaviour
         // End Charging
         _AttackingState = 1;
     }
+
+    public void SetInputDirection(Vector3 pInput)
+    {
+        _modelMovement.facingInput = pInput;
+    }
     #endregion
 
     #region Dodging
