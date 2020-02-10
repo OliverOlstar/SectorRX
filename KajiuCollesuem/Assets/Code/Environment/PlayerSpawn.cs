@@ -13,6 +13,7 @@ public class PlayerSpawn : MonoBehaviour
 {
     public Camera cinemaCam;
     public GameObject playerPrefab;
+    public List<GameObject> players = new List<GameObject>();
 
     public MusicManager musicManager;
     public List<Transform> fourPlayerSpawns = new List<Transform>();
@@ -80,7 +81,7 @@ public class PlayerSpawn : MonoBehaviour
                 _SpawnPointIndex = Random.Range(0, fourPlayerSpawns.Count);
                 Transform _FourSpawnPos = fourPlayerSpawns[_SpawnPointIndex];
                 fourPlayerSpawns.RemoveAt(_SpawnPointIndex);
-                Instantiate(playerPrefab, _FourSpawnPos.position, _FourSpawnPos.rotation);
+                players.Add(Instantiate(playerPrefab, _FourSpawnPos.position, _FourSpawnPos.rotation));
                 //musicManager.battleMusic[0].Play();
             }
 
@@ -90,7 +91,7 @@ public class PlayerSpawn : MonoBehaviour
                 _SpawnPointIndex = Random.Range(0, ninePlayerSpawns.Count);
                 Transform _EightSpawnPos = ninePlayerSpawns[_SpawnPointIndex];
                 ninePlayerSpawns.RemoveAt(_SpawnPointIndex);
-                Instantiate(playerPrefab, _EightSpawnPos.position, _EightSpawnPos.rotation);
+                players.Add(Instantiate(playerPrefab, _EightSpawnPos.position, _EightSpawnPos.rotation));
                 //musicManager.battleMusic[0].Play();
             }
         }
