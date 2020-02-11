@@ -541,6 +541,14 @@ public class @InputPlayer : IInputActionCollection, IDisposable
             ""id"": ""8e1e9d70-09f9-49e9-bb17-697d6efbc873"",
             ""actions"": [
                 {
+                    ""name"": ""Upgrade"",
+                    ""type"": ""Button"",
+                    ""id"": ""ad81d2f9-62d8-45f6-a58f-4fbae25a929f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
                     ""id"": ""8cd59a96-49bd-4ebf-b510-77c3211d8316"",
@@ -1011,6 +1019,28 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""action"": ""Navigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c55e7cd3-b0f3-4479-8c43-67046773212d"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Upgrade"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""54a65f9f-9c58-4860-8871-81bd6b1fad7d"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Upgrade"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1061,6 +1091,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
         m_Player_Upgrade = m_Player.FindAction("Upgrade", throwIfNotFound: true);
         // PauseScreen
         m_PauseScreen = asset.FindActionMap("PauseScreen", throwIfNotFound: true);
+        m_PauseScreen_Upgrade = m_PauseScreen.FindAction("Upgrade", throwIfNotFound: true);
         m_PauseScreen_Pause = m_PauseScreen.FindAction("Pause", throwIfNotFound: true);
         m_PauseScreen_Navigate = m_PauseScreen.FindAction("Navigate", throwIfNotFound: true);
         m_PauseScreen_TrackedDeviceSelect = m_PauseScreen.FindAction("TrackedDeviceSelect", throwIfNotFound: true);
@@ -1243,6 +1274,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
     // PauseScreen
     private readonly InputActionMap m_PauseScreen;
     private IPauseScreenActions m_PauseScreenActionsCallbackInterface;
+    private readonly InputAction m_PauseScreen_Upgrade;
     private readonly InputAction m_PauseScreen_Pause;
     private readonly InputAction m_PauseScreen_Navigate;
     private readonly InputAction m_PauseScreen_TrackedDeviceSelect;
@@ -1259,6 +1291,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
     {
         private @InputPlayer m_Wrapper;
         public PauseScreenActions(@InputPlayer wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Upgrade => m_Wrapper.m_PauseScreen_Upgrade;
         public InputAction @Pause => m_Wrapper.m_PauseScreen_Pause;
         public InputAction @Navigate => m_Wrapper.m_PauseScreen_Navigate;
         public InputAction @TrackedDeviceSelect => m_Wrapper.m_PauseScreen_TrackedDeviceSelect;
@@ -1280,6 +1313,9 @@ public class @InputPlayer : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_PauseScreenActionsCallbackInterface != null)
             {
+                @Upgrade.started -= m_Wrapper.m_PauseScreenActionsCallbackInterface.OnUpgrade;
+                @Upgrade.performed -= m_Wrapper.m_PauseScreenActionsCallbackInterface.OnUpgrade;
+                @Upgrade.canceled -= m_Wrapper.m_PauseScreenActionsCallbackInterface.OnUpgrade;
                 @Pause.started -= m_Wrapper.m_PauseScreenActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PauseScreenActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PauseScreenActionsCallbackInterface.OnPause;
@@ -1320,6 +1356,9 @@ public class @InputPlayer : IInputActionCollection, IDisposable
             m_Wrapper.m_PauseScreenActionsCallbackInterface = instance;
             if (instance != null)
             {
+                @Upgrade.started += instance.OnUpgrade;
+                @Upgrade.performed += instance.OnUpgrade;
+                @Upgrade.canceled += instance.OnUpgrade;
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
@@ -1395,6 +1434,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
     }
     public interface IPauseScreenActions
     {
+        void OnUpgrade(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnNavigate(InputAction.CallbackContext context);
         void OnTrackedDeviceSelect(InputAction.CallbackContext context);
