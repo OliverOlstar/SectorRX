@@ -8,9 +8,9 @@ public class CellCollect : MonoBehaviour
     {
         CellMagnetCollect cmc = GetComponentInParent<CellMagnetCollect>();
 
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
-            cmc.StartSuckUp(collision.transform);
+            cmc.StartSuckUp(other.transform);
             //PlayerCollectibles playerCollectibles = other.GetComponent<PlayerCollectibles>();
             //if (playerCollectibles == null)
                 //playerCollectibles = other.GetComponentInParent<PlayerCollectibles>();
