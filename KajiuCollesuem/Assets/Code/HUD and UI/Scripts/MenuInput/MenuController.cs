@@ -15,7 +15,6 @@ public class MenuController : MonoBehaviour
     {
         currentButton = 0;
         pInput = transform.parent.GetComponentInChildren<PlayerInput>();
-        pInput.SwitchCurrentActionMap("PauseScreen");
     }
 
     private void Update()
