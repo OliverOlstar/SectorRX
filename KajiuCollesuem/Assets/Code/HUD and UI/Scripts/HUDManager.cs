@@ -12,7 +12,8 @@ public class HUDManager : MonoBehaviour
     public GameObject resumeButton;
     public GameObject targetUI;
     public Slider cellExp;
-    public Text cellCount, canUpgrade, upCellCount;
+    public bool canUpgrade;
+    public Text cellCount, upgradeReady, upCellCount;
 
     //Booleans to check if Cell UI or Power Core UI are already active when collecting other item
     public bool cellUIOn;
@@ -36,11 +37,13 @@ public class HUDManager : MonoBehaviour
     {
         if(cellExp.value >= 100)
         {
-            canUpgrade.gameObject.SetActive(true);
+            upgradeReady.gameObject.SetActive(true);
+            canUpgrade = true;
         }
         else
         {
-            canUpgrade.gameObject.SetActive(false);
+            canUpgrade = false;
+            upgradeReady.gameObject.SetActive(false);
         }
 
         if (targetUI != null)
@@ -54,6 +57,22 @@ public class HUDManager : MonoBehaviour
         {
             EventSystem.current.SetSelectedGameObject(resumeButton);
             pauseMenu.hasPaused = false;
+        }
+    }
+
+    public void OpenUpgrade()
+    {
+        if(canUpgrade)
+        {
+            statUpgrade.gameObject.SetActive(true);
+            cellExp.gameObject.SetActive(false);
+            upgradeReady.gameObject.SetActive(false);
+        }
+        else
+        {
+            cellExp.gameObject.SetActive(true);
+            upgradeReady.gameObject.SetActive(true);
+            statUpgrade.gameObject.SetActive(false);
         }
     }
 

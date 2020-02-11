@@ -10,11 +10,13 @@ public class MenuController : MonoBehaviour
     public GameObject[] _Buttons;
     public int currentButton;
     public PlayerInput pInput;
+    PauseMenu _playerPause;
 
     private void OnEnable()
     {
         currentButton = 0;
         pInput = transform.parent.GetComponentInChildren<PlayerInput>();
+        _playerPause = GetComponent<PauseMenu>();
     }
 
     private void Update()

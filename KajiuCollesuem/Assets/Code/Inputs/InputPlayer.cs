@@ -105,6 +105,14 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Upgrade"",
+                    ""type"": ""Button"",
+                    ""id"": ""c119366b-7750-45e7-a2d7-3a239f5b27a7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -501,6 +509,28 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""LockOn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dbe8e8b0-2d37-4f28-81e6-6ba5f6152000"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Upgrade"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3a86aed-8194-49f6-b822-1b2e34bb95ce"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Upgrade"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1028,6 +1058,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
         m_Player_LockOn = m_Player.FindAction("LockOn", throwIfNotFound: true);
         m_Player_AnyInput = m_Player.FindAction("AnyInput", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_Upgrade = m_Player.FindAction("Upgrade", throwIfNotFound: true);
         // PauseScreen
         m_PauseScreen = asset.FindActionMap("PauseScreen", throwIfNotFound: true);
         m_PauseScreen_Pause = m_PauseScreen.FindAction("Pause", throwIfNotFound: true);
@@ -1102,6 +1133,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_LockOn;
     private readonly InputAction m_Player_AnyInput;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_Upgrade;
     public struct PlayerActions
     {
         private @InputPlayer m_Wrapper;
@@ -1117,6 +1149,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
         public InputAction @LockOn => m_Wrapper.m_Player_LockOn;
         public InputAction @AnyInput => m_Wrapper.m_Player_AnyInput;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @Upgrade => m_Wrapper.m_Player_Upgrade;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1159,6 +1192,9 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Upgrade.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUpgrade;
+                @Upgrade.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUpgrade;
+                @Upgrade.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUpgrade;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1196,6 +1232,9 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @Upgrade.started += instance.OnUpgrade;
+                @Upgrade.performed += instance.OnUpgrade;
+                @Upgrade.canceled += instance.OnUpgrade;
             }
         }
     }
@@ -1352,6 +1391,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
         void OnLockOn(InputAction.CallbackContext context);
         void OnAnyInput(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnUpgrade(InputAction.CallbackContext context);
     }
     public interface IPauseScreenActions
     {

@@ -154,11 +154,11 @@ public class StatUpgrades : MonoBehaviour
         descriptionStat.text = stats[pIndex].statDescriptions[pLevel] + "\n" + "Cost: " + stats[pIndex].cost[pLevel] + " Cells";
         descriptionStat.rectTransform.position = new Vector2(descriptionStat.rectTransform.position.x, pYPos);
     }
-    public void HoverPowerButton(int pIndex, int pLevel, float pYPos)
-    {
-        descriptionPower.text = powers[pIndex].powerDescriptions[pLevel] + "\n" + "Cost: " + powers[pIndex].cost[pLevel] + " Cores";
-        descriptionPower.rectTransform.position = new Vector2(descriptionPower.rectTransform.position.x, pYPos);
-    }
+    //public void HoverPowerButton(int pIndex, int pLevel, float pYPos)
+    //{
+    //    descriptionPower.text = powers[pIndex].powerDescriptions[pLevel] + "\n" + "Cost: " + powers[pIndex].cost[pLevel] + " Cores";
+    //    descriptionPower.rectTransform.position = new Vector2(descriptionPower.rectTransform.position.x, pYPos);
+    //}
 
     public void HoverExit()
     {
