@@ -14,6 +14,11 @@ public class AddPlayer : MonoBehaviour
         playerPanels[connectedPlayers.playersConnected - 1].text = "Player " + connectedPlayers.playersConnected + " Joined";
     }
 
+    public void PlayerLeaves()
+    {
+        playerPanels[connectedPlayers.playersConnected].text = "Press Any Button to JOIN";
+    }
+
     public void SwitchDefaultScheme()
     {
         if(Keyboard.current.anyKey.wasPressedThisFrame)
