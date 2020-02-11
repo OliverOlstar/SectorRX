@@ -113,6 +113,7 @@ public class PlayerCamera : MonoBehaviour
             else if (targetDead == true)
             {
                 DeadCameraMovement();
+                return;
             }
             else
             {
@@ -125,8 +126,7 @@ public class PlayerCamera : MonoBehaviour
         _ParentTransform.rotation = Quaternion.Lerp(_ParentTransform.rotation, TargetQ, Time.deltaTime * _turnDampening);
 
         //Position the camera pivot on the player
-        if (targetDead == false)
-            _ParentTransform.position = targetPlayer.position + (Vector3.up * _offSetUp);
+        _ParentTransform.position = targetPlayer.position + (Vector3.up * _offSetUp);
 
         //Camera Collision
         CameraCollision();
@@ -183,7 +183,8 @@ public class PlayerCamera : MonoBehaviour
     void DeadCameraMovement()
     {
         //Slowly Rotate
-        transform.LookAt(targetPlayer.position);
+        Quaternion TargetQ = Quaternion.LookRotation((targetPlayer.position - transform.position).normalized, Vector3.up);
+        _ParentTransform.rotation = Quaternion.Lerp(_ParentTransform.rotation, TargetQ, Time.deltaTime * _turnDampening);
     }
 
     #region Collision
