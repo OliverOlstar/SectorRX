@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class DeathState : BaseState
 {
-    PlayerStateController stateController;
+    PlayerStateController _stateController;
 
     public DeathState(PlayerStateController controller) : base(controller.gameObject)
     {
-        stateController = controller;
+        _stateController = controller;
     }
 
     public override void Enter()
@@ -17,6 +17,7 @@ public class DeathState : BaseState
         Debug.Log("DeathState: Enter");
         //stateController._respawnComponent.Dead();
         //stateController._modelController.Dead();
+        _stateController._ragdollManager.SwitchToRagdoll();
     }
 
     public override void Exit()

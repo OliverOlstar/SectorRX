@@ -9,12 +9,9 @@ public class RagdollManager : MonoBehaviour
     [SerializeField] private GameObject MainCharacterModel;
     [SerializeField] private GameObject MainCharacter;
 
-    //[SerializeField] private List<GameObject> RagDollParts = new List<GameObject>();
-    [SerializeField] private Transform[] RagDollParts;
-    //[SerializeField] private List<GameObject> MainCharParts = new List<GameObject>();
-    [SerializeField] private Transform[] MainCharParts;
+    private Transform[] RagDollParts;
+    private Transform[] MainCharParts;
 
-    // Start is called before the first frame update
     void Start()
     {
         RagDollParts = Ragdoll.GetComponentsInChildren<Transform>();
@@ -23,18 +20,10 @@ public class RagdollManager : MonoBehaviour
         Ragdoll.transform.GetChild(0).gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator ragdollDelay()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            RagdollActive();
-            print("hello");
-        }
-    }
+        yield return new WaitForSeconds(0.1f);
 
-    private void RagdollActive()
-    {
         Ragdoll.transform.GetChild(0).gameObject.SetActive(true);
         for (int i = 1; i < RagDollParts.Length - 1; i++)
         {
@@ -42,5 +31,10 @@ public class RagdollManager : MonoBehaviour
             RagDollParts[i].rotation = MainCharParts[i].rotation;
         }
         MainCharacter.SetActive(false);
+    }
+
+    public void SwitchToRagdoll()
+    {
+        StartCoroutine("ragdollDelay");
     }
 }

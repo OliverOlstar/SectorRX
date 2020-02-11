@@ -43,6 +43,7 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public PlayerAttributes _playerAttributes;
     [HideInInspector] public ModelController _modelController;
     [HideInInspector] public PlayerCamera _playerCamera;
+    public RagdollManager _ragdollManager;
 
     [HideInInspector] public Rigidbody _Rb;
     public Transform _Camera;
