@@ -141,7 +141,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2457618514464848117}
   - component: {fileID: 4232252179734827381}
-  - component: {fileID: 4237171866675057081}
   m_Layer: 8
   m_Name: CameraHolder
   m_TagString: Untagged
@@ -180,7 +179,7 @@ MonoBehaviour:
   lockOnTarget: {fileID: 0}
   inverted: 0
   idleSpinSpeed: 1
-  _lockOnXOffset: 0
+  _lockOnXOffset: -22
   _lockOnInputInfluence: 0.2
   _cameraCollisionLayers:
     serializedVersion: 2
@@ -193,17 +192,3 @@ MonoBehaviour:
   CameraDisabled: 0
   targetDead: 0
   targetIdle: 0
---- !u!114 &4237171866675057081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6205258067836619038}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c56b240bae0872e4789ebadac6e6a974, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCam: []
-  isHorizontalSplit: 0

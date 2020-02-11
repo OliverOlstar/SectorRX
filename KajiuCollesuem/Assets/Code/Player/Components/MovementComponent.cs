@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class MovementComponent : MonoBehaviour
 {
-    private PlayerStateController _StateController;
+    private Rigidbody _rb;
+    private PlayerStateController _stateController;
 
     [Header("Movement")]
     [SerializeField] private float _moveAcceleration = 1.0f;
@@ -14,56 +15,56 @@ public class MovementComponent : MonoBehaviour
 
     [Header("Jump")]
     [SerializeField] private float _jumpForceUp = 4;
-    [SerializeField] private float _jumpForceVelocityMult = 1;
+    [SerializeField] private float _jumpForceVelocityMult = 1.7f;
 
-    [HideInInspector] public bool OnGround;
-
+    [Space]
     public bool disableMovement = false;
 
     void Start()
     {
-        _StateController = GetComponent<PlayerStateController>();
+        _rb = GetComponent<Rigidbody>();
+        _stateController = GetComponent<PlayerStateController>();
     }
 
     void Update()
     {
-        if (disableMovement == true) 
+        if (disableMovement) 
             return;
 
         //Movement
         Move();
     }
 
+    private void OnJump()
+    {
+        if (_stateController.onGround && disableMovement == false)
+        {
+            //Add force
+            _rb.velocity = new Vector3(_stateController._Rb.velocity.x * _jumpForceVelocityMult, 0, _stateController._Rb.velocity.z * _jumpForceVelocityMult);
+            _rb.AddForce(_jumpForceUp * Vector3.up, ForceMode.Impulse);
+
+            _stateController._modelController.AddCrouching(1, 0.1f, 0.05f);
+        }
+    }
+
     private void Move()
     {
         //Move Vector
-        Vector3 move = new Vector3(_StateController.moveInput.x, 0, _StateController.moveInput.y);
-        move = _StateController._Camera.TransformDirection(move);
-        move.y = 0;
-        move = move.normalized * Time.deltaTime * _moveAcceleration * inputInfluence;
+        Vector3 move = _stateController.moveInput * Time.deltaTime * _moveAcceleration * inputInfluence;
 
         //Moving the player
-        Vector3 horizontalVelocity = new Vector3(_StateController._rb.velocity.x, 0, _StateController._rb.velocity.z);
+        Vector3 horizontalVelocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
         float nextMagnitudeWithInput = (horizontalVelocity + move * Time.deltaTime).magnitude;
 
         if (horizontalVelocity.magnitude < maxSpeed || nextMagnitudeWithInput <= horizontalVelocity.magnitude)
         {
-            _StateController._rb.AddForce(move);
+            _rb.AddForce(move);
         }
+
+        _stateController._modelController.acceleration = move.normalized;
+        _stateController._modelController.onGround = _stateController.onGround;
 
         if (move.magnitude != 0)
-            _StateController.LastMoveDirection = new Vector2(move.x, move.z).normalized;
-    }
-
-    private void OnJump()
-    {
-        if (OnGround && disableMovement == false)
-        {
-            //Add force
-            Debug.Log("MovementComponent: OnJump");
-            _StateController._rb.velocity = new Vector3(_StateController._rb.velocity.x * _jumpForceVelocityMult, 0, _StateController._rb.velocity.z * _jumpForceVelocityMult);
-            _StateController._rb.AddForce(_jumpForceUp * Vector3.up, ForceMode.Impulse);
-            _StateController._animHandler.StartJump();
-        }
+            _stateController.LastMoveDirection = new Vector2(move.x, move.z).normalized;
     }
 }

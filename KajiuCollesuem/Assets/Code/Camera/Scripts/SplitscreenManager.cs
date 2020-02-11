@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /*Programmer: Scott Watman
  Description: Changes Splitscreen between Horizontal and Vertical*/
@@ -14,7 +15,7 @@ public class SplitscreenManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerCam = GameObject.FindObjectsOfType<Camera>();
+        
     }
 
     // Update is called once per frame

@@ -5,26 +5,28 @@ using EZCameraShake;
 
 public class PlayerHitbox : MonoBehaviour
 {
-    [SerializeField] private int lightAttackDamage_S1 = 1;
-    [SerializeField] private int lightAttackDamage_S2 = 1;
-    [SerializeField] private int lightAttackDamage_S3 = 1;
-    [SerializeField] private int heavyAttackDamage = 2;
-    private int damage;
+    private int _damage;
+    private Vector3 _knockback;
 
-    [SerializeField] private float damageMultiplier = 1;
+    private int _powerRecivedOnHit = 25;
 
-    [Space]
-    [SerializeField] private int powerRecivedOnHit = 20;
+    private PlayerAttributes _playerAttributes;
+    private IAttributes _playerIAttributes;
+    private PlayerLockOnScript _lockOnScript;
 
-    private PlayerAttributes playerAttributes;
-    private IAttributes playerIAttributes;
-    private PlayerLockOnScript lockOnScript;
+    private List<IAttributes> hitAttributes = new List<IAttributes>();
+
+    private void OnEnable()
+    {
+        // Clear list
+        hitAttributes = new List<IAttributes>();
+    }
 
     private void Start()
     {
-        playerAttributes = GetComponentInParent<PlayerAttributes>();
-        //playerIAttributes = playerAttributes.GetComponent<IAttributes>();
-        lockOnScript = playerAttributes.GetComponent<PlayerLockOnScript>();
+        _playerAttributes = GetComponentInParent<PlayerAttributes>();
+        _playerIAttributes = _playerAttributes.GetComponent<IAttributes>();
+        _lockOnScript = _playerAttributes.GetComponent<PlayerLockOnScript>();
     }
 
     private void OnTriggerEnter (Collider other)
@@ -36,20 +38,30 @@ public class PlayerHitbox : MonoBehaviour
         if (otherAttributes == null)
             otherAttributes = other.GetComponentInParent<IAttributes>();
 
-        if (otherAttributes != null && otherAttributes.IsDead() == false && otherAttributes != playerIAttributes)
+        // Don't hit the same thing twice
+        foreach (IAttributes previousAttributes in hitAttributes)
+        {
+            if (previousAttributes == otherAttributes)
+                return;
+        }
+
+        // Add to list so we can't hit it twice
+        hitAttributes.Add(otherAttributes);
+
+        if (otherAttributes != null && otherAttributes.IsDead() == false && otherAttributes != _playerIAttributes)
         {
             Debug.Log("Hitbox: OnTriggerEnter hit");
 
             //Damage other
-            if (otherAttributes.TakeDamage(damage, true))
+            /*if (*/otherAttributes.TakeDamage(_damage, _knockback, true);//)
                 //If other died and is lockOn target return camera to default
-                lockOnScript.TargetDead(other.transform);
+                //_lockOnScript.TargetDead(other.transform);
 
             //Recieve Power
-            playerAttributes.RecivePower(powerRecivedOnHit);
+            _playerAttributes.RecivePower(_powerRecivedOnHit);
 
             //Camera Shake
-            CameraShaker.Instance.ShakeOnce(1, 0.5f, 0.2f, 0.1f);
+            //CameraShaker.Instance.ShakeOnce(1, 0.5f, 0.2f, 0.1f);
         }
 
         // TODO Get rid of this
@@ -60,30 +72,11 @@ public class PlayerHitbox : MonoBehaviour
         }
     }
 
-    public void SetDamage(int pIndex)
+    public void SetDamage(int pDamage, Vector3 pKnockback)
     {
-        switch (pIndex)
-        {
-            case 1:
-                damage = lightAttackDamage_S1;
-                break;
-
-            case 2:
-                damage = lightAttackDamage_S2;
-                break;
-
-            case 3:
-                damage = lightAttackDamage_S3;
-                break;
-
-            case 4:
-                damage = heavyAttackDamage;
-                break;
-        }
-
-        damage = Mathf.RoundToInt(damage * damageMultiplier);
+        _damage = pDamage;
+        _knockback = pKnockback;
     }
 
-    //For Upgrading Attack Damage
-    public void SetDamageMultiplier(float pMult) => damageMultiplier = pMult;
+    //public void SetDamageMultiplier(float pMult) => damageMultiplier = pMult;
 }

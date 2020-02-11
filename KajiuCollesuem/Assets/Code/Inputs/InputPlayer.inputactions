@@ -70,6 +70,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "LockOn",
+                    "type": "Button",
+                    "id": "c7d9a5e6-df6b-4763-b4d2-b812c2450b22",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "AnyInput",
                     "type": "PassThrough",
                     "id": "427686e6-923e-49fb-b4e6-aa461cf2d70f",
@@ -167,7 +175,7 @@
                 {
                     "name": "",
                     "id": "1c4beac7-edeb-43c8-8bce-033deb17dd4f",
-                    "path": "<Gamepad>/buttonSouth",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -211,7 +219,7 @@
                 {
                     "name": "",
                     "id": "a593c68e-85cf-4dd7-a256-b234852c6539",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -235,7 +243,7 @@
                     "id": "8126ae8b-2c85-485e-abb0-da90efcf4856",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
-                    "processors": "ScaleVector2(y=0.7)",
+                    "processors": "ScaleVector2(x=1.5,y=0.9)",
                     "groups": "Gamepad",
                     "action": "Camera",
                     "isComposite": false,
@@ -255,7 +263,7 @@
                 {
                     "name": "",
                     "id": "5744db95-db65-43d2-8f77-997aa7ce3d45",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "Press(behavior=2)",
                     "processors": "",
                     "groups": "Gamepad",
@@ -458,6 +466,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d3646187-b25e-4773-9baf-b3ca52ca297a",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "LockOn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b02f9d9e-fa8a-49b4-b740-0d203e848886",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "LockOn",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

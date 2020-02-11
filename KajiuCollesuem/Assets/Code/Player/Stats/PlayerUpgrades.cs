@@ -63,7 +63,7 @@ public class PlayerUpgrades : MonoBehaviour
 
             //Muscle
             case 'M':
-                _hitbox.SetDamageMultiplier(Stats[pIndex].values[_statLevels[pIndex]] / 100);
+                //_hitbox.SetDamageMultiplier(Stats[pIndex].values[_statLevels[pIndex]] / 100);
                 break;
 
             //Luck

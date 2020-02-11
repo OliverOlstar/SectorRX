@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerStateController : MonoBehaviour
 {
@@ -14,15 +15,16 @@ public class PlayerStateController : MonoBehaviour
          */
 
     // On Ground
-    [HideInInspector] public bool OnGround = false;
+    [HideInInspector] public bool onGround = false;
     [HideInInspector] public bool Stunned = false;
     [HideInInspector] public float AttackStateReturnDelay = 0;
 
     // Inputs
     [HideInInspector] public float LastInputTime = 0;
     [HideInInspector] public Vector2 mouseInput;
-    [HideInInspector] public Vector2 moveInput = new Vector2(0,0);
-    [HideInInspector] public Vector2 LastMoveDirection = new Vector2(0,0);
+    [HideInInspector] public Vector3 moveInput = new Vector3(0, 0, 0);
+    [HideInInspector] public Vector2 moveRawInput = new Vector2(0, 0);
+    [HideInInspector] public Vector2 LastMoveDirection = new Vector2(0, 0);
     // 0 - Tapped, 1 - Held
     [HideInInspector] public float dodgeInput = -1.0f;
     [HideInInspector] public float lightAttackinput = -1.0f;
@@ -33,21 +35,23 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public PlayerStateMachine _stateMachine;
     public MovementComponent _movementComponent { get; private set; } // Player's movement component, access this to move and jump
     [HideInInspector] public DodgeComponent _dodgeComponent; // Player's dodge component, access this to
-    private PlayerLockOnScript _lockOnComponent;
+    //private PlayerLockOnScript _lockOnComponent;
     [HideInInspector] public PlayerPowerHandler _powerComponent;
     [HideInInspector] public PlayerHitbox _hitboxComponent;
-    //[HideInInspector] public ModelMovement _modelController;
+    [HideInInspector] public PauseMenu _PauseMenu;
 
     [HideInInspector] public PlayerAttributes _playerAttributes;
-    [HideInInspector] public AnimHandler _animHandler;
+    [HideInInspector] public ModelController _modelController;
     [HideInInspector] public PlayerCamera _playerCamera;
-    [HideInInspector] public PauseMenu _pauseMenu;
+    public RagdollManager _ragdollManager;
 
-    [HideInInspector] public Rigidbody _rb;
-    [HideInInspector] public Transform _Camera;
+    [HideInInspector] public Rigidbody _Rb;
+    public Transform _Camera;
+    public PlayerHitbox[] hitboxes = new PlayerHitbox[0];
 
-    //Reset Player
-    [HideInInspector] public bool Respawn = false;
+
+    // Used if it auto calls release when reached maxCharge time & next release input is to be ignored
+    [HideInInspector] public bool ignoreNextHeavyAttackRelease = false;
 
     //[HideInInspector] public InputPlayer inputs;
     //[HideInInspector] public InputAction.CallbackContext ctx;
@@ -56,42 +60,58 @@ public class PlayerStateController : MonoBehaviour
     {
         _movementComponent = GetComponent<MovementComponent>();
         _dodgeComponent = GetComponent<DodgeComponent>();
-        _lockOnComponent = GetComponent<PlayerLockOnScript>();
+        //_lockOnComponent = GetComponent<PlayerLockOnScript>();
         _powerComponent = GetComponent<PlayerPowerHandler>();
         _hitboxComponent = GetComponentInChildren<PlayerHitbox>();
+        _PauseMenu = transform.parent.GetComponentInChildren<PauseMenu>();
         //_hitboxComponent.gameObject.SetActive(false);
         //_modelController = GetComponentInChildren<ModelMovement>();
 
         //_respawnComponent = GetComponent<PlayerRespawn>();
         _playerAttributes = GetComponent<PlayerAttributes>();
-        _animHandler = GetComponentInChildren<AnimHandler>();
+        _modelController = GetComponentInChildren<ModelController>();
 
         _stateMachine = GetComponent<PlayerStateMachine>();
         InitializeStateMachine();
 
-        _rb = GetComponent<Rigidbody>();
-        _Camera = transform.parent.GetComponentInChildren<Camera>().transform;
+        _Rb = GetComponent<Rigidbody>();
         _playerCamera = _Camera.GetComponentInParent<PlayerCamera>();
-
-        _pauseMenu = transform.parent.GetComponentInChildren<PauseMenu>();
     }
 
     // List for inputs
     private void OnCamera(InputValue ctx) => mouseInput = ctx.Get<Vector2>();
-    private void OnMovement(InputValue ctx) => moveInput = ctx.Get<Vector2>();
+    private void OnMovement(InputValue ctx) => moveRawInput = ctx.Get<Vector2>();
     private void OnDodge(InputValue ctx) => dodgeInput = ctx.Get<float>();
     private void OnLightAttack(InputValue ctx) => lightAttackinput = ctx.Get<float>();
-    private void OnHeavyAttack(InputValue ctx) => heavyAttackinput = ctx.Get<float>();
-    private void OnAnyInput() => LastInputTime = Time.time;
+    private void OnHeavyAttack(InputValue ctx)
+    {
+        heavyAttackinput = ctx.Get<float>();
 
-    private void OnPause() => _pauseMenu.TogglePause();
+        if (ignoreNextHeavyAttackRelease == true && heavyAttackinput == 0)
+        {
+            heavyAttackinput = -1.0f;
+            ignoreNextHeavyAttackRelease = false;
+        }
+    }
+    private void OnPause() => _PauseMenu.TogglePause();
+    private void OnAnyInput() => LastInputTime = Time.time;
 
     private void FixedUpdate()
     {
+        RotateMoveInputToCamera();
+
         if (moveInput.magnitude != 0 || mouseInput.magnitude != 0)
         {
             LastInputTime = Time.time;
         }
+    }
+
+    public void RotateMoveInputToCamera()
+    {
+        moveInput = new Vector3(moveRawInput.x, 0, moveRawInput.y);
+        moveInput = _Camera.TransformDirection(moveInput);
+        moveInput.y = 0;
+        moveInput.Normalize();
     }
 
     void InitializeStateMachine()

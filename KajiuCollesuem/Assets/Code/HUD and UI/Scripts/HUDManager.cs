@@ -8,15 +8,15 @@ using UnityEngine.EventSystems;
 public class HUDManager : MonoBehaviour
 {
     //public RectTransform pauseMenu, optionsMenu, powerMenu, skillMenu;
-    public GameObject pause, /*option, ability, videoOP, audioOP gameplayOP,*/ cellUI, coreUI, powerUpgrade, statUpgrade, powerSelect;
+    public GameObject pause, /*option, ability, videoOP, audioOP gameplayOP,*/ cellUI, powerUpgrade, statUpgrade, powerSelect;
     public GameObject resumeButton;
     public GameObject targetUI;
-    public Text cellCount, coreCount, upCoreCount, upCellCount;
+    public Slider cellExp;
+    public Text cellCount, canUpgrade, upCellCount;
 
     //Booleans to check if Cell UI or Power Core UI are already active when collecting other item
-    public bool cellUIOn, coreUIOn;
+    public bool cellUIOn;
     public int cellCounter;
-    public int coreCounter;
 
     public PauseMenu pauseMenu;
     [SerializeField] private PlayerCamera mainCam;
@@ -29,28 +29,18 @@ public class HUDManager : MonoBehaviour
         powerUpgrade.SetActive(false);
         statUpgrade.SetActive(false);
 
-        cellUIOn = false;
-        coreUIOn = false;
+        cellUIOn = true;
     }
 
     private void Update()
     {
-        if (cellUIOn)
+        if(cellExp.value >= 100)
         {
-            StartCoroutine("CellUIOff");
+            canUpgrade.gameObject.SetActive(true);
         }
-        else if (cellUIOn == false)
+        else
         {
-            cellUI.SetActive(false);
-        }
-
-        if (coreUIOn)
-        {
-            StartCoroutine("CoreUIOff");
-        }
-        else if (coreUIOn == false)
-        {
-            coreUI.SetActive(false);
+            canUpgrade.gameObject.SetActive(false);
         }
 
         if (targetUI != null)
@@ -72,24 +62,13 @@ public class HUDManager : MonoBehaviour
     {
         cellCount.text = cellCounter.ToString();
     }
-    public void SetCoreCount()
-    {
-        coreCount.text = coreCounter.ToString();
-    }
 
-    IEnumerator CellUIOff()
-    {
-        yield return new WaitForSeconds(1.5f);
-        cellUI.SetActive(false);
-        cellUIOn = false;
-    }
-
-    IEnumerator CoreUIOff()
-    {
-        yield return new WaitForSeconds(1.5f);
-        coreUI.SetActive(false);
-        coreUIOn = false;
-    }   
+    //IEnumerator CellUIOff()
+    //{
+    //    yield return new WaitForSeconds(1.5f);
+    //    cellUI.SetActive(false);
+    //    cellUIOn = false;
+    //}
 
     //Navigate between upgrade Menus
     public void goPowUpgrade(GameObject pTarget)
@@ -97,8 +76,6 @@ public class HUDManager : MonoBehaviour
         pause.SetActive(false);
         statUpgrade.SetActive(false);
         powerUpgrade.SetActive(true);
-        coreCount.gameObject.SetActive(true);
-        upCoreCount.text = coreCounter.ToString();
         targetUI = pTarget;
     }
 

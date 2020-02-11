@@ -11,34 +11,34 @@ using UnityEngine;
 
 public class EnemyRespawner : MonoBehaviour
 {
-    private Vector3 spawnPosition;
-    private Quaternion spawnRotation;
+    //private Vector3 spawnPosition;
+    //private Quaternion spawnRotation;
 
-    [SerializeField] private bool _killOnLoad;
+    //[SerializeField] private bool _killOnLoad;
 
-    void Start()
-    {
-        spawnPosition = transform.position;
-        spawnRotation = transform.rotation;
+    //void Start()
+    //{
+    //    spawnPosition = transform.position;
+    //    spawnRotation = transform.rotation;
 
-        //Add my function to event
-        SaveAndLoad.RespawnEnemies += RespawnEnemy;
-    }
+    //    //Add my function to event
+    //    SaveAndLoad.RespawnEnemies += RespawnEnemy;
+    //}
 
-    private void OnDestroy()
-    {
-        //Remove my function from event
-        SaveAndLoad.RespawnEnemies -= RespawnEnemy;
-    }
+    //private void OnDestroy()
+    //{
+    //    //Remove my function from event
+    //    SaveAndLoad.RespawnEnemies -= RespawnEnemy;
+    //}
 
-    void RespawnEnemy(SaveAndLoad pSaveAndLoad)
-    {
-        // Replaced this line with the use of an object pool
-        if (_killOnLoad) Destroy(this.gameObject);
+    //void RespawnEnemy(SaveAndLoad pSaveAndLoad)
+    //{
+    //    // Replaced this line with the use of an object pool
+    //    if (_killOnLoad) Destroy(this.gameObject);
 
-        transform.position = spawnPosition;
-        transform.rotation = spawnRotation;
-        GetComponent<IAttributes>().Respawn();
-        gameObject.SetActive(true);
-    }
+    //    transform.position = spawnPosition;
+    //    transform.rotation = spawnRotation;
+    //    GetComponent<IAttributes>().Respawn();
+    //    gameObject.SetActive(true);
+    //}
 }

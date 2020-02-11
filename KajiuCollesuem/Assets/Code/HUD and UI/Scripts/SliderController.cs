@@ -9,7 +9,6 @@ Additional Programmers: Oliver Loescher
 Description: Managing sliders to contain a mask and lower, conveying visual cue of damage done to players
 */
 
-
 public class SliderController : MonoBehaviour
 {
     const int BAR_HEIGHT = 20;
@@ -21,7 +20,7 @@ public class SliderController : MonoBehaviour
     public Slider[] RegSlider;
     public Slider[] MaskSlider;
 
-    private Coroutine[] _lerpCoroutineArray = new Coroutine[3];
+    private Coroutine[] _lerpCoroutineArray = new Coroutine[4];
 
     public float lerpTimer = 1;
 
@@ -33,6 +32,7 @@ public class SliderController : MonoBehaviour
     public void SetBar(int pIndex, float pValue)
     {
         RegSlider[pIndex].maxValue = pValue;
+        MaskSlider[pIndex].maxValue = pValue;
     }
 
     public void SetBars(int pIndex, float pValue)
@@ -41,12 +41,13 @@ public class SliderController : MonoBehaviour
         BarRect[pIndex].sizeDelta = new Vector2(pValue * barLengthMultiplier, BAR_HEIGHT);
         MaskBarRect[pIndex] = MaskBarRect[pIndex].gameObject.GetComponent<RectTransform>();
         MaskBarRect[pIndex].sizeDelta = new Vector2(pValue * barLengthMultiplier, BAR_HEIGHT);
-        RegSlider[pIndex].maxValue = pValue;
+        SetBar(pIndex, pValue);
     }
 
     public void UpdateBars(int pIndex, float pValue)
     {
-        Debug.Log("Hello World");
+        RegSlider[pIndex].value = pValue;
+
         if (_lerpCoroutineArray[pIndex] != null)
         {
             StopCoroutine(_lerpCoroutineArray[pIndex]);
