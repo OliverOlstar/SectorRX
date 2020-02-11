@@ -35,7 +35,7 @@ public class CellCollect : MonoBehaviour
 
         if (collision.gameObject.tag == "Player")
         {
-            cmc.player = collision.transform;
+            cmc.StartSuckUp(collision.transform);
 
             //collision.GetComponent<PlayerCollectibles>().CollectedCell();
             //Destroy(this.gameObject);

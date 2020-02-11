@@ -14,6 +14,10 @@ public class CellMagnetCollect : MonoBehaviour
     private ParticleSystem.ShapeModule _shape;
     private ParticleSystem.LimitVelocityOverLifetimeModule _lvot;
 
+    [SerializeField] private float _suckInitialVelocity = 10;
+    [SerializeField] private float _suckAcceleration = 10;
+    [SerializeField] private Vector3 _suckOffset;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,10 +56,10 @@ public class CellMagnetCollect : MonoBehaviour
                 player.GetComponent<ParticleSystem>().Play();
             }
 
-            if (Vector3.Angle(transform.forward, player.position - transform.position) > 1)
+            /*if (Vector3.Angle(transform.forward, player.position - transform.position) > 1)
                 transform.rotation = Quaternion.Lerp(transform.rotation,
                 Quaternion.LookRotation(player.position - transform.position),
-                Time.deltaTime * 30);
+                Time.deltaTime * 30);*/
         }
     }
 
@@ -64,14 +68,22 @@ public class CellMagnetCollect : MonoBehaviour
         float current = Time.time, previous = Time.deltaTime;
         float velocity = (current - previous) / Time.deltaTime;
 
-        if (inrange && player != null)
+        if (player != null)
         {
-            if (Vector3.Angle(transform.forward, player.position - transform.position) < 1)
+            /*if (Vector3.Angle(transform.forward, player.position - transform.position) < 1)
             {
                 if (transform.position.y < 1)
                     _rb.AddForce(transform.up * Time.time);
                 _rb.AddForce(transform.forward * Time.time);
-            }
+            }*/
+            _rb.AddForce((player.position - transform.position).normalized * Time.deltaTime * _suckAcceleration);
         }
+    }
+
+    public void StartSuckUp(Transform pPlayer)
+    {
+        player = pPlayer;
+        _rb.useGravity = false;
+        _rb.velocity = (((player.position + _suckOffset) - transform.position).normalized * _suckInitialVelocity);
     }
 }
