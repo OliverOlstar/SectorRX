@@ -29,12 +29,16 @@ public class CellCollect : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         //Vector3 cellOriginalPos = _playerHUD.cellUI.transform.position;
-        Debug.Log("HERE");
+        //Debug.Log("HERE");
+        CellMagnetCollect cmc = GetComponentInParent<CellMagnetCollect>();
+        cmc.inrange = true;
 
         if (collision.gameObject.tag == "Player")
         {
-            collision.GetComponent<PlayerCollectibles>().CollectedCell();
-            Destroy(this.gameObject);
+            cmc.player = collision.transform;
+
+            //collision.GetComponent<PlayerCollectibles>().CollectedCell();
+            //Destroy(this.gameObject);
         }
     }
 }
