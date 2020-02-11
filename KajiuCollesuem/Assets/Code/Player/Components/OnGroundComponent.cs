@@ -10,7 +10,7 @@ public class OnGroundComponent : MonoBehaviour
 
     [Header("Fall Damage")]
     [SerializeField] private float _fallMaxTime = 2;
-    [SerializeField] private float _fallDamageStartTime = 1;
+    //[SerializeField] private float _fallDamageStartTime = 1;
     private float _terminalFallingTimer = 0;
 
     [Space]
@@ -80,6 +80,7 @@ public class OnGroundComponent : MonoBehaviour
             transform.position = _lastPoint + new Vector3(0, _respawnYOffset, 0);
             _terminalFallingTimer = 0;
             _downForce = 0;
+            _stateController._playerCamera.targetDead = false;
         }
     }
 
