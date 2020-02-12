@@ -13,7 +13,7 @@ public class AttackHitbox : MonoBehaviour
         //If collided with the player model, player takes damage
         if (otherAttributes != null)
         {
-            otherAttributes.TakeDamage(damage, Vector3.zero, true);
+            otherAttributes.TakeDamage(damage, Vector3.zero, true, this.gameObject);
         }
     }
 }

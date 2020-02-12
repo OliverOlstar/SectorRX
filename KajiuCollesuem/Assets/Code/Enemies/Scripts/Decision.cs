@@ -15,11 +15,9 @@ public class Decision : MonoBehaviour
     private IState[] _states;
     private IState _currentState;
 
+    [HideInInspector] public EnemySmoothRotation enemyRotation;
+
     public Transform target;
-
-    private float rotSpeed;
-
-    private bool _targetSwitch = false, _raycastHit = false;
 
     void Start()
     {
@@ -54,7 +52,8 @@ public class Decision : MonoBehaviour
 
     private void FixedUpdate()
     {
-        CheckStates();
+        if (target != null)
+            CheckStates();
     }
 
     private void Update()
@@ -69,7 +68,7 @@ public class Decision : MonoBehaviour
 
         foreach (IState state in _states)
         {
-            state.Setup(target, anim, agent);
+            state.Setup(target, anim, agent, enemyRotation);
         }
     }
 
@@ -79,10 +78,9 @@ public class Decision : MonoBehaviour
         {
             //Get distance to target
             float distance = Vector3.Distance(transform.position, target.position);
-            bool retribution = GetComponent<AlwaysSeek>().retribution;
 
             //Return if you can't Exit current state
-            if (_currentState.CanExit(distance) == false && !retribution) return;
+            if (_currentState.CanExit(distance) == false) return;
 
             foreach (IState state in _states)
             {
@@ -96,49 +94,14 @@ public class Decision : MonoBehaviour
                 }
 
                 //Check if state can be entered. Task 2: Grunts have a harder time detecting a player
-                if (state.CanEnter(distance) || retribution)
+                if (state.CanEnter(distance))
                 {
                     SwitchState(state);
                     break;
                 }
-
-                /*else if (!retribution)
-                    //Ensures that hellhound doesn't continue current when out of range
-                    SwitchState(GetComponent<Guard>());*/
             }
-            //Debug.Log(distance);
         }
     }
-
-    /*Calculate the distance between itself and the player, and updates its target to the nearest player,
-    and update the target setup
-    Task 1: Grunts targeting is updated to allow for switching of targets*/
-    /*private void CheckAndUpdateTarget()
-    {
-        
-
-        /*if (_currentState.CanEnter(smallest_distance))
-        {
-            if (target != _players[index].transform)
-            {
-                GetComponent<Strafe>().Pause();
-                _targetSwitch = true;
-            }
-            target = _players[index].transform;
-            SetupStates();
-        }
-        
-        if (Vector3.Angle(transform.forward, target.position - transform.position) < 1
-            && _targetSwitch)
-        {
-            GetComponent<Strafe>().Resume();
-            _targetSwitch = false;
-        }
-        else if (_targetSwitch)
-            transform.rotation = Quaternion.Lerp(transform.rotation,
-                Quaternion.LookRotation(target.position - transform.position),
-                Time.deltaTime * 5);
-    }*/
 
     //Exit old state and Enter new state
     private void SwitchState(IState pState)

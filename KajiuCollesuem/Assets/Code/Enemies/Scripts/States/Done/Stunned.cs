@@ -15,7 +15,7 @@ public class Stunned : MonoBehaviour, IState
 
     [SerializeField] private bool _enabled = false;
 
-    public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
+    public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent, EnemySmoothRotation pRotation)
     {
         _target = pTarget;
         _anim = pAnim;
@@ -55,18 +55,6 @@ public class Stunned : MonoBehaviour, IState
     public void AEDoneStunned()
     {
         //Debug.Log("Stunned: AEDoneStunned");
-        GetComponent<AlwaysSeek>().retribution = true;
-        GetComponent<Decision>().ForceStateSwitch(GetComponent<Seek>());
         _enabled = false;
-    }
-
-    public void Pause()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void Resume()
-    {
-        throw new System.NotImplementedException();
     }
 }

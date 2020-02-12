@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public interface IState
 {
-    void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent); // Replacement for Start
+    void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent, EnemySmoothRotation pRotation); // Replacement for Start
     void UpdateTarget(Transform pTarget);
     void Enter(); // When entering state
     void Exit(); // When Exiting state

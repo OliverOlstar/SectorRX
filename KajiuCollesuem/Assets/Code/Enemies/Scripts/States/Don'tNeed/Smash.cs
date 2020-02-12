@@ -14,7 +14,7 @@ public class Smash : MonoBehaviour, IState
     [SerializeField] private bool _enabled = false, _isTouchingGround = true;
     private int _iDecision = 1;
 
-    public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
+    public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent, EnemySmoothRotation pRotation)
     {
         _anim = pAnim;
         _agent = pAgent;

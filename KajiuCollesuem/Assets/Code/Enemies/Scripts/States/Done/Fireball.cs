@@ -7,6 +7,7 @@ public class Fireball : MonoBehaviour, IState
 {
     private Animator _anim;
     private NavMeshAgent _agent;
+    private EnemySmoothRotation _rotation;
     private Transform _target;
 
     [SerializeField] private float _cooldown = 1.0f;
@@ -23,14 +24,16 @@ public class Fireball : MonoBehaviour, IState
     private float _fFireballTimer = 0;
 
     [Space]
-    [SerializeField] [Range(0,1)] private float _oddsOfSkipOver = 0, maxRightDir, maxLeftDir;
+    [SerializeField] [Range(0, 1)] private float _oddsOfSkipOver = 0;
+    [SerializeField] [Range(0, 1)] private float _allowedDotValue = 0.7f;
     [SerializeField] private bool _enabled = false;
 
-    public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
+    public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent, EnemySmoothRotation pRotation)
     {
         _anim = pAnim;
         _agent = pAgent;
         _target = pTarget;
+        _rotation = pRotation;
     }
 
     public void Enter()
@@ -40,6 +43,7 @@ public class Fireball : MonoBehaviour, IState
         _agent.isStopped = true;
         transform.LookAt(_target.position);
         _anim.SetBool("Shooting", true);
+        _rotation.enabled = true;
     }
 
     public void Exit()
@@ -47,30 +51,32 @@ public class Fireball : MonoBehaviour, IState
         //Debug.Log("Fireball: Exit");
         _enabled = false;
         _anim.SetBool("Shooting", false);
+        _rotation.enabled = false;
     }
 
     public bool CanEnter(float pDistance)
     {
-        //If target is a gonner don't enter
-        if (_target == null || _target.gameObject.activeSelf == false) return false;
-
         //Can shoot if cooldown is up and player is in range
-        if (Time.time >= _nextEnterTime && pDistance < _fireballRangeMax && pDistance > _fireballRangeMin) 
-            return CheckForSkipOver();
+        if (Time.time >= _nextEnterTime && pDistance < _fireballRangeMax && pDistance > _fireballRangeMin)
+        {
+            // And the direction towards the player is within a cone
+            if (Vector3.Dot(transform.forward, (_target.position - _fireballSpawnpoint.position).normalized) >= _allowedDotValue)
+            {
+                return CheckForSkipOver();
+            }
+        }
 
         return false;
     }
 
     public bool CanExit(float pDistance)
     {
-        //Debug.Log("Fireball: CanExit - " + (_enabled == false));
         return (_enabled == false);
     }
 
     public void Tick()
     {
-        maxLeftDir = _fireballSpawnpoint.position.x - 2;
-        maxRightDir = _fireballSpawnpoint.position.x + 2;
+
     }
 
     public void UpdateTarget(Transform pTarget) => _target = pTarget;
@@ -102,24 +108,6 @@ public class Fireball : MonoBehaviour, IState
         direction = (_target.position - _fireballSpawnpoint.position).normalized;
         fireballInstance = Instantiate(_fireballPrefab) as Rigidbody;
         fireballInstance.transform.position = _fireballSpawnpoint.position;
-
-        _fFireballTimer += Time.deltaTime;
-
-        if (_fFireballTimer > 1)
-        {
-            //Get the raycast of the Wolf's forward direction, and apply the following code if the raycast doesn't hit the player
-            if (_target.position.x > transform.position.x && transform.position.x < maxRightDir 
-                && transform.position.x > maxLeftDir)
-            {
-                fireballInstance.transform.Translate(Vector3.right * 1.5f);
-            }
-
-            else if (_target.position.x < transform.position.x && transform.position.x > maxLeftDir 
-                && transform.position.x < maxRightDir)
-            {
-                fireballInstance.transform.Translate(Vector3.left * 1.5f);
-            }
-        }
         fireballInstance.AddForce(direction * _fireballSpeed);
     }
 
@@ -128,6 +116,5 @@ public class Fireball : MonoBehaviour, IState
         //Debug.Log("Fireball: AEDoneShooting");
         _enabled = false;
         _nextEnterTime = Time.time + _cooldown;
-        _fFireballTimer = 0;
     }
 }

@@ -130,7 +130,7 @@ public class RollAttackTest : MonoBehaviour
             //if object has IAttributes do damage
             if(otherAttributes != null)
             {
-                otherAttributes.TakeDamage(Damage, calcPushBackDir(other.gameObject) * PushBackForce, false);
+                otherAttributes.TakeDamage(Damage, calcPushBackDir(other.gameObject) * PushBackForce, false, this.gameObject);
             }
         }
     }

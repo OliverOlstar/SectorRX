@@ -8,6 +8,7 @@ public class Attack : MonoBehaviour, IState
     private Animator _anim;
     private NavMeshAgent _agent;
     private Transform _target;
+    private Rigidbody _rb;
 
     [SerializeField] private float _cooldown = 1.0f;
     private float _nextEnterTime = 0.0f;
@@ -16,13 +17,22 @@ public class Attack : MonoBehaviour, IState
 
     [SerializeField] private GameObject _hitbox;
 
+    [SerializeField] private float _jumpbackForce = 50;
+    [SerializeField] private float _jumpbackUpForce = 10;
+
+    [SerializeField] private float _halfPlayerHeight = 0.52f;
+    [SerializeField] private float _onGroundCheckTime = 0;
+
+    private int _subState = 0;
+
     [SerializeField] private bool _enabled = false;
 
-    public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
+    public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent, EnemySmoothRotation pRotation)
     {
         _anim = pAnim;
         _agent = pAgent;
         _target = pTarget;
+        _rb = GetComponent<Rigidbody>();
         _hitbox.SetActive(false);
     }
 
@@ -30,23 +40,22 @@ public class Attack : MonoBehaviour, IState
     {
         //Debug.Log("Fireball: Enter");
         _enabled = true;
-        //_agent.isStopped = true;
-        transform.LookAt(_target.position);
+        //transform.LookAt(_target.position);
         _anim.SetBool("Attacking", true);
+        _agent.enabled = false;
     }
 
     public void Exit()
     {
         //Debug.Log("Fireball: Exit");
         _enabled = false;
-        _anim.SetBool("Attacking", false);
+        _nextEnterTime = Time.time + _cooldown;
+        _rb.isKinematic = true;
+        _agent.enabled = true;
     }
 
     public bool CanEnter(float pDistance)
     {
-        //If target is a gonner don't enter
-        if (_target == null || _target.gameObject.activeSelf == false) return false;
-
         //Can shoot if cooldown is up and player is in range
         if (Time.time >= _nextEnterTime && pDistance < _maxAttackRange && pDistance > _minAttackRange)
             return true;
@@ -62,7 +71,51 @@ public class Attack : MonoBehaviour, IState
 
     public void Tick()
     {
-        
+        switch (_subState)
+        {
+            //Play Attack Anim
+            case 0:
+                break;
+
+            //Jump Back Start
+            case 1:
+                _anim.SetBool("Attacking", false);
+                _rb.isKinematic = false;
+                _rb.AddForce(-transform.forward * _jumpbackForce + Vector3.up * _jumpbackUpForce, ForceMode.Impulse);
+                _subState = 2;
+                break;
+
+            //Jump State
+            case 2:
+                if (_onGroundCheckTime <= Time.time && IsOnGround())
+                {
+                    _enabled = false;
+                    _subState = 3;
+                }
+                break;
+        }
+    }
+
+    private bool IsOnGround()
+    {
+        // Linecast get two points
+        Vector3 lineStart = transform.position;
+        Vector3 vectorToSearch = new Vector3(lineStart.x, lineStart.y - _halfPlayerHeight, lineStart.z);
+
+        // Debug Line
+        Color color = new Color(0.0f, 0.0f, 1.0f);
+        Debug.DrawLine(lineStart, vectorToSearch, color);
+
+        // Linecast
+        RaycastHit hitInfo;
+        if (Physics.Linecast(this.transform.position, vectorToSearch, out hitInfo))
+        {
+            // On Ground
+            return true;
+        }
+
+        // Off Ground
+        return false;
     }
 
     public void UpdateTarget(Transform pTarget) => _target = pTarget;
@@ -80,9 +133,7 @@ public class Attack : MonoBehaviour, IState
 
     public void AEDoneAttack()
     {
-        //GetComponent<Decision>().ForceStateSwitch((IState)GetComponent<JumpBack>());
-        GetComponent<Decision>().ForceStateSwitch((IState)GetComponent<JumpBack>());
-        _enabled = false;
-        _nextEnterTime = Time.time + _cooldown;
+        _onGroundCheckTime = Time.time + 0.2f;
+        _subState = 1;
     }
 }

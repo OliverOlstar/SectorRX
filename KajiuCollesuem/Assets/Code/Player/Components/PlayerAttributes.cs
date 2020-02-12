@@ -177,7 +177,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
     #region General Functions
     //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
-    public bool TakeDamage(int pAmount, Vector3 pKnockback, bool pReact)
+    public bool TakeDamage(int pAmount, Vector3 pKnockback, bool pReact, GameObject pAttacker)
     {
         Debug.Log("PlayerAttributes: TakeDamage");
 

@@ -14,16 +14,16 @@ public class JumpBack : MonoBehaviour, IState
     public float jumpSpeed = 0, speed = 0, halfPlayerHeight;
 
     [SerializeField] private float _jumpBackRange = 1;
-    Rigidbody rb;
+    private Rigidbody _rb;
 
     [SerializeField] private bool _enabled = false, _isTouchingGround = false;
 
-    public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
+    public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent, EnemySmoothRotation pRotation)
     {
         _anim = pAnim;
         _agent = pAgent;
         _target = pTarget;
-        rb = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
     }
 
     public void Enter()
@@ -85,7 +85,12 @@ public class JumpBack : MonoBehaviour, IState
                 rb.AddForce(new Vector3(0, -y * time, z * time));
             else
                 rb.AddForce(new Vector3(0, y * time, z * time));*/
-            rb.AddForce(-transform.forward * time);
+
+            //This clamps the jump within a specific radius to ensure jump back isn't too long
+            if (time > 150)
+                time = 150;
+
+            Debug.Log(time);
 
             /*transform.position = Vector3.Lerp(transform.position, transform.position + Vector3.forward, 
                 Time.deltaTime * 5);*/
@@ -107,30 +112,6 @@ public class JumpBack : MonoBehaviour, IState
             //transform.Translate(targetPosition);
             _isTouchingGround = _isOnGround();*/
         }
-    }
-
-    private bool _isOnGround()
-    {
-        float lengthToSearch = 0.8f;
-        float colliderThreshold = 0.001f;
-
-        Vector3 lineStart = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-        Vector3 vectorToSearch = new Vector3(this.transform.position.x, lineStart.y - lengthToSearch, this.transform.position.z);
-
-        Color color = new Color(0.0f, 0.0f, 1.0f);
-        Debug.DrawLine(lineStart, vectorToSearch, color);
-        
-        RaycastHit hitInfo;
-        if (Physics.Linecast(this.transform.position, vectorToSearch, out hitInfo))
-        {
-            if (hitInfo.distance < halfPlayerHeight)
-            {
-                _jumpTime = 0;
-                return true;
-            }
-        }
-
-        return false;
     }
 
     public void AEJumpBack()

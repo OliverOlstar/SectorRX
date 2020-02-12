@@ -18,7 +18,7 @@ public class Guard : MonoBehaviour, IState
 
     [SerializeField] private bool _enabled = false;
 
-    public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
+    public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent, EnemySmoothRotation pRotation)
     {
         _anim = pAnim;
         _agent = pAgent;
@@ -31,7 +31,10 @@ public class Guard : MonoBehaviour, IState
         _enabled = true;
         _subState = 0;
         _stateChangeTime = Time.time + 1;
+
+        //Loses target
         _decision.target = null;
+
         _anim.SetFloat("Speed", 0);
         if (_agent != null)
             _agent.isStopped = true;
