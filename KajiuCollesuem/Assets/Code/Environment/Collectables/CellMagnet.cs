@@ -12,8 +12,9 @@ public class CellMagnet : MonoBehaviour
     [SerializeField] private float _spawnForce = 10.0f;
 
     [Header("Magnet")]
-    [SerializeField] private float _suckInitialVelocity = 10;
-    [SerializeField] private float _suckInitialUpVelocity = 10;
+    [SerializeField] private float _magnetTriggerStartDelay = 0.1f;
+    [SerializeField] private float _magnetInitialVelocity = 10;
+    [SerializeField] private float _magnetInitialUpVelocity = 10;
 
     void Start()
     {
@@ -21,6 +22,19 @@ public class CellMagnet : MonoBehaviour
 
         // Spawn Force
         _rb.AddForce(new Vector3((Random.value - 0.5f) * _spawnForce, _spawnUpForce, (Random.value - 0.5f) * _spawnForce), ForceMode.Impulse);
+
+        // Magnet doesn't enable for a little bit
+        StartCoroutine("EnableTriggerDelay");
+    }
+
+    IEnumerator EnableTriggerDelay()
+    {
+        Collider myTrigger = GetComponent<Collider>();
+        myTrigger.enabled = false;
+
+        yield return new WaitForSeconds(_magnetTriggerStartDelay);
+
+        myTrigger.enabled = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -33,7 +47,7 @@ public class CellMagnet : MonoBehaviour
             jumpDir = new Vector3(jumpDir.x, 0, jumpDir.z).normalized;
 
             // Set force
-            _rb.velocity = jumpDir * _suckInitialVelocity + Vector3.up * _suckInitialUpVelocity;
+            _rb.velocity = jumpDir * _magnetInitialVelocity + Vector3.up * _magnetInitialUpVelocity;
         }
     }
 }
