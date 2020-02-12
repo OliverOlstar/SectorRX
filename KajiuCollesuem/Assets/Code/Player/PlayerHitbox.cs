@@ -10,6 +10,8 @@ public class PlayerHitbox : MonoBehaviour
 
     private int _powerRecivedOnHit = 25;
 
+    [SerializeField] private GameObject _Attacker;
+
     private PlayerAttributes _playerAttributes;
     private IAttributes _playerIAttributes;
     private PlayerLockOnScript _lockOnScript;
@@ -53,7 +55,7 @@ public class PlayerHitbox : MonoBehaviour
             Debug.Log("Hitbox: OnTriggerEnter hit");
 
             //Damage other
-            /*if (*/otherAttributes.TakeDamage(_damage, _knockback, true);//)
+            /*if (*/otherAttributes.TakeDamage(_damage, _knockback, true, _Attacker);//)
                 //If other died and is lockOn target return camera to default
                 //_lockOnScript.TargetDead(other.transform);
 

@@ -10,10 +10,10 @@ public class Dead : MonoBehaviour, IState
     private Transform _target;
 
     [SerializeField] private bool _enabled = false;
-    [SerializeField] private GameObject cell;
+    [SerializeField] private GameObject _cellPrefab;
     int noOfMonsterCells = 5;
 
-    public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
+    public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent, EnemySmoothRotation pRotation)
     {
         _anim = pAnim;
         _agent = pAgent;
@@ -53,9 +53,10 @@ public class Dead : MonoBehaviour, IState
 
     public void AEDeadDone()
     {
+        // Coins disperse
         for (int i = 0; i < noOfMonsterCells; ++i)
         {
-            GameObject tmp = Instantiate(cell);
+            GameObject tmp = Instantiate(_cellPrefab);
             float bounds1 = Random.Range(-0.5f, 0.5f), bounds2 = Random.Range(-0.5f, 0.5f);
             tmp.transform.position = transform.position;
             //tmp.transform.Translate(Vector3.back);

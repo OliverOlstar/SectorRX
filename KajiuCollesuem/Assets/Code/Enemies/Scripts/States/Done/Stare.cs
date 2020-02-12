@@ -7,17 +7,19 @@ public class Stare : MonoBehaviour, IState
 {
     private Animator _anim;
     private NavMeshAgent _agent;
+    private EnemySmoothRotation _rotation;
     private Transform _target;
 
     [SerializeField] private float _stareRange = 11;
 
     [SerializeField] private bool _enabled = false;
 
-    public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
+    public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent, EnemySmoothRotation pRotation)
     {
         _anim = pAnim;
         _agent = pAgent;
         _target = pTarget;
+        _rotation = pRotation;
     }
 
     public void Enter()
@@ -25,18 +27,17 @@ public class Stare : MonoBehaviour, IState
         _enabled = true;
         _agent.isStopped = true;
         _anim.SetFloat("Speed", 0);
+        _rotation.enabled = true;
     }
 
     public void Exit()
     {
         _enabled = false;
+        _rotation.enabled = false;
     }
 
     public bool CanEnter(float pDistance)
     {
-        //If target is a gonner don't enter
-        if (_target == null || _target.gameObject.activeSelf == false) return false;
-
         //Can shoot if cooldown is up and player is in range
         if (pDistance <= _stareRange)
             return true;
@@ -55,14 +56,4 @@ public class Stare : MonoBehaviour, IState
     }
 
     public void UpdateTarget(Transform pTarget) => _target = pTarget;
-
-    public void Pause()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void Resume()
-    {
-        throw new System.NotImplementedException();
-    }
 }

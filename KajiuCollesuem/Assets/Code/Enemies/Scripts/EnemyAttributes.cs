@@ -47,7 +47,7 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         //_playerHUD = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>();
     }
 
-    public bool TakeDamage(int pAmount, Vector3 pKnockback, bool pReact)
+    public bool TakeDamage(int pAmount, Vector3 pKnockback, bool pReact, GameObject pAttacker)
     {
         _health -= pAmount;
 
@@ -65,6 +65,8 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         {
             return true;
         }
+
+        _decision.UpdateTarget(pAttacker.transform);
 
         if (pReact && _decision != null)
             _decision.ForceStateSwitch(_stunnedState);

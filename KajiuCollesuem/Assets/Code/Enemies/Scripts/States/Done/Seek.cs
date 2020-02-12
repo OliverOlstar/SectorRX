@@ -5,8 +5,7 @@ using UnityEngine.AI;
 
 public class Seek : AlwaysSeek
 {
-    [SerializeField] private float agroRange = 10;
-    [SerializeField] private float agroLostRange = 10;
+    [SerializeField] private float _agroLostRange = 10;
 
     public override bool CanEnter(float pDistance)
     {
@@ -14,7 +13,7 @@ public class Seek : AlwaysSeek
         if (_target == null || _target.gameObject.activeSelf == false) return false;
 
         //If in agro range
-        if (pDistance <= (_enabled ? agroLostRange : agroRange) || retribution)
+        if (pDistance <= _agroLostRange)
             return true;
         
         return false;

@@ -5,7 +5,7 @@ using UnityEngine;
 public interface IAttributes
 {
     bool IsDead();
-    bool TakeDamage(int pDamage, Vector3 pKnockback, bool pReact);
+    bool TakeDamage(int pDamage, Vector3 pKnockback, bool pReact, GameObject pAttacker);
     //void AddKnockback(Vector3 pForce);
     void Respawn();
 }

@@ -23,7 +23,7 @@ public class Summon : MonoBehaviour, IState
 
     [SerializeField] private bool _enabled = false;
 
-    public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent)
+    public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent, EnemySmoothRotation pRotation)
     {
         _anim = pAnim;
         _agent = pAgent;
