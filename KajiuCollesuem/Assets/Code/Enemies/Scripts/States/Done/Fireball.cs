@@ -19,13 +19,13 @@ public class Fireball : MonoBehaviour, IState
     [Space]
     [SerializeField] private float _fireballRangeMax = 10;
     [SerializeField] private float _fireballRangeMin = 3;
-
+    [SerializeField] private Vector3 _targetOffset;
     [SerializeField] private float _fireballSpeed = 1000;
-    private float _fFireballTimer = 0;
 
     [Space]
     [SerializeField] [Range(0, 1)] private float _oddsOfSkipOver = 0;
     [SerializeField] [Range(0, 1)] private float _allowedDotValue = 0.7f;
+
     [SerializeField] private bool _enabled = false;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent, EnemySmoothRotation pRotation)
@@ -105,7 +105,7 @@ public class Fireball : MonoBehaviour, IState
         Rigidbody fireballInstance;
         Vector3 direction;
 
-        direction = (_target.position - _fireballSpawnpoint.position).normalized;
+        direction = ((_target.position + _targetOffset) - _fireballSpawnpoint.position).normalized;
         fireballInstance = Instantiate(_fireballPrefab) as Rigidbody;
         fireballInstance.transform.position = _fireballSpawnpoint.position;
         fireballInstance.AddForce(direction * _fireballSpeed);

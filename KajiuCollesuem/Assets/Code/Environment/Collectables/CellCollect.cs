@@ -6,17 +6,17 @@ public class CellCollect : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        CellMagnetCollect cmc = GetComponentInParent<CellMagnetCollect>();
+        Debug.Log("TRIGGER");
 
         if (other.CompareTag("Player"))
         {
-            cmc.StartSuckUp(other.transform);
-            //PlayerCollectibles playerCollectibles = other.GetComponent<PlayerCollectibles>();
-            //if (playerCollectibles == null)
-                //playerCollectibles = other.GetComponentInParent<PlayerCollectibles>();
+            Debug.Log("TRIGGER PLAYER");
+            PlayerCollectibles playerCollectibles = other.GetComponent<PlayerCollectibles>();
+            if (playerCollectibles == null)
+                playerCollectibles = other.GetComponentInParent<PlayerCollectibles>();
 
-            //playerCollectibles.CollectedCell();
-            //Destroy(transform.parent.gameObject);
+            playerCollectibles.CollectedCell();
+            Destroy(transform.parent.gameObject);
         }
     }
 }
