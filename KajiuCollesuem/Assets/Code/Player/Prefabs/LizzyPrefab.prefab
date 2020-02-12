@@ -403,6 +403,7 @@ MonoBehaviour:
   _playerAttributes: {fileID: 0}
   _modelController: {fileID: 0}
   _playerCamera: {fileID: 0}
+  _ragdollManager: {fileID: 0}
   _Rb: {fileID: 0}
   _Camera: {fileID: 0}
   hitboxes:
@@ -438,6 +439,7 @@ MonoBehaviour:
   inputInfluence: 1
   _jumpForceUp: 24
   _jumpForceVelocityMult: 1.7
+  _jumpGraceLength: 0.3
   disableMovement: 0
 --- !u!114 &3053187438800234900
 MonoBehaviour:
@@ -477,7 +479,7 @@ MonoBehaviour:
   _isGroundedCheckDistance: 1
   _respawnYOffset: 1
   _fallMaxTime: 2
-  _fallDamageStartTime: 1
+  _fallDamage: 20
   _inputInfluenceGrounded: 1
   _inputInfluenceInAir: 0.7
   _downForceRate: 45
@@ -553,7 +555,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 05da82d0-c0bb-4e2c-8875-1aef177e0d8c
+  m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &5855493607624095741

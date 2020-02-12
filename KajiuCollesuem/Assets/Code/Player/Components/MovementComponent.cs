@@ -18,6 +18,10 @@ public class MovementComponent : MonoBehaviour
     [SerializeField] private float _jumpForceVelocityMult = 1.7f;
 
     [Space]
+    [SerializeField] private float _jumpGraceLength = 0.1f;
+    private float _jumpGrace = 0;
+
+    [Space]
     public bool disableMovement = false;
 
     void Start()
@@ -31,14 +35,19 @@ public class MovementComponent : MonoBehaviour
         if (disableMovement) 
             return;
 
+        if (_stateController.onGround)
+            _jumpGrace = Time.time + _jumpGraceLength;
+
         //Movement
         Move();
     }
 
     private void OnJump()
     {
-        if (_stateController.onGround && disableMovement == false)
+        if (_jumpGrace > Time.time && disableMovement == false)
         {
+            _jumpGrace = 0;
+
             //Add force
             _rb.velocity = new Vector3(_stateController._Rb.velocity.x * _jumpForceVelocityMult, 0, _stateController._Rb.velocity.z * _jumpForceVelocityMult);
             _rb.AddForce(_jumpForceUp * Vector3.up, ForceMode.Impulse);

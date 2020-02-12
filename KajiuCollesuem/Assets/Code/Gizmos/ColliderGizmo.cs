@@ -6,8 +6,21 @@ public class ColliderGizmo : MonoBehaviour
 {
     [SerializeField] private Color color;
     [SerializeField] private bool fill;
+    [SerializeField] private bool selected;
 
     private void OnDrawGizmos()
+    {
+        if (selected) return;
+        DrawCube();
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (!selected) return;
+        DrawCube();
+    }
+
+    private void DrawCube()
     {
         BoxCollider boxCollider = GetComponent<BoxCollider>();
 

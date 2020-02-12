@@ -9,8 +9,8 @@ public class OnGroundComponent : MonoBehaviour
     private Vector3 _lastPoint = new Vector3(0,0,0);
 
     [Header("Fall Damage")]
-    [SerializeField] private float _fallMaxTime = 2;
-    //[SerializeField] private float _fallDamageStartTime = 1;
+    [SerializeField] private float _fallMaxTime = 2.0f;
+    [SerializeField] private int _fallDamage = 15;
     private float _terminalFallingTimer = 0;
 
     [Space]
@@ -81,6 +81,7 @@ public class OnGroundComponent : MonoBehaviour
             _terminalFallingTimer = 0;
             _downForce = 0;
             _stateController._playerCamera.targetDead = false;
+            _stateController._playerAttributes.modifyHealth(-_fallDamage);
         }
     }
 

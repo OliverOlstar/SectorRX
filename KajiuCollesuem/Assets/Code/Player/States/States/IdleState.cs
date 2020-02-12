@@ -6,6 +6,9 @@ using UnityEngine;
 public class IdleState : BaseState
 {
     PlayerStateController stateController;
+    private float dodgeInputBuffer = 0.4f;
+    private float dodgeInputTime = 0.0f;
+    private float dodgeInput = -1.0f;
 
     public IdleState(PlayerStateController controller) : base(controller.gameObject)
     {
@@ -16,14 +19,18 @@ public class IdleState : BaseState
     {
         //Debug.Log("IdleState: Enter");
         stateController._movementComponent.disableMovement = false;
-        //stateController._playerCamera.Idle = true;
     }
 
     public override void Exit()
     {
         //Debug.Log("IdleState: Exit");
         stateController._movementComponent.disableMovement = true;
-        //stateController._playerCamera.Idle = false;
+
+        // If Dodge input happened less than a dodgeInputBuffer time ago add the input back in
+        if (dodgeInputTime + dodgeInputBuffer >= Time.time)
+        {
+            stateController.dodgeInput = dodgeInput;
+        }
     }
 
     public override Type Tick()
@@ -36,11 +43,14 @@ public class IdleState : BaseState
             return typeof(MovementState);
         }
 
-        // Idle Dodge
-        //if (stateController.dodgeInput != -1)
-        //{
-        //    return typeof(DodgeState);
-        //}
+        // Dodge Input Buffer Getter
+        if (stateController.dodgeInput != -1)
+        {
+            dodgeInput = stateController.dodgeInput;
+            stateController.dodgeInput = -1.0f;
+
+            dodgeInputTime = Time.time;
+        }
 
         //Attack
         if (stateController.heavyAttackinput != -1.0f || stateController.lightAttackinput != -1.0f /* power input */)
