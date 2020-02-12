@@ -30,7 +30,7 @@ public class AttackState : BaseState
 
     public override void Enter()
     {
-        //Debug.Log("AttackState: Enter");
+        Debug.Log("AttackState: Enter");
         //stateController._hitboxComponent.gameObject.SetActive(true); /* Handled by animation events */
         _exitStateTime = 0;
         _onHolding = false;
@@ -39,7 +39,7 @@ public class AttackState : BaseState
 
     public override void Exit()
     {
-        //Debug.Log("AttackState: Exit");
+        Debug.Log("AttackState: Exit");
         _stateController.AttackStateReturnDelay = Time.time + _attackStateReturnDelayLength;
         _numberOfClicks = 0;
 
@@ -55,6 +55,11 @@ public class AttackState : BaseState
 
     public override Type Tick()
     {
+        // Stunned Or Dead
+        Type stunnedOrDead = _stateController.stunnedOrDeadCheck();
+        if (stunnedOrDead != null)
+            return stunnedOrDead;
+
         // Check for another attack
         CheckForAttack();
 
@@ -85,12 +90,6 @@ public class AttackState : BaseState
             {
                 _hitbox.gameObject.SetActive(true);
             }
-        }
-
-        // Stunned
-        if (_stateController.Stunned)
-        {
-            return typeof(StunnedState);
         }
 
         return null;
@@ -145,11 +144,38 @@ public class AttackState : BaseState
                     PressedLightAttack();
                     ClearInputs();
                 }
+                // ON PRESSED ABILITY 1 (Called Once)
+                else if (_stateController.ability1input == 1)
+                {
+                    PressedAbility1();
+                    ClearInputs();
+                }
+                // ON PRESSED ABILITY 2 (Called Once)
+                else if (_stateController.ability2input == 1)
+                {
+                    PressedAbility2();
+                    ClearInputs();
+                }
             }
         }
     }
 
     #region Pressed & Release
+    private void PressedAbility1()
+    {
+        //SOAttack curAttack = _stateController._modelController.attacks[_numberOfClicks];
+        //float PreAttackTime = curAttack.transitionToTime + curAttack.holdStartPosTime;
+        //SetAttackValues(curAttack, PreAttackTime);
+
+        //_stateController._modelController.PlayAttack(_numberOfClicks, false, false);
+
+        _numberOfClicks = 99;
+    }
+    private void PressedAbility2()
+    {
+        _numberOfClicks = 99;
+    }
+
     private void PressedLightAttack()
     {
         SOAttack curAttack = _stateController._modelController.attacks[_numberOfClicks];
@@ -216,6 +242,8 @@ public class AttackState : BaseState
     {
         _stateController.lightAttackinput = -1.0f;
         _stateController.heavyAttackinput = -1.0f;
+        _stateController.ability1input = -1.0f;
+        _stateController.ability2input = -1.0f;
     }
     #endregion
 }

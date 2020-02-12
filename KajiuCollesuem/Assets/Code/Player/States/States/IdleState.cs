@@ -37,6 +37,11 @@ public class IdleState : BaseState
     {
         // TODO Add Taunt system
 
+        // Stunned Or Dead
+        Type stunnedOrDead = stateController.stunnedOrDeadCheck();
+        if (stunnedOrDead != null)
+            return stunnedOrDead;
+
         // Idle
         if (stateController.moveInput.magnitude > 0)
         {
@@ -53,7 +58,7 @@ public class IdleState : BaseState
         }
 
         //Attack
-        if (stateController.heavyAttackinput != -1.0f || stateController.lightAttackinput != -1.0f /* power input */)
+        if (stateController.heavyAttackinput != -1.0f || stateController.lightAttackinput != -1.0f || stateController.ability1input != -1.0f || stateController.ability2input != -1.0f)
         {
             if (stateController.AttackStateReturnDelay <= Time.time)
             {
@@ -62,21 +67,8 @@ public class IdleState : BaseState
             else
             {
                 //If Inputed attack before they can return to the attack state, remove the input
-                stateController.heavyAttackinput = -1.0f;
-                stateController.lightAttackinput = -1.0f;
+                stateController.clearAttackInputs();
             }
-        }
-
-        //Dead
-        if (stateController._playerAttributes.getHealth() <= 0)
-        {
-            return typeof(DeathState);
-        }
-
-        //Stunned
-        if (stateController.Stunned)
-        {
-            return typeof(StunnedState);
         }
 
         return null;

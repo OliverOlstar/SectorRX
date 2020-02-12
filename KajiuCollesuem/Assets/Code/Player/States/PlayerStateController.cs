@@ -27,6 +27,8 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public Vector2 LastMoveDirection = new Vector2(0, 0);
     // 0 - Tapped, 1 - Held
     [HideInInspector] public float dodgeInput = -1.0f;
+    public float ability1input = -1.0f;
+    public float ability2input = -1.0f;
     [HideInInspector] public float lightAttackinput = -1.0f;
     // 0 - Released, 1 - Pressed
     [HideInInspector] public float heavyAttackinput = -1.0f;
@@ -82,6 +84,8 @@ public class PlayerStateController : MonoBehaviour
     private void OnCamera(InputValue ctx) => mouseInput = ctx.Get<Vector2>();
     private void OnMovement(InputValue ctx) => moveRawInput = ctx.Get<Vector2>();
     private void OnDodge(InputValue ctx) => dodgeInput = ctx.Get<float>();
+    private void OnAbility1(InputValue ctx) => ability1input = ctx.Get<float>();
+    private void OnAbility2(InputValue ctx) => ability2input = ctx.Get<float>();
     private void OnLightAttack(InputValue ctx) => lightAttackinput = ctx.Get<float>();
     private void OnHeavyAttack(InputValue ctx)
     {
@@ -95,6 +99,31 @@ public class PlayerStateController : MonoBehaviour
     }
     private void OnPause() => _PauseMenu.TogglePause();
     private void OnAnyInput() => LastInputTime = Time.time;
+
+    public void clearAttackInputs()
+    {
+        ability1input = -1.0f;
+        ability2input = -1.0f;
+        lightAttackinput = -1.0f;
+        heavyAttackinput = -1.0f;
+    }
+
+    public Type stunnedOrDeadCheck()
+    {
+        //Dead
+        if (_playerAttributes.getHealth() <= 0)
+        {
+            return typeof(DeathState);
+        }
+
+        //Stunned
+        if (Stunned)
+        {
+            return typeof(StunnedState);
+        }
+
+        return null;
+    }
 
     private void FixedUpdate()
     {

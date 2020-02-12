@@ -44,10 +44,11 @@ public class CellMagnet : MonoBehaviour
         {
             // Get direction
             Vector3 jumpDir = other.transform.position - transform.position;
+            float jumpUpMult = jumpDir.y * _magnetInitialUpVelocity;
             jumpDir = new Vector3(jumpDir.x, 0, jumpDir.z).normalized;
 
             // Set force
-            _rb.velocity = jumpDir * _magnetInitialVelocity + Vector3.up * _magnetInitialUpVelocity;
+            _rb.velocity = jumpDir * _magnetInitialVelocity + Vector3.up * jumpUpMult;
         }
     }
 }

@@ -20,7 +20,7 @@ public class DodgeState : BaseState
         stateController._dodgeComponent.Dodge(stateController.dodgeInput == 0, stateController.LastMoveDirection.normalized);
 
         //Remove Input
-        stateController.dodgeInput = -1.0f;
+        stateController.clearAttackInputs();
     }
 
     public override void Exit()
@@ -36,6 +36,11 @@ public class DodgeState : BaseState
 
     public override Type Tick()
     {
+        // Stunned Or Dead
+        Type stunnedOrDead = stateController.stunnedOrDeadCheck();
+        if (stunnedOrDead != null)
+            return stunnedOrDead;
+
         // Leave Dodge
         if (stateController._dodgeComponent.doneDodge)
         {

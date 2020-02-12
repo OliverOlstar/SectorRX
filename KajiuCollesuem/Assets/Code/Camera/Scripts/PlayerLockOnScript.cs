@@ -43,8 +43,8 @@ public class PlayerLockOnScript : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-            ToggleScopedIn(0.5f);
+        //if (Input.GetKeyDown(KeyCode.E))
+        //    ToggleScopedIn(0.5f);
 
         if (_stateController._playerCamera == null) return;
 
