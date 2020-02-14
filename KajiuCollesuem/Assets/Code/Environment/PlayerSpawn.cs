@@ -32,10 +32,13 @@ public class PlayerSpawn : MonoBehaviour
             connectedPlayers.playersConnected = 2;
             
             connectedPlayers.playerIndex.Clear();
-            //connectedPlayers.playerIndex.Add(-1);
-            //connectedPlayers.playerIndex.Add(1);
-            //connectedPlayers.playerIndex.Add(-1);
-            //connectedPlayers.playerIndex.Add(0);
+            UsedDevices player = new UsedDevices();
+            player.deviceUser = 0;
+            player.playerIndex = 0;
+            connectedPlayers.playerIndex.Add(player);
+            player.deviceUser = 1;
+            player.playerIndex = 1;
+            connectedPlayers.playerIndex.Add(player);
         }
 
         //Sets number of connected players equal to how many need to be spawned. Helps with match restarts after a player wins.
