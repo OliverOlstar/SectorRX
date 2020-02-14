@@ -4,27 +4,52 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /*Programmer: Scott Watman
- Description: Allows each player to collect their own cache of cells for upgrading*/
+ Description: Edits player's stats depending on which collectible they pick up*/
 
 public class PlayerCollectibles : MonoBehaviour
 {
-    private float cellAmount = 10.0f;
-    [SerializeField] private SliderController _SlideControl;
-
-    private void Start()
+    public enum Upgrades
     {
-        //playerHUD = transform.parent.GetComponentInChildren<HUDManager>();
+        Health,
+        Shield,
+        Power,
+        Speed,
+        Attack,
+        Weight,
+        Jump
     }
 
-    public void CollectedCell()
+    public void CollectedItem(Upgrades pStat)
     {
-        cellAmount += 10;
-        
-        if(cellAmount >= 100)
+        switch (pStat)
         {
-            cellAmount = 100;
-        }
+            case Upgrades.Health:
 
-        _SlideControl.UpdateBars(3, cellAmount);
+                break;
+
+            case Upgrades.Shield:
+
+                break;
+
+            case Upgrades.Power:
+
+                break;
+
+            case Upgrades.Speed:
+
+                break;
+
+            case Upgrades.Attack:
+                Debug.Log("Raising Attack");
+                break;
+
+            case Upgrades.Weight:
+
+                break;
+
+            case Upgrades.Jump:
+
+                break;
+        }
     }
 }

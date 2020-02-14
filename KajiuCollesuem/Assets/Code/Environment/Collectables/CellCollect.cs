@@ -12,7 +12,7 @@ public class CellCollect : MonoBehaviour
             if (playerCollectibles == null)
                 playerCollectibles = other.GetComponentInParent<PlayerCollectibles>();
 
-            playerCollectibles.CollectedCell();
+            //playerCollectibles.CollectedCell();
             Destroy(transform.parent.gameObject);
         }
     }
