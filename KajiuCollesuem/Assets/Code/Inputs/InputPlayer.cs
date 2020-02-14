@@ -72,7 +72,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""id"": ""e4cc26f1-fed4-45d0-8b0a-82352e0ad367"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""Ability2"",
@@ -80,7 +80,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""id"": ""e466a29a-5b8b-4750-9d76-247e58a5b360"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""LockOn"",

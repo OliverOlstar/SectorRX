@@ -10,7 +10,7 @@ public class StatUpgrades : MonoBehaviour
     public Text insufficientCost;
     public PlayerUpgrades pU;
     private SOStats[] stats;
-    private SOPowers[] powers;
+    private SOAbilities[] powers;
 
     [SerializeField] private Color[] statColors = new Color[5];
     [SerializeField] private Color[] powerColors = new Color[3];

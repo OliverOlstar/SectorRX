@@ -44,7 +44,7 @@ public class CellMagnet : MonoBehaviour
         {
             // Get direction
             Vector3 jumpDir = other.transform.position - transform.position;
-            float jumpUpMult = jumpDir.y * _magnetInitialUpVelocity;
+            float jumpUpMult = Mathf.Clamp(jumpDir.y * _magnetInitialUpVelocity, -3, 9);
             jumpDir = new Vector3(jumpDir.x, 0, jumpDir.z).normalized;
 
             // Set force

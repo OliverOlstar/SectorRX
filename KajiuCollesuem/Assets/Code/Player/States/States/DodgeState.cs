@@ -18,9 +18,6 @@ public class DodgeState : BaseState
 
         //Start Dodge
         stateController._dodgeComponent.Dodge(stateController.dodgeInput == 0, stateController.LastMoveDirection.normalized);
-
-        //Remove Input
-        stateController.clearAttackInputs();
     }
 
     public override void Exit()

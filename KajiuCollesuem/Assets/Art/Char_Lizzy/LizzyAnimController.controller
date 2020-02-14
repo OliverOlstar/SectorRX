@@ -662,6 +662,12 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
+  - m_Name: Abilities Index
+    m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   - m_Name: Stepping Speed
     m_Type: 1
     m_DefaultFloat: 0
@@ -705,18 +711,6 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: Move Direction Z
-    m_Type: 1
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
-  - m_Name: Abilities Index
-    m_Type: 1
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
-  - m_Name: Abilities Progress
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -858,7 +852,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: Stepping Weight
     m_Mirror: 0
-  m_BlendParameter: Abilities Progress
+  m_BlendParameter: Attacking Progress
   m_BlendParameterY: Blend
   m_MinThreshold: 0
   m_MaxThreshold: 1
@@ -1346,7 +1340,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: Stepping Weight
     m_Mirror: 0
-  m_BlendParameter: Abilities Progress
+  m_BlendParameter: Attacking Progress
   m_BlendParameterY: Blend
   m_MinThreshold: 0
   m_MaxThreshold: 1

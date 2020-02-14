@@ -30,8 +30,7 @@ public class AttackState : BaseState
 
     public override void Enter()
     {
-        Debug.Log("AttackState: Enter");
-        //stateController._hitboxComponent.gameObject.SetActive(true); /* Handled by animation events */
+        //Debug.Log("AttackState: Enter");
         _exitStateTime = 0;
         _onHolding = false;
         CheckForAttack();
@@ -39,7 +38,7 @@ public class AttackState : BaseState
 
     public override void Exit()
     {
-        Debug.Log("AttackState: Exit");
+        //Debug.Log("AttackState: Exit");
         _stateController.AttackStateReturnDelay = Time.time + _attackStateReturnDelayLength;
         _numberOfClicks = 0;
 
@@ -144,38 +143,11 @@ public class AttackState : BaseState
                     PressedLightAttack();
                     ClearInputs();
                 }
-                // ON PRESSED ABILITY 1 (Called Once)
-                else if (_stateController.ability1input == 1)
-                {
-                    PressedAbility1();
-                    ClearInputs();
-                }
-                // ON PRESSED ABILITY 2 (Called Once)
-                else if (_stateController.ability2input == 1)
-                {
-                    PressedAbility2();
-                    ClearInputs();
-                }
             }
         }
     }
 
     #region Pressed & Release
-    private void PressedAbility1()
-    {
-        //SOAttack curAttack = _stateController._modelController.attacks[_numberOfClicks];
-        //float PreAttackTime = curAttack.transitionToTime + curAttack.holdStartPosTime;
-        //SetAttackValues(curAttack, PreAttackTime);
-
-        //_stateController._modelController.PlayAttack(_numberOfClicks, false, false);
-
-        _numberOfClicks = 99;
-    }
-    private void PressedAbility2()
-    {
-        _numberOfClicks = 99;
-    }
-
     private void PressedLightAttack()
     {
         SOAttack curAttack = _stateController._modelController.attacks[_numberOfClicks];
@@ -205,17 +177,6 @@ public class AttackState : BaseState
         _stateController._modelController.DoneChargingAttack();
 
         _onHolding = false;
-        _numberOfClicks++;
-    }
-
-    private void ReleaseHeavyAttackBeforeCharging()
-    {
-        SOAttack curAttack = _stateController._modelController.attacks[_numberOfClicks + 3];
-        float PreAttackTime = curAttack.transitionToTime + curAttack.holdStartPosTime;
-        SetAttackValues(curAttack, PreAttackTime);
-
-        _stateController._modelController.PlayAttack(_numberOfClicks, true, false);
-
         _numberOfClicks++;
     }
     #endregion

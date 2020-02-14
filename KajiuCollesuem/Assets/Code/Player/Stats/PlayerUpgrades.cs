@@ -12,7 +12,7 @@ public class PlayerUpgrades : MonoBehaviour
     private int[] _statLevels;
 
     [Space]
-    public SOPowers[] Powers;
+    public SOAbilities[] Powers;
     private int[] _powerLevels;
 
     [SerializeField] private int luck = 0;

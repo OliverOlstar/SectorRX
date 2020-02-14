@@ -32,7 +32,7 @@ public class PlayerLockOnScript : MonoBehaviour
     [SerializeField] private SOCamera idlePreset;
     [SerializeField] private float TimeUntilIdle = 20f;
     
-    void Start()
+    public void Start()
     {
         _stateController = GetComponent<PlayerStateController>();
         _playerCamera = _stateController._playerCamera;
@@ -43,9 +43,6 @@ public class PlayerLockOnScript : MonoBehaviour
     
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.E))
-        //    ToggleScopedIn(0.5f);
-
         if (_stateController._playerCamera == null) return;
 
         // TODO make work with pause screen

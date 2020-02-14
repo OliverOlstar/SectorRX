@@ -57,18 +57,16 @@ public class IdleState : BaseState
             dodgeInputTime = Time.time;
         }
 
-        //Attack
-        if (stateController.heavyAttackinput != -1.0f || stateController.lightAttackinput != -1.0f || stateController.ability1input != -1.0f || stateController.ability2input != -1.0f)
+        // Attack
+        if (stateController.heavyAttackinput != -1.0f || stateController.lightAttackinput != -1.0f)
         {
-            if (stateController.AttackStateReturnDelay <= Time.time)
-            {
-                return typeof(AttackState);
-            }
-            else
-            {
-                //If Inputed attack before they can return to the attack state, remove the input
-                stateController.clearAttackInputs();
-            }
+            return typeof(AttackState);
+        }
+
+        // Ability
+        if (stateController.ability1input != -1.0f || stateController.ability2input != -1.0f)
+        {
+            return typeof(AbilityState);
         }
 
         return null;

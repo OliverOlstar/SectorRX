@@ -6,11 +6,11 @@ using UnityEngine.UI;
 public class PowerSelectScreen : MonoBehaviour
 {
     //Variables
-    private PlayerPowerHandler playerPowerHandler;
+    private PlayerAbilitySelector playerPowerHandler;
     public Text powerDescription;
 
     //Power Array
-    [SerializeField] private List<SOPowers> powers;
+    [SerializeField] private List<SOAbilities> powers;
 
     //Power Randomize
     public void RandomPower()
@@ -21,7 +21,7 @@ public class PowerSelectScreen : MonoBehaviour
     //Power Selection
     public void SelectPower(int i)
     {
-        playerPowerHandler.AddPower(powers[i]);
+        //playerPowerHandler.AddPower(powers[i]);
         powers.Remove(powers[i]);
     }
 

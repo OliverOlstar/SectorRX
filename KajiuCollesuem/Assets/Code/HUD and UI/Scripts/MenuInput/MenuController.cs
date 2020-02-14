@@ -19,6 +19,8 @@ public class MenuController : MonoBehaviour
 
     private void Update()
     {
+        return;
+
         CheckSelection();
         ChangeSelect();
         PreventChange();

@@ -18,6 +18,7 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public bool onGround = false;
     [HideInInspector] public bool Stunned = false;
     [HideInInspector] public float AttackStateReturnDelay = 0;
+    [HideInInspector] public float AbilityStateReturnDelay = 0;
 
     // Inputs
     [HideInInspector] public float LastInputTime = 0;
@@ -27,8 +28,8 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public Vector2 LastMoveDirection = new Vector2(0, 0);
     // 0 - Tapped, 1 - Held
     [HideInInspector] public float dodgeInput = -1.0f;
-    public float ability1input = -1.0f;
-    public float ability2input = -1.0f;
+    [HideInInspector] public float ability1input = -1.0f;
+    [HideInInspector] public float ability2input = -1.0f;
     [HideInInspector] public float lightAttackinput = -1.0f;
     // 0 - Released, 1 - Pressed
     [HideInInspector] public float heavyAttackinput = -1.0f;
@@ -37,8 +38,8 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public PlayerStateMachine _stateMachine;
     public MovementComponent _movementComponent { get; private set; } // Player's movement component, access this to move and jump
     [HideInInspector] public DodgeComponent _dodgeComponent; // Player's dodge component, access this to
-    //private PlayerLockOnScript _lockOnComponent;
-    [HideInInspector] public PlayerPowerHandler _powerComponent;
+    [HideInInspector] public PlayerLockOnScript _lockOnComponent;
+    [HideInInspector] public PlayerAbilitySelector _powerComponent;
     [HideInInspector] public PlayerHitbox _hitboxComponent;
     [HideInInspector] public PauseMenu _PauseMenu;
 
@@ -51,6 +52,11 @@ public class PlayerStateController : MonoBehaviour
     public Transform _Camera;
     public PlayerHitbox[] hitboxes = new PlayerHitbox[0];
 
+    // Abilities
+    [HideInInspector] public IAbility _AbilityScript1;
+    [HideInInspector] public IAbility _AbilityScript2;
+    [HideInInspector] public SOAbilities _AbilitySO1;
+    [HideInInspector] public SOAbilities _AbilitySO2;
 
     // Used if it auto calls release when reached maxCharge time & next release input is to be ignored
     [HideInInspector] public bool ignoreNextHeavyAttackRelease = false;
@@ -62,14 +68,11 @@ public class PlayerStateController : MonoBehaviour
     {
         _movementComponent = GetComponent<MovementComponent>();
         _dodgeComponent = GetComponent<DodgeComponent>();
-        //_lockOnComponent = GetComponent<PlayerLockOnScript>();
-        _powerComponent = GetComponent<PlayerPowerHandler>();
+        _powerComponent = GetComponent<PlayerAbilitySelector>();
+        _lockOnComponent = GetComponent<PlayerLockOnScript>();
         _hitboxComponent = GetComponentInChildren<PlayerHitbox>();
         _PauseMenu = transform.parent.GetComponentInChildren<PauseMenu>();
-        //_hitboxComponent.gameObject.SetActive(false);
-        //_modelController = GetComponentInChildren<ModelMovement>();
 
-        //_respawnComponent = GetComponent<PlayerRespawn>();
         _playerAttributes = GetComponent<PlayerAttributes>();
         _modelController = GetComponentInChildren<ModelController>();
 
@@ -78,35 +81,58 @@ public class PlayerStateController : MonoBehaviour
 
         _Rb = GetComponent<Rigidbody>();
         _playerCamera = _Camera.GetComponentInParent<PlayerCamera>();
+
+        // Add Abilities
+        GetComponent<PlayerAbilitySelector>().SetupAbilities(this);
     }
 
+    #region Inputs
     // List for inputs
     private void OnCamera(InputValue ctx) => mouseInput = ctx.Get<Vector2>();
     private void OnMovement(InputValue ctx) => moveRawInput = ctx.Get<Vector2>();
     private void OnDodge(InputValue ctx) => dodgeInput = ctx.Get<float>();
-    private void OnAbility1(InputValue ctx) => ability1input = ctx.Get<float>();
-    private void OnAbility2(InputValue ctx) => ability2input = ctx.Get<float>();
-    private void OnLightAttack(InputValue ctx) => lightAttackinput = ctx.Get<float>();
+    private void OnAbility1(InputValue ctx)
+    {
+        // AbilityState is on cooldown
+        if (AbilityStateReturnDelay > Time.time)
+            return;
+
+        ability1input = ctx.Get<float>();
+    }
+    private void OnAbility2(InputValue ctx)
+    {
+        // AbilityState is on cooldown
+        if (AbilityStateReturnDelay > Time.time)
+            return;
+
+        ability2input = ctx.Get<float>();
+    }
+    private void OnLightAttack(InputValue ctx)
+    {
+        // AttackState is on cooldown
+        if (AttackStateReturnDelay > Time.time)
+            return;
+
+        lightAttackinput = ctx.Get<float>();
+    }
     private void OnHeavyAttack(InputValue ctx)
     {
-        heavyAttackinput = ctx.Get<float>();
-
+        // Already played heavy release so ignore the next one
         if (ignoreNextHeavyAttackRelease == true && heavyAttackinput == 0)
         {
-            heavyAttackinput = -1.0f;
             ignoreNextHeavyAttackRelease = false;
+            return;
         }
+
+        // AttackState is on cooldown
+        if (AttackStateReturnDelay > Time.time)
+            return;
+
+        heavyAttackinput = ctx.Get<float>();
     }
     private void OnPause() => _PauseMenu.TogglePause();
     private void OnAnyInput() => LastInputTime = Time.time;
-
-    public void clearAttackInputs()
-    {
-        ability1input = -1.0f;
-        ability2input = -1.0f;
-        lightAttackinput = -1.0f;
-        heavyAttackinput = -1.0f;
-    }
+    #endregion
 
     public Type stunnedOrDeadCheck()
     {
@@ -125,10 +151,13 @@ public class PlayerStateController : MonoBehaviour
         return null;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         RotateMoveInputToCamera();
+    }
 
+    private void FixedUpdate()
+    {
         if (moveInput.magnitude != 0 || mouseInput.magnitude != 0)
         {
             LastInputTime = Time.time;
@@ -152,6 +181,7 @@ public class PlayerStateController : MonoBehaviour
             {typeof(DodgeState), new DodgeState(controller:this) },
             {typeof(StunnedState), new StunnedState(controller:this) },
             {typeof(AttackState), new AttackState(controller:this) },
+            {typeof(AbilityState), new AbilityState(controller:this) },
             {typeof(DeathState), new DeathState(controller:this) }
         };
 
