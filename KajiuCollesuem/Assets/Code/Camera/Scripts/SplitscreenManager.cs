@@ -8,18 +8,24 @@ using UnityEngine.UI;
 
 public class SplitscreenManager : MonoBehaviour
 {
-    public Camera[] playerCam;
+    public List<Camera> playerCams = new List<Camera>();
 
     public bool isHorizontalSplit;
 
-    public void SetSplitScreen()
+    public void SetSplitScreen(MatchManager pManager)
     {
+        foreach(GameObject player in pManager.spawnPlayerScript.players)
+        {
+            Camera getCam = player.GetComponentInChildren<Camera>();
+            playerCams.Add(getCam);
+        }
+
         //Player 1 Camera settings when Horizontal.
-        playerCam[0].rect = new Rect(0.5f, 0.0f, 0.5f, 1.0f);
-        playerCam[0].fieldOfView = 55;
+        playerCams[0].rect = new Rect(0.5f, 0.0f, 0.5f, 1.0f);
+        playerCams[0].fieldOfView = 55;
 
         //Player 2 Camera settings when Horizontal.
-        playerCam[1].rect = new Rect(0.0f, 0.0f, 0.5f, 1.0f);
-        playerCam[1].fieldOfView = 55;
+        playerCams[1].rect = new Rect(0.0f, 0.0f, 0.5f, 1.0f);
+        playerCams[1].fieldOfView = 55;
     }
 }

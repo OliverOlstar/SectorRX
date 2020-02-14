@@ -42,6 +42,6 @@ public class MatchManager : MonoBehaviour
         cinemaCam.gameObject.SetActive(false);
 
         spawnPlayerScript.SpawnAllPlayers();
+        splitscreenScript.SetSplitScreen(this);
     }
 }
-    
