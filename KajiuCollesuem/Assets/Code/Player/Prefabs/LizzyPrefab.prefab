@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &220310434
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 220310435}
+  m_Layer: 0
+  m_Name: MouthMuzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &220310435
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220310434}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.22, z: 1.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8407431194063596713}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &458376432038671886
 GameObject:
   m_ObjectHideFlags: 0
@@ -45,7 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 521e52a9b67369346810e5cf0fa30afc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Attacker: {fileID: 0}
+  _Attacker: {fileID: 6237853051496095961}
 --- !u!114 &9147673084591073428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 521e52a9b67369346810e5cf0fa30afc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Attacker: {fileID: 0}
+  _Attacker: {fileID: 6237853051496095961}
 --- !u!114 &601797382433172791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,6 +352,7 @@ GameObject:
   - component: {fileID: 6237853051496095936}
   - component: {fileID: 6237853051496095938}
   - component: {fileID: 5855493607624095741}
+  - component: {fileID: 3761404212161874916}
   m_Layer: 8
   m_Name: LizzyPrefab
   m_TagString: Untagged
@@ -389,16 +420,20 @@ MonoBehaviour:
   onGround: 0
   Stunned: 0
   AttackStateReturnDelay: 0
+  AbilityStateReturnDelay: 0
   LastInputTime: 0
   mouseInput: {x: 0, y: 0}
   moveInput: {x: 0, y: 0, z: 0}
   moveRawInput: {x: 0, y: 0}
   LastMoveDirection: {x: 0, y: 0}
   dodgeInput: -1
+  ability1input: -1
+  ability2input: -1
   lightAttackinput: -1
   heavyAttackinput: -1
   _stateMachine: {fileID: 0}
   _dodgeComponent: {fileID: 0}
+  _lockOnComponent: {fileID: 0}
   _powerComponent: {fileID: 0}
   _hitboxComponent: {fileID: 0}
   _PauseMenu: {fileID: 0}
@@ -411,6 +446,8 @@ MonoBehaviour:
   hitboxes:
   - {fileID: 7054537673967102359}
   - {fileID: 1793214009718780975}
+  _AbilitySO1: {fileID: 0}
+  _AbilitySO2: {fileID: 0}
   ignoreNextHeavyAttackRelease: 0
 --- !u!114 &6237853051496095966
 MonoBehaviour:
@@ -573,6 +610,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SlideControl: {fileID: 0}
+--- !u!114 &3761404212161874916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6237853051496095961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a868a39ca9eadb649b8f999bbab85f7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ability1: 0
+  ability2: 0
+  _AbilitySO:
+  - {fileID: 11400000, guid: 487042729fbbffe40804d11e78bc9536, type: 2}
+  _plasmaBreathPrefab: {fileID: 1601903843534470252, guid: dc52f3e137c83ac4494fcd01d6979b85,
+    type: 3}
+  _mouthMuzzle: {fileID: 220310435}
 --- !u!1001 &6791725013134994061
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -652,27 +708,33 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: f0ead578157f62a4182962d7f29e9489, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ed2f2e2eac7b1948a0a3fa7cd9cc837, type: 3}
---- !u!4 &3770770686514023451 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7644150204669896342, guid: 7ed2f2e2eac7b1948a0a3fa7cd9cc837,
-    type: 3}
-  m_PrefabInstance: {fileID: 6791725013134994061}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6982009087824696587 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4709611067718959226, guid: 7ed2f2e2eac7b1948a0a3fa7cd9cc837,
     type: 3}
   m_PrefabInstance: {fileID: 6791725013134994061}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1962365630503076247 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 7ed2f2e2eac7b1948a0a3fa7cd9cc837,
-    type: 3}
-  m_PrefabInstance: {fileID: 6791725013134994061}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3269860703380747140 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 7ed2f2e2eac7b1948a0a3fa7cd9cc837,
+    type: 3}
+  m_PrefabInstance: {fileID: 6791725013134994061}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3770770686514023451 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7644150204669896342, guid: 7ed2f2e2eac7b1948a0a3fa7cd9cc837,
+    type: 3}
+  m_PrefabInstance: {fileID: 6791725013134994061}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8407431194063596713 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3092917181847504420, guid: 7ed2f2e2eac7b1948a0a3fa7cd9cc837,
+    type: 3}
+  m_PrefabInstance: {fileID: 6791725013134994061}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1962365630503076247 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 7ed2f2e2eac7b1948a0a3fa7cd9cc837,
     type: 3}
   m_PrefabInstance: {fileID: 6791725013134994061}
   m_PrefabAsset: {fileID: 0}
