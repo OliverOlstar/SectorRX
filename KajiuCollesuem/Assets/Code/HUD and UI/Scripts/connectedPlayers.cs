@@ -2,10 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 /*Programmer: Scott Watman
  Additional Programmer(s): Oliver Loescher
  Description: Allows multiple players to connect and play the game*/
+
+public struct UsedDevices
+{
+    public int deviceUser;
+    public int playerIndex;
+    //Add Colour variable
+    //Add Ability Presets variable
+}
 
 public class connectedPlayers : MonoBehaviour
 {
@@ -13,6 +22,8 @@ public class connectedPlayers : MonoBehaviour
     public static int playersToSpawn = 0;
     public bool canJoin;
     private List<int> playerSlots = new List<int>(){0, 1, 2, 3, 4, 5, 6, 7, 8};
+    public static List<UsedDevices> playerIndex = new List<UsedDevices>();
+
     [SerializeField] private DeviceHandler[] _Devices; 
     [SerializeField] private Text _PlayerCount;
     [SerializeField] private Panels[] playerPanels;
@@ -24,7 +35,7 @@ public class connectedPlayers : MonoBehaviour
     }
 
     public void EnableJoin()
-    {
+    { 
         if(!canJoin)
             canJoin = true;
     }
@@ -36,6 +47,19 @@ public class connectedPlayers : MonoBehaviour
         foreach(DeviceHandler d in _Devices)
         {
             d.OnLeaving();
+        }
+    }
+
+    //Check user device index and set struct ints to user number
+    public void SetPlayerOrder()
+    {
+        playerIndex.Clear();
+        foreach (DeviceHandler d in _Devices)
+        {
+            UsedDevices user = new UsedDevices();
+            user.deviceUser = d.GetComponent<PlayerInput>().user.index;
+            user.playerIndex = d.GetPlayerIndex();
+            playerIndex.Add(user);
         }
     }
 

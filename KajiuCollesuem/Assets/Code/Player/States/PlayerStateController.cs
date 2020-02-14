@@ -88,10 +88,10 @@ public class PlayerStateController : MonoBehaviour
 
     #region Inputs
     // List for inputs
-    private void OnCamera(InputValue ctx) => mouseInput = ctx.Get<Vector2>();
-    private void OnMovement(InputValue ctx) => moveRawInput = ctx.Get<Vector2>();
-    private void OnDodge(InputValue ctx) => dodgeInput = ctx.Get<float>();
-    private void OnAbility1(InputValue ctx)
+    public void OnCamera(InputValue ctx) => mouseInput = ctx.Get<Vector2>();
+    public void OnMovement(InputValue ctx) => moveRawInput = ctx.Get<Vector2>();
+    public void OnDodge(InputValue ctx) => dodgeInput = ctx.Get<float>();
+    public void OnAbility1(InputValue ctx)
     {
         // AbilityState is on cooldown
         if (AbilityStateReturnDelay > Time.time)
@@ -99,7 +99,7 @@ public class PlayerStateController : MonoBehaviour
 
         ability1input = ctx.Get<float>();
     }
-    private void OnAbility2(InputValue ctx)
+    public void OnAbility2(InputValue ctx)
     {
         // AbilityState is on cooldown
         if (AbilityStateReturnDelay > Time.time)
@@ -107,7 +107,7 @@ public class PlayerStateController : MonoBehaviour
 
         ability2input = ctx.Get<float>();
     }
-    private void OnLightAttack(InputValue ctx)
+    public void OnLightAttack(InputValue ctx)
     {
         // AttackState is on cooldown
         if (AttackStateReturnDelay > Time.time)
@@ -115,7 +115,7 @@ public class PlayerStateController : MonoBehaviour
 
         lightAttackinput = ctx.Get<float>();
     }
-    private void OnHeavyAttack(InputValue ctx)
+    public void OnHeavyAttack(InputValue ctx)
     {
         // Already played heavy release so ignore the next one
         if (ignoreNextHeavyAttackRelease == true && heavyAttackinput == 0)
@@ -130,8 +130,8 @@ public class PlayerStateController : MonoBehaviour
 
         heavyAttackinput = ctx.Get<float>();
     }
-    private void OnPause() => _PauseMenu.TogglePause();
-    private void OnAnyInput() => LastInputTime = Time.time;
+    public void OnPause() => _PauseMenu.TogglePause();
+    public void OnAnyInput() => LastInputTime = Time.time;
     #endregion
 
     public Type stunnedOrDeadCheck()

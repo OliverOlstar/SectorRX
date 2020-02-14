@@ -41,11 +41,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5010724986721657826}
     m_Modifications:
-    - target: {fileID: 5855493607624095741, guid: 90478746071ba814b840be6b3a4e3790,
-        type: 3}
-      propertyPath: _SlideControl
-      value: 
-      objectReference: {fileID: 4669154754747862005}
     - target: {fileID: 6237853051496095936, guid: 90478746071ba814b840be6b3a4e3790,
         type: 3}
       propertyPath: sliderControl
@@ -61,11 +56,6 @@ PrefabInstance:
       propertyPath: _Camera
       value: 
       objectReference: {fileID: 826624172036830273}
-    - target: {fileID: 6237853051496095938, guid: 90478746071ba814b840be6b3a4e3790,
-        type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 5817557970488246002}
     - target: {fileID: 6237853051496095961, guid: 90478746071ba814b840be6b3a4e3790,
         type: 3}
       propertyPath: m_Name
@@ -140,18 +130,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3055066986577872130}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9003972669627803072 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6237853051496095938, guid: 90478746071ba814b840be6b3a4e3790,
-    type: 3}
-  m_PrefabInstance: {fileID: 3055066986577872130}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9003972669627803099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &505854242393421446 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3269860703380747140, guid: 90478746071ba814b840be6b3a4e3790,
@@ -467,7 +445,7 @@ PrefabInstance:
         type: 3}
       propertyPath: pInput
       value: 
-      objectReference: {fileID: 9003972669627803072}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e749edb956cb680429bf63991e3bda43, type: 3}
 --- !u!224 &6151755311178539285 stripped

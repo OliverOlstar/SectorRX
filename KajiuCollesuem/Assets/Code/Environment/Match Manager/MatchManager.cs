@@ -11,6 +11,7 @@ using UnityEngine.UI;
 
 public class MatchManager : MonoBehaviour
 {
+    public Camera cinemaCam;
     public PlayerSpawn spawnPlayerScript;
     public SplitscreenManager splitscreenScript;
     public SpawnRandomEnemies[] spawnEnemyScript;
@@ -23,6 +24,7 @@ public class MatchManager : MonoBehaviour
             cluster.SpawnEnemies();
         }
 
+        StartCoroutine("CinemaOff");
         spawnPlayerScript.MatchStartup();
     }
 
@@ -30,6 +32,16 @@ public class MatchManager : MonoBehaviour
     {
         spawnLavaScript.lavaTimer();
         spawnPlayerScript.MatchEnd();
+    }
+
+    IEnumerator CinemaOff()
+    {
+        //Wait for three seconds then turn off camera (simulates cinematic camera).
+        Cursor.lockState = CursorLockMode.Locked;
+        yield return new WaitForSeconds(3.0f);
+        cinemaCam.gameObject.SetActive(false);
+
+        spawnPlayerScript.SpawnAllPlayers();
     }
 }
     

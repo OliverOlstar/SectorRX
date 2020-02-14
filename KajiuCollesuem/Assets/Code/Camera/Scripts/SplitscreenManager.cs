@@ -12,45 +12,14 @@ public class SplitscreenManager : MonoBehaviour
 
     public bool isHorizontalSplit;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //If the 'O' Key is pressed, camera values change which changes splitscreen style.
-        if(Input.GetKeyDown(KeyCode.O))
-        {
-            isHorizontalSplit = !isHorizontalSplit;
-            
-            SetSplitScreen();
-        }
-    }
-
     public void SetSplitScreen()
     {
-        if(isHorizontalSplit)
-        {
-            //Player 1 Camera settings when Horizontal.
-            playerCam[0].rect = new Rect(0.0f, 0.0f, 1.0f, 0.5f);
-            playerCam[0].fieldOfView = 35;
+        //Player 1 Camera settings when Horizontal.
+        playerCam[0].rect = new Rect(0.5f, 0.0f, 0.5f, 1.0f);
+        playerCam[0].fieldOfView = 55;
 
-            //Player 2 Camera settings when Horizontal.
-            playerCam[1].rect = new Rect(0.0f, 0.5f, 1.0f, 0.5f);
-            playerCam[1].fieldOfView = 35;
-        }
-        else
-        {
-            //Player 1 Camera settings when Horizontal.
-            playerCam[0].rect = new Rect(0.5f, 0.0f, 0.5f, 1.0f);
-            playerCam[0].fieldOfView = 55;
-
-            //Player 2 Camera settings when Horizontal.
-            playerCam[1].rect = new Rect(0.0f, 0.0f, 0.5f, 1.0f);
-            playerCam[1].fieldOfView = 55;
-        }
+        //Player 2 Camera settings when Horizontal.
+        playerCam[1].rect = new Rect(0.0f, 0.0f, 0.5f, 1.0f);
+        playerCam[1].fieldOfView = 55;
     }
 }

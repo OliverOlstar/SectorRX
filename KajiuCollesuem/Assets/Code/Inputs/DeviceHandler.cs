@@ -32,6 +32,18 @@ public class DeviceHandler : MonoBehaviour
         }
     }
 
+    public int GetPlayerIndex()
+    {
+        if(playerPanel == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return playerPanel.PlayerLeft();
+        }
+    }
+
     private void OnColorPicking()
     {
         //if (playerPanel)
