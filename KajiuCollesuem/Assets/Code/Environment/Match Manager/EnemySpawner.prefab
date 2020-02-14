@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 821510528579551143}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -31.6, y: 1.67, z: -35.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f4ceabbb4a11344bc8f5a008237dd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyToSpawn: {fileID: 5353426269315732340, guid: 9831af13c83fc174d8bfc852b13a1aa3,
+  enemyToSpawn: {fileID: 8591727565542770311, guid: 2d5a8e544e5092341ac064a73afeb473,
     type: 3}
   _enemySpawnPoints: []
-  enemySpawnCount: 12
+  enemySpawnCount: 2
 --- !u!1 &821510529084528520
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,10 +57,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 821510529084528521}
+  - component: {fileID: 3220523319211569411}
   m_Layer: 0
   m_Name: SpawnPoint(Enemy)
   m_TagString: Untagged
-  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -72,9 +73,22 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 821510529084528520}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 7.28}
+  m_LocalPosition: {x: 0, y: 0, z: 3.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 821510528579551140}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3220523319211569411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821510529084528520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f8aca1855b9e674b96a9bb76d0ef4c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 0, b: 0, a: 1}
