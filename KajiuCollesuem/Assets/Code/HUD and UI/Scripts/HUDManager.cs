@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem.UI;
-using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 
 public class HUDManager : MonoBehaviour
@@ -11,26 +10,22 @@ public class HUDManager : MonoBehaviour
     //public RectTransform pauseMenu, optionsMenu, powerMenu, skillMenu;
     public GameObject pause, /*option, ability, videoOP, audioOP gameplayOP,*/ cellUI, powerUpgrade, statUpgrade, powerSelect;
     public GameObject resumeButton;
-    public GameObject nextButton;
     public GameObject targetUI;
     public Slider cellExp;
-    public bool canUpgrade;
-    public bool inUpgrades;
-    public Text cellCount, upgradeReady, upCellCount;
+    public Text cellCount, canUpgrade, upCellCount;
 
     //Booleans to check if Cell UI or Power Core UI are already active when collecting other item
     public bool cellUIOn;
     public int cellCounter;
 
     public PauseMenu pauseMenu;
-    public PlayerInput pInput;
     [SerializeField] private PlayerCamera mainCam;
 
     private void Start()
     {
         //option.SetActive(false);
         //ability.SetActive(false);
-        pInput = transform.parent.GetComponentInChildren<PlayerInput>();
+
         powerUpgrade.SetActive(false);
         statUpgrade.SetActive(false);
 
@@ -41,13 +36,11 @@ public class HUDManager : MonoBehaviour
     {
         if(cellExp.value >= 100)
         {
-            upgradeReady.gameObject.SetActive(true);
-            canUpgrade = true;
+            canUpgrade.gameObject.SetActive(true);
         }
         else
         {
-            canUpgrade = false;
-            upgradeReady.gameObject.SetActive(false);
+            canUpgrade.gameObject.SetActive(false);
         }
 
         if (targetUI != null)
@@ -61,27 +54,6 @@ public class HUDManager : MonoBehaviour
         {
             EventSystem.current.SetSelectedGameObject(resumeButton);
             pauseMenu.hasPaused = false;
-        }
-    }
-
-    public void OpenUpgrade()
-    {
-        inUpgrades = !inUpgrades;
-
-        if(canUpgrade && inUpgrades)
-        {
-            statUpgrade.gameObject.SetActive(true);
-            pInput.SwitchCurrentActionMap("PauseScreen");
-            EventSystem.current.SetSelectedGameObject(nextButton);
-            cellExp.gameObject.SetActive(false);
-            upgradeReady.gameObject.SetActive(false);
-        }
-        else
-        {
-            pInput.SwitchCurrentActionMap("Player");
-            cellExp.gameObject.SetActive(true);
-            upgradeReady.gameObject.SetActive(true);
-            statUpgrade.gameObject.SetActive(false);
         }
     }
 
@@ -101,6 +73,7 @@ public class HUDManager : MonoBehaviour
     //Navigate between upgrade Menus
     public void goPowUpgrade(GameObject pTarget)
     {
+        pause.SetActive(false);
         statUpgrade.SetActive(false);
         powerUpgrade.SetActive(true);
         targetUI = pTarget;
@@ -143,6 +116,5 @@ public class HUDManager : MonoBehaviour
     public void ResumeGame()
     {
         pauseMenu.TogglePause();
-        powerUpgrade.SetActive(false);
     }
 }

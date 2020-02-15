@@ -20,24 +20,11 @@ public class PlayerCollectibles : MonoBehaviour
     {
         cellAmount += 10;
         
-        if(cellAmount <= 100)
+        if(cellAmount >= 100)
         {
-            _SlideControl.UpdateBars(3, cellAmount);
-        }
-        
-        if(cellAmount > 100 && cellAmount <= 200)
-        {
-            _SlideControl.UpdateBars(4, cellAmount);
+            cellAmount = 100;
         }
 
-        if(cellAmount > 200 && cellAmount < 300)
-        {
-            _SlideControl.UpdateBars(5, cellAmount);
-        }
-
-        if(cellAmount >= 300)
-        {
-            cellAmount = 300;
-        }
+        _SlideControl.UpdateBars(3, cellAmount);
     }
 }

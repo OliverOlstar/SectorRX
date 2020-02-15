@@ -42,7 +42,6 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public PlayerAbilitySelector _powerComponent;
     [HideInInspector] public PlayerHitbox _hitboxComponent;
     [HideInInspector] public PauseMenu _PauseMenu;
-    [HideInInspector] public HUDManager _Upgrade;
 
     [HideInInspector] public PlayerAttributes _playerAttributes;
     [HideInInspector] public ModelController _modelController;
@@ -73,9 +72,6 @@ public class PlayerStateController : MonoBehaviour
         _lockOnComponent = GetComponent<PlayerLockOnScript>();
         _hitboxComponent = GetComponentInChildren<PlayerHitbox>();
         _PauseMenu = transform.parent.GetComponentInChildren<PauseMenu>();
-        _Upgrade = transform.parent.GetComponentInChildren<HUDManager>();
-        //_hitboxComponent.gameObject.SetActive(false);
-        //_modelController = GetComponentInChildren<ModelMovement>();
 
         _playerAttributes = GetComponent<PlayerAttributes>();
         _modelController = GetComponentInChildren<ModelController>();
@@ -154,8 +150,6 @@ public class PlayerStateController : MonoBehaviour
 
         return null;
     }
-
-    //private void OnUpgrade() => _Upgrade.OpenUpgrade();
 
     private void Update()
     {

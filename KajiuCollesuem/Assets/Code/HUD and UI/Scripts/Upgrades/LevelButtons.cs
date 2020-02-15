@@ -32,10 +32,10 @@ public class LevelButtons : MonoBehaviour
         powerUpgrade.HoverStatButton(index, level, transform.position.y);
     }
 
-    //public void HoverPowerButton()
-    //{
-    //    powerUpgrade.HoverPowerButton(index, level, transform.position.y);
-    //}
+    public void HoverPowerButton()
+    {
+        powerUpgrade.HoverPowerButton(index, level, transform.position.y);
+    }
 
     public void HoverExit()
     {

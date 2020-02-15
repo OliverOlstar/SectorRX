@@ -145,6 +145,8 @@ public class PlayerSpawn : MonoBehaviour
 
     IEnumerator VictoryReset()
     {
+        Debug.Log("I REMOVED THIS");
+
         yield return new WaitForSeconds(4.0f);
         
         if (connectedPlayers.playersToSpawn > 1)
