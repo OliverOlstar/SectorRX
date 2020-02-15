@@ -34,6 +34,7 @@ public class connectedPlayers : MonoBehaviour
     {
         playersConnected--;
         playersToSpawn--;
+        _AddPlayer.PlayerLeaves();
         Debug.Log("OnPlayerLeaves " + playersConnected);
         playerCount.text = "Number of Players: " + playersConnected.ToString();
     }
