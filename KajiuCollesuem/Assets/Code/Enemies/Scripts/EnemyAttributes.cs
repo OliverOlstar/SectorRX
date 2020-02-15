@@ -87,11 +87,6 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         if (_decision != null)
             _decision.ForceStateSwitch(_deadState);
 
-        _playerHUD.cellUIOn = true;
-        _playerHUD.cellUI.SetActive(true);
-        _playerHUD.cellCounter = _playerHUD.cellCounter + 150;
-        _playerHUD.SetCellCount();
-
         // If I was summoned
         if (_mySummoner != null)
             _mySummoner.GruntDied();

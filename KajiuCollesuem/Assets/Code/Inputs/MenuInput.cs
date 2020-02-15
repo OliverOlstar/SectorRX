@@ -25,6 +25,30 @@ public class @MenuInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Joining"",
+                    ""type"": ""Button"",
+                    ""id"": ""77d10590-8300-46b8-8eb6-f3bc7248f920"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Leaving"",
+                    ""type"": ""Button"",
+                    ""id"": ""b865d8cb-87fb-4985-a7fe-ac2b74c6ac62"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ColorPicking"",
+                    ""type"": ""Button"",
+                    ""id"": ""861cc70c-4fea-440c-b305-8509a100074e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -93,6 +117,72 @@ public class @MenuInput : IInputActionCollection, IDisposable
                     ""action"": ""MenuMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""00808c14-dd44-4497-80a8-903dbc1ec792"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Joining"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""46f23923-e550-4e05-8521-8df3589226a8"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Joining"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3e3aa30e-824d-48f0-84a9-d3268ce443d7"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Leaving"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ebff31b7-1090-4388-815a-90dd8cc6a2dd"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Leaving"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""217d3596-0e10-4f34-9b04-3a1501b08134"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ColorPicking"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""93f0e5d1-bebe-4da6-aebb-13bb7b232b6b"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ColorPicking"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -130,6 +220,9 @@ public class @MenuInput : IInputActionCollection, IDisposable
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_MenuMovement = m_Menu.FindAction("MenuMovement", throwIfNotFound: true);
+        m_Menu_Joining = m_Menu.FindAction("Joining", throwIfNotFound: true);
+        m_Menu_Leaving = m_Menu.FindAction("Leaving", throwIfNotFound: true);
+        m_Menu_ColorPicking = m_Menu.FindAction("ColorPicking", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -180,11 +273,17 @@ public class @MenuInput : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Menu;
     private IMenuActions m_MenuActionsCallbackInterface;
     private readonly InputAction m_Menu_MenuMovement;
+    private readonly InputAction m_Menu_Joining;
+    private readonly InputAction m_Menu_Leaving;
+    private readonly InputAction m_Menu_ColorPicking;
     public struct MenuActions
     {
         private @MenuInput m_Wrapper;
         public MenuActions(@MenuInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @MenuMovement => m_Wrapper.m_Menu_MenuMovement;
+        public InputAction @Joining => m_Wrapper.m_Menu_Joining;
+        public InputAction @Leaving => m_Wrapper.m_Menu_Leaving;
+        public InputAction @ColorPicking => m_Wrapper.m_Menu_ColorPicking;
         public InputActionMap Get() { return m_Wrapper.m_Menu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -197,6 +296,15 @@ public class @MenuInput : IInputActionCollection, IDisposable
                 @MenuMovement.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnMenuMovement;
                 @MenuMovement.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnMenuMovement;
                 @MenuMovement.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnMenuMovement;
+                @Joining.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnJoining;
+                @Joining.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnJoining;
+                @Joining.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnJoining;
+                @Leaving.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnLeaving;
+                @Leaving.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnLeaving;
+                @Leaving.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnLeaving;
+                @ColorPicking.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnColorPicking;
+                @ColorPicking.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnColorPicking;
+                @ColorPicking.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnColorPicking;
             }
             m_Wrapper.m_MenuActionsCallbackInterface = instance;
             if (instance != null)
@@ -204,6 +312,15 @@ public class @MenuInput : IInputActionCollection, IDisposable
                 @MenuMovement.started += instance.OnMenuMovement;
                 @MenuMovement.performed += instance.OnMenuMovement;
                 @MenuMovement.canceled += instance.OnMenuMovement;
+                @Joining.started += instance.OnJoining;
+                @Joining.performed += instance.OnJoining;
+                @Joining.canceled += instance.OnJoining;
+                @Leaving.started += instance.OnLeaving;
+                @Leaving.performed += instance.OnLeaving;
+                @Leaving.canceled += instance.OnLeaving;
+                @ColorPicking.started += instance.OnColorPicking;
+                @ColorPicking.performed += instance.OnColorPicking;
+                @ColorPicking.canceled += instance.OnColorPicking;
             }
         }
     }
@@ -229,5 +346,8 @@ public class @MenuInput : IInputActionCollection, IDisposable
     public interface IMenuActions
     {
         void OnMenuMovement(InputAction.CallbackContext context);
+        void OnJoining(InputAction.CallbackContext context);
+        void OnLeaving(InputAction.CallbackContext context);
+        void OnColorPicking(InputAction.CallbackContext context);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 /*Programmer: Scott Watman
  Additional Programmer(s): Oliver Loescher, Kavian Kermani
@@ -11,26 +12,33 @@ using UnityEngine.SceneManagement;
 
 public class PlayerSpawn : MonoBehaviour
 {
-    public Camera cinemaCam;
     public GameObject playerPrefab;
     public List<GameObject> players = new List<GameObject>();
 
     public MusicManager musicManager;
-    public List<Transform> fourPlayerSpawns = new List<Transform>();
-    public List<Transform> ninePlayerSpawns = new List<Transform>();
+    public List<Transform> playerSpawns = new List<Transform>();
     private int _SpawnPointIndex;
+    [SerializeField] private MatchInputHandler[] _PlayerInputs = new MatchInputHandler[9];
+    private List<MatchInputHandler> _ActiveInputs = new List<MatchInputHandler>();
 
     [SerializeField] private Color[] boarderColors = new Color[9];
 
     public void MatchStartup()
     {
-        StartCoroutine("CameraSwitch");
-
         //If no players are entered, automatically set to 1.
         if (connectedPlayers.playersToSpawn <= 0)
         {
             connectedPlayers.playersToSpawn = 2;
             connectedPlayers.playersConnected = 2;
+            
+            connectedPlayers.playerIndex.Clear();
+            UsedDevices player = new UsedDevices();
+            player.deviceUser = 0;
+            player.playerIndex = 0;
+            connectedPlayers.playerIndex.Add(player);
+            player.deviceUser = 1;
+            player.playerIndex = 1;
+            connectedPlayers.playerIndex.Add(player);
         }
 
         //Sets number of connected players equal to how many need to be spawned. Helps with match restarts after a player wins.
@@ -50,54 +58,72 @@ public class PlayerSpawn : MonoBehaviour
 
     public void MatchEnd()
     {
-        //Debug.Log(connectedPlayers.playersToSpawn);
-        //Debug.Log(connectedPlayers.playersConnected);
-
         if (connectedPlayers.playersConnected <= 1)
         {
             StartCoroutine("VictoryReset");
         }
     }
 
-    //Waits three seconds then spawns players in one of the avaiable locations randomly (only one player per location).
-    IEnumerator CameraSwitch()
+    public void InputSetup()
     {
-        //Wait for three seconds then turn off camera (simulates cinematic camera).
-        Cursor.lockState = CursorLockMode.Locked;
-        yield return new WaitForSeconds(3.0f);
-        cinemaCam.gameObject.SetActive(false); 
-
-        //Spawn number of connected players.
-        Debug.Log("Spawning " + connectedPlayers.playersToSpawn + " players");
+        //Find required number of players to spawn
         for (int i = 0; i < connectedPlayers.playersToSpawn; i++)
         {
-            //Checks if there are enough spawn points to use for all players.
-            if (fourPlayerSpawns.Count <= 0 || ninePlayerSpawns.Count <= 0)
+            //Check each connected players device index from Main Menu scene
+            for (int j = 0; j < connectedPlayers.playerIndex.Count; j++)
             {
-                yield return false;
-            }
-
-            //If 4 or less players connected, access the list of 4 spawn points and randomly spawn players at those listed locations.
-            if (connectedPlayers.playersConnected <= 4)
-            {
-                _SpawnPointIndex = Random.Range(0, fourPlayerSpawns.Count);
-                Transform _FourSpawnPos = fourPlayerSpawns[_SpawnPointIndex];
-                fourPlayerSpawns.RemoveAt(_SpawnPointIndex);
-                players.Add(Instantiate(playerPrefab, _FourSpawnPos.position, _FourSpawnPos.rotation));
-                //musicManager.battleMusic[0].Play();
-            }
-
-            //If 5 or more players connected, access the list of 8 spawn points and randomly spawn players at those listed locations.
-            else if (connectedPlayers.playersConnected >= 5)
-            {
-                _SpawnPointIndex = Random.Range(0, ninePlayerSpawns.Count);
-                Transform _EightSpawnPos = ninePlayerSpawns[_SpawnPointIndex];
-                ninePlayerSpawns.RemoveAt(_SpawnPointIndex);
-                players.Add(Instantiate(playerPrefab, _EightSpawnPos.position, _EightSpawnPos.rotation));
-                //musicManager.battleMusic[0].Play();
+                //Set devices in Game Scene as same order as Main Menu scene
+                if (connectedPlayers.playerIndex[j].playerIndex == i)
+                {
+                    //Check all devices for ones that match user index
+                    foreach (MatchInputHandler input in _PlayerInputs)
+                    {
+                        if (input.GetComponent<PlayerInput>().user.index == connectedPlayers.playerIndex[j].deviceUser)
+                        {
+                            _ActiveInputs.Add(input);
+                            break;
+                        }
+                    }
+                    break;
+                }
             }
         }
+    }
 
+    public void DisableUnusedDevices()
+    {
+        //Disable InputHandlers that aren't connected to a player
+        foreach(MatchInputHandler input in _PlayerInputs)
+        {
+            if (input.playerStateController == null)
+                input.gameObject.SetActive(false);
+        }
+    }
+
+    //Waits three seconds then spawns players in one of the avaiable locations randomly (only one player per location).
+    public void SpawnAllPlayers()
+    {
+        //Spawn number of connected players.
+        Debug.Log("Spawning " + connectedPlayers.playersToSpawn + " players");
+
+        if (playerSpawns.Count < connectedPlayers.playersToSpawn)
+        {
+            Debug.Log("Not enough spawnpoints available");
+            return;
+        }
+
+        InputSetup();
+
+        // Randomly spawn players at listed locations.
+        SpawnPlayers();
+
+        SetHUDBoarders();
+
+        DisableUnusedDevices();
+    }
+
+    private void SetHUDBoarders()
+    {
         BorderChange border;
         for (int i  = 0; i < players.Count; i++)
         {
@@ -110,38 +136,22 @@ public class PlayerSpawn : MonoBehaviour
         }
     }
 
-    //For when other scripts need to reference.
-    //public void SpawnPlayer()
-    //{
-    //    cinemaCam.gameObject.SetActive(false);
+    private void SpawnPlayers()
+    {
+        for (int i = 0; i < connectedPlayers.playersToSpawn; i++)
+        {
+            _SpawnPointIndex = Random.Range(0, (connectedPlayers.playersToSpawn <= 4 ? 4 : 9) - i);
+            Transform _EightSpawnPos = playerSpawns[_SpawnPointIndex];
+            playerSpawns.RemoveAt(_SpawnPointIndex);
+            GameObject playerCharacter = Instantiate(playerPrefab, _EightSpawnPos.position, _EightSpawnPos.rotation);
+            players.Add(playerCharacter);
 
-    //    Debug.Log("Spawning " + connectedPlayers.playersConnected + " players");
-    //    for (int i = 0; i < connectedPlayers.playersConnected; i++)
-    //    {
-    //        if (fourPlayerSpawns.Count <= 0 || ninePlayerSpawns.Count <= 0)
-    //        {
-    //            return;
-    //        }
-
-    //        //If 4 or less players connected, access the list of 4 spawn points and randomly spawn players at those listed locations.
-    //        if (connectedPlayers.playersConnected <= 4)
-    //        {
-    //            _SpawnPointIndex = Random.Range(0, fourPlayerSpawns.Count);
-    //            Transform _FourSpawnPos = fourPlayerSpawns[_SpawnPointIndex];
-    //            fourPlayerSpawns.RemoveAt(_SpawnPointIndex);
-    //            Instantiate(playerPrefab, _FourSpawnPos.position, _FourSpawnPos.rotation);
-    //        }
-
-    //        //If 5 or more players connected, access the list of 8 spawn points and randomly spawn players at those listed locations.
-    //        else if (connectedPlayers.playersConnected >= 5)
-    //        {
-    //            _SpawnPointIndex = Random.Range(0, ninePlayerSpawns.Count);
-    //            Transform _EightSpawnPos = ninePlayerSpawns[_SpawnPointIndex];
-    //            ninePlayerSpawns.RemoveAt(_SpawnPointIndex);
-    //            Instantiate(playerPrefab, _EightSpawnPos.position, _EightSpawnPos.rotation);
-    //        }
-    //    }
-    //}
+            //Taking list of joined players and setting them to their correct device, with inputs enabled
+            playerCharacter.GetComponentInChildren<PlayerStateController>();
+            _ActiveInputs[i].playerStateController = playerCharacter.GetComponentInChildren<PlayerStateController>();
+            //musicManager.battleMusic[0].Play();
+        }
+    }
 
     IEnumerator VictoryReset()
     {
