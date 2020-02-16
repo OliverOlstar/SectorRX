@@ -15,6 +15,8 @@ public class MatchInputHandler : MonoBehaviour
     public void OnAbility2(InputValue ctx) => playerStateController.OnAbility2(ctx);
     public void OnLightAttack(InputValue ctx) => playerStateController.OnLightAttack(ctx);
     public void OnHeavyAttack(InputValue ctx) => playerStateController.OnHeavyAttack(ctx);
+    public void OnJump() => playerStateController.OnJump();
+    public void OnLockOn() => playerStateController.OnLockOn();
     public void OnPause() => playerStateController.OnPause();
     public void OnAnyInput() => playerStateController.OnAnyInput();
     #endregion

@@ -82,7 +82,7 @@ public class PlayerLockOnScript : MonoBehaviour
     }
 
     // Called by InputPlayer
-    private void OnLockOn()
+    public void OnLockOn()
     {
         //Toggle LockOn Camera
         if (_stateController._playerCamera.lockOnTarget == null)

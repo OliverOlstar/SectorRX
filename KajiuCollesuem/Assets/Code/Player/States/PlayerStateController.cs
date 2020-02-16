@@ -130,6 +130,8 @@ public class PlayerStateController : MonoBehaviour
 
         heavyAttackinput = ctx.Get<float>();
     }
+    public void OnJump() => _movementComponent.OnJump();
+    public void OnLockOn() => _lockOnComponent.OnLockOn();
     public void OnPause() => _PauseMenu.TogglePause();
     public void OnAnyInput() => LastInputTime = Time.time;
     #endregion

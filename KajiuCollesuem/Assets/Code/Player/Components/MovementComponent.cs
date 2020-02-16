@@ -42,7 +42,7 @@ public class MovementComponent : MonoBehaviour
         Move();
     }
 
-    private void OnJump()
+    public void OnJump()
     {
         if (_jumpGrace > Time.time && disableMovement == false)
         {
