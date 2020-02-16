@@ -33,8 +33,6 @@ public class PlayerHitbox : MonoBehaviour
 
     private void OnTriggerEnter (Collider other)
     {
-        Debug.Log("Hitbox: OnTriggerEnter");
-
         //Check if collided with an Attributes Script
         IAttributes otherAttributes = other.GetComponent<IAttributes>();
         if (otherAttributes == null)
@@ -52,8 +50,6 @@ public class PlayerHitbox : MonoBehaviour
 
         if (otherAttributes != null && otherAttributes.IsDead() == false && otherAttributes != _playerIAttributes)
         {
-            Debug.Log("Hitbox: OnTriggerEnter hit");
-
             //Damage other
             /*if (*/otherAttributes.TakeDamage(_damage, _knockback, true, _Attacker);//)
                 //If other died and is lockOn target return camera to default

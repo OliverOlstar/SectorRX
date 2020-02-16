@@ -16,6 +16,8 @@ public class PlasmaBreath : MonoBehaviour, IAbility
     // SET IN CODE VARS
     private float _RotateDampening = 3.0f;
 
+    private AbilityState _CurrentState;
+
     public void Init(PlayerStateController pStateController, Transform pMuzzle, GameObject pPrefab)
     {
         _stateController = pStateController;
@@ -28,21 +30,23 @@ public class PlasmaBreath : MonoBehaviour, IAbility
         _SpawnedLaser.gameObject.SetActive(false);
     }
 
-    public void Pressed()
+    public void Pressed(AbilityState pState)
     {
-        this.enabled = true;
+        _CurrentState = pState;
 
         _charging = true;
-        _nextSubStateTime = Time.time + 5;
+        _nextSubStateTime = Time.time + 1;
         _stateController._lockOnComponent.ToggleScopedIn(0.2f);
     }
 
     public void Released()
     {
+        Debug.Log("PlasmaBreath: Released");
+
         // If released while still charging, timer resets to zero.
         if (_charging)
         {
-            _nextSubStateTime = 0;
+            _CurrentState.RequestExitState();
         }
     }
 
@@ -50,7 +54,7 @@ public class PlasmaBreath : MonoBehaviour, IAbility
     {
         Debug.Log("PlasmaBreath: Exit");
         _stateController._lockOnComponent.ToggleScopedIn(1.0f);
-        this.enabled = false;
+        _SpawnedLaser.gameObject.SetActive(false);
     }
 
     public void Upgrade()
@@ -58,7 +62,7 @@ public class PlasmaBreath : MonoBehaviour, IAbility
 
     }
 
-    void Update()
+    public void Tick()
     {
         transform.GetChild(1).GetChild(0).forward = Vector3.Slerp(Horizontalize(transform.GetChild(1).GetChild(0).forward), Horizontalize(_stateController._Camera.forward), Time.deltaTime * _RotateDampening);
 
@@ -70,13 +74,11 @@ public class PlasmaBreath : MonoBehaviour, IAbility
     }
 
     //Sets laser prefab to being active.
-    void ToggleBreath()
+    private void ToggleBreath()
     {
         _SpawnedLaser.gameObject.SetActive(_charging);
         if (_charging == true)
-            _nextSubStateTime = Time.time + 4;
-        else
-            this.enabled = false;
+            _nextSubStateTime = Time.time + 5;
 
         _charging = !_charging;
     }

@@ -58,9 +58,6 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public SOAbilities _AbilitySO1;
     [HideInInspector] public SOAbilities _AbilitySO2;
 
-    // Used if it auto calls release when reached maxCharge time & next release input is to be ignored
-    [HideInInspector] public bool ignoreNextHeavyAttackRelease = false;
-
     //[HideInInspector] public InputPlayer inputs;
     //[HideInInspector] public InputAction.CallbackContext ctx;
 
@@ -117,13 +114,6 @@ public class PlayerStateController : MonoBehaviour
     }
     public void OnHeavyAttack(InputValue ctx)
     {
-        // Already played heavy release so ignore the next one
-        if (ignoreNextHeavyAttackRelease == true && heavyAttackinput == 0)
-        {
-            ignoreNextHeavyAttackRelease = false;
-            return;
-        }
-
         // AttackState is on cooldown
         if (AttackStateReturnDelay > Time.time)
             return;
@@ -136,6 +126,7 @@ public class PlayerStateController : MonoBehaviour
     public void OnAnyInput() => LastInputTime = Time.time;
     #endregion
 
+    #region StateChecks
     public Type stunnedOrDeadCheck()
     {
         //Dead
@@ -152,6 +143,24 @@ public class PlayerStateController : MonoBehaviour
 
         return null;
     }
+
+    public Type attackOrAbilityCheck()
+    {
+        // Attack
+        if (heavyAttackinput == 1.0f || lightAttackinput == 1.0f)
+        {
+            return typeof(AttackState);
+        }
+
+        // Ability
+        if (ability1input == 1.0f || ability2input == 1.0f)
+        {
+            return typeof(AbilityState);
+        }
+
+        return null;
+    }
+    #endregion
 
     private void Update()
     {

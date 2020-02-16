@@ -47,7 +47,6 @@ public class ModelMovement : MonoBehaviour
 
             if (facingInput != Vector3.zero)
             {
-                Debug.Log("InputDirection");
                 facingDirection = new Vector3(facingInput.z, 0, -facingInput.x).normalized;
             }
             else if (facingTarget == null)

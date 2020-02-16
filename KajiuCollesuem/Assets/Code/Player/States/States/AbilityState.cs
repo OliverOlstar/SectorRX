@@ -12,6 +12,9 @@ public class AbilityState : BaseState
     private IAbility _curAbility;
     private SOAbilities _curSOAbility;
 
+    private int _Index = 0;
+    private bool _RequestedToExit = false;
+
     public AbilityState(PlayerStateController controller) : base(controller.gameObject)
     {
         _stateController = controller;
@@ -21,8 +24,9 @@ public class AbilityState : BaseState
     {
         Debug.Log("AbilityState: Enter");
         _stateController._movementComponent.disableMovement = true;
+        _RequestedToExit = false;
 
-        CheckInputs();
+        CheckForPress();
     }
 
     public override void Exit()
@@ -37,26 +41,31 @@ public class AbilityState : BaseState
 
     public override Type Tick()
     {
+        _curAbility.Tick();
+
         // Stunned Or Dead
         Type stunnedOrDead = _stateController.stunnedOrDeadCheck();
         if (stunnedOrDead != null)
             return stunnedOrDead;
 
         // Leave state after attack
-        if (Time.time > _exitStateTime)
+        if (_RequestedToExit || Time.time > _exitStateTime)
         {
             return typeof(MovementState);
         }
+
+        CheckForRelease();
 
         return null;
     }
 
     #region Inputs
-    private void CheckInputs()
+    private void CheckForPress()
     {
         // ON PRESSED ABILITY 1 (Called Once)
         if (_stateController.ability1input == 1)
         {
+            _Index = 1;
             _curAbility = _stateController._AbilityScript1;
             _curSOAbility = _stateController._AbilitySO1;
             PressedAbility();
@@ -64,24 +73,28 @@ public class AbilityState : BaseState
         // ON PRESSED ABILITY 2 (Called Once)
         else if (_stateController.ability2input == 1)
         {
+            _Index = 2;
             _curAbility = _stateController._AbilityScript2;
             _curSOAbility = _stateController._AbilitySO2;
             PressedAbility();
         }
+    }
 
+    private void CheckForRelease()
+    {
         // ON RELEASED ABILITY 1 || 2 (Called Once)
-        else if (_stateController.ability1input == 2 || _stateController.ability2input == 2)
+        if ((_stateController.ability1input == 0 && _Index == 1) 
+         || (_stateController.ability2input == 0 && _Index == 2))
         {
             ReleasedAbility();
+            _Index = 0;
         }
-
-        ClearInputs();
     }
 
     private void PressedAbility()
     {
         _exitStateTime = Time.time + _curSOAbility.abilityTime;
-        _curAbility.Pressed();
+        _curAbility.Pressed(this);
     }
 
     private void ReleasedAbility()
@@ -104,4 +117,9 @@ public class AbilityState : BaseState
         _stateController.ability2input = -1.0f;
     }
     #endregion
+
+    public void RequestExitState()
+    {
+        _RequestedToExit = true;
+    }
 }
