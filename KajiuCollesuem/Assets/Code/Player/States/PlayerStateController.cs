@@ -58,8 +58,7 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public SOAbilities _AbilitySO1;
     [HideInInspector] public SOAbilities _AbilitySO2;
 
-    //[HideInInspector] public InputPlayer inputs;
-    //[HideInInspector] public InputAction.CallbackContext ctx;
+    [HideInInspector] public bool IgnoreNextHeavyRelease = false;
 
     void Awake()
     {
@@ -114,6 +113,13 @@ public class PlayerStateController : MonoBehaviour
     }
     public void OnHeavyAttack(InputValue ctx)
     {
+        // Auto released already so ignore next release
+        if (IgnoreNextHeavyRelease)
+        {
+            IgnoreNextHeavyRelease = false;
+            return;
+        }
+
         // AttackState is on cooldown
         if (AttackStateReturnDelay > Time.time)
             return;

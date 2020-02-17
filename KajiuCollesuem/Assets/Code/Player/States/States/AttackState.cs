@@ -116,14 +116,25 @@ public class AttackState : BaseState
                     if (chargeTimer >= _maxCharge)
                     {
                         //Debug.Log("AttackState: CheckForAttack - HEAVY RELEASED Maxed Charge");
+                        
+                        // Automatically did a release input so ignore the actual input
+                        _stateController.IgnoreNextHeavyRelease = true;
                         ReleaseHeavyAttack();
                     }
                 }
             }
+            // Can only input for next attack if done previous attack
             else if (Time.time > _exitStateTime)
             {
+                // ON RELEASED HEAVY BEFORE CHARGING STARTED (Called Once)
+                if (_stateController.heavyAttackinput == 0)
+                {
+                    //Debug.Log("AttackState: CheckForAttack - HEAVY RELEASED Before Charging");
+                    PressedHeavyAttack();
+                    ReleaseHeavyAttack();
+                }
                 // ON PRESSED HEAVY (Called Once)
-                if (_stateController.heavyAttackinput == 1)
+                else if (_stateController.heavyAttackinput == 1)
                 {
                     //Debug.Log("AttackState: CheckForAttack - HEAVY PRESSED");
                     PressedHeavyAttack();
@@ -133,17 +144,6 @@ public class AttackState : BaseState
                 {
                     //Debug.Log("AttackState: CheckForAttack - LIGHT PRESSED");
                     PressedLightAttack();
-                }
-            }
-            // Can only input for next attack if done previous attack
-            else if (_exitStateTime == 0)
-            {
-                // ON RELEASED HEAVY BEFORE CHARGING STARTED (Called Once)
-                if (_stateController.heavyAttackinput == 0)
-                {
-                    //Debug.Log("AttackState: CheckForAttack - HEAVY RELEASED Before Charging");
-                    PressedHeavyAttack();
-                    ReleaseHeavyAttack();
                 }
             }
         }
@@ -168,7 +168,6 @@ public class AttackState : BaseState
         //Debug.Log("AttackState: PressedHeavyAttack");
         _stateController._modelController.PlayAttack(_numberOfClicks, true, true);
 
-        _exitStateTime = 0;
         chargeTimer = 0;
         _onHolding = true;
         ClearInputs();
