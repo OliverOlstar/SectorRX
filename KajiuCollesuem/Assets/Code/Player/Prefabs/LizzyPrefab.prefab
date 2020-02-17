@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 521e52a9b67369346810e5cf0fa30afc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackMult: 1
   _Attacker: {fileID: 6237853051496095961}
 --- !u!114 &9147673084591073428
 MonoBehaviour:
@@ -148,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 521e52a9b67369346810e5cf0fa30afc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackMult: 1
   _Attacker: {fileID: 6237853051496095961}
 --- !u!114 &601797382433172791
 MonoBehaviour:
@@ -447,7 +449,6 @@ MonoBehaviour:
   - {fileID: 1793214009718780975}
   _AbilitySO1: {fileID: 0}
   _AbilitySO2: {fileID: 0}
-  ignoreNextHeavyAttackRelease: 0
 --- !u!114 &6237853051496095966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,11 +473,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c082e8adf3df254ab5ebf0be114fd1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speedMult: 1
+  jumpMult: 1
   _moveAcceleration: 2000
   maxSpeed: 6
   inputInfluence: 1
   _jumpForceUp: 24
-  _jumpForceVelocityMult: 1.7
+  _jumpForceVelocityMult: 2
   _jumpGraceLength: 0.3
   disableMovement: 0
 --- !u!114 &3053187438800234900
@@ -491,6 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58edaa3b804fcc844b97b3eb1d8ac9fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speedMult: 1
   doneDodge: 0
   shortDodgeCooldown: 0.3
   longDodgeCooldown: 0.3
@@ -541,7 +545,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 768
   lockOnRange: 30
-  lockOnAngle: 90
   focusedOnScreen: 0
   unfocusedOnScreen: 0
   idlePreset: {fileID: 11400000, guid: 67ad0d9b288e04043ae10b57d85fe6c2, type: 2}
@@ -559,12 +562,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sliderControl: {fileID: 0}
-  _maxHealth: 100
-  _maxShield: 50
-  _maxPower: 100
-  _shieldRegenStartDelaySeconds: 6
-  _shieldRegenDelaySeconds: 1
-  _shieldRegenAmount: 4
+  weight: 1
+  _shieldRegenStartDelaySeconds: 9
+  _shieldRegenDelaySeconds: 0.5
+  _shieldRegenAmount: 5
   _powerLossStartDelaySeconds: 10
   _powerLossDelaySeconds: 0.3
   _powerLossAmount: 1
@@ -580,6 +581,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57df21d598cd16c4983cce38a4b7e9a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MAXUPGRADES: 20
+  minHealth: 60
+  maxHealth: 160
+  minShield: 30
+  maxShield: 90
+  minSpeed: 1
+  maxSpeed: 2
+  minJump: 1
+  maxJump: 1.8
+  minWeight: 0.6
+  maxWeight: 5
+  minAttack: 1
+  maxAttack: 3
 --- !u!114 &3761404212161874916
 MonoBehaviour:
   m_ObjectHideFlags: 0
