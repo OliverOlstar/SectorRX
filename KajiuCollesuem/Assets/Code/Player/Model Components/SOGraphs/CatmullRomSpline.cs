@@ -82,7 +82,7 @@ public class CatmullRomSpline : MonoBehaviour
 			else
 				Gizmos.color = Color.white;
 
-			Gizmos.DrawLine(lastPos, newPos);
+			Gizmos.DrawLine(new Vector3(lastPos.x, lastPos.y) + transform.position, new Vector3(newPos.x, newPos.y) + transform.position);
 
 			//Save this pos so we can draw the next line segment
 			lastPos = newPos;
