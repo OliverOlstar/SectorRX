@@ -17,7 +17,6 @@ public class PauseMenu : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //Time.timeScale = 1;
         pause = false;
         pauseScreen.SetActive(false);
         EventSystem.current.SetSelectedGameObject(resumeButton);
@@ -29,11 +28,13 @@ public class PauseMenu : MonoBehaviour
 
         if (pause)
         {
+            Time.timeScale = 0;
             hasPaused = true;
             Cursor.lockState = CursorLockMode.None;
         }
         else
         {
+            Time.timeScale = 1;
             hasPaused = false;
             Cursor.lockState = CursorLockMode.Locked;
         }

@@ -17,10 +17,10 @@ public class LevelButtons : MonoBehaviour
         statButton = GetComponent<Button>();
     }
 
-    public void ClickStatButton()
-    {
-        powerUpgrade.ClickButtonStat(index, level, statButton);
-    }
+    //public void ClickStatButton()
+    //{
+    //    powerUpgrade.ClickButtonStat(index, level, statButton);
+    //}
 
     //public void ClickPowerButton()
     //{
