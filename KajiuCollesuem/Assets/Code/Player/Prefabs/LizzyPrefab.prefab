@@ -237,6 +237,7 @@ MonoBehaviour:
   crouchWeight: 0
   attackWeight: 0
   dodgeWeight: 0
+  deadWeight: 0
   _weightChangeDampening: 8
   _weightChangeDeadzone: 0.01
 --- !u!114 &4104074972387249871
@@ -254,9 +255,11 @@ MonoBehaviour:
   _stepMult: 1
   _idleMult: 0.3
   _fallMult: 1.6
+  _deadMult: 0.9
   _stepGraph: {fileID: 11400000, guid: d105e3352e7b8e94f82be1c6df8d9084, type: 2}
   _idleGraph: {fileID: 11400000, guid: 8d38503b353117b4e9fdbebd87428edf, type: 2}
   _fallGraph: {fileID: 11400000, guid: 5d40a20a35f8b154e9204417dc7022f5, type: 2}
+  _deadGraph: {fileID: 11400000, guid: 077046eff822eff49991833925e46f1b, type: 2}
   _jumpingTransitionWidth: 4.6
 --- !u!1 &6237853049773769088
 GameObject:
@@ -437,7 +440,6 @@ MonoBehaviour:
   _lockOnComponent: {fileID: 0}
   _powerComponent: {fileID: 0}
   _hitboxComponent: {fileID: 0}
-  _PauseMenu: {fileID: 0}
   _playerAttributes: {fileID: 0}
   _modelController: {fileID: 0}
   _playerCamera: {fileID: 0}
@@ -580,10 +582,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MAXUPGRADES: 20
-  minHealth: 60
+  minHealth: 40
   maxHealth: 160
-  minShield: 30
-  maxShield: 90
+  minShield: 40
+  maxShield: 100
   minSpeed: 1
   maxSpeed: 2
   minJump: 1

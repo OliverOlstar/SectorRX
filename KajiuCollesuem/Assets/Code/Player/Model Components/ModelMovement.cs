@@ -110,8 +110,7 @@ public class ModelMovement : MonoBehaviour
             _flipProgress += Time.deltaTime * pSpeed;
             if (_flipProgress >= 1)
                 _flipProgress = 1;
-
-            Debug.Log(_modelController.GetCatmullRomPosition(_flipProgress, _flipGraph).y);
+            
             transform.parent.localEulerAngles = new Vector3(Mathf.Lerp(0, 360, _modelController.GetCatmullRomPosition(_flipProgress, _flipGraph).y), _flipYRotation, 0);
             yield return null;
         }

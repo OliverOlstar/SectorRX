@@ -12,6 +12,7 @@ public class ModelWeights : MonoBehaviour
     [SerializeField] [Range(0, 1)] private float crouchWeight = 0;
     [SerializeField] [Range(0, 1)] private float attackWeight = 0;
     [SerializeField] [Range(0, 1)] private float dodgeWeight = 0;
+    [SerializeField] [Range(0, 1)] private float deadWeight = 0;
 
     [Space]
     [SerializeField] private float _weightChangeDampening = 10;
@@ -37,19 +38,15 @@ public class ModelWeights : MonoBehaviour
         }
     }
 
+    // Lerp weight values
     public void LerpWeights()
     {
-        // Get total weight (Used to prevent Total Weight from going past 1)
-        float totalWeight = stepWeight + jumpWeight + crouchWeight + attackWeight + dodgeWeight;
-        if (totalWeight <= 1)
-            totalWeight = 1;
-
-        // Lerp weight values
-        LerpWeight("Stepping Weight", stepWeight / totalWeight);
-        LerpWeight("Jumping Weight", jumpWeight / totalWeight);
-        LerpWeight("Crouching Weight", crouchWeight / totalWeight);
-        LerpWeight("Attacking Weight", attackWeight / totalWeight);
-        LerpWeight("Dodge Weight", dodgeWeight / totalWeight);
+        LerpWeight("Stepping Weight", stepWeight);
+        LerpWeight("Jumping Weight", jumpWeight);
+        LerpWeight("Crouching Weight", crouchWeight);
+        LerpWeight("Attacking Weight", attackWeight);
+        LerpWeight("Dodge Weight", dodgeWeight);
+        LerpWeight("Dead Weight", deadWeight);
     }
 
     private void LerpWeight(string pWeight, float pTargetValue)
@@ -71,13 +68,14 @@ public class ModelWeights : MonoBehaviour
         _anim.SetFloat(pWeight, currentValue);
     }
 
-    public void SetWeights(float pStepWeight, float pJumpWeight, float pAttackWeight, float pDodgeWeight)
+    public void SetWeights(float pStepWeight, float pJumpWeight, float pAttackWeight, float pDodgeWeight, float pDeadWeight)
     {
         stepWeight = pStepWeight;
         jumpWeight = pJumpWeight;
         //crouchWeight = pCrouchWeight;
         attackWeight = pAttackWeight;
         dodgeWeight = pDodgeWeight;
+        deadWeight = pDeadWeight;
     }
 
     public void AddCrouching(float pValue, float pGoingToLength, float pGoingAwayLength)
