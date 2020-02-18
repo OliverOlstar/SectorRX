@@ -12,6 +12,7 @@ public class Stunned : MonoBehaviour, IState
     private Transform _target;
     private Animator _anim;
     private NavMeshAgent _agent;
+    private Rigidbody _rb;
 
     [SerializeField] private bool _enabled = false;
 
@@ -20,6 +21,7 @@ public class Stunned : MonoBehaviour, IState
         _target = pTarget;
         _anim = pAnim;
         _agent = pAgent;
+        _rb = GetComponent<Rigidbody>();
     }
 
     public void Enter()
@@ -27,10 +29,12 @@ public class Stunned : MonoBehaviour, IState
         _enabled = true;
         _anim.SetTrigger("Hurt");
         _agent.isStopped = true;
+        _rb.isKinematic = false;
     }
 
     public void Exit()
     {
+        _rb.isKinematic = true;
         _enabled = false;
     }
 

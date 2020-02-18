@@ -67,16 +67,13 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
             return true;
         }
 
-        else
-        {
-            _rb.isKinematic = false;
-            _rb.AddForce(pKnockback, ForceMode.Impulse);
-        }
-
         _decision.UpdateTarget(pAttacker.transform);
 
         if (pReact && _decision != null)
+        {
             _decision.ForceStateSwitch(_stunnedState);
+            _rb.AddForce(pKnockback, ForceMode.Impulse);
+        }
         
         return false;
     }
