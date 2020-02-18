@@ -12,16 +12,19 @@ public class ModelAnimations : MonoBehaviour
     [SerializeField] private float _stepMult = 1;
     [SerializeField] private float _idleMult = 1;
     [SerializeField] private float _fallMult = 1;
+    [SerializeField] private float _deadMult = 1;
 
     private float _stepProgress = 0;
     private float _idleProgress = 0;
     private float _fallProgress = 0;
     private float _attackProgress = 0;
+    private float _deadProgress = 0;
 
     [Header("Interpolation Graphs")]
     [SerializeField] private SOGraph _stepGraph;
     [SerializeField] private SOGraph _idleGraph;
     [SerializeField] private SOGraph _fallGraph;
+    [SerializeField] private SOGraph _deadGraph;
     private SOGraph _attackGraph;
     
     [Space]
@@ -176,11 +179,31 @@ public class ModelAnimations : MonoBehaviour
     }
     #endregion
 
-    private float increaseProgress(float pProgress, float pMult)
+    #region Dead
+    public void DeadAnim()
+    {
+        // Increase Falling Animation
+        _deadProgress = increaseProgress(_deadProgress, _deadMult, false);
+        _anim.SetFloat("Dead Progress", _modelController.GetCatmullRomPosition(_deadProgress, _deadGraph).y);
+    }
+
+    public void PlayDead()
+    {
+        _deadProgress = 0;
+    }
+    #endregion
+
+    private float increaseProgress(float pProgress, float pMult, bool pLoop = true)
     {
         pProgress += Time.fixedDeltaTime * pMult;
+        
         if (pProgress >= 1)
-            pProgress -= 1;
+        {
+            if (pLoop)
+                pProgress -= 1;
+            else
+                return 1;
+        }
 
         return pProgress;
     }

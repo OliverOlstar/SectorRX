@@ -37,7 +37,7 @@ public class PlayerLockOnScript : MonoBehaviour
         _playerCollider = GetComponent<Collider>();
         _bumperCollider = transform.parent.GetComponent<Collider>();
     }
-    
+
     void Update()
     {
         if (_stateController._playerCamera == null) return;
