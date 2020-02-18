@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackState : BaseState
@@ -17,7 +15,7 @@ public class AttackState : BaseState
     private float _disableHitboxTime = 0;
     private PlayerHitbox _hitbox = null;
 
-    private float _attackStateReturnDelayLength = 0.2f;
+    private float _attackStateReturnDelayLength = 0.3f;
     private float _maxCharge = 1.0f;
 
     private bool _onHolding = false;
@@ -30,8 +28,7 @@ public class AttackState : BaseState
 
     public override void Enter()
     {
-        //Debug.Log("AttackState: Enter");
-        //stateController._hitboxComponent.gameObject.SetActive(true); /* Handled by animation events */
+        Debug.Log("AttackState: Enter");
         _exitStateTime = 0;
         _onHolding = false;
         CheckForAttack();
@@ -39,7 +36,7 @@ public class AttackState : BaseState
 
     public override void Exit()
     {
-        //Debug.Log("AttackState: Exit");
+        Debug.Log("AttackState: Exit");
         _stateController.AttackStateReturnDelay = Time.time + _attackStateReturnDelayLength;
         _numberOfClicks = 0;
 
@@ -51,10 +48,16 @@ public class AttackState : BaseState
         }
 
         _stateController._modelController.SetInputDirection(Vector3.zero);
+        ClearInputs();
     }
 
     public override Type Tick()
     {
+        // Stunned Or Dead
+        Type stunnedOrDead = _stateController.stunnedOrDeadCheck();
+        if (stunnedOrDead != null)
+            return stunnedOrDead;
+
         // Check for another attack
         CheckForAttack();
 
@@ -87,12 +90,6 @@ public class AttackState : BaseState
             }
         }
 
-        // Stunned
-        if (_stateController.Stunned)
-        {
-            return typeof(StunnedState);
-        }
-
         return null;
     }
 
@@ -107,8 +104,8 @@ public class AttackState : BaseState
                 // ON RELEASE HEAVY (Called Once)
                 if (_stateController.heavyAttackinput == 0)
                 {
+                    //Debug.Log("AttackState: CheckForAttack - HEAVY RELEASED");
                     ReleaseHeavyAttack();
-                    ClearInputs();
                 }
                 // ON HOLDING HEAVY
                 else
@@ -118,32 +115,35 @@ public class AttackState : BaseState
                     // If Reached max charge release heavy attack
                     if (chargeTimer >= _maxCharge)
                     {
-                        _stateController.ignoreNextHeavyAttackRelease = true;
+                        //Debug.Log("AttackState: CheckForAttack - HEAVY RELEASED Maxed Charge");
+                        
+                        // Automatically did a release input so ignore the actual input
+                        _stateController.IgnoreNextHeavyRelease = true;
                         ReleaseHeavyAttack();
                     }
                 }
             }
             // Can only input for next attack if done previous attack
-            else if (Time.time > _exitStateTime || _exitStateTime == 0)
+            else if (Time.time > _exitStateTime)
             {
                 // ON RELEASED HEAVY BEFORE CHARGING STARTED (Called Once)
                 if (_stateController.heavyAttackinput == 0)
                 {
+                    //Debug.Log("AttackState: CheckForAttack - HEAVY RELEASED Before Charging");
                     PressedHeavyAttack();
                     ReleaseHeavyAttack();
-                    ClearInputs();
                 }
                 // ON PRESSED HEAVY (Called Once)
                 else if (_stateController.heavyAttackinput == 1)
                 {
+                    //Debug.Log("AttackState: CheckForAttack - HEAVY PRESSED");
                     PressedHeavyAttack();
-                    ClearInputs();
                 }
                 // ON PRESSED LIGHT (Called Once)
                 else if (_stateController.lightAttackinput == 1)
                 {
+                    //Debug.Log("AttackState: CheckForAttack - LIGHT PRESSED");
                     PressedLightAttack();
-                    ClearInputs();
                 }
             }
         }
@@ -152,6 +152,7 @@ public class AttackState : BaseState
     #region Pressed & Release
     private void PressedLightAttack()
     {
+        //Debug.Log("AttackState: PressedLightAttack");
         SOAttack curAttack = _stateController._modelController.attacks[_numberOfClicks];
         float PreAttackTime = curAttack.transitionToTime + curAttack.holdStartPosTime;
         SetAttackValues(curAttack, PreAttackTime);
@@ -159,19 +160,22 @@ public class AttackState : BaseState
         _stateController._modelController.PlayAttack(_numberOfClicks, false, false);
 
         _numberOfClicks++;
+        ClearInputs();
     }
 
     private void PressedHeavyAttack()
     {
+        //Debug.Log("AttackState: PressedHeavyAttack");
         _stateController._modelController.PlayAttack(_numberOfClicks, true, true);
 
-        _exitStateTime = 0;
         chargeTimer = 0;
         _onHolding = true;
+        ClearInputs();
     }
 
     private void ReleaseHeavyAttack()
     {
+        //Debug.Log("AttackState: ReleaseHeavyAttack");
         SOAttack curAttack = _stateController._modelController.attacks[_numberOfClicks + 3];
         SetAttackValues(curAttack); // TODO Add charging mult to hitbox
 
@@ -180,17 +184,7 @@ public class AttackState : BaseState
 
         _onHolding = false;
         _numberOfClicks++;
-    }
-
-    private void ReleaseHeavyAttackBeforeCharging()
-    {
-        SOAttack curAttack = _stateController._modelController.attacks[_numberOfClicks + 3];
-        float PreAttackTime = curAttack.transitionToTime + curAttack.holdStartPosTime;
-        SetAttackValues(curAttack, PreAttackTime);
-
-        _stateController._modelController.PlayAttack(_numberOfClicks, true, false);
-
-        _numberOfClicks++;
+        ClearInputs();
     }
     #endregion
 
@@ -216,6 +210,8 @@ public class AttackState : BaseState
     {
         _stateController.lightAttackinput = -1.0f;
         _stateController.heavyAttackinput = -1.0f;
+        _stateController.ability1input = -1.0f;
+        _stateController.ability2input = -1.0f;
     }
     #endregion
 }

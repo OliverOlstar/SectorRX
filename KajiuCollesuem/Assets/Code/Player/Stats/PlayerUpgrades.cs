@@ -4,111 +4,111 @@ using UnityEngine;
 
 public class PlayerUpgrades : MonoBehaviour
 {
-    [SerializeField] private PlayerAttributes _attributes;
-    [SerializeField] private PlayerHitbox _hitbox;
+    //[SerializeField] private PlayerAttributes _attributes;
+    //[SerializeField] private PlayerHitbox _hitbox;
 
-    [Space]
-    public SOStats[] Stats;
-    private int[] _statLevels;
+    //[Space]
+    //public SOStats[] Stats;
+    //private int[] _statLevels;
 
-    [Space]
-    public SOPowers[] Powers;
-    private int[] _powerLevels;
+    //[Space]
+    //public SOAbilities[] Powers;
+    //private int[] _powerLevels;
 
-    [SerializeField] private int luck = 0;
+    //[SerializeField] private int luck = 0;
 
-    private void Start()
-    {
-        Setup();
-    }
+    //private void Start()
+    //{
+    //    Setup();
+    //}
 
-    public void Setup()
-    {
-        _statLevels = new int[Stats.Length];
-        for (int i = 0; i < Stats.Length; i++)
-        {
-            LevelUp(i, 0);
-        }
+    //public void Setup()
+    //{
+    //    _statLevels = new int[Stats.Length];
+    //    for (int i = 0; i < Stats.Length; i++)
+    //    {
+    //        LevelUp(i, 0);
+    //    }
 
-        _powerLevels = new int[Powers.Length];
-        for (int i = 0; i < Powers.Length; i++)
-        {
-            //LevelUp(i);
-        }
-    }
+    //    _powerLevels = new int[Powers.Length];
+    //    for (int i = 0; i < Powers.Length; i++)
+    //    {
+    //        //LevelUp(i);
+    //    }
+    //}
 
-    public bool LevelUp(int pIndex, int pLevel)
-    {
-        //Return false if trying to upgrade that is not possible
-        if (_statLevels[pIndex] != pLevel)
-            return false;
+    //public bool LevelUp(int pIndex, int pLevel)
+    //{
+    //    //Return false if trying to upgrade that is not possible
+    //    if (_statLevels[pIndex] != pLevel)
+    //        return false;
 
-        //Make Upgrade Happen
-        switch(Stats[pIndex].dislayName[0])
-        {
-            //Health
-            case 'H':
-                _attributes.setMaxHealth(Stats[pIndex].values[_statLevels[pIndex]]);
-                break;
+    //    //Make Upgrade Happen
+    //    switch(Stats[pIndex].dislayName[0])
+    //    {
+    //        //Health
+    //        case 'H':
+    //            _attributes.setMaxHealth(Stats[pIndex].values[_statLevels[pIndex]]);
+    //            break;
 
-            //Shield
-            case 'S':
-                _attributes.setMaxDefense(Stats[pIndex].values[_statLevels[pIndex]]);
-                break;
+    //        //Shield
+    //        case 'S':
+    //            _attributes.setMaxDefense(Stats[pIndex].values[_statLevels[pIndex]]);
+    //            break;
 
-            //Power
-            case 'P':
-                _attributes.setMaxPower(Stats[pIndex].values[_statLevels[pIndex]]);
-                break;
+    //        //Power
+    //        case 'P':
+    //            _attributes.setMaxPower(Stats[pIndex].values[_statLevels[pIndex]]);
+    //            break;
 
-            //Muscle
-            case 'M':
-                //_hitbox.SetDamageMultiplier(Stats[pIndex].values[_statLevels[pIndex]] / 100);
-                break;
+    //        //Muscle
+    //        case 'M':
+    //            //_hitbox.SetDamageMultiplier(Stats[pIndex].values[_statLevels[pIndex]] / 100);
+    //            break;
 
-            //Luck
-            case 'L':
-                luck = Stats[pIndex].values[_statLevels[pIndex]];
-                break;
-        }
+    //        //Luck
+    //        case 'L':
+    //            luck = Stats[pIndex].values[_statLevels[pIndex]];
+    //            break;
+    //    }
 
-        _statLevels[pIndex]++;
-        return true;
-    }
+    //    _statLevels[pIndex]++;
+    //    return true;
+    //}
 
-    public bool PowerUpgrade(int pIndex, int pLevel)
-    {
-        //Return false if trying to upgrade that is not possible
-        if (_statLevels[pIndex] != pLevel)
-            return false;
+    //public bool PowerUpgrade(int pIndex, int pLevel)
+    //{
+    //    //Return false if trying to upgrade that is not possible
+    //    if (_statLevels[pIndex] != pLevel)
+    //        return false;
 
-        switch (Powers[pIndex].dislayName[0])
-        {
-            //Magma
-            case 'M':
-                //_attributes.unlockPower(Powers[pIndex].values[_powerLevels[pIndex]]);
-                break;
+    //    switch (Powers[pIndex].dislayName[0])
+    //    {
+    //        //Magma
+    //        case 'M':
+    //            //_attributes.unlockPower(Powers[pIndex].values[_powerLevels[pIndex]]);
+    //            break;
 
-            //Ice
-            case 'I':
-                break;
+    //        //Ice
+    //        case 'I':
+    //            break;
 
-            //Sand Coffin
-            case 'C':
-                break;
-        }
+    //        //Sand Coffin
+    //        case 'C':
+    //            break;
+    //    }
 
-        _powerLevels[pIndex]++;
-        return true;
-    }
+    //    _powerLevels[pIndex]++;
+    //    return true;
+    //}
 
-    public int[] GetStatLevels()
-    {
-        return _statLevels;
-    }
+    //public int[] GetStatLevels()
+    //{
+    //    return _statLevels;
+    //}
 
-    public int[] GetPowerLevels()
-    {
-        return _powerLevels;
-    }
+    //public int[] GetPowerLevels()
+    //{
+    //    return _powerLevels;
+    //}
 }

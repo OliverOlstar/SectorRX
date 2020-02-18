@@ -26,7 +26,7 @@ public class FireballHitbox : MonoBehaviour
 
         if (otherAttributes != null || otherAttributes.IsDead())
         {
-            otherAttributes.TakeDamage(damageAmount, Vector3.zero, true, this.gameObject);
+            otherAttributes.TakeDamage(damageAmount, GetComponent<Rigidbody>().velocity, true, this.gameObject);
             DestroyFireball();
         }
     }

@@ -6,6 +6,8 @@ public class DodgeComponent : MonoBehaviour
 {
     //Oliver
 
+    [HideInInspector] public float speedMult = 1;
+
     [HideInInspector] public bool doneDodge = false;
 
     public float shortDodgeCooldown = 1.0f;
@@ -43,13 +45,13 @@ public class DodgeComponent : MonoBehaviour
             if (pShortDodge)
             {
                 //Short Dodge
-                StartCoroutine(DodgeRoutine(shortDodgeMaxSpeed, shortDodgeDuration, shortDodgeAcceleration, pDirection, shortDodgeCooldown));
+                StartCoroutine(DodgeRoutine(shortDodgeMaxSpeed * speedMult, shortDodgeDuration, shortDodgeAcceleration, pDirection, shortDodgeCooldown));
                 _stateController._modelController.PlayDodge(_stateController.LastMoveDirection, shortDodgeAnimSpeed);
             }
             else
             {
                 //Long Dodge
-                StartCoroutine(DodgeRoutine(longDodgeMaxSpeed, longDodgeDuration, longDodgeAcceleration, pDirection, longDodgeCooldown));
+                StartCoroutine(DodgeRoutine(longDodgeMaxSpeed * speedMult, longDodgeDuration, longDodgeAcceleration, pDirection, longDodgeCooldown));
                 _stateController._modelController.PlayDodge(_stateController.LastMoveDirection, longDodgeAnimSpeed);
             }
 

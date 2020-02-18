@@ -54,7 +54,7 @@ public class Stunned : MonoBehaviour, IState
     //Animation Events //////////////
     public void AEDoneStunned()
     {
-        //Debug.Log("Stunned: AEDoneStunned");
+        Debug.Log("Stunned: AEDoneStunned");
         _enabled = false;
     }
 }

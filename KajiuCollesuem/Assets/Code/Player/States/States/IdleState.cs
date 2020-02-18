@@ -6,6 +6,9 @@ using UnityEngine;
 public class IdleState : BaseState
 {
     PlayerStateController stateController;
+    private float dodgeInputBuffer = 0.4f;
+    private float dodgeInputTime = 0.0f;
+    private float dodgeInput = -1.0f;
 
     public IdleState(PlayerStateController controller) : base(controller.gameObject)
     {
@@ -16,19 +19,28 @@ public class IdleState : BaseState
     {
         //Debug.Log("IdleState: Enter");
         stateController._movementComponent.disableMovement = false;
-        //stateController._playerCamera.Idle = true;
     }
 
     public override void Exit()
     {
         //Debug.Log("IdleState: Exit");
         stateController._movementComponent.disableMovement = true;
-        //stateController._playerCamera.Idle = false;
+
+        // If Dodge input happened less than a dodgeInputBuffer time ago add the input back in
+        if (dodgeInputTime + dodgeInputBuffer >= Time.time)
+        {
+            stateController.dodgeInput = dodgeInput;
+        }
     }
 
     public override Type Tick()
     {
         // TODO Add Taunt system
+
+        // Stunned Or Dead
+        Type returnedState = stateController.stunnedOrDeadCheck();
+        if (returnedState != null)
+            return returnedState;
 
         // Idle
         if (stateController.moveInput.magnitude > 0)
@@ -36,38 +48,19 @@ public class IdleState : BaseState
             return typeof(MovementState);
         }
 
-        // Idle Dodge
-        //if (stateController.dodgeInput != -1)
-        //{
-        //    return typeof(DodgeState);
-        //}
-
-        //Attack
-        if (stateController.heavyAttackinput != -1.0f || stateController.lightAttackinput != -1.0f /* power input */)
+        // Dodge Input Buffer Getter
+        if (stateController.dodgeInput != -1)
         {
-            if (stateController.AttackStateReturnDelay <= Time.time)
-            {
-                return typeof(AttackState);
-            }
-            else
-            {
-                //If Inputed attack before they can return to the attack state, remove the input
-                stateController.heavyAttackinput = -1.0f;
-                stateController.lightAttackinput = -1.0f;
-            }
+            dodgeInput = stateController.dodgeInput;
+            stateController.dodgeInput = -1.0f;
+
+            dodgeInputTime = Time.time;
         }
 
-        //Dead
-        if (stateController._playerAttributes.getHealth() <= 0)
-        {
-            return typeof(DeathState);
-        }
-
-        //Stunned
-        if (stateController.Stunned)
-        {
-            return typeof(StunnedState);
-        }
+        // Attack or Ability
+        returnedState = stateController.attackOrAbilityCheck();
+        if (returnedState != null)
+            return returnedState;
 
         return null;
     }

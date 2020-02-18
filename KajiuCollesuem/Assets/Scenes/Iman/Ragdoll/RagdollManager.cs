@@ -18,6 +18,7 @@ public class RagdollManager : MonoBehaviour
         MainCharParts = MainCharacterModel.GetComponentsInChildren<Transform>();
 
         Ragdoll.transform.GetChild(0).gameObject.SetActive(false);
+        Ragdoll.transform.GetChild(1).gameObject.SetActive(false);
     }
 
     IEnumerator ragdollDelay()
@@ -25,6 +26,7 @@ public class RagdollManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         Ragdoll.transform.GetChild(0).gameObject.SetActive(true);
+        Ragdoll.transform.GetChild(1).gameObject.SetActive(true);
         for (int i = 1; i < RagDollParts.Length - 1; i++)
         {
             RagDollParts[i].position = MainCharParts[i].position;

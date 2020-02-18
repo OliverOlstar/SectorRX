@@ -15,10 +15,12 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     private PlayerStateController _stateController;
     public SliderController sliderControl;
 
+    [HideInInspector] public float weight = 1;
+
     [Header("Maxes")]
-    [SerializeField] private int _maxHealth = 100;
-    [SerializeField] private int _maxShield = 100;
-    [SerializeField] private int _maxPower = 100;
+    private int _maxHealth = 100;
+    private int _maxShield = 100;
+    private int _maxPower = 100;
 
     private int _health;
     private int _shield;
@@ -57,38 +59,9 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _power = 0;
         modifyPower(0);
 
-        //Set the length of the bars to their respective maxes
-        //if (_healthSlider)
-        //{
-        //    healthRect = _healthSlider.gameObject.GetComponent<RectTransform>();
-        //    healthRect.sizeDelta = new Vector2(_maxHealth * barLengthMultiplier, BAR_HEIGHT);
-        //    _healthSlider.maxValue = _maxHealth;
-        //}
-
-        //if (_shieldSlider)
-        //{
-        //    shieldRect = _shieldSlider.gameObject.GetComponent<RectTransform>();
-        //    shieldRect.sizeDelta = new Vector2(_maxShield * barLengthMultiplier, BAR_HEIGHT);
-        //    _shieldSlider.maxValue = _maxShield;
-        //}
-
-        //if (_powerSlider)
-        //{
-        //    powerRect = _powerSlider.gameObject.GetComponent<RectTransform>();
-        //    powerRect.sizeDelta = new Vector2(_maxPower * barLengthMultiplier, BAR_HEIGHT);
-        //    _powerSlider.maxValue = _maxPower;
-        //}
-
         sliderControl.SetBars(0, _maxHealth);
         sliderControl.SetBars(1, _maxShield);
         sliderControl.SetBars(2, _maxPower);
-    }
-
-    public void Respawn()
-    {
-        setHealth(_maxHealth);
-        setShield(_maxShield);
-        setPower(0);
     }
 
     #region Get & Sets
@@ -112,10 +85,10 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _health = Mathf.Clamp(_health, 0, _maxHealth);
 
         //Changing Visuals
-        if (sliderControl.RegSlider[0])
-        {
+        //if (sliderControl.RegSlider[0])
+        //{
             sliderControl.UpdateBars(0, _health);
-        }
+        //}
     }
 
     public void modifyShield(int x)
@@ -124,10 +97,10 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _shield = Mathf.Clamp(_shield, 0, _maxShield);
 
         //Changing Visuals
-        if (sliderControl.RegSlider[1])
-        {
+        //if (sliderControl.RegSlider[1])
+        //{
             sliderControl.UpdateBars(1, _shield);
-        }
+        //}
     }
 
     public void modifyPower(int x)
@@ -137,31 +110,35 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _power = Mathf.Clamp(_power, 0, _maxPower);
 
         //Changing Visuals
-        if (sliderControl.RegSlider[2])
-        {
+        //if (sliderControl.RegSlider[2])
+        //{
             sliderControl.UpdateBars(2, _power);
-        }
+        //}
     }
 
     //MODIFY MAXES
     public void setMaxHealth(int pMaxHealth)
     {
+        int modifyAmount = pMaxHealth - _maxHealth;
+
         //Change Value
         _maxHealth = pMaxHealth;
 
         //Change respective bar length
         sliderControl.SetBars(0, pMaxHealth);
-        modifyHealth(_maxHealth);
+        modifyHealth(modifyAmount);
     }
 
     public void setMaxDefense(int pMaxShield)
     {
+        int modifyAmount = pMaxShield - _maxShield;
+
         //Change Value
         _maxShield = pMaxShield;
 
         //Change respective bar length
         sliderControl.SetBars(1, pMaxShield);
-        modifyShield(_maxShield);
+        modifyShield(modifyAmount);
     }
 
     public void setMaxPower(int pMaxPowerGuage)
@@ -171,7 +148,6 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
         //Change respective bar length
         sliderControl.SetBars(2, pMaxPowerGuage);
-        sliderControl.RegSlider[2].maxValue = _maxPower;
     }
     #endregion
 
@@ -179,13 +155,13 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
     public bool TakeDamage(int pAmount, Vector3 pKnockback, bool pReact, GameObject pAttacker)
     {
-        Debug.Log("PlayerAttributes: TakeDamage");
+        //Debug.Log("PlayerAttributes: TakeDamage");
 
         // Return if already dead
         if (_health <= 0)
             return true;
 
-        Debug.Log("Damaging Player " + pAmount);
+        //Debug.Log("Damaging Player " + pAmount);
 
         if (_shield >= pAmount)
         {
@@ -220,7 +196,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         }
 
         // Add Knockback
-        _stateController._Rb.AddForce(pKnockback, ForceMode.Impulse);
+        _stateController._Rb.AddForce(pKnockback / weight, ForceMode.Impulse);
 
         //if (pReact)
         //    _anim.Stunned(Random.value < 0.5f);
@@ -228,15 +204,13 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         // Return If Dead or Not
         if (_health <= 0)
         {
-            //Camera Shake
-            CameraShaker.Instance.ShakeOnce(20, 4, 0.4f, 0.3f);
+            // TODO Camera Shake
             connectedPlayers.playersConnected--;
 
             return true;
         }
 
-        // Camera Shake
-        //CameraShaker.Instance.ShakeOnce(1, 2, 0.2f, 0.1f);
+        // TODO Camera Shake
 
         return false;
     }

@@ -9,7 +9,7 @@ public class Strafe : MonoBehaviour, IState
     private Animator _anim;
     private NavMeshAgent _agent;
     //float decisionTimer = 0;
-    float timer = 0, coolDownTime = 5;
+    float timer = 0;
     int strafeDecision = 0;
     Vector3 direction;
     [SerializeField] private int strafeMax = 5, strafeMin = 3;

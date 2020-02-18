@@ -34,15 +34,6 @@ public class HUDManager : MonoBehaviour
 
     private void Update()
     {
-        if(cellExp.value >= 100)
-        {
-            canUpgrade.gameObject.SetActive(true);
-        }
-        else
-        {
-            canUpgrade.gameObject.SetActive(false);
-        }
-
         if (targetUI != null)
         {
             EventSystem.current.SetSelectedGameObject(targetUI);

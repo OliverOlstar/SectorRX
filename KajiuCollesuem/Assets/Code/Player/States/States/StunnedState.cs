@@ -29,6 +29,12 @@ public class StunnedState : BaseState
 
     public override Type Tick()
     {
+        // Stunned Or Dead
+        Type stunnedOrDead = stateController.stunnedOrDeadCheck();
+        if (stunnedOrDead != null)
+            return stunnedOrDead;
+
+        // Done being Stunned
         if (Time.time >= _leaveStateTime)
         {
             return typeof(MovementState);

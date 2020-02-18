@@ -102,18 +102,18 @@ public class PlayerCamera : MonoBehaviour
         //Getting Mouse Movement
         if (!CameraDisabled)
         {
-            if (lockOnTarget != null)
+            if (targetDead == true)
+            {
+                DeadCameraMovement();
+                return;
+            }
+            else if (lockOnTarget != null)
             {
                 LockOnCameraMovement();
             }
             else if (targetIdle == true)
             {
                 IdleCameraMovement();
-            }
-            else if (targetDead == true)
-            {
-                DeadCameraMovement();
-                return;
             }
             else
             {
@@ -183,7 +183,10 @@ public class PlayerCamera : MonoBehaviour
     void DeadCameraMovement()
     {
         //Slowly Rotate
-        Quaternion TargetQ = Quaternion.LookRotation((targetPlayer.position - transform.position).normalized, Vector3.up);
+        Vector3 direction = (targetPlayer.position - transform.position).normalized;
+        if (direction.x == 0 && direction.z == 0) return;
+
+        Quaternion TargetQ = Quaternion.LookRotation(direction, Vector3.up);
         _ParentTransform.rotation = Quaternion.Lerp(_ParentTransform.rotation, TargetQ, Time.deltaTime * _turnDampening);
     }
 

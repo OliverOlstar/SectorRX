@@ -7,9 +7,9 @@ public class TargetManagement : MonoBehaviour
 {
     private Decision _decision;
 
-    [SerializeField] private float _fRadius;
     [SerializeField] private LayerMask _playerLayer;
-    [SerializeField] private float _fScanVision = 30;
+    [SerializeField] private float _visionRadius = 15;
+    [SerializeField] private float _visionDistance = 30;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +23,7 @@ public class TargetManagement : MonoBehaviour
 
         if (_decision.target == null)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, _fRadius, _playerLayer);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, _visionRadius, _playerLayer);
 
             if (colliders.Length > 0)
             {
@@ -47,7 +47,7 @@ public class TargetManagement : MonoBehaviour
 
     private bool _IsPlayerInRange(Transform pTarget)
     {
-        if (Vector3.Angle(transform.forward, pTarget.position - transform.position) < _fScanVision)
+        if (Vector3.Angle(transform.forward, pTarget.position - transform.position) < _visionDistance)
             return true;
 
         return false;
