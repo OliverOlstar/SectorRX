@@ -14,10 +14,6 @@ public class HUDManager : MonoBehaviour
     public Slider cellExp;
     public Text cellCount, canUpgrade, upCellCount;
 
-    //Booleans to check if Cell UI or Power Core UI are already active when collecting other item
-    public bool cellUIOn;
-    public int cellCounter;
-
     public PauseMenu pauseMenu;
     [SerializeField] private PlayerCamera mainCam;
 
@@ -28,8 +24,6 @@ public class HUDManager : MonoBehaviour
 
         powerUpgrade.SetActive(false);
         statUpgrade.SetActive(false);
-
-        cellUIOn = true;
     }
 
     private void Update()
@@ -46,12 +40,6 @@ public class HUDManager : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(resumeButton);
             pauseMenu.hasPaused = false;
         }
-    }
-
-    //Collectable UI Management
-    public void SetCellCount()
-    {
-        cellCount.text = cellCounter.ToString();
     }
 
     //IEnumerator CellUIOff()
@@ -76,7 +64,6 @@ public class HUDManager : MonoBehaviour
         powerUpgrade.SetActive(false);
         statUpgrade.SetActive(true);
         cellCount.gameObject.SetActive(true);
-        upCellCount.text = cellCounter.ToString();
         targetUI = pTarget;
     }
 
