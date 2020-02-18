@@ -39,6 +39,7 @@ public class SplitscreenManager : MonoBehaviour
         }
         else if(playerCams.Count == 2)
         {
+            playerCams[0].GetComponentInParent<PlayerCamera>();
             playerCams[0].rect = new Rect(0.0f, 0.0f, 0.5f, 1.0f);
             playerCams[1].rect = new Rect(0.5f, 0.0f, 0.5f, 1.0f);
             return;
