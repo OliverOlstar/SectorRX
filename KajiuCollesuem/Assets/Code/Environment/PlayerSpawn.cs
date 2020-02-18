@@ -146,6 +146,7 @@ public class PlayerSpawn : MonoBehaviour
             playerSpawns.RemoveAt(_SpawnPointIndex);
             GameObject playerCharacter = Instantiate(playerPrefab, _EightSpawnPos.position, transform.rotation);
             playerCharacter.transform.LookAt(Vector3.zero);
+            playerCharacter.transform.rotation = playerCharacter.transform.rotation * Quaternion.Euler(0, 90, 0);
             players.Add(playerCharacter);
 
             //Taking list of joined players and setting them to their correct device, with inputs enabled
