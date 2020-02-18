@@ -7,21 +7,34 @@ using DG.Tweening;
 
 public class TransitionDown : MonoBehaviour
 {
-    public RectTransform screenTransition;
+    public RectTransform gameOverTransition;
+    public RectTransform gamePausedTransition;
 
     public void Start()
     {
         Time.timeScale = 1;
     }
 
-    public void Transition()
+    public void GameOverTransition()
     {
-        StartCoroutine(screenMove());
+        StartCoroutine(screenOverMove());
     }
 
-    IEnumerator screenMove()
+    public void GamePausedTransition()
     {
-        screenTransition.DOAnchorPos(new Vector2(0, -1280), 0.4f);
+        StartCoroutine(screenPausedMove());
+    }
+
+    IEnumerator screenOverMove()
+    {
+        gameOverTransition.DOAnchorPos(new Vector2(0, -1280), 0.4f);
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadScene(0);
+    }
+
+    IEnumerator screenPausedMove()
+    {
+        gamePausedTransition.DOAnchorPos(new Vector2(0, 0), 0.4f);
         yield return new WaitForSeconds(0.5f);
         SceneManager.LoadScene(0);
     }
