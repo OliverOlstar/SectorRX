@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /*Programmer: Scott Watman
- Description: Changes Splitscreen between Horizontal and Vertical*/
+ Additional Programmers: Oliver Loescher
+ Description: Checks how many players there are and splits the screen accordingly*/
 
 public class SplitscreenManager : MonoBehaviour
 {
