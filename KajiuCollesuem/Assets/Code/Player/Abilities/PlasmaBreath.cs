@@ -57,11 +57,6 @@ public class PlasmaBreath : MonoBehaviour, IAbility
         _SpawnedLaser.gameObject.SetActive(false);
     }
 
-    public void Upgrade()
-    {
-
-    }
-
     public void Tick()
     {
         transform.GetChild(1).GetChild(0).forward = Vector3.Slerp(Horizontalize(transform.GetChild(1).GetChild(0).forward), Horizontalize(_stateController._Camera.forward), Time.deltaTime * _RotateDampening);

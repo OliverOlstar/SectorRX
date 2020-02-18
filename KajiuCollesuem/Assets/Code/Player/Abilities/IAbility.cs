@@ -8,5 +8,4 @@ public interface IAbility
     void Released();
     void Tick();
     void Exit();
-    void Upgrade();
 }
