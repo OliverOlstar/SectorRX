@@ -25,8 +25,6 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
     private IState _deadState;
     private IState _stunnedState;
 
-    private Summon _mySummoner;
-
     public bool IsDead() { return isDead; }
 
     void Start()
@@ -86,27 +84,5 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         isDead = true;
         if (_decision != null)
             _decision.ForceStateSwitch(_deadState);
-
-        // If I was summoned
-        if (_mySummoner != null)
-            _mySummoner.GruntDied();
-    }
-
-    public void SetSummonedGrunt(Summon pSummon)
-    {
-        _mySummoner = pSummon;
-    }
-
-    public void Respawn()
-    {
-        isDead = false;
-        _health = startHealth;
-
-        if (enemyHealthBar)
-            enemyHealthBar.SetActive(false);
-
-        // If I was summoned
-        if (_mySummoner != null)
-            _mySummoner.GruntDied();
     }
 }

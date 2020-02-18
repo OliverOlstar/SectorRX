@@ -23,7 +23,7 @@ public class PlayerLockOnScript : MonoBehaviour
     [SerializeField] private SOCamera lockOnPreset;
     [SerializeField] private LayerMask enemiesLayer;
     [SerializeField] private float lockOnRange = 10.0f;
-    [SerializeField] [Range(0, 359.9999f)] private float lockOnAngle = 45;
+    //[SerializeField] [Range(0, 359.9999f)] private float lockOnAngle = 45;
     
     [HideInInspector] public bool focusedOnScreen = false;
     [HideInInspector] public bool unfocusedOnScreen = false;
@@ -82,7 +82,7 @@ public class PlayerLockOnScript : MonoBehaviour
     }
 
     // Called by InputPlayer
-    private void OnLockOn()
+    public void OnLockOn()
     {
         //Toggle LockOn Camera
         if (_stateController._playerCamera.lockOnTarget == null)

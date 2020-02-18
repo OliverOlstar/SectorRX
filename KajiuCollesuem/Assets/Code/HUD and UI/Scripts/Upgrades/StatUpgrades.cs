@@ -127,7 +127,7 @@ public class StatUpgrades : MonoBehaviour
     {
         if (hud.cellCounter >= stats[pIndex].cost[pLevel])
         {
-            if (pU.LevelUp(pIndex, pLevel + 1))
+            if (/*pU.LevelUp(pIndex, pLevel + 1)*/ false)
             {
                 hud.cellCounter -= stats[pIndex].cost[pLevel];
                 hud.upCellCount.text = hud.cellCounter.ToString();

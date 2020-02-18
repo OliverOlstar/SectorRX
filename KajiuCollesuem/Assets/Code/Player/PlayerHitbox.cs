@@ -5,6 +5,8 @@ using EZCameraShake;
 
 public class PlayerHitbox : MonoBehaviour
 {
+    [HideInInspector] public float attackMult = 1;
+    
     private int _damage;
     private Vector3 _knockback;
 
@@ -33,8 +35,6 @@ public class PlayerHitbox : MonoBehaviour
 
     private void OnTriggerEnter (Collider other)
     {
-        Debug.Log("Hitbox: OnTriggerEnter");
-
         //Check if collided with an Attributes Script
         IAttributes otherAttributes = other.GetComponent<IAttributes>();
         if (otherAttributes == null)
@@ -52,25 +52,15 @@ public class PlayerHitbox : MonoBehaviour
 
         if (otherAttributes != null && otherAttributes.IsDead() == false && otherAttributes != _playerIAttributes)
         {
-            Debug.Log("Hitbox: OnTriggerEnter hit");
-
             //Damage other
-            /*if (*/otherAttributes.TakeDamage(_damage, _knockback, true, _Attacker);//)
+            /*if (*/otherAttributes.TakeDamage(Mathf.FloorToInt(_damage * attackMult), _knockback, true, _Attacker);//)
                 //If other died and is lockOn target return camera to default
                 //_lockOnScript.TargetDead(other.transform);
 
             //Recieve Power
             _playerAttributes.RecivePower(_powerRecivedOnHit);
 
-            //Camera Shake
-            //CameraShaker.Instance.ShakeOnce(1, 0.5f, 0.2f, 0.1f);
-        }
-
-        // TODO Get rid of this
-        if (other.gameObject.name.Equals("Fireball"))
-        {
-            Rigidbody otherRb = other.GetComponent<Rigidbody>();
-            otherRb.velocity = -otherRb.velocity;
+            // TODO Camera Shake
         }
     }
 

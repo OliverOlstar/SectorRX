@@ -15,7 +15,7 @@ public class PowerUpgrade : MonoBehaviour
 
     void Start()
     {
-        stats = pU.Stats;
+        //stats = pU.Stats;
 
         hud = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>();
         

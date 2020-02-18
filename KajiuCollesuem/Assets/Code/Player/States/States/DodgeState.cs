@@ -14,20 +14,20 @@ public class DodgeState : BaseState
 
     public override void Enter()
     {
-        Debug.Log("DodgeState: Enter");
+        //Debug.Log("DodgeState: Enter");
 
-        //Start Dodge
+        // Start Dodge
         stateController._dodgeComponent.Dodge(stateController.dodgeInput == 0, stateController.LastMoveDirection.normalized);
     }
 
     public override void Exit()
     {
-        Debug.Log("DodgeState: Exit");
+        //Debug.Log("DodgeState: Exit");
 
-        //Stop Dodge
+        // Stop Dodge
         stateController._modelController.DoneDodge();
 
-        //Remove Input
+        // Remove Input
         stateController.dodgeInput = -1.0f;
     }
 
