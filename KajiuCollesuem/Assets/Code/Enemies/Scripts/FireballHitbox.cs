@@ -7,6 +7,7 @@ public class FireballHitbox : MonoBehaviour
     public int damageAmount;
     public float maxTime;
     float timer = 0;
+    [SerializeField] private Transform player;
 
     void Update()
     {
@@ -23,7 +24,7 @@ public class FireballHitbox : MonoBehaviour
     {
         IAttributes otherAttributes = other.gameObject.GetComponent<PlayerAttributes>();
 
-        if (otherAttributes != null)
+        if (otherAttributes != null || otherAttributes.IsDead())
         {
             otherAttributes.TakeDamage(damageAmount, Vector3.zero, true, this.gameObject);
             DestroyFireball();

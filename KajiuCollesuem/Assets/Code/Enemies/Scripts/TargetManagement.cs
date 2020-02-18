@@ -20,6 +20,7 @@ public class TargetManagement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (_decision.target == null)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, _fRadius, _playerLayer);
@@ -35,6 +36,12 @@ public class TargetManagement : MonoBehaviour
                     }
                 }
             }
+        }
+
+        else if (_decision.target.GetComponent<PlayerAttributes>().IsDead())
+        {
+            _decision.UpdateTarget(null);
+            _decision.ForceStateSwitch(GetComponent<Guard>());
         }
     }
 

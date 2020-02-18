@@ -46,7 +46,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     //const int BAR_HEIGHT = 20;
     //public float barLengthMultiplier = 1.5f;
 
-    public bool IsDead() { return false; }
+    public bool IsDead() { return _health == 0; }
 
     void Awake()
     {

@@ -17,6 +17,8 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
     [SerializeField] private float healthDisplayLength = 2f;
     [SerializeField] private GameObject enemyHealthBar;
 
+    private Rigidbody _rb;
+
     private bool isDead;
 
     private Decision _decision;
@@ -44,12 +46,13 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         _decision = GetComponent<Decision>();
         _deadState = GetComponent<Dead>();
         _stunnedState = GetComponent<Stunned>();
+        _rb = GetComponent<Rigidbody>();
         //_playerHUD = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>();
     }
 
     public bool TakeDamage(int pAmount, Vector3 pKnockback, bool pReact, GameObject pAttacker)
     {
-        _health -= pAmount;
+        //_health -= pAmount;
 
         if (sliderControl != null)
             sliderControl.UpdateBars(0, pAmount);
@@ -66,11 +69,17 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
             return true;
         }
 
+        else
+        {
+            _rb.isKinematic = false;
+            _rb.AddForce(pKnockback, ForceMode.Impulse);
+        }
+
         _decision.UpdateTarget(pAttacker.transform);
 
         if (pReact && _decision != null)
             _decision.ForceStateSwitch(_stunnedState);
-
+        
         return false;
     }
 
