@@ -36,7 +36,7 @@ public class PlasmaBreath : MonoBehaviour, IAbility
 
         _charging = true;
         _nextSubStateTime = Time.time + 1;
-        _stateController._lockOnComponent.ToggleScopedIn(0.2f);
+        _stateController._lockOnComponent.ToggleScopedIn(0.05f);
     }
 
     public void Released()
