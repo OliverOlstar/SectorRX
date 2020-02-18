@@ -62,7 +62,7 @@ public class UIManager : MonoBehaviour
 
     IEnumerator LoadAsyncLevel(int sceneIndex)
     {
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.5f);
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
         while (!operation.isDone)
         {
