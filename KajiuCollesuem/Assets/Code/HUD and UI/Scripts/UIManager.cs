@@ -14,6 +14,7 @@ Description: Managing UI, loading, starting level, etc.
 
 public class UIManager : MonoBehaviour
 {
+    public static bool menuProperties;
     public RectTransform mainMenu, playerInputMenu, loadingScreen;
     public GameObject targetUI;
     public Slider loadingProgress;
@@ -21,8 +22,14 @@ public class UIManager : MonoBehaviour
     public void Start()
     {
         Time.timeScale = 1;
-        mainMenu.DOAnchorPos(new Vector2(44, 0), 0.4f);
-        BackToMainMenu(targetUI);
+        if (menuProperties == true)
+        {
+            playerInputMenu.DOAnchorPos(new Vector2(69, -2), 0.4f);
+        }
+        else
+        {
+            mainMenu.DOAnchorPos(new Vector2(44, 21), 0.4f);
+        }
     }
 
     private void Update()
@@ -41,22 +48,24 @@ public class UIManager : MonoBehaviour
 
     public void BackToMainMenu(GameObject pTarget)
     {
-        mainMenu.DOAnchorPos(new Vector2(44, 0), 0.4f);
-        playerInputMenu.DOAnchorPos(new Vector2(71, 823), 0.4f);
+        mainMenu.DOAnchorPos(new Vector2(44, 21), 0.4f);
+        playerInputMenu.DOAnchorPos(new Vector2(69, 823), 0.4f);
+        menuProperties = false;
         targetUI = pTarget;
     }
 
     public void GoToPlayer(GameObject pTarget)
     {
-        playerInputMenu.DOAnchorPos(new Vector2(71, 0), 0.4f);
+        playerInputMenu.DOAnchorPos(new Vector2(69, -2), 0.4f);
         mainMenu.DOAnchorPos(new Vector2(44, -755), 0.4f);
+        menuProperties = true;
         targetUI = pTarget;
     }
 
     public void LoadLevel(int sceneIndex)
     {
         playerInputMenu.DOAnchorPos(new Vector2(71, -823), 0.4f);
-        loadingScreen.DOAnchorPos(new Vector2(44, 0), 0.4f);
+        loadingScreen.DOAnchorPos(new Vector2(0, 0), 0.4f);
         StartCoroutine(LoadAsyncLevel(sceneIndex));
     }
 
