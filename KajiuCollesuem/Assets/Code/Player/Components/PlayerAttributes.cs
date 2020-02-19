@@ -66,17 +66,22 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
     #region Modify Vars
     //MODIFY VARS ///////////////////////////////////////////////////////////////////////////////////////////
-    public void modifyHealth(int x)
+    public bool modifyHealth(int x)
     {
         //Changing Value
         _health += x;
         _health = Mathf.Clamp(_health, 0, _maxHealth);
 
         //Changing Visuals
-        //if (sliderControl.RegSlider[0])
-        //{
-            sliderControl.UpdateBars(0, _health);
-        //}
+        sliderControl.UpdateBars(0, _health);
+
+        // Return If Dead or Not
+        if (_health <= 0)
+        {
+            connectedPlayers.playersConnected--;
+            return true;
+        }
+        return false;
     }
 
     public void modifyShield(int x)
@@ -150,6 +155,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             return true;
 
         //Debug.Log("Damaging Player " + pAmount);
+        bool died = false;
 
         if (_shield >= pAmount)
         {
@@ -163,7 +169,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             modifyShield(-_shield);
 
             // Changing Health by remainder
-            modifyHealth(-pAmount);
+            died = modifyHealth(-pAmount);
             Debug.Log(pAmount);
         }
 
@@ -190,17 +196,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         //    _anim.Stunned(Random.value < 0.5f);
 
         // Return If Dead or Not
-        if (_health <= 0)
-        {
-            // TODO Camera Shake
-            connectedPlayers.playersConnected--;
-
-            return true;
-        }
-
-        // TODO Camera Shake
-
-        return false;
+        return died;
     }
 
     public void RecivePower(int pPower)
