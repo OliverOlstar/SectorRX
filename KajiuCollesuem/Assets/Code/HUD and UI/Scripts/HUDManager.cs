@@ -29,17 +29,6 @@ public class HUDManager : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(targetUI);
             targetUI = null;
         }
-<<<<<<< HEAD
-
-        ////Controller and Keyboard Input with UI Module
-
-
-        {
-            EventSystem.current.SetSelectedGameObject(resumeButton);
-            pauseMenu.hasPaused = false;
-        }
-=======
->>>>>>> Scott
     }
 
     //IEnumerator CellUIOff()

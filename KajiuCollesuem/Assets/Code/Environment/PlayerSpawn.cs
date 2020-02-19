@@ -144,11 +144,7 @@ public class PlayerSpawn : MonoBehaviour
             _SpawnPointIndex = Random.Range(0, (connectedPlayers.playersToSpawn <= 4 ? 4 : 9) - i);
             Transform _EightSpawnPos = playerSpawns[_SpawnPointIndex];
             playerSpawns.RemoveAt(_SpawnPointIndex);
-<<<<<<< HEAD
-            GameObject playerCharacter = Instantiate(playerPrefab, _EightSpawnPos.position, transform.rotation);
-=======
             GameObject playerCharacter = Instantiate(playerPrefab, _EightSpawnPos.position, _EightSpawnPos.rotation);
->>>>>>> Scott
             //playerCharacter.transform.LookAt(Vector3.zero);
             //playerCharacter.transform.rotation = playerCharacter.transform.rotation * Quaternion.Euler(0, 90, 0);
             players.Add(playerCharacter);
