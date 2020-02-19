@@ -35,7 +35,8 @@ public class HUDManager : MonoBehaviour
         }
 
         ////Controller and Keyboard Input with UI Module
-        if (pauseMenu.hasPaused)
+
+
         {
             EventSystem.current.SetSelectedGameObject(resumeButton);
             pauseMenu.hasPaused = false;
