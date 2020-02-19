@@ -13,6 +13,7 @@ public class TransitionDown : MonoBehaviour
     public void Start()
     {
         Time.timeScale = 1;
+        gameOverTransition.DOAnchorPos(new Vector2(0, 0), 0.4f);
     }
 
     public void GameOverTransition()
@@ -27,15 +28,16 @@ public class TransitionDown : MonoBehaviour
 
     IEnumerator screenOverMove()
     {
-        gameOverTransition.DOAnchorPos(new Vector2(0, -1280), 0.4f);
+        gameOverTransition.DOAnchorPos(new Vector2(0, -640), 0.4f);
         yield return new WaitForSeconds(0.5f);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadSceneAsync(0);
     }
 
     IEnumerator screenPausedMove()
     {
+        Time.timeScale = 1;
         gamePausedTransition.DOAnchorPos(new Vector2(0, 0), 0.4f);
         yield return new WaitForSeconds(0.5f);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadSceneAsync(0);
     }
 }
