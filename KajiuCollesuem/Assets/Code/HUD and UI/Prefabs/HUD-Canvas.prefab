@@ -430,7 +430,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &383972715627141324
 RectTransform:
   m_ObjectHideFlags: 0
@@ -594,7 +594,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -400.08008, y: -83.14276}
+  m_AnchoredPosition: {x: -400, y: -83}
   m_SizeDelta: {x: 150, y: 20}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &383972716189787739
@@ -657,7 +657,7 @@ GameObject:
   m_Component:
   - component: {fileID: 383972716794856374}
   m_Layer: 5
-  m_Name: Healthbar
+  m_Name: ShieldBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -718,8 +718,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -400.08008, y: -28.142822}
-  m_SizeDelta: {x: 75, y: 20}
+  m_AnchoredPosition: {x: -400, y: -28.142578}
+  m_SizeDelta: {x: 150, y: 20}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &383972716998805421
 MonoBehaviour:
@@ -781,7 +781,7 @@ GameObject:
   m_Component:
   - component: {fileID: 383972717083724608}
   m_Layer: 5
-  m_Name: Healthbar
+  m_Name: PowerBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -824,7 +824,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &383972717305610211
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1371,7 +1371,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -400.08008, y: -56.142822}
+  m_AnchoredPosition: {x: -400, y: -56.14258}
   m_SizeDelta: {x: 150, y: 20}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &77542050258562549
@@ -1948,7 +1948,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
   m_AnchoredPosition: {x: -5, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_SizeDelta: {x: -20.000004, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8925213040842410764
 CanvasRenderer:
@@ -2187,7 +2187,7 @@ GameObject:
   m_Component:
   - component: {fileID: 49370475471534807}
   m_Layer: 5
-  m_Name: Healthbar
+  m_Name: PowerbarMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2223,7 +2223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 590155146868101585}
   m_Layer: 5
-  m_Name: Healthbar
+  m_Name: ShieldbarMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2702,7 +2702,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -400.08008, y: -56.014893}
+  m_AnchoredPosition: {x: -400, y: -56.01465}
   m_SizeDelta: {x: 150, y: 20}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &3883840497747739066
@@ -3590,7 +3590,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -400.08008, y: -56.48535}
+  m_AnchoredPosition: {x: -400, y: -83}
   m_SizeDelta: {x: 150, y: 20}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5707870074333011383
@@ -3639,7 +3639,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 100
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3660,7 +3660,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3074618266951635125
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3728,7 +3728,6 @@ GameObject:
   - component: {fileID: 2774623583265223923}
   - component: {fileID: 4917115591759450007}
   - component: {fileID: 5737519129902807341}
-  - component: {fileID: 263040158}
   - component: {fileID: 197044480}
   m_Layer: 5
   m_Name: HUD-Canvas
@@ -3827,31 +3826,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &263040158
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8291954625409564958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6bf1e18248145c46bd962a9dd147cf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pause: {fileID: 0}
-  cellUI: {fileID: 0}
-  powerUpgrade: {fileID: 0}
-  statUpgrade: {fileID: 0}
-  powerSelect: {fileID: 0}
-  resumeButton: {fileID: 0}
-  targetUI: {fileID: 0}
-  cellExp: {fileID: 0}
-  cellCount: {fileID: 0}
-  canUpgrade: {fileID: 0}
-  upCellCount: {fileID: 0}
-  pauseMenu: {fileID: 0}
-  mainCam: {fileID: 0}
 --- !u!114 &197044480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3935,8 +3909,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -400.08008, y: -28.142822}
-  m_SizeDelta: {x: 75, y: 20}
+  m_AnchoredPosition: {x: -400, y: -28.142578}
+  m_SizeDelta: {x: 150, y: 20}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5029846690300353888
 MonoBehaviour:
@@ -4115,7 +4089,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7260623885751095725}
   m_Layer: 5
-  m_Name: Healthbar
+  m_Name: HealthbarMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
