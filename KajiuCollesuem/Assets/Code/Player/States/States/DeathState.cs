@@ -19,6 +19,7 @@ public class DeathState : BaseState
         //stateController._modelController.Dead();
         //_stateController._ragdollManager.SwitchToRagdoll();
         _stateController._modelController.PlayDead();
+        _stateController._movementComponent.disableMovement = true;
         _stateController.GetComponent<Collider>().material.bounciness = 1.0f;
         _stateController.GetComponentInChildren<Collider>().material.bounciness = 1.0f;
     }

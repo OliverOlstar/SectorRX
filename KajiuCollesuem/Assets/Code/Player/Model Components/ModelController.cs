@@ -143,6 +143,13 @@ public class ModelController : MonoBehaviour
 
     public void DoneDodge()
     {
+        StopCoroutine("DoneDodgeRoutine");
+        StartCoroutine("DoneDodgeRoutine");
+    }
+
+    IEnumerator DoneDodgeRoutine()
+    {
+        yield return new WaitForSeconds(0.12f);
         _DontUpdateWeights = false;
         _modelWeights.SetWeights(0, 0, 0, 0, 0);
     }
