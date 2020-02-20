@@ -194,6 +194,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
         //if (pReact)
         //    _anim.Stunned(Random.value < 0.5f);
+        _stateController._modelController.AddStunned(1, (Random.value - 0.5f) * 2, 0.02f, 0.1f);
 
         // Return If Dead or Not
         return died;
@@ -202,7 +203,6 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     public void RecivePower(int pPower)
     {
         modifyPower(pPower);
-        //Debug.Log("Power Recieved: " + pPower + ", " + _power);
 
         // Restarting Power Loss over time
         if (_power > 0)

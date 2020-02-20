@@ -155,6 +155,20 @@ public class ModelController : MonoBehaviour
     }
     #endregion
 
+    #region Stunned
+    public void AddStunned(float pValue, float pDirection, float pGoingToLength, float pGoingAwayLength)
+    {
+        Debug.Log("ModelController: AddStunned");
+        _modelWeights.AddStunned(pValue, pDirection, pGoingToLength, pGoingAwayLength);
+        _modelMovement.disableRotation = true;
+    }
+
+    public void DoneStunned()
+    {
+        _modelMovement.disableRotation = false;
+    }
+    #endregion
+
     #region LockOn
     public void SetLockOn(Transform pTarget)
     {
