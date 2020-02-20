@@ -54,6 +54,8 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
     {
         _health -= pAmount;
 
+        pKnockback.y = pKnockback.y * 2;
+
         if (sliderControl != null)
             sliderControl.UpdateBars(0, pAmount);
 
@@ -73,7 +75,7 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         if (pReact && _decision != null)
         {
             _decision.ForceStateSwitch(_stunnedState);
-            _rb.AddForce(pKnockback, ForceMode.Impulse);
+            _rb.AddForce(pKnockback / _weight, ForceMode.Impulse);
         }
         
         return false;
