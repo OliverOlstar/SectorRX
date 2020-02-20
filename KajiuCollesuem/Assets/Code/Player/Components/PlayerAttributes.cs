@@ -36,7 +36,19 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     [SerializeField] private float _powerLossDelaySeconds = 0.3f;
     [SerializeField] private int _powerLossAmount = 1;
 
-    public bool IsDead() { return false; }
+    [Header("HUD")]
+    //[SerializeField] private Slider _healthSlider;
+    //[SerializeField] private Slider _shieldSlider;
+    //[SerializeField] private Slider _powerSlider;
+
+    private RectTransform healthRect;
+    private RectTransform shieldRect;
+    private RectTransform powerRect;
+
+    //const int BAR_HEIGHT = 20;
+    //public float barLengthMultiplier = 1.5f;
+
+    public bool IsDead() { return _health == 0; }
 
     void Awake()
     {
