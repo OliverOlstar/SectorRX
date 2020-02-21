@@ -19,7 +19,6 @@ public class PauseMenu : MonoBehaviour
     {
         pause = false;
         pauseScreen.SetActive(false);
-        EventSystem.current.SetSelectedGameObject(resumeButton);
     }
 
     public void TogglePause()
@@ -31,6 +30,7 @@ public class PauseMenu : MonoBehaviour
             Time.timeScale = 0;
             hasPaused = true;
             Cursor.lockState = CursorLockMode.None;
+            EventSystem.current.SetSelectedGameObject(resumeButton);
         }
         else
         {
