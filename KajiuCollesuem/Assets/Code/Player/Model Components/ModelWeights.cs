@@ -56,7 +56,7 @@ public class ModelWeights : MonoBehaviour
         LerpWeight("Dead Weight", deadWeight);
     }
 
-    private void LerpWeight(string pWeight, float pTargetValue)
+    private void LerpWeight(string pWeight, float pTargetValue, float pMultLerp = 1)
     {
         // Get current weight value
         float currentValue = _anim.GetFloat(pWeight);
@@ -65,7 +65,7 @@ public class ModelWeights : MonoBehaviour
         if (currentValue == pTargetValue) return;
 
         // Lerp value towards target
-        currentValue = Mathf.Lerp(currentValue, pTargetValue, _weightChangeDampening * Time.deltaTime);
+        currentValue = Mathf.Lerp(currentValue, pTargetValue, _weightChangeDampening * Time.deltaTime * pMultLerp);
 
         // If in deadzone just snap to value
         if (Mathf.Abs(currentValue - pTargetValue) < _weightChangeDeadzone)
@@ -116,28 +116,20 @@ public class ModelWeights : MonoBehaviour
         crouchWeight = 0;
     }
 
-    public void AddStunned(float pValue, float pDirection, float pGoingToLength, float pGoingAwayLength)
+    public void AddStunned(float pValue, float pDirection, float pGoingAwayDelay, float pGoingAwayLength)
     {
         stunnedDirection = pDirection;
 
         if (stunnedRoutineStored != null)
             StopCoroutine(stunnedRoutineStored);
-        stunnedRoutineStored = StartCoroutine(stunnedRoutine(pValue, pGoingToLength, pGoingAwayLength));
+        stunnedRoutineStored = StartCoroutine(stunnedRoutine(pValue, pGoingAwayDelay, pGoingAwayLength));
     }
 
-    IEnumerator stunnedRoutine(float pValue, float pGoingToLength, float pGoingAwayLength)
+    IEnumerator stunnedRoutine(float pValue, float pGoingAwayDelay, float pGoingAwayLength)
     {
-        // Increase Value
-        while (stunnedWeight < pValue)
-        {
-            stunnedWeight += Time.deltaTime * (1 / pGoingToLength);
-            yield return null;
-        }
-
-        // Snap to target value for a frame
+        // Snap to target value for a delay
         stunnedWeight = pValue;
-        yield return new WaitForSeconds(0.05f);
-        _modelController.DoneStunned();
+        yield return new WaitForSeconds(pGoingAwayDelay);
 
         // Decrease Value
         while (stunnedWeight > 0)

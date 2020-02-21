@@ -143,13 +143,6 @@ public class ModelController : MonoBehaviour
 
     public void DoneDodge()
     {
-        StopCoroutine("DoneDodgeRoutine");
-        StartCoroutine("DoneDodgeRoutine");
-    }
-
-    IEnumerator DoneDodgeRoutine()
-    {
-        yield return new WaitForSeconds(0.12f);
         _DontUpdateWeights = false;
         _modelWeights.SetWeights(0, 0, 0, 0, 0);
     }
@@ -163,16 +156,10 @@ public class ModelController : MonoBehaviour
     #endregion
 
     #region Stunned
-    public void AddStunned(float pValue, float pDirection, float pGoingToLength, float pGoingAwayLength)
+    public void AddStunned(float pValue, float pDirection, float pGoingAwayDelay, float pGoingAwayLength)
     {
         Debug.Log("ModelController: AddStunned");
-        _modelWeights.AddStunned(pValue, pDirection, pGoingToLength, pGoingAwayLength);
-        _modelMovement.disableRotation = true;
-    }
-
-    public void DoneStunned()
-    {
-        _modelMovement.disableRotation = false;
+        _modelWeights.AddStunned(pValue, pDirection, pGoingAwayDelay, pGoingAwayLength);
     }
     #endregion
 
