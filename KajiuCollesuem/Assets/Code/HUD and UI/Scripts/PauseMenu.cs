@@ -8,10 +8,8 @@ public class PauseMenu : MonoBehaviour
 {
     public bool pause;
     public bool hasPaused;
-    public GameObject pauseScreen;
-    public GameObject powUpgrade;
-    public GameObject statUpgrade;
-    public GameObject resumeButton;
+    public GameObject pauseScreen, controlScreen;
+    public GameObject resumeButton, targetUI;
     [SerializeField] private PlayerCamera mainCam;
     
     // Use this for initialization
@@ -19,6 +17,17 @@ public class PauseMenu : MonoBehaviour
     {
         pause = false;
         pauseScreen.SetActive(false);
+        controlScreen.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(null);
+    }
+
+    private void Update()
+    {
+        if (targetUI != null)
+        {
+            EventSystem.current.SetSelectedGameObject(targetUI);
+            targetUI = null;
+        }
     }
 
     public void TogglePause()
@@ -30,16 +39,30 @@ public class PauseMenu : MonoBehaviour
             Time.timeScale = 0;
             hasPaused = true;
             Cursor.lockState = CursorLockMode.None;
-            EventSystem.current.SetSelectedGameObject(resumeButton);
+            targetUI = resumeButton;
         }
         else
         {
             Time.timeScale = 1;
             hasPaused = false;
             Cursor.lockState = CursorLockMode.Locked;
+            EventSystem.current.SetSelectedGameObject(null);
+            controlScreen.SetActive(false);
         }
 
         pauseScreen.SetActive(pause);
-        //mainCam.CameraDisabled = pause;
+    }
+
+    public void ToControls()
+    {
+        pauseScreen.SetActive(false);
+        controlScreen.SetActive(true);
+    }
+
+    public void BackToPause(GameObject pTarget)
+    {
+        pauseScreen.SetActive(true);
+        controlScreen.SetActive(false);
+        targetUI = pTarget;
     }
 }
