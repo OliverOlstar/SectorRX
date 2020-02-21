@@ -33,6 +33,11 @@ public class connectedPlayers : MonoBehaviour
     {
         playersConnected = 0;
         playersToSpawn = 0;
+        playerIndex.Clear();
+        if(UIManager.menuProperties == true)
+        {
+            EnableJoin();
+        }
     }
 
     public void OnPlayerJoined()
