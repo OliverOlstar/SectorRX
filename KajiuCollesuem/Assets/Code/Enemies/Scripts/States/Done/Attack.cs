@@ -52,6 +52,7 @@ public class Attack : MonoBehaviour, IState
         //Debug.Log("Fireball: Exit");
         _enabled = false;
         _nextEnterTime = Time.time + _cooldown;
+        _anim.SetBool("Attacking", false);
         _rb.isKinematic = true;
         _agent.enabled = true;
     }
