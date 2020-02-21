@@ -14,9 +14,13 @@ public class Stunned : MonoBehaviour, IState
     private NavMeshAgent _agent;
     private Rigidbody _rb;
 
+    [SerializeField] private float _halfPlayerHeight = 0.2f;
+    
+    private float _leaveStateTime = 0.0f;
+    [SerializeField] private float _stunnedStateMinTime = 0.2f;
+
     [SerializeField] private bool _enabled = false;
     [SerializeField] private float _halfPlayerHeight = 0.52f;
-    [SerializeField] private float _onGroundCheckTime = 0;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent, EnemySmoothRotation pRotation)
     {
@@ -28,15 +32,18 @@ public class Stunned : MonoBehaviour, IState
 
     public void Enter()
     {
-        _enabled = true;
+        _leaveStateTime = Time.time + _stunnedStateMinTime;
+
         _anim.SetTrigger("Hurt");
         _agent.enabled = false;
         _rb.isKinematic = false;
         _onGroundCheckTime = Time.time + 0.2f;
+        _enabled = true;
     }
 
     public void Exit()
     {
+        _agent.enabled = true;
         _rb.isKinematic = true;
         _agent.enabled = true;
         _enabled = false;
@@ -49,22 +56,15 @@ public class Stunned : MonoBehaviour, IState
 
     public bool CanExit(float pDistance)
     {
-        return (_onGroundCheckTime <= Time.time && IsOnGround());
+        return (Time.time > _leaveStateTime && IsOnGround());
     }
 
     public void Tick()
     {
-        
+        _rb.AddForce(Vector3.down * Time.deltaTime * 50);
     }
 
     public void UpdateTarget(Transform pTarget) => _target = pTarget;
-
-    //Animation Events //////////////
-    /*public void AEDoneStunned()
-    {
-        Debug.Log("Stunned: AEDoneStunned");
-        _enabled = false;
-    }*/
 
     private bool IsOnGround()
     {

@@ -9,6 +9,7 @@ public class SOCamera : ScriptableObject
     public float UpOffset = 0.6f;
     public float LeftOffset = 0.0f;
     public float Distance = 6.0f;
+    public float FOV = 65.0f;
     
     [Header("Input")]
     public float SensitivityMult = 1.0f;

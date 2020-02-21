@@ -237,7 +237,10 @@ MonoBehaviour:
   crouchWeight: 0
   attackWeight: 0
   dodgeWeight: 0
-  _weightChangeDampening: 8
+  stunnedWeight: 0
+  stunnedDirection: 0
+  deadWeight: 0
+  _weightChangeDampening: 10
   _weightChangeDeadzone: 0.01
 --- !u!114 &4104074972387249871
 MonoBehaviour:
@@ -254,9 +257,11 @@ MonoBehaviour:
   _stepMult: 1
   _idleMult: 0.3
   _fallMult: 1.6
+  _deadMult: 0.9
   _stepGraph: {fileID: 11400000, guid: d105e3352e7b8e94f82be1c6df8d9084, type: 2}
   _idleGraph: {fileID: 11400000, guid: 8d38503b353117b4e9fdbebd87428edf, type: 2}
   _fallGraph: {fileID: 11400000, guid: 5d40a20a35f8b154e9204417dc7022f5, type: 2}
+  _deadGraph: {fileID: 11400000, guid: 077046eff822eff49991833925e46f1b, type: 2}
   _jumpingTransitionWidth: 4.6
 --- !u!1 &6237853049773769088
 GameObject:
@@ -437,7 +442,6 @@ MonoBehaviour:
   _lockOnComponent: {fileID: 0}
   _powerComponent: {fileID: 0}
   _hitboxComponent: {fileID: 0}
-  _PauseMenu: {fileID: 0}
   _playerAttributes: {fileID: 0}
   _modelController: {fileID: 0}
   _playerCamera: {fileID: 0}
@@ -506,7 +510,7 @@ MonoBehaviour:
   longDodgeDuration: 0.3
   longDodgeAcceleration: 12000
   shortDodgeAnimSpeed: 2
-  longDodgeAnimSpeed: 1.4
+  longDodgeAnimSpeed: 1.6
 --- !u!114 &7968489575383935976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -540,15 +544,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransSpeed: 1
-  _aimingPreset: {fileID: 11400000, guid: c235eb03047f1c94084ef3b9a43570ea, type: 2}
-  lockOnPreset: {fileID: 11400000, guid: 9aed1e3693ccc6149ac1471b451f36be, type: 2}
   enemiesLayer:
     serializedVersion: 2
     m_Bits: 768
   lockOnRange: 30
   focusedOnScreen: 0
   unfocusedOnScreen: 0
-  idlePreset: {fileID: 11400000, guid: 67ad0d9b288e04043ae10b57d85fe6c2, type: 2}
   TimeUntilIdle: 20
 --- !u!114 &6237853051496095936
 MonoBehaviour:
@@ -570,6 +571,8 @@ MonoBehaviour:
   _powerLossStartDelaySeconds: 10
   _powerLossDelaySeconds: 0.3
   _powerLossAmount: 1
+  easeOut: 0.12
+  easeOutDelay: 0.18
 --- !u!114 &5855493607624095741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -583,10 +586,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MAXUPGRADES: 20
-  minHealth: 60
+  minHealth: 40
   maxHealth: 160
-  minShield: 30
-  maxShield: 90
+  minShield: 40
+  maxShield: 100
   minSpeed: 1
   maxSpeed: 2
   minJump: 1

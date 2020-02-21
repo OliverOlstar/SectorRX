@@ -36,7 +36,7 @@ public class PlasmaBreath : MonoBehaviour, IAbility
 
         _charging = true;
         _nextSubStateTime = Time.time + 1;
-        _stateController._lockOnComponent.ToggleScopedIn(0.2f);
+        _stateController._lockOnComponent.ToggleScopedIn(0.05f);
     }
 
     public void Released()
@@ -55,11 +55,6 @@ public class PlasmaBreath : MonoBehaviour, IAbility
         Debug.Log("PlasmaBreath: Exit");
         _stateController._lockOnComponent.ToggleScopedIn(1.0f);
         _SpawnedLaser.gameObject.SetActive(false);
-    }
-
-    public void Upgrade()
-    {
-
     }
 
     public void Tick()

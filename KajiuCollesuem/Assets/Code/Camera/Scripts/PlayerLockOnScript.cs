@@ -16,11 +16,9 @@ public class PlayerLockOnScript : MonoBehaviour
     [SerializeField] private float cameraTransSpeed = 1;
 
     [Header("Aiming")]
-    [SerializeField] private SOCamera _aimingPreset;
     private bool _aiming = false;
 
     [Header("LockOn")]
-    [SerializeField] private SOCamera lockOnPreset;
     [SerializeField] private LayerMask enemiesLayer;
     [SerializeField] private float lockOnRange = 10.0f;
     //[SerializeField] [Range(0, 359.9999f)] private float lockOnAngle = 45;
@@ -29,7 +27,6 @@ public class PlayerLockOnScript : MonoBehaviour
     [HideInInspector] public bool unfocusedOnScreen = false;
 
     [Header("Idle")]
-    [SerializeField] private SOCamera idlePreset;
     [SerializeField] private float TimeUntilIdle = 20f;
     
     public void Start()
@@ -40,7 +37,7 @@ public class PlayerLockOnScript : MonoBehaviour
         _playerCollider = GetComponent<Collider>();
         _bumperCollider = transform.parent.GetComponent<Collider>();
     }
-    
+
     void Update()
     {
         if (_stateController._playerCamera == null) return;
@@ -52,7 +49,7 @@ public class PlayerLockOnScript : MonoBehaviour
             if (_playerCamera.targetIdle == false && _playerCamera.lockOnTarget == null)
             {
                 _playerCamera.targetIdle = true;
-                _playerCamera.ChangePlayerCamera(idlePreset, cameraTransSpeed);
+                _playerCamera.SwitchToIdleCamera(cameraTransSpeed);
             }
         }
         else if (_playerCamera.targetIdle == true && _playerCamera.lockOnTarget == null)
@@ -60,7 +57,7 @@ public class PlayerLockOnScript : MonoBehaviour
             //Leave Idle Camera
             _playerCamera.targetIdle = false;
             if (_aiming)
-                _playerCamera.ChangePlayerCamera(_aimingPreset, cameraTransSpeed);
+                _playerCamera.SwitchToAimingCamera(cameraTransSpeed);
             else
                 _playerCamera.ReturnToDefaultPlayerCamera(cameraTransSpeed);
         }
@@ -72,7 +69,7 @@ public class PlayerLockOnScript : MonoBehaviour
 
         if (_aiming)
         {
-            _playerCamera.ChangePlayerCamera(_aimingPreset, pTransSpeed);
+            _playerCamera.SwitchToAimingCamera(cameraTransSpeed);
         }
         else
         {
@@ -95,7 +92,7 @@ public class PlayerLockOnScript : MonoBehaviour
             {
                 _playerCamera.lockOnTarget = target;
                 _stateController._modelController.SetLockOn(target);
-                _playerCamera.ChangePlayerCamera(lockOnPreset, cameraTransSpeed);
+                _playerCamera.SwitchToLockOnCamera(cameraTransSpeed);
             }
         }
         else

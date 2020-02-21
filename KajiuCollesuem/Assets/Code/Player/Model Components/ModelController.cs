@@ -19,7 +19,7 @@ public class ModelController : MonoBehaviour
     private int _AttackingState;
     private bool _AttackingDirection;
 
-    private bool _Dodging;
+    private bool _DontUpdateWeights;
 
     public SOAttack[] attacks;
     private float _doneAttackDelay = 0;
@@ -45,7 +45,7 @@ public class ModelController : MonoBehaviour
     {
         horizontalVelocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
 
-        if (_Dodging == false)
+        if (_DontUpdateWeights == false)
         {
             if (_AttackingState == 1)
             {
@@ -58,6 +58,10 @@ public class ModelController : MonoBehaviour
             {
                 _modelWeights.UpdateWeights();
             }
+        }
+        else
+        {
+            _modelAnimation.DeadAnim();
         }
 
         _modelWeights.LerpWeights();
@@ -92,7 +96,7 @@ public class ModelController : MonoBehaviour
         _AttackingDirection = pIndex == 1 ? false : true;
         _doneAttackDelay = curAttack.holdEndPosTime;
         _modelMovement.disableRotation = true;
-        _modelWeights.SetWeights(0, 0, 1, 0);
+        _modelWeights.SetWeights(0, 0, 1, 0, 0);
         _modelAnimation.StartAttack(pIndex, pHeavy);
     }
 
@@ -114,7 +118,7 @@ public class ModelController : MonoBehaviour
     {
         _AttackingState = 0;
         _modelMovement.disableRotation = false;
-        _modelWeights.SetWeights(0, 0, 0, 0);
+        _modelWeights.SetWeights(0, 0, 0, 0, 0);
     }
 
     public void DoneChargingAttack()
@@ -132,15 +136,15 @@ public class ModelController : MonoBehaviour
     #region Dodging
     public void PlayDodge(Vector2 pDirection, float pSpeed)
     {
-        _Dodging = true;
-        _modelWeights.SetWeights(0, 0, 0, 1);
+        _DontUpdateWeights = true;
+        _modelWeights.SetWeights(0, 0, 0, 1, 0);
         _modelMovement.PlayFlipParent(pDirection, pSpeed);
     }
 
     public void DoneDodge()
     {
-        _Dodging = false;
-        _modelWeights.SetWeights(0, 0, 0, 0);
+        _DontUpdateWeights = false;
+        _modelWeights.SetWeights(0, 0, 0, 0, 0);
     }
     #endregion
 
@@ -151,10 +155,28 @@ public class ModelController : MonoBehaviour
     }
     #endregion
 
+    #region Stunned
+    public void AddStunned(float pValue, float pDirection, float pGoingAwayDelay, float pGoingAwayLength)
+    {
+        Debug.Log("ModelController: AddStunned");
+        _modelWeights.AddStunned(pValue, pDirection, pGoingAwayDelay, pGoingAwayLength);
+    }
+    #endregion
+
     #region LockOn
     public void SetLockOn(Transform pTarget)
     {
         _modelMovement.facingTarget = pTarget;
+    }
+    #endregion
+
+    #region Dead
+    public void PlayDead()
+    {
+        _DontUpdateWeights = true;
+        _modelMovement.disableRotation = true;
+        _modelWeights.SetWeights(0, 0, 0, 0, 1);
+        _modelAnimation.PlayDead();
     }
     #endregion
 
