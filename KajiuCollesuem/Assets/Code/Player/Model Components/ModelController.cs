@@ -17,7 +17,6 @@ public class ModelController : MonoBehaviour
     [HideInInspector] public Vector3 horizontalVelocity;
     // 0 - done attack, 1 - attacking, 2 - sitting on a delay between attacking
     private int _AttackingState;
-    private bool _AttackingDirection;
 
     private bool _DontUpdateWeights;
 
@@ -49,7 +48,7 @@ public class ModelController : MonoBehaviour
         {
             if (_AttackingState == 1)
             {
-                if (_modelAnimation.AttackingAnim(_AttackingDirection))
+                if (_modelAnimation.AttackingAnim())
                 {
                     StartCoroutine("DoneAttackWithDelay");
                 }
@@ -75,9 +74,9 @@ public class ModelController : MonoBehaviour
     }
 
     #region Attacking
-    public void PlayAttack(int pIndex, bool pHeavy, bool pChargable)
+    public void PlayAttack(int pIndex, bool pChargable)
     {
-        SOAttack curAttack = attacks[pIndex + (pHeavy ? 3 : 0)];
+        SOAttack curAttack = attacks[pIndex];
 
         StopCoroutine("DoneAttackWithDelay");
         StopCoroutine("PlayAttackWithDelay");
@@ -91,13 +90,12 @@ public class ModelController : MonoBehaviour
         else
         {
             StartCoroutine("PlayAttackWithDelay", curAttack.holdStartPosTime);
+            _modelMovement.disableRotation = true;
         }
 
-        _AttackingDirection = pIndex == 1 ? false : true;
         _doneAttackDelay = curAttack.holdEndPosTime;
-        _modelMovement.disableRotation = true;
         _modelWeights.SetWeights(0, 0, 1, 0, 0);
-        _modelAnimation.StartAttack(pIndex, pHeavy);
+        _modelAnimation.StartAttack(pIndex);
     }
 
     private IEnumerator PlayAttackWithDelay(float pDelay)
@@ -125,6 +123,7 @@ public class ModelController : MonoBehaviour
     {
         // End Charging
         _AttackingState = 1;
+        _modelMovement.disableRotation = true;
     }
 
     public void SetInputDirection(Vector3 pInput)
