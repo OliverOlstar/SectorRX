@@ -10,6 +10,7 @@ public class TargetManagement : MonoBehaviour
     [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private float _visionRadius = 15;
     [SerializeField] private float _visionDistance = 30;
+    [SerializeField] private float _triggerDistance = 5;
     [HideInInspector] public PlayerAttributes playerAttributes;
 
     // Start is called before the first frame update
@@ -31,10 +32,12 @@ public class TargetManagement : MonoBehaviour
                 for (int i = 0; i < colliders.Length; ++i)
                 {
                     playerAttributes = colliders[i].gameObject.GetComponent<PlayerAttributes>();
+                    Transform playerTransform = colliders[i].gameObject.transform;
+                    float distance = Vector3.Distance(transform.position, playerTransform.position);
 
-                    if (_IsPlayerInRange(colliders[i].gameObject.transform) && !playerAttributes.IsDead())
+                    if ((_IsPlayerInRange(playerTransform) || distance < _triggerDistance) && !playerAttributes.IsDead())
                     {
-                        _decision.UpdateTarget(colliders[i].gameObject.transform);
+                        _decision.UpdateTarget(playerTransform);
                         break;
                     }
                 }

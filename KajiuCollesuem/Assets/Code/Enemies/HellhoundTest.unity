@@ -2762,15 +2762,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3771036346408154702, guid: 2d5a8e544e5092341ac064a73afeb473,
+    - target: {fileID: 3379795131003389061, guid: 2d5a8e544e5092341ac064a73afeb473,
         type: 3}
-      propertyPath: _knockbackUpForce
-      value: 0
+      propertyPath: _rotationSpeed
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3771036346408154702, guid: 2d5a8e544e5092341ac064a73afeb473,
         type: 3}
-      propertyPath: _weight
-      value: 1
+      propertyPath: startHealth
+      value: 3000
       objectReference: {fileID: 0}
     - target: {fileID: 7630819356453292782, guid: 2d5a8e544e5092341ac064a73afeb473,
         type: 3}
@@ -2785,6 +2785,11 @@ PrefabInstance:
     - target: {fileID: 7908808925985318757, guid: 2d5a8e544e5092341ac064a73afeb473,
         type: 3}
       propertyPath: _halfPlayerHeight
+      value: 0.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908808925985318757, guid: 2d5a8e544e5092341ac064a73afeb473,
+        type: 3}
+      propertyPath: _stunnedStateMinTime
       value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8591727565542770311, guid: 2d5a8e544e5092341ac064a73afeb473,
@@ -6500,6 +6505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStateController: {fileID: 2092940583}
+  _PauseMenu: {fileID: 0}
 --- !u!114 &1539021638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7501,6 +7507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99a4d45b359b1fa4aba984ae0f0a0aab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stunnedStateMinTime: 0.2
   _enabled: 0
   _halfPlayerHeight: 0.52
   _onGroundCheckTime: 0
@@ -7614,6 +7621,7 @@ MonoBehaviour:
   _jumpbackUpForce: 10
   _halfPlayerHeight: 0.52
   _onGroundCheckTime: 0
+  _allowedDotValue: 0.6
   _enabled: 0
 --- !u!114 &1691069997
 MonoBehaviour:

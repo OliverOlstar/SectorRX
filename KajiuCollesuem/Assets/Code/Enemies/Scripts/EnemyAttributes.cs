@@ -13,8 +13,6 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
 {
     [SerializeField] private int startHealth = 100;
     private int _health;
-
-    [SerializeField] private float _weight = 2;
     
     [SerializeField] private float healthDisplayLength = 2f;
     [SerializeField] private float _weight = 0;

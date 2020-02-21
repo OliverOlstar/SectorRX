@@ -13,14 +13,12 @@ public class Stunned : MonoBehaviour, IState
     private Animator _anim;
     private NavMeshAgent _agent;
     private Rigidbody _rb;
-
-    [SerializeField] private float _halfPlayerHeight = 0.2f;
     
     private float _leaveStateTime = 0.0f;
     [SerializeField] private float _stunnedStateMinTime = 0.2f;
 
     [SerializeField] private bool _enabled = false;
-    [SerializeField] private float _halfPlayerHeight = 0.52f;
+    [SerializeField] private float _halfPlayerHeight = 0.52f, _onGroundCheckTime = 0;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent, EnemySmoothRotation pRotation)
     {
