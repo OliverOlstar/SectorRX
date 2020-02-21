@@ -71,7 +71,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -538, y: 204}
+  m_AnchoredPosition: {x: -495.2, y: 204.85002}
   m_SizeDelta: {x: 442.8, y: 91.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7325800451197427001
@@ -148,8 +148,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -495.2, y: 0.000015259}
-  m_SizeDelta: {x: 990.4, y: 318.55}
+  m_AnchoredPosition: {x: -495.2, y: -21.3}
+  m_SizeDelta: {x: 990.4, y: 361.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4050560967834296116
 CanvasRenderer:
@@ -184,23 +184,25 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 4
     m_MaxSize: 95
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Use the A, W, S and D keys to move around.
+  m_Text: 'W A S D - Move
 
-    Move the mouse to rotate the camera.
+    MOUSE - Camera
 
-    Left Click to perform a Quick Attack.
+    LMB - Quick Attack
 
-    Right click to perform a Heavy Attack.
+    RMB - Heavy Attack
 
-    Press Q to lock-on to an enemy or other player.
+    Q - Lock On
 
-    Press Space to Jump.'
+    SPACE - Dogde
+
+    LEFT SHIFT - Jump'
 --- !u!1 &3061181692275531172
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,7 +274,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 538, y: 204}
+  m_AnchoredPosition: {x: 495.19995, y: 204.85002}
   m_SizeDelta: {x: 442.8, y: 91.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2054502691070628012
@@ -722,8 +724,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 495.2, y: 0.000015259}
-  m_SizeDelta: {x: 990.4, y: 318.55}
+  m_AnchoredPosition: {x: 495.2, y: -13.9}
+  m_SizeDelta: {x: 990.4, y: 346.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5325880118609559700
 CanvasRenderer:
@@ -758,23 +760,25 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 4
     m_MaxSize: 95
-    m_Alignment: 2
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Use the Left Stick to move around.
+  m_Text: 'LEFT STICK - Move
 
-    Use the Right Stick to rotate the camera.
+    RIGHT STICK- Camera
 
-    Press the A button to perform a Quick Attack.
+    A - Quick Attack
 
-    Press the B button to perform a Heavy Attack.
+    B - Heavy Attack
 
-    Press the X button to lock-on to an enemy or other player.
+    X - Lock On
 
-    Press the Y button to Jump.'
+    RB - Dodge
+
+    Y Button - Jump'
 --- !u!1 &8908498167504770623
 GameObject:
   m_ObjectHideFlags: 0
