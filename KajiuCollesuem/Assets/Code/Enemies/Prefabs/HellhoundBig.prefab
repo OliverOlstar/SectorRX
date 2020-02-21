@@ -764,7 +764,7 @@ MonoBehaviour:
   _jumpbackUpForce: 4
   _halfPlayerHeight: 0.22
   _onGroundCheckTime: 0
-  _allowedDotValue: 0.2
+  _allowedDotValue: 0.1
   _enabled: 0
 --- !u!114 &642284532420701670
 MonoBehaviour:
@@ -844,9 +844,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99a4d45b359b1fa4aba984ae0f0a0aab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _halfPlayerHeight: 0.22
   _stunnedStateMinTime: 0.05
   _enabled: 0
+  _halfPlayerHeight: 0.22
+  _onGroundCheckTime: 0
 --- !u!114 &4631869177046432509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -876,8 +877,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startHealth: 30
-  _weight: 6
   healthDisplayLength: 2
+  _weight: 6
   enemyHealthBar: {fileID: 7630819355108581568}
   sliderControl: {fileID: 0}
 --- !u!114 &9071476161836435771
@@ -897,6 +898,8 @@ MonoBehaviour:
     m_Bits: 256
   _visionRadius: 70
   _visionDistance: 38
+  _triggerDistance: 10
+  playerAttributes: {fileID: 0}
 --- !u!114 &3379795131003389061
 MonoBehaviour:
   m_ObjectHideFlags: 0
