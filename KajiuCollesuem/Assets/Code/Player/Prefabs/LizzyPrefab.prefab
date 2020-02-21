@@ -240,7 +240,7 @@ MonoBehaviour:
   stunnedWeight: 0
   stunnedDirection: 0
   deadWeight: 0
-  _weightChangeDampening: 8
+  _weightChangeDampening: 10
   _weightChangeDeadzone: 0.01
 --- !u!114 &4104074972387249871
 MonoBehaviour:
@@ -510,7 +510,7 @@ MonoBehaviour:
   longDodgeDuration: 0.3
   longDodgeAcceleration: 12000
   shortDodgeAnimSpeed: 2
-  longDodgeAnimSpeed: 1.4
+  longDodgeAnimSpeed: 1.6
 --- !u!114 &7968489575383935976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -571,6 +571,8 @@ MonoBehaviour:
   _powerLossStartDelaySeconds: 10
   _powerLossDelaySeconds: 0.3
   _powerLossAmount: 1
+  easeOut: 0.12
+  easeOutDelay: 0.15
 --- !u!114 &5855493607624095741
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -36,19 +36,18 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     [SerializeField] private float _powerLossDelaySeconds = 0.3f;
     [SerializeField] private int _powerLossAmount = 1;
 
-    [Header("HUD")]
-    //[SerializeField] private Slider _healthSlider;
-    //[SerializeField] private Slider _shieldSlider;
-    //[SerializeField] private Slider _powerSlider;
-
-    private RectTransform healthRect;
-    private RectTransform shieldRect;
-    private RectTransform powerRect;
-
-    //const int BAR_HEIGHT = 20;
-    //public float barLengthMultiplier = 1.5f;
+    [Header("Stunned Anim")]
+    [SerializeField] [Range(0, 0.5f)] private float easeOut = 0.15f;
+    [SerializeField] [Range(0, 0.5f)] private float easeOutDelay = 0.15f;
 
     public bool IsDead() { return _health == 0; }
+
+    private void Update()
+    {
+        // DELETE THIS (testing)
+        if (Input.GetKeyDown(KeyCode.Z))
+            _stateController._modelController.AddStunned(1, (Random.value - 0.5f) * 2, easeOutDelay, easeOut);
+    }
 
     void Awake()
     {
@@ -158,7 +157,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
     #region General Functions
     //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
-    public bool TakeDamage(int pAmount, Vector3 pKnockback, bool pReact, GameObject pAttacker)
+    public bool TakeDamage(int pAmount, Vector3 pKnockback, GameObject pAttacker)
     {
         //Debug.Log("PlayerAttributes: TakeDamage");
 
@@ -204,9 +203,8 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         // Add Knockback
         _stateController._Rb.AddForce(pKnockback / weight, ForceMode.Impulse);
 
-        //if (pReact)
-        //    _anim.Stunned(Random.value < 0.5f);
-        _stateController._modelController.AddStunned(1, (Random.value - 0.5f) * 2, 0.02f, 0.1f);
+        if (died == false)
+            _stateController._modelController.AddStunned(1, (Random.value - 0.5f) * 2, easeOutDelay, easeOut);
 
         // Return If Dead or Not
         return died;

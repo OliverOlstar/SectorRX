@@ -762,8 +762,9 @@ MonoBehaviour:
   _hitbox: {fileID: 7630819354959702786}
   _jumpbackForce: 20
   _jumpbackUpForce: 4
-  _halfPlayerHeight: 0.2
+  _halfPlayerHeight: 0.22
   _onGroundCheckTime: 0
+  _allowedDotValue: 0.2
   _enabled: 0
 --- !u!114 &642284532420701670
 MonoBehaviour:
@@ -843,7 +844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99a4d45b359b1fa4aba984ae0f0a0aab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _halfPlayerHeight: 0.2
+  _halfPlayerHeight: 0.22
   _stunnedStateMinTime: 0.05
   _enabled: 0
 --- !u!114 &4631869177046432509
@@ -894,8 +895,8 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 256
-  _visionRadius: 60
-  _visionDistance: 45
+  _visionRadius: 70
+  _visionDistance: 38
 --- !u!114 &3379795131003389061
 MonoBehaviour:
   m_ObjectHideFlags: 0
