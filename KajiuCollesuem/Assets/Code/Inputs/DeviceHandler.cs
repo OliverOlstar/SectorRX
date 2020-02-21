@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DeviceHandler : MonoBehaviour
 {
-    [SerializeField] private connectedPlayers _AddPlayer;
+    [SerializeField] public connectedPlayers _AddPlayer;
     [SerializeField] private Panels playerPanel;
 
     //Disconnects the player device from assigned slot if player has left and panel was assigned
@@ -19,7 +19,7 @@ public class DeviceHandler : MonoBehaviour
     }
 
     //Connects the player device to an open slot if player a panel has not been assigned to
-    private void OnJoining()
+    public void OnJoining()
     {
         if (playerPanel == null)
         {
