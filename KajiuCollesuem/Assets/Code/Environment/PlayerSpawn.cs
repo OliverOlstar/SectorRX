@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 /*Programmer: Scott Watman
  Additional Programmer(s): Oliver Loescher, Kavian Kermani
@@ -14,6 +15,7 @@ public class PlayerSpawn : MonoBehaviour
 {
     public GameObject playerPrefab;
     public List<GameObject> players = new List<GameObject>();
+    public RectTransform transitionScreen;
 
     public MusicManager musicManager;
     [SerializeField] private Transform _MapCentre;
@@ -160,11 +162,13 @@ public class PlayerSpawn : MonoBehaviour
     {
         Debug.Log("I REMOVED THIS");
 
-        yield return new WaitForSeconds(4.0f);
+        yield return new WaitForSeconds(3.5f);
         
         if (connectedPlayers.playersToSpawn > 1)
         {
             musicManager.mainAudio.Stop();
+            transitionScreen.DOAnchorPos(new Vector2(0, 0), 0.4f);
+            yield return new WaitForSeconds(0.5f);
             SceneManager.LoadSceneAsync(2);
         }
     }

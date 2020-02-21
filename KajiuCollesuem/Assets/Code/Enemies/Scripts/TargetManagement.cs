@@ -10,6 +10,7 @@ public class TargetManagement : MonoBehaviour
     [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private float _visionRadius = 15;
     [SerializeField] private float _visionDistance = 30;
+    private PlayerAttributes _playerAttributes;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,7 @@ public class TargetManagement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (_decision.target == null)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, _visionRadius, _playerLayer);
@@ -28,13 +30,21 @@ public class TargetManagement : MonoBehaviour
             {
                 for (int i = 0; i < colliders.Length; ++i)
                 {
-                    if (_IsPlayerInRange(colliders[i].gameObject.transform))
+                    _playerAttributes = colliders[i].gameObject.GetComponent<PlayerAttributes>();
+
+                    if (_IsPlayerInRange(colliders[i].gameObject.transform) && !_playerAttributes.IsDead())
                     {
                         _decision.UpdateTarget(colliders[i].gameObject.transform);
                         break;
                     }
                 }
             }
+        }
+
+        else if (_playerAttributes.IsDead())
+        {
+            _decision.UpdateTarget(null);
+            _decision.ForceStateSwitch(GetComponent<Guard>());
         }
     }
 

@@ -13,9 +13,13 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
 {
     [SerializeField] private int startHealth = 100;
     private int _health;
+
+    [SerializeField] private float _weight = 2;
     
     [SerializeField] private float healthDisplayLength = 2f;
     [SerializeField] private GameObject enemyHealthBar;
+
+    private Rigidbody _rb;
 
     private bool isDead;
 
@@ -42,6 +46,7 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         _decision = GetComponent<Decision>();
         _deadState = GetComponent<Dead>();
         _stunnedState = GetComponent<Stunned>();
+        _rb = GetComponent<Rigidbody>();
         //_playerHUD = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>();
     }
 
@@ -49,26 +54,30 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
     {
         _health -= pAmount;
 
+        pKnockback.y = pKnockback.y * 2;
+
         if (sliderControl != null)
             sliderControl.UpdateBars(0, pAmount);
 
+        Debug.Log("Disabled Hellhound Healthbar");
+        //StopCoroutine("ShowHealthbar");
+        //StartCoroutine("ShowHealthbar");
+
         if (_health <= 0 && !isDead)
-            Death();
-
-        StopCoroutine("ShowHealthbar");
-        StartCoroutine("ShowHealthbar");
-
-        //Return If Dead or Not
-        if (_health <= 0)
         {
+            Death();
+            _rb.AddForce(pKnockback / _weight, ForceMode.Impulse);
             return true;
         }
 
         _decision.UpdateTarget(pAttacker.transform);
 
         if (pReact && _decision != null)
+        {
             _decision.ForceStateSwitch(_stunnedState);
-
+            _rb.AddForce(pKnockback / _weight, ForceMode.Impulse);
+        }
+        
         return false;
     }
 
