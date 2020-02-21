@@ -23,6 +23,7 @@ public class connectedPlayers : MonoBehaviour
     public bool canJoin;
     private List<int> playerSlots = new List<int>(){0, 1, 2, 3, 4, 5, 6, 7, 8};
     public static List<UsedDevices> playerIndex = new List<UsedDevices>();
+    public GameObject devicePrefab;
 
     [SerializeField] private DeviceHandler[] _Devices; 
     [SerializeField] private Text _PlayerCount;
@@ -32,6 +33,12 @@ public class connectedPlayers : MonoBehaviour
     {
         playersConnected = 0;
         playersToSpawn = 0;
+    }
+
+    public void OnPlayerJoined()
+    {
+        _Devices = FindObjectsOfType<DeviceHandler>();
+        _Devices[0]._AddPlayer = this;
     }
 
     public void EnableJoin()
@@ -46,7 +53,10 @@ public class connectedPlayers : MonoBehaviour
             canJoin = false;
         foreach(DeviceHandler d in _Devices)
         {
-            d.OnLeaving();
+            if(d != null)
+            {
+                d.OnLeaving();
+            }
         }
     }
 
@@ -56,10 +66,13 @@ public class connectedPlayers : MonoBehaviour
         playerIndex.Clear();
         foreach (DeviceHandler d in _Devices)
         {
-            UsedDevices user = new UsedDevices();
-            user.deviceUser = d.GetComponent<PlayerInput>().user.index;
-            user.playerIndex = d.GetPlayerIndex();
-            playerIndex.Add(user);
+            if(d != null)
+            {
+                UsedDevices user = new UsedDevices();
+                user.deviceUser = d.GetComponent<PlayerInput>().user.index;
+                user.playerIndex = d.GetPlayerIndex();
+                playerIndex.Add(user);
+            }
         }
     }
 

@@ -28,7 +28,7 @@ public class PlayerSpawn : MonoBehaviour
 
     public void MatchStartup()
     {
-        //If no players are entered, automatically set to 1.
+        //If no players are entered, automatically set to 2.
         if (connectedPlayers.playersToSpawn <= 0)
         {
             connectedPlayers.playersToSpawn = 2;
@@ -45,18 +45,8 @@ public class PlayerSpawn : MonoBehaviour
         }
 
         //Sets number of connected players equal to how many need to be spawned. Helps with match restarts after a player wins.
-        if (connectedPlayers.playersToSpawn <= 1)
-        {
-            connectedPlayers.playersConnected = 1;
-        }
-        else if (connectedPlayers.playersToSpawn == 2)
-        {
-            connectedPlayers.playersConnected = 2;
-        }
-        else if (connectedPlayers.playersToSpawn == 3)
-        {
-            connectedPlayers.playersConnected = 3;
-        }
+        connectedPlayers.playersConnected = connectedPlayers.playersToSpawn;
+        Debug.Log(connectedPlayers.playersConnected);
     }
 
     public void MatchEnd()
