@@ -15,7 +15,9 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
     private int _health;
     
     [SerializeField] private float healthDisplayLength = 2f;
+    [SerializeField] private float _weight = 0;
     [SerializeField] private GameObject enemyHealthBar;
+    private TargetManagement _tm;
 
     private Rigidbody _rb;
 
@@ -45,6 +47,7 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         _deadState = GetComponent<Dead>();
         _stunnedState = GetComponent<Stunned>();
         _rb = GetComponent<Rigidbody>();
+        _tm = GetComponent<TargetManagement>();
         //_playerHUD = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>();
     }
 
@@ -66,13 +69,14 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         {
             return true;
         }
+        _tm.playerAttributes = pAttacker.GetComponent<PlayerAttributes>();
 
         _decision.UpdateTarget(pAttacker.transform);
 
         if (pReact && _decision != null)
         {
             _decision.ForceStateSwitch(_stunnedState);
-            _rb.AddForce(pKnockback, ForceMode.Impulse);
+            _rb.AddForce(pKnockback / _weight, ForceMode.Impulse);
         }
         
         return false;

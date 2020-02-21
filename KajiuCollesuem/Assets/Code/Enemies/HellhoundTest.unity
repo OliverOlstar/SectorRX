@@ -2762,6 +2762,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3771036346408154702, guid: 2d5a8e544e5092341ac064a73afeb473,
+        type: 3}
+      propertyPath: _knockbackUpForce
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3771036346408154702, guid: 2d5a8e544e5092341ac064a73afeb473,
+        type: 3}
+      propertyPath: _weight
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7630819356453292782, guid: 2d5a8e544e5092341ac064a73afeb473,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -2771,6 +2781,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908808925985318757, guid: 2d5a8e544e5092341ac064a73afeb473,
+        type: 3}
+      propertyPath: _halfPlayerHeight
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8591727565542770311, guid: 2d5a8e544e5092341ac064a73afeb473,
         type: 3}
@@ -7439,6 +7454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startHealth: 100
   healthDisplayLength: 2
+  _weight: 0
   enemyHealthBar: {fileID: 1553624881}
   sliderControl: {fileID: 0}
 --- !u!114 &1691069988
@@ -7486,6 +7502,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enabled: 0
+  _halfPlayerHeight: 0.52
+  _onGroundCheckTime: 0
 --- !u!114 &1691069991
 MonoBehaviour:
   m_ObjectHideFlags: 0
