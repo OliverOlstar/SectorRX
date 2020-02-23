@@ -81,6 +81,8 @@ public class ModelController : MonoBehaviour
         StopCoroutine("DoneAttackWithDelay");
         StopCoroutine("PlayAttackWithDelay");
 
+        _modelMovement.disableRotation = true;
+
         // Chargeable Attack - wait for done charging before starting attack
         if (pChargable == true)
         {
@@ -90,7 +92,6 @@ public class ModelController : MonoBehaviour
         else
         {
             StartCoroutine("PlayAttackWithDelay", curAttack.holdStartPosTime);
-            _modelMovement.disableRotation = true;
         }
 
         _doneAttackDelay = curAttack.holdEndPosTime;

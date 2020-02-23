@@ -99,8 +99,6 @@ public class AttackState : BaseState
         // If holding don't listen for more attacks, listen for release else run holding code.
         if (_onHolding == true)
         {
-            _stateController._modelController.SetInputDirection(_stateController.moveInput);
-
             // ON RELEASE HEAVY (Called Once)
             if (_stateController.heavyAttackinput == 0)
             {
