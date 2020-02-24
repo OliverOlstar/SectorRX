@@ -831,12 +831,6 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: Attacking Weight
-    m_Type: 1
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
   - m_Name: Abilities Weight
     m_Type: 1
     m_DefaultFloat: 0
@@ -862,12 +856,6 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
   - m_Name: Dead Weight
-    m_Type: 1
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: Attacking Type
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -1368,7 +1356,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: Stepping Weight
     m_Mirror: 0
-  m_BlendParameter: Attacking Type
+  m_BlendParameter: Attacking Index
   m_BlendParameterY: Stepping Weight
   m_MinThreshold: 0
   m_MaxThreshold: 1
@@ -1763,7 +1751,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: -803931819713262140}
-    m_Threshold: 0.061224494
+    m_Threshold: 0.071428575
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -1771,23 +1759,15 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: -8043533615635627058}
-    m_Threshold: 0.12244899
+    m_Threshold: 0.14285715
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: Jumping Weight
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 8922875807600818847}
-    m_Threshold: 0.18367347
-    m_Position: {x: 0, y: 0}
-    m_TimeScale: 1
-    m_CycleOffset: 0
-    m_DirectBlendParameter: Attacking Weight
-    m_Mirror: 0
-  - serializedVersion: 2
     m_Motion: {fileID: 8813754492429047960}
-    m_Threshold: 0.24489798
+    m_Threshold: 0.21428572
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -1795,7 +1775,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: -2013380582725286748}
-    m_Threshold: 0.30612245
+    m_Threshold: 0.2857143
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -1803,7 +1783,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: -218436363756203322}
-    m_Threshold: 0.36734694
+    m_Threshold: 0.35714287
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0

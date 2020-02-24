@@ -96,6 +96,7 @@ public class ModelController : MonoBehaviour
 
         _doneAttackDelay = curAttack.holdEndPosTime;
         //_modelWeights.SetWeights(0, 0, 1, 0, 0);
+        _modelWeights.SetUpperbodyWeight(1);
         _modelAnimation.StartAttack(pIndex);
     }
 
@@ -117,7 +118,7 @@ public class ModelController : MonoBehaviour
     {
         _AttackingState = 0;
         _modelMovement.disableRotation = false;
-        //_modelWeights.SetWeights(0, 0, 0, 0, 0);
+        _modelWeights.SetUpperbodyWeight(0);
     }
 
     public void DoneChargingAttack()
