@@ -8,13 +8,13 @@ public class VideoManager : MonoBehaviour
     public VideoPlayer videoPlayer;
     public AudioClip audioClip;
     public AudioSource audioSource;
-    public CanvasGroup mainMenu;
+    public GameObject mainMenu;
     public float fadeSpeed;
 
     // Start is called before the first frame update
     void Start()
     {
-        mainMenu.alpha = 0;
+        mainMenu.SetActive(false);
         videoPlayer.Play();
         videoPlayer.SetDirectAudioVolume(1, 0.5f);
         audioSource.PlayDelayed(7.0f);
@@ -28,10 +28,10 @@ public class VideoManager : MonoBehaviour
     IEnumerator IntroTransition()
     {
         yield return new WaitForSeconds(6.5f);
+        mainMenu.SetActive(true);
         if(videoPlayer.targetCameraAlpha > 0)
         {
             videoPlayer.targetCameraAlpha -= fadeSpeed * Time.deltaTime;
-            mainMenu.alpha += fadeSpeed * Time.deltaTime;
         }
     }
 }
