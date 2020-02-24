@@ -60,7 +60,7 @@ public class Dead : MonoBehaviour, IState
         // Coins disperse
         for (int i = 0; i < _cellSpawnCount; ++i)
         {
-            GameObject tmp = Instantiate(_itemPrefabs[Random.Range(0, 6)]);
+            GameObject tmp = Instantiate(_itemPrefabs[Random.Range(0, _itemPrefabs.Length)]);
             tmp.transform.position = transform.position;
         }
         Destroy(this.gameObject);
