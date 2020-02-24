@@ -10,7 +10,8 @@ public class TargetManagement : MonoBehaviour
     [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private float _visionRadius = 15;
     [SerializeField] private float _visionDistance = 30;
-    private PlayerAttributes _playerAttributes;
+    [SerializeField] private float _triggerDistance = 5;
+    [HideInInspector] public PlayerAttributes playerAttributes;
 
     // Start is called before the first frame update
     void Start()
@@ -30,18 +31,20 @@ public class TargetManagement : MonoBehaviour
             {
                 for (int i = 0; i < colliders.Length; ++i)
                 {
-                    _playerAttributes = colliders[i].gameObject.GetComponent<PlayerAttributes>();
+                    playerAttributes = colliders[i].gameObject.GetComponent<PlayerAttributes>();
+                    Transform playerTransform = colliders[i].gameObject.transform;
+                    float distance = Vector3.Distance(transform.position, playerTransform.position);
 
-                    if (_IsPlayerInRange(colliders[i].gameObject.transform) && !_playerAttributes.IsDead())
+                    if ((_IsPlayerInRange(playerTransform) || distance < _triggerDistance) && !playerAttributes.IsDead())
                     {
-                        _decision.UpdateTarget(colliders[i].gameObject.transform);
+                        _decision.UpdateTarget(playerTransform);
                         break;
                     }
                 }
             }
         }
 
-        else if (_playerAttributes.IsDead())
+        else if (playerAttributes.IsDead())
         {
             _decision.UpdateTarget(null);
             _decision.ForceStateSwitch(GetComponent<Guard>());

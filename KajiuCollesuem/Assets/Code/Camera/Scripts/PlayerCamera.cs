@@ -145,8 +145,8 @@ public class PlayerCamera : MonoBehaviour
         //Rotation of the camera based on mouse movement
         if (_StateController.mouseInput.magnitude != 0)
         {
-            _LocalRotation.x += _StateController.mouseInput.x * _mouseSensitivity * _mouseSensitivityMult * pInputModifier;
-            _LocalRotation.y -= _StateController.mouseInput.y * _mouseSensitivity * _mouseSensitivityMult * pInputModifier * (inverted ? -1 : 1);
+            _LocalRotation.x += _StateController.mouseInput.x * _mouseSensitivity * _mouseSensitivityMult * pInputModifier * Time.deltaTime;
+            _LocalRotation.y -= _StateController.mouseInput.y * _mouseSensitivity * _mouseSensitivityMult * pInputModifier * (inverted ? -1 : 1) * Time.deltaTime;
 
             //Clamping the y rotation to horizon and not flipping over at the top
             if (_LocalRotation.y < _cameraMinHeight)
@@ -164,8 +164,8 @@ public class PlayerCamera : MonoBehaviour
     {
         //Locked onto Target
         Vector2 direction = new Vector2(lockOnTarget.position.z, lockOnTarget.position.x)  - new Vector2(_ParentTransform.position.z, _ParentTransform.position.x) ;
-        _LocalRotation.x = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + (_lockOnXOffset); // Add distance into this line potentially
-        _LocalRotation.y = _ParentTransform.position.y - lockOnTarget.position.y;
+        _LocalRotation.x = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + _lockOnXOffset) * Time.deltaTime; // Add distance into this line potentially
+        _LocalRotation.y = (_ParentTransform.position.y - lockOnTarget.position.y) * Time.deltaTime;
 
         Vector3 _RotTarget = _LocalRotation;
 

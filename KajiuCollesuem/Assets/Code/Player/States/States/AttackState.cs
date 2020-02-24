@@ -73,7 +73,7 @@ public class AttackState : BaseState
         // Forward stepping force
         if (Time.time > _addForceTime && Time.time < _stopForceTime && _onHolding == false)
         {
-            _stateController._Rb.AddForce(_stateController._modelController.transform.forward * _addForceAmount);
+            _stateController._Rb.AddForce(_stateController._modelController.transform.forward * _addForceAmount * Time.deltaTime);
         }
 
         // Hitbox enable & disable
