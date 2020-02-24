@@ -36,7 +36,18 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     [SerializeField] private float _powerLossDelaySeconds = 0.3f;
     [SerializeField] private int _powerLossAmount = 1;
 
-    public bool IsDead() { return false; }
+    [Header("Stunned Anim")]
+    [SerializeField] [Range(0, 0.5f)] private float easeOut = 0.15f;
+    [SerializeField] [Range(0, 0.5f)] private float easeOutDelay = 0.15f;
+
+    public bool IsDead() { return _health == 0; }
+
+    private void Update()
+    {
+        // DELETE THIS (testing)
+        if (Input.GetKeyDown(KeyCode.Z))
+            _stateController._modelController.AddStunned(1, (Random.value - 0.5f) * 2, easeOutDelay, easeOut);
+    }
 
     void Awake()
     {
@@ -66,17 +77,22 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
     #region Modify Vars
     //MODIFY VARS ///////////////////////////////////////////////////////////////////////////////////////////
-    public void modifyHealth(int x)
+    public bool modifyHealth(int x)
     {
         //Changing Value
         _health += x;
         _health = Mathf.Clamp(_health, 0, _maxHealth);
 
         //Changing Visuals
-        //if (sliderControl.RegSlider[0])
-        //{
-            sliderControl.UpdateBars(0, _health);
-        //}
+        sliderControl.UpdateBars(0, _health);
+
+        // Return If Dead or Not
+        if (_health <= 0)
+        {
+            connectedPlayers.playersConnected--;
+            return true;
+        }
+        return false;
     }
 
     public void modifyShield(int x)
@@ -141,7 +157,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
     #region General Functions
     //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
-    public bool TakeDamage(int pAmount, Vector3 pKnockback, bool pReact, GameObject pAttacker)
+    public bool TakeDamage(int pAmount, Vector3 pKnockback, GameObject pAttacker)
     {
         //Debug.Log("PlayerAttributes: TakeDamage");
 
@@ -150,6 +166,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             return true;
 
         //Debug.Log("Damaging Player " + pAmount);
+        bool died = false;
 
         if (_shield >= pAmount)
         {
@@ -163,7 +180,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             modifyShield(-_shield);
 
             // Changing Health by remainder
-            modifyHealth(-pAmount);
+            died = modifyHealth(-pAmount);
             Debug.Log(pAmount);
         }
 
@@ -186,27 +203,16 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         // Add Knockback
         _stateController._Rb.AddForce(pKnockback / weight, ForceMode.Impulse);
 
-        //if (pReact)
-        //    _anim.Stunned(Random.value < 0.5f);
+        if (died == false)
+            _stateController._modelController.AddStunned(1, (Random.value - 0.5f) * 2, easeOutDelay, easeOut);
 
         // Return If Dead or Not
-        if (_health <= 0)
-        {
-            // TODO Camera Shake
-            connectedPlayers.playersConnected--;
-
-            return true;
-        }
-
-        // TODO Camera Shake
-
-        return false;
+        return died;
     }
 
     public void RecivePower(int pPower)
     {
         modifyPower(pPower);
-        //Debug.Log("Power Recieved: " + pPower + ", " + _power);
 
         // Restarting Power Loss over time
         if (_power > 0)

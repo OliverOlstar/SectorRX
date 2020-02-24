@@ -12,10 +12,16 @@ public class ModelWeights : MonoBehaviour
     [SerializeField] [Range(0, 1)] private float crouchWeight = 0;
     [SerializeField] [Range(0, 1)] private float attackWeight = 0;
     [SerializeField] [Range(0, 1)] private float dodgeWeight = 0;
+    [SerializeField] [Range(0, 1)] private float stunnedWeight = 0;
+    [SerializeField] [Range(0, 1)] private float stunnedDirection = 0;
+    [SerializeField] [Range(0, 1)] private float deadWeight = 0;
 
     [Space]
     [SerializeField] private float _weightChangeDampening = 10;
     [SerializeField] private float _weightChangeDeadzone = 0.01f;
+
+    private Coroutine crouchRoutineStored;
+    private Coroutine stunnedRoutineStored;
 
     public void Init(ModelController pController, Animator pAnim)
     {
@@ -37,22 +43,20 @@ public class ModelWeights : MonoBehaviour
         }
     }
 
+    // Lerp weight values
     public void LerpWeights()
     {
-        // Get total weight (Used to prevent Total Weight from going past 1)
-        float totalWeight = stepWeight + jumpWeight + crouchWeight + attackWeight + dodgeWeight;
-        if (totalWeight <= 1)
-            totalWeight = 1;
-
-        // Lerp weight values
-        LerpWeight("Stepping Weight", stepWeight / totalWeight);
-        LerpWeight("Jumping Weight", jumpWeight / totalWeight);
-        LerpWeight("Crouching Weight", crouchWeight / totalWeight);
-        LerpWeight("Attacking Weight", attackWeight / totalWeight);
-        LerpWeight("Dodge Weight", dodgeWeight / totalWeight);
+        LerpWeight("Stepping Weight", stepWeight - stunnedWeight);
+        LerpWeight("Jumping Weight", jumpWeight - stunnedWeight);
+        LerpWeight("Crouching Weight", crouchWeight - stunnedWeight);
+        LerpWeight("Attacking Weight", attackWeight - stunnedWeight);
+        LerpWeight("Dodge Weight", dodgeWeight);
+        LerpWeight("Stunned Weight", stunnedWeight);
+        LerpWeight("Stunned Direction", stunnedDirection);
+        LerpWeight("Dead Weight", deadWeight);
     }
 
-    private void LerpWeight(string pWeight, float pTargetValue)
+    private void LerpWeight(string pWeight, float pTargetValue, float pMultLerp = 1)
     {
         // Get current weight value
         float currentValue = _anim.GetFloat(pWeight);
@@ -61,7 +65,7 @@ public class ModelWeights : MonoBehaviour
         if (currentValue == pTargetValue) return;
 
         // Lerp value towards target
-        currentValue = Mathf.Lerp(currentValue, pTargetValue, _weightChangeDampening * Time.deltaTime);
+        currentValue = Mathf.Lerp(currentValue, pTargetValue, _weightChangeDampening * Time.deltaTime * pMultLerp);
 
         // If in deadzone just snap to value
         if (Mathf.Abs(currentValue - pTargetValue) < _weightChangeDeadzone)
@@ -71,19 +75,21 @@ public class ModelWeights : MonoBehaviour
         _anim.SetFloat(pWeight, currentValue);
     }
 
-    public void SetWeights(float pStepWeight, float pJumpWeight, float pAttackWeight, float pDodgeWeight)
+    public void SetWeights(float pStepWeight, float pJumpWeight, float pAttackWeight, float pDodgeWeight, float pDeadWeight)
     {
         stepWeight = pStepWeight;
         jumpWeight = pJumpWeight;
         //crouchWeight = pCrouchWeight;
         attackWeight = pAttackWeight;
         dodgeWeight = pDodgeWeight;
+        deadWeight = pDeadWeight;
     }
 
     public void AddCrouching(float pValue, float pGoingToLength, float pGoingAwayLength)
     {
-        StopAllCoroutines();
-        StartCoroutine(crouchRoutine(pValue, pGoingToLength, pGoingAwayLength));
+        if (crouchRoutineStored != null)
+            StopCoroutine(crouchRoutineStored);
+        crouchRoutineStored = StartCoroutine(crouchRoutine(pValue, pGoingToLength, pGoingAwayLength));
     }
 
     IEnumerator crouchRoutine(float pValue, float pGoingToLength, float pGoingAwayLength)
@@ -108,5 +114,31 @@ public class ModelWeights : MonoBehaviour
 
         // Snap back to zero
         crouchWeight = 0;
+    }
+
+    public void AddStunned(float pValue, float pDirection, float pGoingAwayDelay, float pGoingAwayLength)
+    {
+        stunnedDirection = pDirection;
+
+        if (stunnedRoutineStored != null)
+            StopCoroutine(stunnedRoutineStored);
+        stunnedRoutineStored = StartCoroutine(stunnedRoutine(pValue, pGoingAwayDelay, pGoingAwayLength));
+    }
+
+    IEnumerator stunnedRoutine(float pValue, float pGoingAwayDelay, float pGoingAwayLength)
+    {
+        // Snap to target value for a delay
+        stunnedWeight = pValue;
+        yield return new WaitForSeconds(pGoingAwayDelay);
+
+        // Decrease Value
+        while (stunnedWeight > 0)
+        {
+            stunnedWeight -= Time.deltaTime * (1 / pGoingAwayLength);
+            yield return null;
+        }
+
+        // Snap back to zero
+        stunnedWeight = 0;
     }
 }

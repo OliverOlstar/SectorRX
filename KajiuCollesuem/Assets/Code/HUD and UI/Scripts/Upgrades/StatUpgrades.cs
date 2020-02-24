@@ -123,31 +123,31 @@ public class StatUpgrades : MonoBehaviour
     //    }
     //}
 
-    public void ClickButtonStat(int pIndex, int pLevel, Button pButton)
-    {
-        if (hud.cellCounter >= stats[pIndex].cost[pLevel])
-        {
-            if (/*pU.LevelUp(pIndex, pLevel + 1)*/ false)
-            {
-                hud.cellCounter -= stats[pIndex].cost[pLevel];
-                hud.upCellCount.text = hud.cellCounter.ToString();
-                pButton.GetComponent<Image>().color = statColors[pIndex];
-                pButton.interactable = false;
-            }
-            else
-            {
-                insufficientCost.text = "Can't do level";
-                insufficientCost.gameObject.SetActive(false);
-                insufficientCost.gameObject.SetActive(true);
-            }
-        }
-        else
-        {
-            insufficientCost.text = "Not enough cells";
-            insufficientCost.gameObject.SetActive(false);
-            insufficientCost.gameObject.SetActive(true);
-        }
-    }
+    //public void ClickButtonStat(int pIndex, int pLevel, Button pButton)
+    //{
+    //    if (hud.cellCounter >= stats[pIndex].cost[pLevel])
+    //    {
+    //        if (/*pU.LevelUp(pIndex, pLevel + 1)*/ false)
+    //        {
+    //            hud.cellCounter -= stats[pIndex].cost[pLevel];
+    //            hud.upCellCount.text = hud.cellCounter.ToString();
+    //            pButton.GetComponent<Image>().color = statColors[pIndex];
+    //            pButton.interactable = false;
+    //        }
+    //        else
+    //        {
+    //            insufficientCost.text = "Can't do level";
+    //            insufficientCost.gameObject.SetActive(false);
+    //            insufficientCost.gameObject.SetActive(true);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        insufficientCost.text = "Not enough cells";
+    //        insufficientCost.gameObject.SetActive(false);
+    //        insufficientCost.gameObject.SetActive(true);
+    //    }
+    //}
 
     public void HoverStatButton(int pIndex, int pLevel, float pYPos)
     {

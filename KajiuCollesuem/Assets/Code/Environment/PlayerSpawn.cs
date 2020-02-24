@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 /*Programmer: Scott Watman
  Additional Programmer(s): Oliver Loescher, Kavian Kermani
@@ -14,18 +15,20 @@ public class PlayerSpawn : MonoBehaviour
 {
     public GameObject playerPrefab;
     public List<GameObject> players = new List<GameObject>();
+    public RectTransform transitionScreen;
 
     public MusicManager musicManager;
-    public List<Transform> playerSpawns = new List<Transform>();
+    [SerializeField] private Transform _MapCentre;
+    [HideInInspector] public List<Transform> playerSpawns = new List<Transform>();
     private int _SpawnPointIndex;
     [SerializeField] private MatchInputHandler[] _PlayerInputs = new MatchInputHandler[9];
-    private List<MatchInputHandler> _ActiveInputs = new List<MatchInputHandler>();
+    [SerializeField] private List<MatchInputHandler> _ActiveInputs = new List<MatchInputHandler>();
 
     [SerializeField] private Color[] boarderColors = new Color[9];
 
     public void MatchStartup()
     {
-        //If no players are entered, automatically set to 1.
+        //If no players are entered, automatically set to 2.
         if (connectedPlayers.playersToSpawn <= 0)
         {
             connectedPlayers.playersToSpawn = 2;
@@ -42,18 +45,8 @@ public class PlayerSpawn : MonoBehaviour
         }
 
         //Sets number of connected players equal to how many need to be spawned. Helps with match restarts after a player wins.
-        if (connectedPlayers.playersToSpawn <= 1)
-        {
-            connectedPlayers.playersConnected = 1;
-        }
-        else if (connectedPlayers.playersToSpawn == 2)
-        {
-            connectedPlayers.playersConnected = 2;
-        }
-        else if (connectedPlayers.playersToSpawn == 3)
-        {
-            connectedPlayers.playersConnected = 3;
-        }
+        connectedPlayers.playersConnected = connectedPlayers.playersToSpawn;
+        Debug.Log(connectedPlayers.playersConnected);
     }
 
     public void MatchEnd()
@@ -113,13 +106,16 @@ public class PlayerSpawn : MonoBehaviour
         }
 
         InputSetup();
-
+        Debug.Log("Here1");
         // Randomly spawn players at listed locations.
         SpawnPlayers();
+        Debug.Log("Here2");
 
         SetHUDBoarders();
+        Debug.Log("Here3");
 
         DisableUnusedDevices();
+        Debug.Log("Here4");
     }
 
     private void SetHUDBoarders()
@@ -143,7 +139,9 @@ public class PlayerSpawn : MonoBehaviour
             _SpawnPointIndex = Random.Range(0, (connectedPlayers.playersToSpawn <= 4 ? 4 : 9) - i);
             Transform _EightSpawnPos = playerSpawns[_SpawnPointIndex];
             playerSpawns.RemoveAt(_SpawnPointIndex);
-            GameObject playerCharacter = Instantiate(playerPrefab, _EightSpawnPos.position, _EightSpawnPos.rotation);
+            GameObject playerCharacter = Instantiate(playerPrefab, _EightSpawnPos.position, transform.rotation);
+            //playerCharacter.transform.LookAt(Vector3.zero);
+            //playerCharacter.transform.rotation = playerCharacter.transform.rotation * Quaternion.Euler(0, 90, 0);
             players.Add(playerCharacter);
 
             //Taking list of joined players and setting them to their correct device, with inputs enabled
@@ -155,13 +153,13 @@ public class PlayerSpawn : MonoBehaviour
 
     IEnumerator VictoryReset()
     {
-        Debug.Log("I REMOVED THIS");
-
-        yield return new WaitForSeconds(4.0f);
+        yield return new WaitForSeconds(3.5f);
         
         if (connectedPlayers.playersToSpawn > 1)
         {
             musicManager.mainAudio.Stop();
+            transitionScreen.DOAnchorPos(new Vector2(0, 0), 0.4f);
+            yield return new WaitForSeconds(0.5f);
             SceneManager.LoadSceneAsync(2);
         }
     }

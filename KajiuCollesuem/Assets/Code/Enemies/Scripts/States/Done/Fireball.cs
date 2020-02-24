@@ -52,6 +52,7 @@ public class Fireball : MonoBehaviour, IState
         _enabled = false;
         _anim.SetBool("Shooting", false);
         _rotation.enabled = false;
+        _nextEnterTime = Time.time + _cooldown;
     }
 
     public bool CanEnter(float pDistance)
@@ -76,7 +77,7 @@ public class Fireball : MonoBehaviour, IState
 
     public void Tick()
     {
-
+        
     }
 
     public void UpdateTarget(Transform pTarget) => _target = pTarget;
@@ -114,7 +115,7 @@ public class Fireball : MonoBehaviour, IState
     public void AEDoneShooting()
     {
         //Debug.Log("Fireball: AEDoneShooting");
-        _enabled = false;
-        _nextEnterTime = Time.time + _cooldown;
+        Debug.Log("Stunned");
+            _enabled = false;
     }
 }

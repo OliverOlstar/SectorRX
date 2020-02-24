@@ -12,16 +12,19 @@ public class ModelAnimations : MonoBehaviour
     [SerializeField] private float _stepMult = 1;
     [SerializeField] private float _idleMult = 1;
     [SerializeField] private float _fallMult = 1;
+    [SerializeField] private float _deadMult = 1;
 
     private float _stepProgress = 0;
     private float _idleProgress = 0;
     private float _fallProgress = 0;
     private float _attackProgress = 0;
+    private float _deadProgress = 0;
 
     [Header("Interpolation Graphs")]
     [SerializeField] private SOGraph _stepGraph;
     [SerializeField] private SOGraph _idleGraph;
     [SerializeField] private SOGraph _fallGraph;
+    [SerializeField] private SOGraph _deadGraph;
     private SOGraph _attackGraph;
     
     [Space]
@@ -42,7 +45,7 @@ public class ModelAnimations : MonoBehaviour
 
     #region Attacking
     // True = go towards 1, False = towards 0
-    public bool AttackingAnim(bool pDirection)
+    public bool AttackingAnim()
     {
         // Return if still transtioning to next attack
         if (_doneAttackTransition < 2)
@@ -52,45 +55,40 @@ public class ModelAnimations : MonoBehaviour
         _attackProgress = Mathf.Min(1, _attackProgress + Time.fixedDeltaTime / _attackLength);
 
         // Set progress value
-        if (pDirection)
-            _anim.SetFloat("Attacking Progress", _modelController.GetCatmullRomPosition(_attackProgress, _attackGraph).y);
-        else
-            _anim.SetFloat("Attacking Progress", 1 - _modelController.GetCatmullRomPosition(_attackProgress, _attackGraph).y);
+        _anim.SetFloat("Attacking Progress", _modelController.GetCatmullRomPosition(_attackProgress, _attackGraph).y);
 
         // Return true if reached anim goal
         return _attackProgress == 1;
     }
 
-    public void StartAttack(int pIndex, bool pHeavy)
+    public void StartAttack(int pIndex)
     {
         // Reset attack progress
         _attackProgress = 0;
-        _anim.SetFloat("Attacking Progress", pIndex == 1 ? 1 : 0);
+        _anim.SetFloat("Attacking Progress", 0);
 
         // Get SOAttack values
-        SOAttack curAttack = _modelController.attacks[pIndex + (pHeavy ? 3 : 0)];
+        SOAttack curAttack = _modelController.attacks[pIndex];
         _attackLength = curAttack.attackTime;
         _attackGraph = curAttack.attackGraph;
 
-        if (pIndex == 0)
-        {
             // Snap to first attack
             _anim.SetFloat("Attacking Index", 0);
-            _anim.SetFloat("Attacking Type", pHeavy ? 1 : 0);
+            _anim.SetFloat("Attacking Type", pIndex);
             _doneAttackTransition = 2;
-        }
-        else
-        {
-            // Start transitions to next attack
-            _attackTransitionRate = 1 / curAttack.transitionToTime;
-            _doneAttackTransition = 0;
+        //}
+        //else
+        //{
+        //    // Start transitions to next attack
+        //    _attackTransitionRate = 1 / curAttack.transitionToTime;
+        //    _doneAttackTransition = 0;
 
-            StopCoroutine("AttackingTypeTransition");
-            StartCoroutine("AttackingTypeTransition", pHeavy ? 1 : 0);
+        //    StopCoroutine("AttackingTypeTransition");
+        //    StartCoroutine("AttackingTypeTransition", pIndex);
 
-            StopCoroutine("AttackingIndexTransition");
-            StartCoroutine("AttackingIndexTransition", pIndex);
-        }
+        //    //StopCoroutine("AttackingIndexTransition");
+        //    //StartCoroutine("AttackingIndexTransition", pIndex);
+        //}
     }
 
     // Transition between attacks in combo
@@ -176,11 +174,31 @@ public class ModelAnimations : MonoBehaviour
     }
     #endregion
 
-    private float increaseProgress(float pProgress, float pMult)
+    #region Dead
+    public void DeadAnim()
+    {
+        // Increase Falling Animation
+        _deadProgress = increaseProgress(_deadProgress, _deadMult, false);
+        _anim.SetFloat("Dead Progress", _modelController.GetCatmullRomPosition(_deadProgress, _deadGraph).y);
+    }
+
+    public void PlayDead()
+    {
+        _deadProgress = 0;
+    }
+    #endregion
+
+    private float increaseProgress(float pProgress, float pMult, bool pLoop = true)
     {
         pProgress += Time.fixedDeltaTime * pMult;
+        
         if (pProgress >= 1)
-            pProgress -= 1;
+        {
+            if (pLoop)
+                pProgress -= 1;
+            else
+                return 1;
+        }
 
         return pProgress;
     }
