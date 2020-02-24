@@ -7,6 +7,7 @@ public class DeviceHandler : MonoBehaviour
 {
     [SerializeField] public connectedPlayers _AddPlayer;
     [SerializeField] private Panels playerPanel;
+    [SerializeField] public AbilitySet ability;
     private int stateValue = 0;
 
     //Disconnects the player device from assigned slot if player has left and panel was assigned
@@ -39,7 +40,7 @@ public class DeviceHandler : MonoBehaviour
                 break;
 
             case 2:
-                if (_AddPlayer.hasJoined && _AddPlayer._Devices.Length >= 2)
+                if (_AddPlayer.skillSet && _AddPlayer._Devices.Length >= 2)
                 {
                     _AddPlayer.SetPlayerOrder();
                     SceneManager.LoadScene(1);
