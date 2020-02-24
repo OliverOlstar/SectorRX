@@ -8,6 +8,7 @@ public class Dead : MonoBehaviour, IState
     private Animator _anim;
     private NavMeshAgent _agent;
     private Transform _target;
+    private Rigidbody _rb;
 
     [SerializeField] private GameObject _cellPrefab;
     [SerializeField] private int _cellSpawnCount = 5;
@@ -19,6 +20,7 @@ public class Dead : MonoBehaviour, IState
         _anim = pAnim;
         _agent = pAgent;
         _target = pTarget;
+        _rb = GetComponent<Rigidbody>();
     }
 
     public void Enter()
@@ -26,7 +28,8 @@ public class Dead : MonoBehaviour, IState
         _enabled = true;
         _anim.SetTrigger("Dead");
         _anim.SetBool("IsDead", true);
-        _agent.isStopped = true;
+        _agent.enabled = false;
+        _rb.isKinematic = false;
         // TODO Remove collision during animation and after animation replace model with ragdoll version
     }
 
@@ -49,7 +52,7 @@ public class Dead : MonoBehaviour, IState
 
     public void Tick()
     {
-
+        _rb.AddForce(Vector3.down * Time.deltaTime * 50);
     }
 
     public void AEDeadDone()

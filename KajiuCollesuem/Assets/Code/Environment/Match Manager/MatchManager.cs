@@ -19,13 +19,13 @@ public class MatchManager : MonoBehaviour
 
     public void Start()
     {
+        StartCoroutine("CinemaOff");
+        spawnPlayerScript.MatchStartup();
+
         foreach (SpawnRandomEnemies cluster in spawnEnemyScript)
         {
             cluster.SpawnEnemies();
         }
-
-        StartCoroutine("CinemaOff");
-        spawnPlayerScript.MatchStartup();
     }
 
     public void Update()

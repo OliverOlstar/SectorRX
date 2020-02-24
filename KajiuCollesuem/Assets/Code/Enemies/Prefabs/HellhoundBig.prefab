@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 7630819354959702791}
   - component: {fileID: 7630819354959702788}
   - component: {fileID: 3089522045494249724}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: AttackHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7630819354959702786}
   m_LocalRotation: {x: 0.00000005730259, y: -0.0000010074506, z: 0.3625221, w: 0.9319752}
-  m_LocalPosition: {x: -0.334, y: -0.276, z: -0.103}
+  m_LocalPosition: {x: -0.705, y: -0.397, z: -0.103}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8591727565542808289}
@@ -74,7 +74,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.6
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7630819354959702788
 MonoBehaviour:
@@ -670,7 +670,7 @@ Transform:
   m_GameObject: {fileID: 8591727565542770311}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -15.582067, y: -1.873437, z: -20.768227}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8591727565542808309}
   - {fileID: 8591727565542808249}
@@ -723,7 +723,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8591727565542770311}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 7469e352376eb8f47a987c1fb98894e2, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 1.2
@@ -757,13 +757,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldown: 0.2
-  _maxAttackRange: 3
+  _maxAttackRange: 4
   _minAttackRange: 1
   _hitbox: {fileID: 7630819354959702786}
   _jumpbackForce: 20
   _jumpbackUpForce: 4
-  _halfPlayerHeight: 0.2
+  _halfPlayerHeight: 0.22
   _onGroundCheckTime: 0
+  _allowedDotValue: 0.1
   _enabled: 0
 --- !u!114 &642284532420701670
 MonoBehaviour:
@@ -782,7 +783,7 @@ MonoBehaviour:
     type: 3}
   _fireballSpawnpoint: {fileID: 7013412660525921672}
   _fireballRangeMax: 46
-  _fireballRangeMin: 10
+  _fireballRangeMin: 8
   _targetOffset: {x: 0, y: 1, z: 0}
   _fireballSpeed: 1600
   _oddsOfSkipOver: 0.6
@@ -802,7 +803,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minRange: 4
   _enabled: 0
-  _agroLostRange: 44
+  _agroLostRange: 46
 --- !u!114 &8864369131307793453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -815,7 +816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb77404ad2b1d6b49bf3c2235dc4bea3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stareRange: 50
+  _stareRange: 52
   _enabled: 0
 --- !u!114 &4847122812334901423
 MonoBehaviour:
@@ -843,7 +844,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99a4d45b359b1fa4aba984ae0f0a0aab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stunnedStateMinTime: 0.05
   _enabled: 0
+  _halfPlayerHeight: 0.22
+  _onGroundCheckTime: 0
 --- !u!114 &4631869177046432509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -872,8 +876,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af05573836c31bc498a615a7193d76b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startHealth: 25
+  startHealth: 30
   healthDisplayLength: 2
+  _weight: 6
   enemyHealthBar: {fileID: 7630819355108581568}
   sliderControl: {fileID: 0}
 --- !u!114 &9071476161836435771
@@ -891,8 +896,10 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 256
-  _visionRadius: 60
-  _visionDistance: 45
+  _visionRadius: 70
+  _visionDistance: 38
+  _triggerDistance: 10
+  playerAttributes: {fileID: 0}
 --- !u!114 &3379795131003389061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -916,7 +923,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1.1
-  m_Speed: 8
+  m_Speed: 9
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 140

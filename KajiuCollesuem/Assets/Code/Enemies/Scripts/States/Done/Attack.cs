@@ -23,6 +23,8 @@ public class Attack : MonoBehaviour, IState
     [SerializeField] private float _halfPlayerHeight = 0.52f;
     [SerializeField] private float _onGroundCheckTime = 0;
 
+    [SerializeField] [Range(0, 1)] private float _allowedDotValue = 0.6f;
+
     private int _subState = 0;
 
     [SerializeField] private bool _enabled = false;
@@ -50,6 +52,7 @@ public class Attack : MonoBehaviour, IState
         //Debug.Log("Fireball: Exit");
         _enabled = false;
         _nextEnterTime = Time.time + _cooldown;
+        _anim.SetBool("Attacking", false);
         _rb.isKinematic = true;
         _agent.enabled = true;
     }
@@ -58,7 +61,12 @@ public class Attack : MonoBehaviour, IState
     {
         //Can shoot if cooldown is up and player is in range
         if (Time.time >= _nextEnterTime && pDistance < _maxAttackRange && pDistance > _minAttackRange)
-            return true;
+        {
+            if (Vector3.Dot(transform.forward, (_target.position - transform.position).normalized) >= _allowedDotValue)
+            {
+                return true;
+            }
+        }
 
         return false;
     }

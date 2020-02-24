@@ -497,6 +497,39 @@ BlendTree:
   m_UseAutomaticThresholds: 1
   m_NormalizedBlendValues: 0
   m_BlendType: 0
+--- !u!206 &-2013380582725286748
+BlendTree:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Stunned Direction
+  m_Childs:
+  - serializedVersion: 2
+    m_Motion: {fileID: 4174427340098426646, guid: ff082e4b1e7641140a2b42dc475be643,
+      type: 3}
+    m_Threshold: -1
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Stepping Weight
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: -7023315156258604256, guid: ff082e4b1e7641140a2b42dc475be643,
+      type: 3}
+    m_Threshold: 1
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Stepping Weight
+    m_Mirror: 0
+  m_BlendParameter: Stunned Direction
+  m_BlendParameterY: Blend
+  m_MinThreshold: -1
+  m_MaxThreshold: 1
+  m_UseAutomaticThresholds: 0
+  m_NormalizedBlendValues: 0
+  m_BlendType: 0
 --- !u!206 &-1966968097702074375
 BlendTree:
   m_ObjectHideFlags: 1
@@ -743,7 +776,13 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: StunnedWeight
+  - m_Name: Stunned Weight
+    m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: Stunned Direction
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -1553,13 +1592,12 @@ BlendTree:
     m_DirectBlendParameter: Dodge Weight
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 6372844823411558026, guid: ff082e4b1e7641140a2b42dc475be643,
-      type: 3}
+    m_Motion: {fileID: -2013380582725286748}
     m_Threshold: 0.30612245
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
-    m_DirectBlendParameter: StunnedWeight
+    m_DirectBlendParameter: Stunned Weight
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: -218436363756203322}

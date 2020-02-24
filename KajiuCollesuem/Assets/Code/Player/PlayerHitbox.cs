@@ -53,7 +53,7 @@ public class PlayerHitbox : MonoBehaviour
         if (otherAttributes != null && otherAttributes.IsDead() == false && otherAttributes != _playerIAttributes)
         {
             //Damage other
-            /*if (*/otherAttributes.TakeDamage(Mathf.FloorToInt(_damage * attackMult), _knockback, true, _Attacker);//)
+            /*if (*/otherAttributes.TakeDamage(Mathf.FloorToInt(_damage * attackMult), _knockback, _Attacker);//)
                 //If other died and is lockOn target return camera to default
                 //_lockOnScript.TargetDead(other.transform);
 

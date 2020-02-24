@@ -194,11 +194,7 @@ MonoBehaviour:
   acceleration: {x: 0, y: 0, z: 0}
   horizontalVelocity: {x: 0, y: 0, z: 0}
   attacks:
-  - {fileID: 11400000, guid: 365918b984a3a1c49ba47b65cdda9f9e, type: 2}
-  - {fileID: 11400000, guid: 8f7ea7fe693a34143a48a0b80099411c, type: 2}
   - {fileID: 11400000, guid: 14a66436df1065d46bf9e6b1513243d2, type: 2}
-  - {fileID: 11400000, guid: feccfe14a6745df418038c2d99649f83, type: 2}
-  - {fileID: 11400000, guid: 732136e49e1aff94f98488714c8ff1d5, type: 2}
   - {fileID: 11400000, guid: c843a2f1728f4f94f954983a281f0a14, type: 2}
 --- !u!114 &1748856274499402340
 MonoBehaviour:
@@ -237,8 +233,10 @@ MonoBehaviour:
   crouchWeight: 0
   attackWeight: 0
   dodgeWeight: 0
+  stunnedWeight: 0
+  stunnedDirection: 0
   deadWeight: 0
-  _weightChangeDampening: 8
+  _weightChangeDampening: 10
   _weightChangeDeadzone: 0.01
 --- !u!114 &4104074972387249871
 MonoBehaviour:
@@ -508,7 +506,7 @@ MonoBehaviour:
   longDodgeDuration: 0.3
   longDodgeAcceleration: 12000
   shortDodgeAnimSpeed: 2
-  longDodgeAnimSpeed: 1.4
+  longDodgeAnimSpeed: 1.6
 --- !u!114 &7968489575383935976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,6 +567,8 @@ MonoBehaviour:
   _powerLossStartDelaySeconds: 10
   _powerLossDelaySeconds: 0.3
   _powerLossAmount: 1
+  easeOut: 0.12
+  easeOutDelay: 0.18
 --- !u!114 &5855493607624095741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -581,8 +581,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57df21d598cd16c4983cce38a4b7e9a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MAXUPGRADES: 20
-  minHealth: 40
+  MAXUPGRADES: 30
+  minHealth: 50
   maxHealth: 160
   minShield: 40
   maxShield: 100
