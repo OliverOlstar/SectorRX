@@ -10,7 +10,7 @@ public class ModelWeights : MonoBehaviour
     [SerializeField] [Range(0, 1)] private float stepWeight = 0;
     [SerializeField] [Range(0, 1)] private float jumpWeight = 0;
     [SerializeField] [Range(0, 1)] private float crouchWeight = 0;
-    [SerializeField] [Range(0, 1)] private float attackWeight = 0;
+    //[SerializeField] [Range(0, 1)] private float attackWeight = 0;
     [SerializeField] [Range(0, 1)] private float dodgeWeight = 0;
     [SerializeField] [Range(0, 1)] private float stunnedWeight = 0;
     [SerializeField] [Range(0, 1)] private float stunnedDirection = 0;
@@ -49,7 +49,7 @@ public class ModelWeights : MonoBehaviour
         LerpWeight("Stepping Weight", stepWeight - stunnedWeight);
         LerpWeight("Jumping Weight", jumpWeight - stunnedWeight);
         LerpWeight("Crouching Weight", crouchWeight - stunnedWeight);
-        LerpWeight("Attacking Weight", attackWeight - stunnedWeight);
+        //LerpWeight("Attacking Weight", attackWeight - stunnedWeight);
         LerpWeight("Dodge Weight", dodgeWeight);
         LerpWeight("Stunned Weight", stunnedWeight);
         LerpWeight("Stunned Direction", stunnedDirection);
@@ -75,12 +75,12 @@ public class ModelWeights : MonoBehaviour
         _anim.SetFloat(pWeight, currentValue);
     }
 
-    public void SetWeights(float pStepWeight, float pJumpWeight, float pAttackWeight, float pDodgeWeight, float pDeadWeight)
+    public void SetWeights(float pStepWeight, float pJumpWeight, float pDodgeWeight, float pDeadWeight)
     {
         stepWeight = pStepWeight;
         jumpWeight = pJumpWeight;
         //crouchWeight = pCrouchWeight;
-        attackWeight = pAttackWeight;
+        //attackWeight = pAttackWeight;
         dodgeWeight = pDodgeWeight;
         deadWeight = pDeadWeight;
     }
