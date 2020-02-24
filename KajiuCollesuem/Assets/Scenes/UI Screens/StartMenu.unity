@@ -627,6 +627,12 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &487024397 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7611489137066082936, guid: 4b07021bc038f364f908054525b52c6d,
+    type: 3}
+  m_PrefabInstance: {fileID: 6200741579382770576}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &531510840 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5474379253692298309, guid: 4b07021bc038f364f908054525b52c6d,
@@ -1017,6 +1023,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LoadScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 5982470357673513540, guid: a78dc6afbf850b04ba6d196514ffa9bd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8644140178584555184, guid: a78dc6afbf850b04ba6d196514ffa9bd,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -1199,11 +1210,8 @@ MonoBehaviour:
   canJoin: 0
   devicePrefab: {fileID: 4135724155936955570, guid: 4b82b2abd6b56ce42ad7c7e7883cea67,
     type: 3}
-  _Devices:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  startButton: {fileID: 487024397}
+  _Devices: []
   _PlayerCount: {fileID: 531510840}
   playerPanels:
   - {fileID: 1617033117}
