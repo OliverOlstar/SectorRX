@@ -19,10 +19,10 @@ public class PlayerSpawn : MonoBehaviour
 
     public MusicManager musicManager;
     [SerializeField] private Transform _MapCentre;
-    public List<Transform> playerSpawns = new List<Transform>();
+    [HideInInspector] public List<Transform> playerSpawns = new List<Transform>();
     private int _SpawnPointIndex;
     [SerializeField] private MatchInputHandler[] _PlayerInputs = new MatchInputHandler[9];
-    private List<MatchInputHandler> _ActiveInputs = new List<MatchInputHandler>();
+    [SerializeField] private List<MatchInputHandler> _ActiveInputs = new List<MatchInputHandler>();
 
     [SerializeField] private Color[] boarderColors = new Color[9];
 
@@ -106,13 +106,16 @@ public class PlayerSpawn : MonoBehaviour
         }
 
         InputSetup();
-
+        Debug.Log("Here1");
         // Randomly spawn players at listed locations.
         SpawnPlayers();
+        Debug.Log("Here2");
 
         SetHUDBoarders();
+        Debug.Log("Here3");
 
         DisableUnusedDevices();
+        Debug.Log("Here4");
     }
 
     private void SetHUDBoarders()
@@ -150,8 +153,6 @@ public class PlayerSpawn : MonoBehaviour
 
     IEnumerator VictoryReset()
     {
-        Debug.Log("I REMOVED THIS");
-
         yield return new WaitForSeconds(3.5f);
         
         if (connectedPlayers.playersToSpawn > 1)
