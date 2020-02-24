@@ -10,7 +10,7 @@ public class Dead : MonoBehaviour, IState
     private Transform _target;
     private Rigidbody _rb;
 
-    [SerializeField] private GameObject _cellPrefab;
+    [SerializeField] private GameObject[] _itemPrefabs;
     [SerializeField] private int _cellSpawnCount = 5;
 
     [SerializeField] private bool _enabled = false;
@@ -60,7 +60,7 @@ public class Dead : MonoBehaviour, IState
         // Coins disperse
         for (int i = 0; i < _cellSpawnCount; ++i)
         {
-            GameObject tmp = Instantiate(_cellPrefab);
+            GameObject tmp = Instantiate(_itemPrefabs[Random.Range(0, 6)]);
             tmp.transform.position = transform.position;
         }
         Destroy(this.gameObject);

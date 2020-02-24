@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: -496830666233626805}
   - component: {fileID: 7865935160635239466}
   m_Layer: 11
-  m_Name: MonsterCell
+  m_Name: HealthUp
   m_TagString: Cell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,7 +93,7 @@ Transform:
   m_GameObject: {fileID: 7865935160635239468}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.70710677}
   m_LocalPosition: {x: -0.95, y: 1.012, z: -14.24}
-  m_LocalScale: {x: 0.41911778, y: 0.017129688, z: 0.41911778}
+  m_LocalScale: {x: 1, y: 0.017129688, z: 1}
   m_Children:
   - {fileID: 7070880431614366792}
   - {fileID: 1542886570937907124}
@@ -125,7 +125,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c167e754300fd4c40af6973c0db03384, type: 2}
+  - {fileID: 2100000, guid: 7da481001237a2844a89a24596ed9f09, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -429,7 +429,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.8584906, g: 0.39859828, b: 0.0040494935, a: 1}
+      maxColor: {r: 1, g: 0.04843266, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4966,6 +4966,7 @@ GameObject:
   - component: {fileID: 7070880431614366792}
   - component: {fileID: 3473567416081508522}
   - component: {fileID: 1186465053637063151}
+  - component: {fileID: 6466147930164569434}
   m_Layer: 2
   m_Name: Collect
   m_TagString: Untagged
@@ -5012,3 +5013,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 299abefeec706914ca9383de01f864ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6466147930164569434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8557320602191808797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1716c97fa22097a47a8280a58bc4a108, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  variableName: 0
