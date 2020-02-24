@@ -24,6 +24,11 @@ public class Panels : MonoBehaviour
         ability[1].GetComponent<Image>().sprite = abilityIcons[2];
     }
 
+    private void Update()
+    {
+        Debug.Log(presetNumber);
+    }
+
     public void OnJoining()
     {
         switch (stateValue)
@@ -37,7 +42,7 @@ public class Panels : MonoBehaviour
                 break;
             
             case 1:
-                if (_AddPlayer._Devices.Length >= 2 && abilityLocked)
+                if (connectedPlayers.playersConnected >= 2 && abilityLocked)
                 {
                     _AddPlayer.SetPlayerOrder();
                     SceneManager.LoadScene(1);
@@ -50,7 +55,7 @@ public class Panels : MonoBehaviour
     {
         if(stateValue == 0)
         {
-            ChangeIcons(presetNumber - 1);
+            ChangeIcons(-1);
         }
     }
 
@@ -58,23 +63,26 @@ public class Panels : MonoBehaviour
     {
         if (stateValue == 0)
         {
-            ChangeIcons(presetNumber + 1);
+            ChangeIcons(1);
         }
     }
 
     public void ChangeIcons(int pDirection)
     {
-        if(presetNumber == 0)
+        presetNumber += pDirection;
+
+        // Check if outside bounds
+        if(presetNumber < 0)
         {
-            ability[0].GetComponent<Image>().sprite = abilityIcons[3];
-            ability[1].GetComponent<Image>().sprite = abilityIcons[2];
+            presetNumber = abilityIcons.Length / 2 - 1;
+        }
+        else if(presetNumber >= abilityIcons.Length / 2)
+        {
+            presetNumber = 0;
         }
 
-        if(presetNumber == 1)
-        {
-            ability[0].GetComponent<Image>().sprite = abilityIcons[0];
-            ability[1].GetComponent<Image>().sprite = abilityIcons[1];
-        }
+        ability[0].GetComponent<Image>().sprite = abilityIcons[presetNumber * 2];
+        ability[1].GetComponent<Image>().sprite = abilityIcons[presetNumber * 2 + 1];
     }
 
     public void PlayerJoined()
