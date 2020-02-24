@@ -20,8 +20,8 @@ public class Panels : MonoBehaviour
 
     private void Start()
     {
-        ability[0].GetComponent<Image>().sprite = abilityIcons[3];
-        ability[1].GetComponent<Image>().sprite = abilityIcons[2];
+        ability[0].GetComponent<Image>().sprite = abilityIcons[2];
+        ability[1].GetComponent<Image>().sprite = abilityIcons[3];
     }
 
     private void Update()
@@ -89,8 +89,8 @@ public class Panels : MonoBehaviour
     {
         playerPanels.text = "Player " + playerNumber + " Joined";
         presetNumber = 0;
-        ability[0].GetComponent<Image>().sprite = abilityIcons[3];
-        ability[1].GetComponent<Image>().sprite = abilityIcons[2];
+        ability[0].GetComponent<Image>().sprite = abilityIcons[2];
+        ability[1].GetComponent<Image>().sprite = abilityIcons[3];
     }
 
     public int PlayerLeft()
