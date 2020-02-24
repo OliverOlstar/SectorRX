@@ -6,10 +6,18 @@
             "id": "0ec84224-54a5-4ff4-ac63-7c5082bdbc15",
             "actions": [
                 {
-                    "name": "MenuMovement",
-                    "type": "PassThrough",
+                    "name": "Left",
+                    "type": "Button",
                     "id": "5f63826f-d0ce-4e17-b963-4567b48e2fbc",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Right",
+                    "type": "Button",
+                    "id": "2e8a1c66-2270-4d44-927d-2a1cfde9a0b2",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
@@ -40,68 +48,35 @@
             ],
             "bindings": [
                 {
-                    "name": "2D Vector",
-                    "id": "666ea405-5f57-4da4-9793-c2c7e7aabaf7",
-                    "path": "2DVector",
+                    "name": "",
+                    "id": "e374f01f-8a7f-48d9-9cf4-56b584fb3816",
+                    "path": "<Gamepad>/dpad/left",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "MenuMovement",
-                    "isComposite": true,
+                    "groups": "Gamepad",
+                    "action": "Left",
+                    "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "up",
-                    "id": "d15c470e-b812-4b62-97a6-eff030cc42e7",
-                    "path": "<Keyboard>/w",
+                    "name": "",
+                    "id": "2bd9d036-9f14-4d2f-bb03-887fc1e22222",
+                    "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "MenuMovement",
+                    "action": "Left",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 },
                 {
-                    "name": "down",
-                    "id": "1f34497e-3361-44ef-a53d-fb27b7c2e67f",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "MenuMovement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "a6429a02-f502-413d-9f1a-76c6c4457dc6",
+                    "name": "",
+                    "id": "38a0b812-50aa-41b6-98f0-151dca0b1d25",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "MenuMovement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "55422a56-ad14-4c12-a49b-61e17974e31f",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "MenuMovement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "e374f01f-8a7f-48d9-9cf4-56b584fb3816",
-                    "path": "<Gamepad>/dpad",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "MenuMovement",
+                    "action": "Left",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -168,6 +143,39 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "ColorPicking",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cc00fb23-6396-4bbf-b29f-711424f455d4",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fcb4029a-c6a6-46fc-9d1b-014bdcbb9c47",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2db1344a-5b10-4c0f-bc67-106f44d0d477",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Right",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
