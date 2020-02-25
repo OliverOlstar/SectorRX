@@ -6,8 +6,10 @@ public class PlayerSFX : MonoBehaviour
 {
     public AudioClip[] lightAttack = new AudioClip[2]; 
     public AudioClip[] heavyAttack = new AudioClip[2];
-    public AudioClip collectStat;
+    public AudioClip[] collectStat = new AudioClip[7];
     public AudioSource sfxSource;
+
+    [SerializeField] private PlayerCollectibles.Upgrades statName;
 
     public void LightAttackSound()
     {
@@ -24,8 +26,7 @@ public class PlayerSFX : MonoBehaviour
 
     public void StatUpSound()
     {
-        sfxSource.clip = collectStat;
-        sfxSource.pitch = Random.Range(1.5f, 2.5f);
+        sfxSource.clip = collectStat[(int)statName];
         sfxSource.Play();
     }
 }
