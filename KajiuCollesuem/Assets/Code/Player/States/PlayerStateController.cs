@@ -56,6 +56,7 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public IAbility _AbilityScript2;
 
     [HideInInspector] public bool IgnoreNextHeavyRelease = false;
+    [HideInInspector] public float IgnoreJumpInputTime = 0.0f;
 
     void Awake()
     {
@@ -122,7 +123,13 @@ public class PlayerStateController : MonoBehaviour
 
         heavyAttackinput = ctx.Get<float>();
     }
-    public void OnJump() => _movementComponent.OnJump();
+    public void OnJump()
+    {
+        if (Time.time >= IgnoreJumpInputTime)
+        {
+            _movementComponent.OnJump();
+        }
+    }
     public void OnLockOn() => _lockOnComponent.OnLockOn();
     public void OnAnyInput() => LastInputTime = Time.time;
     #endregion
