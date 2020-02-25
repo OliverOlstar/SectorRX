@@ -95,7 +95,8 @@ public class ModelController : MonoBehaviour
         }
 
         _doneAttackDelay = curAttack.holdEndPosTime;
-        _modelWeights.SetWeights(0, 0, 1, 0, 0);
+        //_modelWeights.SetWeights(0, 0, 1, 0, 0);
+        _modelWeights.SetUpperbodyWeight(1);
         _modelAnimation.StartAttack(pIndex);
     }
 
@@ -117,7 +118,7 @@ public class ModelController : MonoBehaviour
     {
         _AttackingState = 0;
         _modelMovement.disableRotation = false;
-        _modelWeights.SetWeights(0, 0, 0, 0, 0);
+        _modelWeights.SetUpperbodyWeight(0);
     }
 
     public void DoneChargingAttack()
@@ -137,14 +138,14 @@ public class ModelController : MonoBehaviour
     public void PlayDodge(Vector2 pDirection, float pSpeed)
     {
         _DontUpdateWeights = true;
-        _modelWeights.SetWeights(0, 0, 0, 1, 0);
+        _modelWeights.SetWeights(0, 0, 1, 0);
         _modelMovement.PlayFlipParent(pDirection, pSpeed);
     }
 
     public void DoneDodge()
     {
         _DontUpdateWeights = false;
-        _modelWeights.SetWeights(0, 0, 0, 0, 0);
+        _modelWeights.SetWeights(0, 0, 0, 0);
     }
     #endregion
 
@@ -175,7 +176,7 @@ public class ModelController : MonoBehaviour
     {
         _DontUpdateWeights = true;
         _modelMovement.disableRotation = true;
-        _modelWeights.SetWeights(0, 0, 0, 0, 1);
+        _modelWeights.SetWeights(0, 0, 0, 1);
         _modelAnimation.PlayDead();
     }
     #endregion

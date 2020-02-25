@@ -23,7 +23,6 @@ public class AbilityState : BaseState
     public override void Enter()
     {
         Debug.Log("AbilityState: Enter");
-        _stateController._movementComponent.disableMovement = true;
         _RequestedToExit = false;
 
         CheckForPress();
@@ -33,7 +32,6 @@ public class AbilityState : BaseState
     {
         Debug.Log("AbilityState: Exit");
         _stateController.AttackStateReturnDelay = Time.time + _abilityStateReturnDelayLength;
-        _stateController._movementComponent.disableMovement = false;
 
         _curAbility.Exit();
         ClearInputs();

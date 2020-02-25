@@ -14,12 +14,6 @@ public class SOAttack : ScriptableObject
 
     [Header("Pre Attack")]
     [Min(0)] public float holdStartPosTime = 0.1f;
-    [Min(0)] public float transitionToTime = 0.2f;
-
-    [Header("During Attack - Stepping")]
-    [Min(0)] public float forceForwardTime = 0.2f;
-    [Min(0)] public float stopForceForwardTime = 0.3f;
-    public float forceForwardAmount = 50.0f;
 
     [Header("During Attack - Hitbox")]
     public int hitboxIndex = 0;
