@@ -110,12 +110,12 @@ public class PlayerCamera : MonoBehaviour
         //Getting Mouse Movement
         if (!CameraDisabled)
         {
-            /*if (targetDead == true)
+            if (targetDead == true)
             {
                 DeadCameraMovement();
                 return;
             }
-            else*/ if (lockOnTarget != null)
+            else if (lockOnTarget != null)
             {
                 LockOnCameraMovement();
             }
@@ -163,13 +163,13 @@ public class PlayerCamera : MonoBehaviour
     void LockOnCameraMovement()
     {
         //Locked onto Target
-        Vector2 direction = new Vector2(lockOnTarget.position.z, lockOnTarget.position.x)  - new Vector2(_ParentTransform.position.z, _ParentTransform.position.x) ;
-        _LocalRotation.x = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + _lockOnXOffset) * Time.deltaTime; // Add distance into this line potentially
-        _LocalRotation.y = (_ParentTransform.position.y - lockOnTarget.position.y) * Time.deltaTime;
-
-        //Vector3 _RotTarget = _LocalRotation;
+        Vector2 direction = new Vector2(lockOnTarget.position.z, lockOnTarget.position.x) - new Vector2(_ParentTransform.position.z, _ParentTransform.position.x) ;
+        _LocalRotation.x = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + _lockOnXOffset); // Add distance into this line potentially
+        _LocalRotation.y = (_ParentTransform.position.y - lockOnTarget.position.y);
 
         DefaultCameraMovement(_lockOnInputInfluence);
+
+        //Vector3 _RotTarget = _LocalRotation;
 
         //Change Target
         //float RequiredPushAmount = ((Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0) ? lockOnChangeAmount_KB : lockOnChangeAmount_GP);

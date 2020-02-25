@@ -106,16 +106,13 @@ public class PlayerSpawn : MonoBehaviour
         }
 
         InputSetup();
-        Debug.Log("Here1");
+
         // Randomly spawn players at listed locations.
         SpawnPlayers();
-        Debug.Log("Here2");
 
         SetHUDBoarders();
-        Debug.Log("Here3");
 
         DisableUnusedDevices();
-        Debug.Log("Here4");
     }
 
     private void SetHUDBoarders()
