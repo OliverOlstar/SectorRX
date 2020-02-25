@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackTime: 0.35
   attackGraph: {fileID: 11400000, guid: 75e55119c274554469b812e4c83bfa62, type: 2}
-  holdEndPosTime: 0.4
+  holdEndPosTime: 0.5
   holdStartPosTime: 0.2
   hitboxIndex: 0
   enableHitboxTime: 0.1
@@ -22,3 +22,5 @@ MonoBehaviour:
   HitboxKnockup: 30
   HitboxKnockback: 65
   HitboxDamage: 20
+  transitionInDampening: 5
+  transitionOutDampening: 15

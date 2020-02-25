@@ -39,9 +39,6 @@ public class OnGroundComponent : MonoBehaviour
 
         //Check if on the ground
         CheckGrounded();
-
-        //Damage player if they fall for too long and teleport them back to ground
-        CheckFellTeleport();
     }
     
     private void CheckGrounded()
@@ -71,18 +68,9 @@ public class OnGroundComponent : MonoBehaviour
         }
     }
 
-    private void CheckFellTeleport()
+    public void ResetFallingForce()
     {
-        //If falling for max time, teleport back to last place on ground
-        if (_terminalFallingTimer >= _fallMaxTime)
-        {
-            _rb.velocity = Vector3.zero;
-            transform.position = _lastPoint + new Vector3(0, _respawnYOffset, 0);
-            _terminalFallingTimer = 0;
-            _downForce = 0;
-            _stateController._playerCamera.targetDead = false;
-            _stateController._playerAttributes.modifyHealth(-_fallDamage);
-        }
+        _downForce = 0;
     }
 
     public void FallingForce()

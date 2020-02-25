@@ -91,6 +91,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         {
             connectedPlayers.playersConnected--;
             MatchManager.instance.ManagerEnd();
+            _stateController._playerCamera.targetDead = true;
             return true;
         }
         return false;

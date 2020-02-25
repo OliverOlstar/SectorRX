@@ -1481,6 +1481,7 @@ MonoBehaviour:
   - {fileID: 9179836059231498655}
   - {fileID: 459739093647060007}
   IgnoreNextHeavyRelease: 0
+  IgnoreJumpInputTime: 0
 --- !u!114 &5193453761140963542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1574,9 +1575,8 @@ MonoBehaviour:
   enemiesLayer:
     serializedVersion: 2
     m_Bits: 768
-  lockOnRange: 30
-  focusedOnScreen: 0
-  unfocusedOnScreen: 0
+  lockOnRange: 40
+  lockOnMinDot: 0.4
   TimeUntilIdle: 20
 --- !u!114 &5193453761140963528
 MonoBehaviour:
@@ -1620,7 +1620,7 @@ MonoBehaviour:
   - {fileID: 3377833172081100299}
   - {fileID: 3574428894867480786}
   - {fileID: 776720570792789159}
-  MAXUPGRADES: 30
+  MAXUPGRADES: 10
   minHealth: 50
   maxHealth: 160
   minShield: 40
@@ -1630,7 +1630,7 @@ MonoBehaviour:
   minJump: 1
   maxJump: 2.6
   minWeight: 0.6
-  maxWeight: 5
+  maxWeight: 4.2
   minAttack: 1
   maxAttack: 5
 --- !u!114 &3076140870130127852
@@ -1779,7 +1779,7 @@ HingeJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 0
-  m_MassScale: 20
+  m_MassScale: 15
   m_ConnectedMassScale: 1
 --- !u!1 &6441709666246281952
 GameObject:
@@ -3092,6 +3092,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LizzyRagDoll
+      objectReference: {fileID: 0}
+    - target: {fileID: 4035396028899063266, guid: d033bfc0218191f4ab56b0a944a51e42,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4035396028899063267, guid: d033bfc0218191f4ab56b0a944a51e42,
         type: 3}

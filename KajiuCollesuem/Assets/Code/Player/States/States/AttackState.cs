@@ -45,12 +45,15 @@ public class AttackState : BaseState
             _hitbox.gameObject.SetActive(false);
             _hitbox = null;
         }
-
+        
         // Reallow jumping during attack 
         _stateController.IgnoreJumpInputTime = 0.0f;
 
         _stateController._modelController.SetInputDirection(Vector3.zero);
+        
+        // Clear Inputs
         ClearInputs();
+        _stateController.dodgeInput = -1.0f;
     }
 
     public override Type Tick()
@@ -195,8 +198,6 @@ public class AttackState : BaseState
         _stateController.heavyAttackinput = -1.0f;
         _stateController.ability1input = -1.0f;
         _stateController.ability2input = -1.0f;
-
-        _stateController.dodgeInput = -1.0f;
     }
     #endregion
 }
