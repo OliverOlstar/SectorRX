@@ -160,7 +160,7 @@ public class PlayerSpawn : MonoBehaviour
             musicManager.mainAudio.Stop();
             transitionScreen.DOAnchorPos(new Vector2(0, 0), 0.4f);
             yield return new WaitForSeconds(0.5f);
-            SceneManager.LoadScene(2);
+            SceneManager.LoadSceneAsync(2);
         }
     }
 }
