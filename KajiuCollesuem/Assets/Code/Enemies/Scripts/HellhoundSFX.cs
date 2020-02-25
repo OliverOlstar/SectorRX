@@ -13,18 +13,21 @@ public class HellhoundSFX : MonoBehaviour
     public void AEShotSound()
     {
         sfxSource.clip = shotAttack;
+        sfxSource.pitch = Random.Range(1.0f, 2.0f);
         sfxSource.Play();
     }
 
     public void AEAttackSound()
     {
         sfxSource.clip = biteAttack;
+        sfxSource.pitch = Random.Range(0.5f, 1.5f);
         sfxSource.Play();
     }
 
     public void AEDeathSound()
     {
         sfxSource.clip = deathSound[Random.Range(0, 1)];
+        sfxSource.pitch = Random.Range(0.5f, 2.0f);
         sfxSource.Play();
     }
 }
