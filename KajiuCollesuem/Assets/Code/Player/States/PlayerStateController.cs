@@ -54,8 +54,6 @@ public class PlayerStateController : MonoBehaviour
     // Abilities
     [HideInInspector] public IAbility _AbilityScript1;
     [HideInInspector] public IAbility _AbilityScript2;
-    [HideInInspector] public SOAbilities _AbilitySO1;
-    [HideInInspector] public SOAbilities _AbilitySO2;
 
     [HideInInspector] public bool IgnoreNextHeavyRelease = false;
 

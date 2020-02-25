@@ -20,7 +20,8 @@ public class ModelController : MonoBehaviour
 
     private bool _DontUpdateWeights;
 
-    public SOAttack[] attacks;
+    public SOAttack[] attacks = new SOAttack[3];
+    public SOAbilities[] abilities = new SOAbilities[2];
     private float _doneAttackDelay = 0;
     
     void Start()
@@ -95,11 +96,50 @@ public class ModelController : MonoBehaviour
         }
 
         _doneAttackDelay = curAttack.holdEndPosTime;
-        //_modelWeights.SetWeights(0, 0, 1, 0, 0);
-        _modelWeights.SetUpperbodyWeight(1);
+        _modelWeights.SetUpperbodyWeight(1, 15);
         _modelAnimation.StartAttack(pIndex);
     }
 
+    public void PlayAbility(int pIndex, bool pChargable)
+    {
+        SOAbilities curAbility = abilities[pIndex];
+
+        StopCoroutine("DoneAttackWithDelay");
+        StopCoroutine("PlayAttackWithDelay");
+
+        _modelMovement.disableRotation = true;
+
+        // Chargeable Attack - wait for done charging before starting attack
+        if (pChargable == true)
+        {
+            _AttackingState = 2;
+        }
+        // Non-Chargable Attack
+        else
+        {
+            StartCoroutine("PlayAttackWithDelay", curAbility.holdStartPosTime);
+        }
+
+        _doneAttackDelay = curAbility.holdEndPosTime;
+        _modelWeights.SetUpperbodyWeight(1, curAbility.transitionInDampening);
+        _modelAnimation.StartAbility(pIndex);
+    }
+
+    public void DoneAttack()
+    {
+        _AttackingState = 0;
+        _modelMovement.disableRotation = false;
+        _modelWeights.SetUpperbodyWeight(0.0f, 5.0f);
+    }
+
+    public void DoneChargingAttack()
+    {
+        // End Charging
+        _AttackingState = 1;
+        _modelMovement.disableRotation = true;
+    }
+
+    // Coroutines
     private IEnumerator PlayAttackWithDelay(float pDelay)
     {
         _AttackingState = 2;
@@ -114,20 +154,7 @@ public class ModelController : MonoBehaviour
         DoneAttack();
     }
 
-    public void DoneAttack()
-    {
-        _AttackingState = 0;
-        _modelMovement.disableRotation = false;
-        _modelWeights.SetUpperbodyWeight(0);
-    }
-
-    public void DoneChargingAttack()
-    {
-        // End Charging
-        _AttackingState = 1;
-        _modelMovement.disableRotation = true;
-    }
-
+    // Set rotation
     public void SetInputDirection(Vector3 pInput)
     {
         _modelMovement.facingInput = pInput;

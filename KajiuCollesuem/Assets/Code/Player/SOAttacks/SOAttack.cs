@@ -26,4 +26,8 @@ public class SOAttack : ScriptableObject
     public float HitboxKnockup = 10.0f;
     public float HitboxKnockback = 20.0f;
     public int HitboxDamage = 20;
+
+    [Header("Transtion Dampenings")]
+    public float transitionInDampening = 5.0f;
+    public float transitionOutDampening = 15.0f;
 }

@@ -58,7 +58,12 @@ public class ModelWeights : MonoBehaviour
         LerpWeight("Dead Weight", deadWeight);
     }
 
-    public void SetUpperbodyWeight(float pWeight) => upperbodyWeight = pWeight;
+    public void SetUpperbodyWeight(float pWeight, float pDampening)
+    {
+        upperbodyWeight = pWeight;
+        _upperbodyWeightDampening = pDampening;
+    }
+
     private void LerpUpperbodyWeight()
     {
         upperbodyCurrentWeight = Mathf.Lerp(upperbodyCurrentWeight, upperbodyWeight, Time.deltaTime * _upperbodyWeightDampening);
