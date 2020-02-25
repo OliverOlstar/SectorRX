@@ -55,17 +55,16 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
     {
         _health -= pAmount;
 
-        pKnockback.y = pKnockback.y * 2;
+        Debug.Log("Disabled Hellhound Healthbar");
+        StopCoroutine("ShowHealthBar");
+        StartCoroutine("ShowHealthbar");
 
         if (sliderControl != null)
-            sliderControl.UpdateBars(0, pAmount);
-
-        Debug.Log("Disabled Hellhound Healthbar");
-        //StopCoroutine("ShowHealthbar");
-        //StartCoroutine("ShowHealthbar");
+            sliderControl.UpdateBars(0, _health);
 
         if (_health <= 0 && !isDead)
         {
+            sliderControl.UpdateBars(0, _health);
             Death();
             _rb.AddForce(pKnockback / _weight, ForceMode.Impulse);
             return true;

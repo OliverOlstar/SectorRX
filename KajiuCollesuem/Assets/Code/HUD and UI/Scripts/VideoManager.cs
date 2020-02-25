@@ -15,14 +15,22 @@ public class VideoManager : MonoBehaviour
     void Start()
     {
         mainMenu.SetActive(false);
-        videoPlayer.Play();
         videoPlayer.SetDirectAudioVolume(1, 0.5f);
         audioSource.PlayDelayed(7.0f);
     }
 
     private void Update()
     {
-        StartCoroutine("IntroTransition");
+        if (UIManager.menuProperties == true)
+        {
+            mainMenu.SetActive(true);
+        }
+
+        if (UIManager.menuProperties == false)
+        {
+            videoPlayer.Play();
+            StartCoroutine("IntroTransition");
+        }
     }
 
     IEnumerator IntroTransition()
