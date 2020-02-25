@@ -21,11 +21,13 @@ public class connectedPlayers : MonoBehaviour
     public static int playersConnected = 0;
     public static int playersToSpawn = 0;
     public bool canJoin;
+    public bool hasJoined;
     private List<int> playerSlots = new List<int>(){0, 1, 2, 3, 4, 5, 6, 7, 8};
     public static List<UsedDevices> playerIndex = new List<UsedDevices>();
     public GameObject devicePrefab;
+    public GameObject startButton;
 
-    [SerializeField] private DeviceHandler[] _Devices; 
+    [SerializeField] public DeviceHandler[] _Devices; 
     [SerializeField] private Text _PlayerCount;
     [SerializeField] private Panels[] playerPanels;
 
@@ -37,6 +39,18 @@ public class connectedPlayers : MonoBehaviour
         if(UIManager.menuProperties == true)
         {
             EnableJoin();
+        }
+    }
+
+    private void Update()
+    {
+        if(_Devices.Length >= 2)
+        {
+            startButton.SetActive(true);
+        }
+        else
+        {
+            startButton.SetActive(false);
         }
     }
 
@@ -54,8 +68,16 @@ public class connectedPlayers : MonoBehaviour
 
     public void ResetPlayers()
     {
-        if(canJoin) 
+        if(canJoin)
+        {
             canJoin = false;
+        }
+
+        if(hasJoined)
+        {
+            hasJoined = false;
+        }
+
         foreach(DeviceHandler d in _Devices)
         {
             if(d != null)
@@ -91,6 +113,7 @@ public class connectedPlayers : MonoBehaviour
             playersToSpawn++;
             Debug.Log("OnPlayerJoined " + playersConnected);
             _PlayerCount.text = "Number of Players: " + playersConnected.ToString();
+            hasJoined = true;
 
             //Sets player panel to first open slot and then removes it from list
             int slot = playerSlots[0];
