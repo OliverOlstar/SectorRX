@@ -18,13 +18,11 @@ public class IdleState : BaseState
     public override void Enter()
     {
         //Debug.Log("IdleState: Enter");
-        stateController._movementComponent.disableMovement = false;
     }
 
     public override void Exit()
     {
         //Debug.Log("IdleState: Exit");
-        stateController._movementComponent.disableMovement = true;
 
         // If Dodge input happened less than a dodgeInputBuffer time ago add the input back in
         if (dodgeInputTime + dodgeInputBuffer >= Time.time)

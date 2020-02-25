@@ -16,7 +16,7 @@ public class UIManager : MonoBehaviour
 {
     public static bool menuProperties;
     public RectTransform mainMenu, playerInputMenu, loadingScreen;
-    public GameObject targetUI;
+    public GameObject targetUI, backButton;
     public Slider loadingProgress;
 
     public void Start()
@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour
         if (menuProperties == true)
         {
             playerInputMenu.DOAnchorPos(new Vector2(69, -2), 0.4f);
+            targetUI = backButton;
         }
         else
         {

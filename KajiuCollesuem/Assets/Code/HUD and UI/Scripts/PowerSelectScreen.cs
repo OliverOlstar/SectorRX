@@ -28,6 +28,6 @@ public class PowerSelectScreen : MonoBehaviour
     //Power Select Description Management
     public void ChangeDescription()
     {
-        powerDescription.text = powers[0].dislayDescription;
+        //powerDescription.text = powers[0].dislayDescription;
     }
 }
