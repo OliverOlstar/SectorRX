@@ -54,10 +54,8 @@ public class ModelController : MonoBehaviour
                     StartCoroutine("DoneAttackWithDelay");
                 }
             }
-            else if (_AttackingState == 0)
-            {
-                _modelWeights.UpdateWeights();
-            }
+
+            _modelWeights.UpdateWeights();
         }
         else
         {

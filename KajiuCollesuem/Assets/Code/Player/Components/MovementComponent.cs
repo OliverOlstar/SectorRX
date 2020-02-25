@@ -51,6 +51,9 @@ public class MovementComponent : MonoBehaviour
         {
             _jumpGrace = 0;
 
+            // Jump Cooldown
+            _stateController.IgnoreJumpInputTime = Time.time + 0.5f;
+
             //Add force
             _rb.velocity = new Vector3(_stateController._Rb.velocity.x * _jumpForceVelocityMult, 0, _stateController._Rb.velocity.z * _jumpForceVelocityMult);
             _rb.AddForce(_jumpForceUp * jumpMult * Vector3.up, ForceMode.Impulse);
