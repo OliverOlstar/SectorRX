@@ -37,6 +37,7 @@ public class PlasmaBreath : MonoBehaviour, IAbility
         _charging = true;
         _nextSubStateTime = Time.time + 1;
         _stateController._lockOnComponent.ToggleScopedIn(0.05f);
+        _stateController._modelController.PlayAbility(0, false);
     }
 
     public void Released()
@@ -73,7 +74,7 @@ public class PlasmaBreath : MonoBehaviour, IAbility
     {
         _SpawnedLaser.gameObject.SetActive(_charging);
         if (_charging == true)
-            _nextSubStateTime = Time.time + 5;
+            _nextSubStateTime = Time.time + _stateController._modelController.abilities[0].maxChargeTime;
 
         _charging = !_charging;
     }

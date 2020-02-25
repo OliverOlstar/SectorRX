@@ -6,19 +6,18 @@ public class AttackState : BaseState
     PlayerStateController _stateController;
 
     private float _exitStateTime = 0;
-    private float _addForceTime = 0;
-    private float _stopForceTime = 0;
-    private float _addForceAmount = 0;
 
     private float _enableHitboxTime = 0;
     private float _disableHitboxTime = 0;
     private PlayerHitbox _hitbox = null;
 
-    private float _attackStateReturnDelayLength = 0.3f;
-    private float _maxCharge = 5.0f;
+    private float _attackStateReturnDelayLength = 0.2f;
+    private float _minChargeTime = 0.0f;
+    private float _maxCharge = 4.0f;
 
     private bool _onHolding = false;
-    public float chargeTime = 0f;
+    private bool _alreadyReleased = false;
+    private float _chargeTime = 0f;
 
     public AttackState(PlayerStateController controller) : base(controller.gameObject)
     {
@@ -27,17 +26,17 @@ public class AttackState : BaseState
 
     public override void Enter()
     {
-        Debug.Log("AttackState: Enter");
+        //Debug.Log("AttackState: Enter");
         _exitStateTime = 0;
         _onHolding = false;
-        _stateController._movementComponent.disableMovement = false;
+        _alreadyReleased = false;
         _stateController._modelController.SetInputDirection(_stateController.moveInput);
         CheckForAttack();
     }
 
     public override void Exit()
     {
-        Debug.Log("AttackState: Exit");
+        //Debug.Log("AttackState: Exit");
         _stateController.AttackStateReturnDelay = Time.time + _attackStateReturnDelayLength;
 
         // If leaving state before disabling hitbox, disable hitbox
@@ -46,8 +45,6 @@ public class AttackState : BaseState
             _hitbox.gameObject.SetActive(false);
             _hitbox = null;
         }
-
-        _stateController._movementComponent.disableMovement = true;
 
         _stateController._modelController.SetInputDirection(Vector3.zero);
         ClearInputs();
@@ -67,15 +64,6 @@ public class AttackState : BaseState
         {
             return typeof(MovementState);
         }
-
-        //if (Time.time < _addForceTime)
-        //    _stateController._modelController.SetInputDirection(_stateController.moveInput);
-
-        // Forward stepping force
-        //if (Time.time > _addForceTime && Time.time < _stopForceTime && _onHolding == false)
-        //{
-        //    _stateController._Rb.AddForce(_stateController._modelController.transform.forward * _addForceAmount * Time.deltaTime);
-        //}
 
         // Hitbox enable & disable
         if (_hitbox != null)
@@ -99,19 +87,23 @@ public class AttackState : BaseState
         // If holding don't listen for more attacks, listen for release else run holding code.
         if (_onHolding == true)
         {
-            // ON RELEASE HEAVY (Called Once)
-            if (_stateController.heavyAttackinput == 0)
+            // Delay before starting charging
+            if (Time.time >= _minChargeTime)
             {
-                //Debug.Log("AttackState: CheckForAttack - HEAVY RELEASED");
-                ReleaseHeavyAttack();
-            }
-            // If Reached max charge release heavy attack
-            else if (Time.time >= chargeTime)
-            {
-                //Debug.Log("AttackState: CheckForAttack - HEAVY RELEASED Maxed Charge");
-                // Automatically did a release input so ignore the actual input
-                _stateController.IgnoreNextHeavyRelease = true;
-                ReleaseHeavyAttack();
+                // ON RELEASE HEAVY (Called Once)
+                if (_stateController.heavyAttackinput == 0 || _alreadyReleased)
+                {
+                    //Debug.Log("AttackState: CheckForAttack - HEAVY RELEASED");
+                    ReleaseHeavyAttack();
+                }
+                // If Reached max charge release heavy attack
+                else if (Time.time >= _chargeTime)
+                {
+                    //Debug.Log("AttackState: CheckForAttack - HEAVY RELEASED Maxed Charge");
+                    // Automatically did a release input so ignore the actual input
+                    _stateController.IgnoreNextHeavyRelease = true;
+                    ReleaseHeavyAttack();
+                }
             }
         }
     }
@@ -123,7 +115,7 @@ public class AttackState : BaseState
         {
             //Debug.Log("AttackState: CheckForAttack - HEAVY RELEASED Before Charging");
             PressedHeavyAttack();
-            ReleaseHeavyAttack();
+            _alreadyReleased = true;
         }
         // ON PRESSED HEAVY (Called Once)
         else if (_stateController.heavyAttackinput == 1)
@@ -144,12 +136,10 @@ public class AttackState : BaseState
     {
         //Debug.Log("AttackState: PressedLightAttack");
         SOAttack curAttack = _stateController._modelController.attacks[0];
-        float PreAttackTime = curAttack.transitionToTime + curAttack.holdStartPosTime;
+        float PreAttackTime = curAttack.holdStartPosTime;
         SetAttackValues(curAttack, PreAttackTime);
 
         _stateController._modelController.PlayAttack(0, false);
-
-        ClearInputs();
     }
 
     private void PressedHeavyAttack()
@@ -157,9 +147,9 @@ public class AttackState : BaseState
         //Debug.Log("AttackState: PressedHeavyAttack");
         _stateController._modelController.PlayAttack(1, true);
 
-        chargeTime = Time.time + _maxCharge;
+        _minChargeTime = Time.time + _stateController._modelController.attacks[1].holdStartPosTime;
+        _chargeTime = Time.time + _maxCharge + _minChargeTime;
         _onHolding = true;
-        ClearInputs();
     }
 
     private void ReleaseHeavyAttack()
@@ -172,7 +162,6 @@ public class AttackState : BaseState
         _stateController._modelController.DoneChargingAttack();
 
         _onHolding = false;
-        ClearInputs();
     }
     #endregion
 
@@ -181,9 +170,6 @@ public class AttackState : BaseState
     {
         // Timings
         _exitStateTime = Time.time + pAttackVars.attackTime + pPreAttackTime + pAttackVars.holdEndPosTime;
-        _addForceTime = Time.time + pAttackVars.forceForwardTime + pPreAttackTime;
-        _stopForceTime = Time.time + pAttackVars.stopForceForwardTime + pPreAttackTime;
-        _addForceAmount = pAttackVars.forceForwardAmount;
 
         // Hitbox
         _hitbox = _stateController.hitboxes[pAttackVars.hitboxIndex];

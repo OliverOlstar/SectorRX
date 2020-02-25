@@ -15,6 +15,7 @@ public class DodgeState : BaseState
     public override void Enter()
     {
         //Debug.Log("DodgeState: Enter");
+        stateController._movementComponent.disableMovement = true;
 
         // Start Dodge
         stateController._dodgeComponent.Dodge(stateController.dodgeInput == 0, stateController.LastMoveDirection.normalized);
@@ -23,6 +24,7 @@ public class DodgeState : BaseState
     public override void Exit()
     {
         //Debug.Log("DodgeState: Exit");
+        stateController._movementComponent.disableMovement = false;
 
         // Stop Dodge
         stateController._modelController.DoneDodge();

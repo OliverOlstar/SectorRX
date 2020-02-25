@@ -20,11 +20,12 @@ public class StunnedState : BaseState
         // Debug.Log("StunnedState: Enter");
         _leaveStateTime = Time.time + _cooldown;
         stateController.Stunned = false;
+        stateController._movementComponent.disableMovement = true;
     }
 
     public override void Exit()
     {
-         
+        stateController._movementComponent.disableMovement = false;
     }
 
     public override Type Tick()
