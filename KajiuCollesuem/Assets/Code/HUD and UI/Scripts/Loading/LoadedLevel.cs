@@ -16,6 +16,6 @@ public class LoadedLevel : MonoBehaviour
     IEnumerator screenMove()
     {
         yield return new WaitForSeconds(1);
-        screenTransition.DOAnchorPos(new Vector2(0, 577), 0.4f);
+        screenTransition.DOAnchorPos(new Vector2(0, 4120), 3.2f);
     }
 }
