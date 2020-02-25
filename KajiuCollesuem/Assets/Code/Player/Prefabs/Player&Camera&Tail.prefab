@@ -676,7 +676,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 6373305451171964123, guid: ff082e4b1e7641140a2b42dc475be643, type: 3}
+  - {fileID: 2100000, guid: 0af63eb5167b1e2479e4c61bfb1fb5ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -889,7 +889,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 6373305451171964123, guid: ff082e4b1e7641140a2b42dc475be643, type: 3}
+  - {fileID: 2100000, guid: 0af63eb5167b1e2479e4c61bfb1fb5ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1855,7 +1855,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 67fcad4aff1190042b98e910bdfe7a48, type: 2}
+  - {fileID: 2100000, guid: 0af63eb5167b1e2479e4c61bfb1fb5ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2084,7 +2084,7 @@ MonoBehaviour:
   _fallMult: 1.6
   _deadMult: 0.9
   _stepGraph: {fileID: 11400000, guid: d105e3352e7b8e94f82be1c6df8d9084, type: 2}
-  _idleGraph: {fileID: 11400000, guid: 8d38503b353117b4e9fdbebd87428edf, type: 2}
+  _idleGraph: {fileID: 0}
   _fallGraph: {fileID: 11400000, guid: 5d40a20a35f8b154e9204417dc7022f5, type: 2}
   _deadGraph: {fileID: 11400000, guid: 077046eff822eff49991833925e46f1b, type: 2}
   _jumpingTransitionWidth: 4.6
@@ -2259,7 +2259,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 6373305451171964123, guid: ff082e4b1e7641140a2b42dc475be643, type: 3}
+  - {fileID: 2100000, guid: 0af63eb5167b1e2479e4c61bfb1fb5ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2994,6 +2994,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3993598426422289541, guid: d033bfc0218191f4ab56b0a944a51e42,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4035396028899063266, guid: d033bfc0218191f4ab56b0a944a51e42,
         type: 3}
