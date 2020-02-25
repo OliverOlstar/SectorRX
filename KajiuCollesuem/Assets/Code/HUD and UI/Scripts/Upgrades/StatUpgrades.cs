@@ -156,7 +156,7 @@ public class StatUpgrades : MonoBehaviour
     }
     public void HoverPowerButton(int pIndex, int pLevel, float pYPos)
     {
-        descriptionPower.text = powers[pIndex].powerDescriptions[pLevel] + "\n" + "Cost: " + powers[pIndex].cost[pLevel] + " Cores";
+        //descriptionPower.text = powers[pIndex].powerDescriptions[pLevel] + "\n" + "Cost: " + powers[pIndex].cost[pLevel] + " Cores";
         descriptionPower.rectTransform.position = new Vector2(descriptionPower.rectTransform.position.x, pYPos);
     }
 
