@@ -118,15 +118,15 @@ HingeJoint:
     freeSpin: 0
   m_UseLimits: 1
   m_Limits:
-    min: 0
-    max: 0
+    min: 3
+    max: 30
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
-  m_EnablePreprocessing: 1
+  m_EnablePreprocessing: 0
   m_MassScale: 1.15
   m_ConnectedMassScale: 1
 --- !u!1 &1378083244057460890
@@ -263,15 +263,15 @@ HingeJoint:
     freeSpin: 0
   m_UseLimits: 1
   m_Limits:
-    min: 0
-    max: 0
+    min: 3
+    max: 30
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
-  m_EnablePreprocessing: 1
+  m_EnablePreprocessing: 0
   m_MassScale: 1.15
   m_ConnectedMassScale: 1
 --- !u!1 &1446260200697920864
@@ -541,16 +541,16 @@ HingeJoint:
     freeSpin: 0
   m_UseLimits: 1
   m_Limits:
-    min: 0
-    max: 0
+    min: 3
+    max: 30
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
-  m_EnablePreprocessing: 1
-  m_MassScale: 3
+  m_EnablePreprocessing: 0
+  m_MassScale: 2
   m_ConnectedMassScale: 1
 --- !u!1 &2139955488395497893
 GameObject:
@@ -1186,15 +1186,15 @@ HingeJoint:
     freeSpin: 0
   m_UseLimits: 1
   m_Limits:
-    min: 0
-    max: 0
+    min: 3
+    max: 30
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
-  m_EnablePreprocessing: 1
+  m_EnablePreprocessing: 0
   m_MassScale: 1.15
   m_ConnectedMassScale: 1
 --- !u!1 &4244698847473481934
@@ -1736,7 +1736,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 0
 --- !u!59 &6399331140476993497
 HingeJoint:
@@ -1749,7 +1749,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.36684307, y: -1.0679092, z: -0.0412364}
+  m_ConnectedAnchor: {x: 0.06884307, y: -0.12490922, z: -0.0412364}
   m_UseSpring: 1
   m_Spring:
     spring: 500
@@ -1762,17 +1762,17 @@ HingeJoint:
     freeSpin: 0
   m_UseLimits: 1
   m_Limits:
-    min: 0
-    max: 0
+    min: 3
+    max: 30
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
-  m_EnablePreprocessing: 1
-  m_MassScale: 10
-  m_ConnectedMassScale: 0.01
+  m_EnablePreprocessing: 0
+  m_MassScale: 1.15
+  m_ConnectedMassScale: 1
 --- !u!1 &6441709666246281952
 GameObject:
   m_ObjectHideFlags: 0
@@ -2451,15 +2451,15 @@ HingeJoint:
     freeSpin: 0
   m_UseLimits: 1
   m_Limits:
-    min: 0
-    max: 0
+    min: 3
+    max: 30
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
-  m_EnablePreprocessing: 1
+  m_EnablePreprocessing: 0
   m_MassScale: 1.15
   m_ConnectedMassScale: 1
 --- !u!1 &8431574099176504930
