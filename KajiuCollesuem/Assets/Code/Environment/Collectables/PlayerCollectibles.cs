@@ -151,7 +151,7 @@ public class PlayerCollectibles : MonoBehaviour
                 break;
 
             case Upgrades.Speed:
-                statTexts[3].SetActive(true);
+                statTexts[4].SetActive(true);
                 _stateController._movementComponent.speedMult = minSpeed + (upgradeMults[index] * upgradeCounts[index]);
                 _stateController._dodgeComponent.speedMult = minSpeed + (upgradeMults[index] * upgradeCounts[index]);
                 break;
@@ -167,7 +167,7 @@ public class PlayerCollectibles : MonoBehaviour
                 break;
 
             case Upgrades.Attack:
-                statTexts[4].SetActive(true);
+                statTexts[3].SetActive(true);
                 foreach (PlayerHitbox hitbox in _stateController.hitboxes)
                 {
                     hitbox.attackMult = minAttack + (upgradeMults[index] * upgradeCounts[index]);

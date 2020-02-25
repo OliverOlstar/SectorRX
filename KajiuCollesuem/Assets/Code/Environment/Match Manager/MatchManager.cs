@@ -16,6 +16,12 @@ public class MatchManager : MonoBehaviour
     public SplitscreenManager splitscreenScript;
     public SpawnRandomEnemies[] spawnEnemyScript;
     public SpawnEditLava spawnLavaScript;
+    public static MatchManager instance = null;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     public void Start()
     {
@@ -31,6 +37,10 @@ public class MatchManager : MonoBehaviour
     public void Update()
     {
         spawnLavaScript.lavaTimer();
+    }
+
+    public void ManagerEnd()
+    {
         spawnPlayerScript.MatchEnd();
     }
 

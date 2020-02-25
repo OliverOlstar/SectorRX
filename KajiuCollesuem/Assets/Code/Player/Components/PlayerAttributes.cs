@@ -90,6 +90,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         if (_health <= 0)
         {
             connectedPlayers.playersConnected--;
+            MatchManager.instance.ManagerEnd();
             return true;
         }
         return false;

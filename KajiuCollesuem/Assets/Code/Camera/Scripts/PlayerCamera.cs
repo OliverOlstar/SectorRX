@@ -110,12 +110,12 @@ public class PlayerCamera : MonoBehaviour
         //Getting Mouse Movement
         if (!CameraDisabled)
         {
-            if (targetDead == true)
+            /*if (targetDead == true)
             {
                 DeadCameraMovement();
                 return;
             }
-            else if (lockOnTarget != null)
+            else*/ if (lockOnTarget != null)
             {
                 LockOnCameraMovement();
             }
@@ -167,7 +167,7 @@ public class PlayerCamera : MonoBehaviour
         _LocalRotation.x = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + _lockOnXOffset) * Time.deltaTime; // Add distance into this line potentially
         _LocalRotation.y = (_ParentTransform.position.y - lockOnTarget.position.y) * Time.deltaTime;
 
-        Vector3 _RotTarget = _LocalRotation;
+        //Vector3 _RotTarget = _LocalRotation;
 
         DefaultCameraMovement(_lockOnInputInfluence);
 
