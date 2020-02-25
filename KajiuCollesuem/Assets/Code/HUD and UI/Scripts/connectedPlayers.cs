@@ -47,6 +47,12 @@ public class connectedPlayers : MonoBehaviour
         if(playersConnected >= 2)
         {
             startButton.SetActive(true);
+
+
+
+
+
+
         }
         else
         {

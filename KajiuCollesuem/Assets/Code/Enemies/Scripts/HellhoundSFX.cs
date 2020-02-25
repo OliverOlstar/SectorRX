@@ -9,6 +9,12 @@ public class HellhoundSFX : MonoBehaviour
     public AudioClip biteAttack;
     public AudioSource sfxSource;
 
+    public void AEAttackSound()
+    {
+        sfxSource.clip = biteAttack;
+        sfxSource.Play();
+    }
+
     public void AEDeathSound()
     {
         sfxSource.clip = deathSound[Random.Range(0, 1)];
