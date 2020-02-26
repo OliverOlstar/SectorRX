@@ -7,7 +7,7 @@ public class SOAttack : ScriptableObject
 {
     [Header("Attack itself")]
     [Min(0)] public float attackTime = 0.5f;
-    public SOGraph attackGraph;
+    public AnimationCurve attackGraph;
     
     [Header("Post Attack")]
     [Min(0)] public float holdEndPosTime = 0.1f;

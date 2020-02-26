@@ -2081,7 +2081,39 @@ MonoBehaviour:
   _rotationDeadzone: 0.2
   _tiltingDampening: 8
   _tiltingMult: 9
-  _flipGraph: {fileID: 11400000, guid: 20ae1d637162dcc46b9ed2e8ff2fb38e, type: 2}
+  _flipGraph:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.72260135
+      outSlope: 0.72260135
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.15656313
+    - serializedVersion: 3
+      time: 0.5003306
+      value: 0.5117924
+      inSlope: 2.171854
+      outSlope: 2.171854
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.06728342
+      outWeight: 0.08606236
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.39622673
+      outSlope: 0.39622673
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.15634687
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   disableRotation: 0
   facingInput: {x: 0, y: 0, z: 0}
   facingTarget: {fileID: 0}
@@ -2124,10 +2156,111 @@ MonoBehaviour:
   _idleMult: 0.3
   _fallMult: 1.6
   _deadMult: 0.9
-  _stepGraph: {fileID: 11400000, guid: d105e3352e7b8e94f82be1c6df8d9084, type: 2}
-  _idleGraph: {fileID: 0}
-  _fallGraph: {fileID: 11400000, guid: 5d40a20a35f8b154e9204417dc7022f5, type: 2}
-  _deadGraph: {fileID: 11400000, guid: 077046eff822eff49991833925e46f1b, type: 2}
+  _stepGraph:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.18457752
+      outSlope: 0.18457752
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.07666667
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.33962283
+      outSlope: 0.33962283
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.08333331
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _idleGraph:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.53459114
+      outSlope: 0.53459114
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.075
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.6289308
+      outSlope: 0.6289308
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.07499999
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _fallGraph:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.44549263
+      outSlope: 0.44549263
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.09
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _deadGraph:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.66422796
+      outSlope: 0.66422796
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.21509111
+    - serializedVersion: 3
+      time: 0.09648277
+      value: 0.03204123
+      inSlope: 0.0705088
+      outSlope: 0.0705088
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.37870237
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 3.2423353
+      outSlope: 3.2423353
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.040243335
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   _jumpingTransitionWidth: 4.6
 --- !u!1 &7364514729067292412
 GameObject:
