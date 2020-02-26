@@ -51,7 +51,7 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         //_playerHUD = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>();
     }
 
-    public bool TakeDamage(int pAmount, Vector3 pKnockback, GameObject pAttacker)
+    public bool TakeDamage(int pAmount, Vector3 pKnockback, GameObject pAttacker, bool pIgnoreWeight = false)
     {
         _health -= pAmount;
 
@@ -69,9 +69,13 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
             _rb.AddForce(pKnockback / _weight, ForceMode.Impulse);
             return true;
         }
-        _tm.playerAttributes = pAttacker.GetComponent<PlayerAttributes>();
 
-        _decision.UpdateTarget(pAttacker.transform);
+        // Switch target to attacker
+        if (pAttacker != null)
+        {
+            _tm.playerAttributes = pAttacker.GetComponent<PlayerAttributes>();
+            _decision.UpdateTarget(pAttacker.transform);
+        }
 
         if (_decision != null)
         {

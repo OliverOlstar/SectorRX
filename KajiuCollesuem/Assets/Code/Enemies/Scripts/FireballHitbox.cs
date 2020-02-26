@@ -4,29 +4,28 @@ using UnityEngine;
 
 public class FireballHitbox : MonoBehaviour
 {
-    public int damageAmount;
-    public float maxTime;
-    float timer = 0;
-    [SerializeField] private Transform player;
+    [SerializeField] private int damageAmount;
+    [SerializeField] private float maxTime;
+    [SerializeField] private float knockForce;
 
-    void Update()
+    private void Start()
     {
-        timer += Time.deltaTime;
+        StartCoroutine("DestroyDelay");
+    }
 
-        if (timer > maxTime)
-        {
-            timer = 0;
-            DestroyFireball();
-        }
+    private IEnumerator DestroyDelay()
+    {
+        yield return new WaitForSeconds(maxTime);
+        DestroyFireball();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         IAttributes otherAttributes = other.gameObject.GetComponent<PlayerAttributes>();
 
-        if (otherAttributes != null && otherAttributes.IsDead())
+        if (otherAttributes != null && otherAttributes.IsDead() == false)
         {
-            otherAttributes.TakeDamage(damageAmount, GetComponent<Rigidbody>().velocity, this.gameObject);
+            otherAttributes.TakeDamage(damageAmount, GetComponent<Rigidbody>().velocity.normalized * knockForce, this.gameObject);
             DestroyFireball();
         }
     }

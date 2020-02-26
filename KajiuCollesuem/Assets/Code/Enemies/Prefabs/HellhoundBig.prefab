@@ -399,6 +399,7 @@ GameObject:
   - component: {fileID: 7630819354959702791}
   - component: {fileID: 7630819354959702788}
   - component: {fileID: 3089522045494249724}
+  - component: {fileID: 2339987813715479702}
   m_Layer: 2
   m_Name: AttackHitbox
   m_TagString: Untagged
@@ -413,13 +414,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7630819354959702786}
-  m_LocalRotation: {x: 0.00000005730259, y: -0.0000010074506, z: 0.3625221, w: 0.9319752}
+  m_LocalRotation: {x: 0.15304591, y: -0.6903456, z: 0.15304591, w: 0.6903456}
   m_LocalPosition: {x: -0.705, y: -0.397, z: -0.103}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8591727565542808289}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 25, y: -90, z: 0}
 --- !u!135 &7630819354959702791
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -445,7 +446,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8619c6deed4abf42a55b87835c1125d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
+  _damage: 10
+  _knockForce: 25
+  _knockupForce: 15
 --- !u!114 &3089522045494249724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,8 +461,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9f58cf84b1aef640a66112f1031fa4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _color: {r: 0, g: 0, b: 0, a: 0}
-  _radius: 0.5
+  _color: {r: 1, g: 0, b: 0, a: 1}
+  _radius: 1
+--- !u!114 &2339987813715479702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7630819354959702786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f8aca1855b9e674b96a9bb76d0ef4c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &7630819355108581568
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,7 +669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: ba0dd8290dcdf494abb6b8746ee3ab0c, type: 2}
+  m_Material: {fileID: 2100000, guid: 92eb7606ed1bd2440b79aa11d7d45c7b, type: 2}
   m_Color: {r: 0.38039216, g: 0.38039216, b: 0.38039216, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -1030,7 +1046,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af05573836c31bc498a615a7193d76b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startHealth: 30
+  startHealth: 45
   healthDisplayLength: 5
   _weight: 6
   enemyHealthBar: {fileID: 7630819355108581568}

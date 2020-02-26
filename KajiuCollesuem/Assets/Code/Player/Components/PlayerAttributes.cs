@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using EZCameraShake;
 
 /*
 Programmer: Robert Fowley
@@ -159,7 +158,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
     #region General Functions
     //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
-    public bool TakeDamage(int pAmount, Vector3 pKnockback, GameObject pAttacker)
+    public bool TakeDamage(int pAmount, Vector3 pKnockback, GameObject pAttacker, bool pIgnoreWeight = false)
     {
         //Debug.Log("PlayerAttributes: TakeDamage");
 
@@ -203,7 +202,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         }
 
         // Add Knockback
-        _stateController._Rb.AddForce(pKnockback / weight, ForceMode.Impulse);
+        _stateController._Rb.AddForce(pKnockback / (pIgnoreWeight ? 1 : weight), ForceMode.Impulse);
 
         if (died == false)
             _stateController._modelController.AddStunned(1, (Random.value - 0.5f) * 2, easeOutDelay, easeOut);

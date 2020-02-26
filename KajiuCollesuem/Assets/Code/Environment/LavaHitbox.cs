@@ -13,7 +13,7 @@ public class LavaHitbox : MonoBehaviour
 
         if (otherAttributes != null)
         {
-            otherAttributes.TakeDamage(_Damage, Vector3.up * _KnockupForce, null);
+            otherAttributes.TakeDamage(_Damage, Vector3.up * _KnockupForce, null, true);
 
             // Reset Falling force
             OnGroundComponent otherOnGround = other.GetComponent<OnGroundComponent>();
