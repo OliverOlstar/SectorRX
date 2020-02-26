@@ -39,14 +39,11 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     [SerializeField] [Range(0, 0.5f)] private float easeOut = 0.15f;
     [SerializeField] [Range(0, 0.5f)] private float easeOutDelay = 0.15f;
 
-    public bool IsDead() { return _health == 0; }
+    [Header("Spawn Stats")]
+    [SerializeField] private GameObject[] _itemPrefabs;
+    [SerializeField] private int _cellSpawnCount = 5;
 
-    private void Update()
-    {
-        // DELETE THIS (testing)
-        if (Input.GetKeyDown(KeyCode.Z))
-            _stateController._modelController.AddStunned(1, (Random.value - 0.5f) * 2, easeOutDelay, easeOut);
-    }
+    public bool IsDead() { return _health == 0; }
 
     void Awake()
     {
@@ -206,9 +203,31 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
         if (died == false)
             _stateController._modelController.AddStunned(1, (Random.value - 0.5f) * 2, easeOutDelay, easeOut);
+        else
+            SpawnStatUps();
 
         // Return If Dead or Not
         return died;
+    }
+
+    private void SpawnStatUps()
+    {
+        // Can't Collect them myself
+        Destroy(GetComponent<PlayerCollectibles>());
+
+        StartCoroutine(SpawnStatUpsDelay());
+    }
+
+    private IEnumerator SpawnStatUpsDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        // Coins disperse
+        for (int i = 0; i < _cellSpawnCount; ++i)
+        {
+            GameObject tmp = Instantiate(_itemPrefabs[Random.Range(0, _itemPrefabs.Length)]);
+            tmp.transform.position = transform.position + Vector3.up * 0.1f;
+        }
     }
 
     public void RecivePower(int pPower)

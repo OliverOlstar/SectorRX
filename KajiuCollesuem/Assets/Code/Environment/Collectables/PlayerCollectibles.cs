@@ -100,29 +100,29 @@ public class PlayerCollectibles : MonoBehaviour
         upgradeMults[index] = (maxAttack - minAttack) / MAXUPGRADES;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            CollectedItem(Upgrades.Health);
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Alpha1))
+    //        CollectedItem(Upgrades.Health);
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            CollectedItem(Upgrades.Shield);
+    //    if (Input.GetKeyDown(KeyCode.Alpha2))
+    //        CollectedItem(Upgrades.Shield);
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            CollectedItem(Upgrades.Power);
+    //    if (Input.GetKeyDown(KeyCode.Alpha3))
+    //        CollectedItem(Upgrades.Power);
 
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-            CollectedItem(Upgrades.Speed);
+    //    if (Input.GetKeyDown(KeyCode.Alpha4))
+    //        CollectedItem(Upgrades.Speed);
 
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-            CollectedItem(Upgrades.Jump);
+    //    if (Input.GetKeyDown(KeyCode.Alpha5))
+    //        CollectedItem(Upgrades.Jump);
 
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-            CollectedItem(Upgrades.Weight);
+    //    if (Input.GetKeyDown(KeyCode.Alpha6))
+    //        CollectedItem(Upgrades.Weight);
 
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-            CollectedItem(Upgrades.Attack);
-    }
+    //    if (Input.GetKeyDown(KeyCode.Alpha7))
+    //        CollectedItem(Upgrades.Attack);
+    //}
 
     // MIDGAME UPGRADE (return true if collected, false if already at max collect)
     public bool CollectedItem(Upgrades pStat)
