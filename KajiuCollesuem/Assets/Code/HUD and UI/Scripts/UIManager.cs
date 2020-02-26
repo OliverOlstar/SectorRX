@@ -52,7 +52,7 @@ public class UIManager : MonoBehaviour
     public void BackToMainMenu(GameObject pTarget)
     {
         mainMenu.DOAnchorPos(new Vector2(44, 21), 0.4f);
-        playerInputMenu.DOAnchorPos(new Vector2(69, 823), 0.4f);
+        playerInputMenu.DOAnchorPos(new Vector2(69, 4120), 0.4f);
         menuProperties = false;
         targetUI = pTarget;
     }
@@ -60,14 +60,15 @@ public class UIManager : MonoBehaviour
     public void GoToPlayer(GameObject pTarget)
     {
         playerInputMenu.DOAnchorPos(new Vector2(69, -2), 0.4f);
-        mainMenu.DOAnchorPos(new Vector2(44, -755), 0.4f);
+        mainMenu.DOAnchorPos(new Vector2(44, -4120), 0.4f);
         menuProperties = true;
         targetUI = pTarget;
     }
 
     public void LoadLevel(int sceneIndex)
     {
-        playerInputMenu.DOAnchorPos(new Vector2(71, -823), 0.4f);
+        videoPlayer.Prepare();
+        playerInputMenu.DOAnchorPos(new Vector2(71, -4120), 0.4f);
         loadingScreen.DOAnchorPos(new Vector2(0, 0), 0.4f);
         StartCoroutine(LoadAsyncLevel(sceneIndex));
     }
@@ -101,7 +102,7 @@ public class UIManager : MonoBehaviour
 
     IEnumerator CompleteLoadVisual()
     {
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.75f);
         videoPlayer.isLooping = false;
     }
 }

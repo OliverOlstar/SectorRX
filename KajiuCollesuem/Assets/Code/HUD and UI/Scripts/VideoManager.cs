@@ -40,6 +40,7 @@ public class VideoManager : MonoBehaviour
         if(videoPlayer.targetCameraAlpha > 0)
         {
             videoPlayer.targetCameraAlpha -= fadeSpeed * Time.deltaTime;
+            videoPlayer.SetDirectAudioVolume(0, 0);
         }
     }
 }
