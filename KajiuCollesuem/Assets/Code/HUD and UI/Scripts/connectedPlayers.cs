@@ -50,7 +50,7 @@ public class connectedPlayers : MonoBehaviour
         }
         else
         {
-            startButton.SetActive(false);
+            //startButton.SetActive(false);
         }
     }
 
