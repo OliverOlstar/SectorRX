@@ -128,6 +128,17 @@ public class @MenuInput : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""8c3ec617-45dd-4851-9b0c-771c656212ce"",
+                    ""path"": ""<Keyboard>/backspace"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Leaving"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""ebff31b7-1090-4388-815a-90dd8cc6a2dd"",
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",

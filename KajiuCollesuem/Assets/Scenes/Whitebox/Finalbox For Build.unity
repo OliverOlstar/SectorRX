@@ -384,7 +384,7 @@ MonoBehaviour:
   mainAudio: {fileID: 57633179}
   allMusic:
   - {fileID: 8300000, guid: 965ef2dddabc8464eb0b8ceded4af596, type: 3}
-  _playMusic: 0
+  _playMusic: 1
 --- !u!82 &57633179
 AudioSource:
   m_ObjectHideFlags: 0
@@ -589,7 +589,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStateController: {fileID: 0}
-  _PauseMenu: {fileID: 0}
+  _PauseMenu: {fileID: 682208059}
 --- !u!114 &92169413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1373,7 +1373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStateController: {fileID: 0}
-  _PauseMenu: {fileID: 0}
+  _PauseMenu: {fileID: 682208059}
 --- !u!114 &186759315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3621,7 +3621,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStateController: {fileID: 0}
-  _PauseMenu: {fileID: 0}
+  _PauseMenu: {fileID: 682208059}
 --- !u!114 &509145994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4535,6 +4535,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 6.100367, y: 8.327289, z: 0.74018127}
   m_Center: {x: -2.9063265, y: 4.1636405, z: 0.37008914}
+--- !u!114 &682208059 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 673367258136454944, guid: 590af8f1137c02848b0c1c158d4e538c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1379065266}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25d92853095a56d4fb37e61b191c6188, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &685494815
 GameObject:
   m_ObjectHideFlags: 0
@@ -4881,7 +4893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStateController: {fileID: 0}
-  _PauseMenu: {fileID: 0}
+  _PauseMenu: {fileID: 682208059}
 --- !u!114 &737749468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6324,7 +6336,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 6ad135ae2152d8b4481269f8b53b03c4, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 9f6fe61a71a82484b9dc28c3cf39574f, type: 2}
 --- !u!4 &894061954
 Transform:
   m_ObjectHideFlags: 0
@@ -6992,6 +7004,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8137edfc0ec367843ad45179c8522345, type: 3}
+--- !u!1 &1002481415 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 727d50acfad84864ab812a00fffcd33e,
+    type: 3}
+  m_PrefabInstance: {fileID: 831061322}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1002481416
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002481415}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -2274083047156860529, guid: 727d50acfad84864ab812a00fffcd33e, type: 3}
 --- !u!4 &1005014526 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1187900114206382563, guid: 4d14251f4f9f3e646a939921c60af092,
@@ -7713,7 +7745,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStateController: {fileID: 0}
-  _PauseMenu: {fileID: 0}
+  _PauseMenu: {fileID: 682208059}
 --- !u!114 &1078053757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8020,7 +8052,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStateController: {fileID: 0}
-  _PauseMenu: {fileID: 0}
+  _PauseMenu: {fileID: 682208059}
 --- !u!114 &1112303652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77494,7 +77526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStateController: {fileID: 0}
-  _PauseMenu: {fileID: 0}
+  _PauseMenu: {fileID: 682208059}
 --- !u!114 &1715840140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78037,7 +78069,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStateController: {fileID: 0}
-  _PauseMenu: {fileID: 0}
+  _PauseMenu: {fileID: 682208059}
 --- !u!114 &1817056215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79995,7 +80027,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStateController: {fileID: 0}
-  _PauseMenu: {fileID: 0}
+  _PauseMenu: {fileID: 682208059}
 --- !u!114 &2122193106
 MonoBehaviour:
   m_ObjectHideFlags: 0
