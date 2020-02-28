@@ -55,6 +55,7 @@ public class Attack : MonoBehaviour, IState
         _anim.SetBool("Attacking", false);
         _rb.isKinematic = true;
         _agent.enabled = true;
+        _hitbox.SetActive(false);
     }
 
     public bool CanEnter(float pDistance)

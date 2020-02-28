@@ -22,6 +22,8 @@ public class FireballHitbox : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         IAttributes otherAttributes = other.gameObject.GetComponent<PlayerAttributes>();
+        if (otherAttributes == null)
+            otherAttributes = other.transform.parent.GetComponent<PlayerAttributes>();
 
         if (otherAttributes != null && otherAttributes.IsDead() == false)
         {

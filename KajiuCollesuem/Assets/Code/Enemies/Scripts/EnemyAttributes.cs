@@ -55,7 +55,6 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
     {
         _health -= pAmount;
 
-        Debug.Log("Disabled Hellhound Healthbar");
         StopCoroutine("ShowHealthBar");
         StartCoroutine("ShowHealthbar");
 

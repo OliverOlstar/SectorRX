@@ -145,8 +145,8 @@ public class PlayerCamera : MonoBehaviour
         //Rotation of the camera based on mouse movement
         if (_StateController.mouseInput.magnitude != 0)
         {
-            _LocalRotation.x += _StateController.mouseInput.x * _mouseSensitivity * _mouseSensitivityMult * pInputModifier * Time.deltaTime;
-            _LocalRotation.y -= _StateController.mouseInput.y * _mouseSensitivity * _mouseSensitivityMult * pInputModifier * (inverted ? -1 : 1) * Time.deltaTime;
+            _LocalRotation.x += _StateController.mouseInput.x * _mouseSensitivity * _mouseSensitivityMult * pInputModifier;
+            _LocalRotation.y -= _StateController.mouseInput.y * _mouseSensitivity * _mouseSensitivityMult * pInputModifier * (inverted ? -1 : 1);
 
             //Clamping the y rotation to horizon and not flipping over at the top
             if (_LocalRotation.y < _cameraMinHeight)

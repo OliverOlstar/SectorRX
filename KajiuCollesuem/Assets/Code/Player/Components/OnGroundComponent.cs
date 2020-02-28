@@ -34,7 +34,6 @@ public class OnGroundComponent : MonoBehaviour
     void Update()
     {
         //Falling Force (Add extra force to falling to make falling feel better)
-        //if (_stateController._movementComponent.disableMovement == false)
         FallingForce();
 
         //Check if on the ground
@@ -92,6 +91,6 @@ public class OnGroundComponent : MonoBehaviour
                 _downForce = _downForceTerminal;
         }
 
-        _rb.AddForce(Vector3.down * _downForce);
+        _rb.AddForce(Vector3.down * _downForce * Time.deltaTime);
     }
 }
