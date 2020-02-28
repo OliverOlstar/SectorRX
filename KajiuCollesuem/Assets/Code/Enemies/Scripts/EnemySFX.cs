@@ -11,14 +11,14 @@ public class EnemySFX : MonoBehaviour
     public void AEAttackSound()
     {
         enemySource.clip = enemySFX[0];
-        enemySource.volume = 0.4f;
+        enemySource.volume = 0.3f;
         enemySource.Play();
     }
 
     public void AEShotSound()
     {
         enemySource.clip = enemySFX[1];
-        enemySource.volume = 0.4f;
+        enemySource.volume = 0.3f;
         enemySource.Play();
     }
 
@@ -32,7 +32,7 @@ public class EnemySFX : MonoBehaviour
     public void AEHurtSound()
     {
         enemySource.clip = enemySFX[4];
-        enemySource.volume = 0.5f;
+        enemySource.volume = 0.3f;
         enemySource.Play();
     }
 }
