@@ -8,14 +8,14 @@ public class EnemySFX : MonoBehaviour
     public AudioSource enemySource;
     public AudioClip[] enemySFX = new AudioClip[4];
 
-    public void BiteSound()
+    public void AEAttackSound()
     {
         enemySource.clip = enemySFX[0];
         enemySource.volume = 0.6f;
         enemySource.Play();
     }
 
-    public void ShotSound()
+    public void AEShotSound()
     {
         enemySource.clip = enemySFX[1];
         enemySource.volume = 0.6f;
