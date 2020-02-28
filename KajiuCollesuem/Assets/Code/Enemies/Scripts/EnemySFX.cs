@@ -22,7 +22,7 @@ public class EnemySFX : MonoBehaviour
         enemySource.Play();
     }
 
-    public void DeathSound()
+    public void AEDeathSound()
     {
         enemySource.clip = enemySFX[Random.Range(2, 3)];
         enemySource.volume = 0.6f;
