@@ -175,6 +175,9 @@ public class PlayerCollectibles : MonoBehaviour
                 break;
         }
 
+        // Sound
+        _stateController._Sound.StatUpSound(pStat);
+
         return true;
     }
 }

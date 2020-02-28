@@ -5,13 +5,6 @@ using UnityEngine;
 public class OnGroundComponent : MonoBehaviour
 {
     [SerializeField] private float _isGroundedCheckDistance = 1.0f;
-    [SerializeField] private float _respawnYOffset = 1;
-    private Vector3 _lastPoint = new Vector3(0,0,0);
-
-    [Header("Fall Damage")]
-    [SerializeField] private float _fallMaxTime = 2.0f;
-    [SerializeField] private int _fallDamage = 15;
-    private float _terminalFallingTimer = 0;
 
     [Space]
     [SerializeField] private float _inputInfluenceGrounded = 1.0f;
@@ -51,19 +44,21 @@ public class OnGroundComponent : MonoBehaviour
             if (_stateController.onGround == false)
             {
                 _stateController.onGround = true;
+                
+                // Anim
                 _stateController._modelController.AddCrouching(_downForce / _downForceTerminal, 0.08f, 0.25f);
-            }
 
-            _lastPoint = hit.point;
-            _terminalFallingTimer = 0;
+                // Shake
+                _stateController._CameraShake.ShakeOnce(_downForce / _downForceTerminal * 2.0f, 6.0f, 0.1f, 0.3f);
+
+                // Sound
+                _stateController._Sound.LandingSound();
+            }
         }
         // Off ground
-        else
+        else if (_stateController.onGround == true)
         {
             _stateController.onGround = false;
-
-            if (_downForce >= _downForceTerminal)
-                _terminalFallingTimer += Time.deltaTime;
         }
     }
 

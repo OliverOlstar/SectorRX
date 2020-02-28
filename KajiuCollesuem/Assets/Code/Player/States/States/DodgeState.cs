@@ -5,45 +5,45 @@ using UnityEngine;
 
 public class DodgeState : BaseState
 {
-    PlayerStateController stateController;
+    PlayerStateController _stateController;
 
     public DodgeState(PlayerStateController controller) : base(controller.gameObject)
     {
-        stateController = controller;
+        _stateController = controller;
     }
 
     public override void Enter()
     {
         //Debug.Log("DodgeState: Enter");
-        stateController._movementComponent.disableMovement = true;
+        _stateController._movementComponent.disableMovement = true;
 
         // Start Dodge
-        stateController._dodgeComponent.Dodge(stateController.dodgeInput == 0, stateController.LastMoveDirection.normalized);
+        _stateController._dodgeComponent.Dodge(_stateController.dodgeInput == 0, _stateController.LastMoveDirection.normalized);
     }
 
     public override void Exit()
     {
         //Debug.Log("DodgeState: Exit");
-        stateController._movementComponent.disableMovement = false;
+        _stateController._movementComponent.disableMovement = false;
 
         // Stop Dodge
-        stateController._modelController.DoneDodge();
+        _stateController._modelController.DoneDodge();
 
         // Remove Input
-        stateController.dodgeInput = -1.0f;
+        _stateController.dodgeInput = -1.0f;
     }
 
     public override Type Tick()
     {
         // Stunned Or Dead
-        Type stunnedOrDead = stateController.stunnedOrDeadCheck();
+        Type stunnedOrDead = _stateController.stunnedOrDeadCheck();
         if (stunnedOrDead != null)
             return stunnedOrDead;
 
         // Leave Dodge
-        if (stateController._dodgeComponent.doneDodge)
+        if (_stateController._dodgeComponent.doneDodge)
         {
-            stateController._dodgeComponent.doneDodge = false;
+            _stateController._dodgeComponent.doneDodge = false;
             return typeof(MovementState);
         }
 

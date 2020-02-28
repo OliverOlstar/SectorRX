@@ -58,7 +58,13 @@ public class MovementComponent : MonoBehaviour
             _rb.velocity = new Vector3(_stateController._Rb.velocity.x * _jumpForceVelocityMult, 0, _stateController._Rb.velocity.z * _jumpForceVelocityMult);
             _rb.AddForce(_jumpForceUp * jumpMult * Vector3.up, ForceMode.Impulse);
 
+            // Anim
             _stateController._modelController.AddCrouching(1, 0.1f, 0.05f);
+
+            // Shake
+            _stateController._CameraShake.ShakeOnce(1.0f, 0.4f, )
+
+            // Sound
         }
     }
 

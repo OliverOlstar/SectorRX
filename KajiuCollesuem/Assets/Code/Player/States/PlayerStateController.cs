@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using EZCameraShake;
 
 public class PlayerStateController : MonoBehaviour
 {
@@ -47,6 +48,9 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public PlayerCamera _playerCamera;
     public RagdollManager _ragdollManager;
 
+    [HideInInspector] public PlayerSFX _Sound;
+    public CameraShaker _CameraShake;
+
     [HideInInspector] public Rigidbody _Rb;
     public Transform _Camera;
     public PlayerHitbox[] hitboxes = new PlayerHitbox[0];
@@ -69,6 +73,8 @@ public class PlayerStateController : MonoBehaviour
         _playerAttributes = GetComponent<PlayerAttributes>();
         _modelController = GetComponentInChildren<ModelController>();
 
+        _Sound = GetComponentInChildren<PlayerSFX>();
+
         _stateMachine = GetComponent<PlayerStateMachine>();
         InitializeStateMachine();
 
@@ -86,11 +92,14 @@ public class PlayerStateController : MonoBehaviour
     public void OnDodge(InputValue ctx) => dodgeInput = ctx.Get<float>();
     public void OnAbility1(InputValue ctx)
     {
+
+        _CameraShake.ShakeOnce(5.0f, 2.0f, 0.3f, 0.5f);
+
         // AbilityState is on cooldown
         if (AbilityStateReturnDelay > Time.time)
             return;
 
-        ability1input = ctx.Get<float>();
+        //ability1input = ctx.Get<float>();
     }
     public void OnAbility2(InputValue ctx)
     {

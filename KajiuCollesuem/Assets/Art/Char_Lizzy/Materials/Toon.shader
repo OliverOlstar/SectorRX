@@ -5,6 +5,10 @@
 		_Color("Color", Color) = (0.5, 0.65, 1, 1)
 		_MainTex("Main Texture", 2D) = "white" {}	
 
+		//////// Outline
+		_OutlineColor("Outline Color", Color) = (0,0,0,1)
+		_Outline("Outline width", Range(.002, 0.1)) = .005
+
 		//////// Shadows
 		[HDR]
 		_AmbientColor("Ambient Color", Color) = (0.4, 0.4, 0.4, 1)
@@ -59,6 +63,10 @@
 
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
+
+			//////// Outline
+			uniform float _Outline;
+			uniform float4 _OutlineColor;
 
 			//////// Shadows
 			float4 _AmbientColor;

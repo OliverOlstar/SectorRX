@@ -7,17 +7,17 @@ using UnityEngine;
 
 public class PlayerSFX : MonoBehaviour
 {
-    public AudioClip[] surfaces = new AudioClip[2]; //Walking sound effects.
-    public AudioClip[] movement = new AudioClip[3]; //Sound effects for dodging, jumping, and landing.
-    public AudioClip[] playerHit = new AudioClip[3]; //Sound effects for when the player takes damage from something or dies.
-    public AudioClip[] lightAttack = new AudioClip[2]; //Sound effects for the light attack.
-    public AudioClip[] heavyAttack = new AudioClip[2]; //Sound effects for the heavy attack.
-    public AudioClip[] collectStat = new AudioClip[7]; //One different sound effect for each of the seven collectibles.
-    public AudioClip[] abilitySounds = new AudioClip[4]; //Sound effects for the various player abilities.
-    public AudioSource sfxSource; //Audio Source which handles single playback of sounds.
-    public AudioSource walkingSource; //Audio Source which will be looping the walking sounds. Adjust playback speed depending on movement speed.
+    [SerializeField] private AudioClip[] surfaces = new AudioClip[2]; //Walking sound effects.
+    [SerializeField] private AudioClip[] movement = new AudioClip[3]; //Sound effects for dodging, jumping, and landing.
+    [SerializeField] private AudioClip[] playerHit = new AudioClip[3]; //Sound effects for when the player takes damage from something or dies.
+    [SerializeField] private AudioClip[] lightAttack = new AudioClip[2]; //Sound effects for the light attack.
+    [SerializeField] private AudioClip[] heavyAttack = new AudioClip[2]; //Sound effects for the heavy attack.
+    [SerializeField] private AudioClip[] collectStat = new AudioClip[7]; //One different sound effect for each of the seven collectibles.
+    [SerializeField] private AudioClip[] abilitySounds = new AudioClip[4]; //Sound effects for the various player abilities.
+    [SerializeField] private AudioSource sfxSource; //Audio Source which handles single playback of sounds.
+    [SerializeField] private AudioSource walkingSource; //Audio Source which will be looping the walking sounds. Adjust playback speed depending on movement speed.
 
-    [SerializeField] private PlayerCollectibles.Upgrades statName;
+    //[SerializeField] private PlayerCollectibles.Upgrades _statName;
 
     #region PlayerReactions
     //Plays sound when player takes damage.
@@ -42,9 +42,9 @@ public class PlayerSFX : MonoBehaviour
     }
 
     //Plays sound when the player has collected a stat increasing item
-    public void StatUpSound()
+    public void StatUpSound(PlayerCollectibles.Upgrades pStat)
     {
-        sfxSource.clip = collectStat[(int)statName];
+        sfxSource.clip = collectStat[(int)pStat];
         sfxSource.Play();
     }
     #endregion
