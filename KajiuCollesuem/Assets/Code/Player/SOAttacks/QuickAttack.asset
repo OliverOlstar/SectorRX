@@ -13,12 +13,55 @@ MonoBehaviour:
   m_Name: QuickAttack
   m_EditorClassIdentifier: 
   attackTime: 0.5
-  attackGraph: {fileID: 11400000, guid: 75e55119c274554469b812e4c83bfa62, type: 2}
-  holdEndPosTime: 0.2
-  holdStartPosTime: 0.02
+  attackGraph:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.32563725
+      value: 0.059724294
+      inSlope: 0.4188258
+      outSlope: 0.4188258
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.1380362
+    - serializedVersion: 3
+      time: 0.9061258
+      value: 0.9397929
+      inSlope: 1.8144183
+      outSlope: 1.8144183
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.043802436
+      outWeight: 0.47406977
+    - serializedVersion: 3
+      time: 0.9958191
+      value: 1
+      inSlope: 0.22330531
+      outSlope: 0.22330531
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  holdEndPosTime: 0.23
+  holdStartPosTime: 0.03
   hitboxIndex: 1
-  enableHitboxTime: 0
+  enableHitboxTime: 0.1
   disableHitboxTime: 0.4
   HitboxKnockup: 20
   HitboxKnockback: 40
   HitboxDamage: 15
+  transitionInDampening: 5
+  transitionOutDampening: 15

@@ -45,9 +45,15 @@ public class AttackState : BaseState
             _hitbox.gameObject.SetActive(false);
             _hitbox = null;
         }
+        
+        // Reallow jumping during attack 
+        _stateController.IgnoreJumpInputTime = 0.0f;
 
         _stateController._modelController.SetInputDirection(Vector3.zero);
+        
+        // Clear Inputs
         ClearInputs();
+        _stateController.dodgeInput = -1.0f;
     }
 
     public override Type Tick()
@@ -140,6 +146,9 @@ public class AttackState : BaseState
         SetAttackValues(curAttack, PreAttackTime);
 
         _stateController._modelController.PlayAttack(0, false);
+
+        // Disallow jumping during attack 
+        _stateController.IgnoreJumpInputTime = Time.time + 9999999.0f;
     }
 
     private void PressedHeavyAttack()
@@ -160,6 +169,9 @@ public class AttackState : BaseState
 
         // TODO send through how long attack was charged for and use that to know how fast the attack should move.
         _stateController._modelController.DoneChargingAttack();
+
+        // Disallow jumping during attack 
+        _stateController.IgnoreJumpInputTime = Time.time + 9999999.0f;
 
         _onHolding = false;
     }

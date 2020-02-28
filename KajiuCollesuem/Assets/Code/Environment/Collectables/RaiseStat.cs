@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class RaiseStat : MonoBehaviour
 {
-    [SerializeField] private PlayerCollectibles.Upgrades variableName;
+    [SerializeField] private PlayerCollectibles.Upgrades statType;
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Player")
         {
-            other.gameObject.GetComponentInParent<PlayerCollectibles>().CollectedItem(variableName);
-            Destroy(transform.parent.gameObject);
+            PlayerCollectibles otherCollectibles = other.gameObject.GetComponentInParent<PlayerCollectibles>();
+
+            if (otherCollectibles != null)
+            {
+                otherCollectibles.CollectedItem(statType);
+                Destroy(transform.parent.gameObject);
+            }
         }
     }
 }

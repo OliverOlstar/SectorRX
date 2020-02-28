@@ -44,7 +44,7 @@ public class connectedPlayers : MonoBehaviour
 
     private void Update()
     {
-        if(playersConnected >= 2)
+        if(_Devices.Length >= 2)
         {
             startButton.SetActive(true);
 
@@ -56,7 +56,7 @@ public class connectedPlayers : MonoBehaviour
         }
         else
         {
-            startButton.SetActive(false);
+            //startButton.SetActive(false);
         }
     }
 

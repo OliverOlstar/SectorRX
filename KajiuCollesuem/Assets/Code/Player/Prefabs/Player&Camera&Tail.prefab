@@ -723,7 +723,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 6373305451171964123, guid: ff082e4b1e7641140a2b42dc475be643, type: 3}
+  - {fileID: 2100000, guid: 0af63eb5167b1e2479e4c61bfb1fb5ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -936,7 +936,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 6373305451171964123, guid: ff082e4b1e7641140a2b42dc475be643, type: 3}
+  - {fileID: 2100000, guid: 0af63eb5167b1e2479e4c61bfb1fb5ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1481,6 +1481,7 @@ MonoBehaviour:
   - {fileID: 9179836059231498655}
   - {fileID: 459739093647060007}
   IgnoreNextHeavyRelease: 0
+  IgnoreJumpInputTime: 0
 --- !u!114 &5193453761140963542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1556,8 +1557,8 @@ MonoBehaviour:
   _fallDamage: 20
   _inputInfluenceGrounded: 1
   _inputInfluenceInAir: 0.7
-  _downForceRate: 45
-  _downForceTerminal: 60
+  _downForceRate: 2200
+  _downForceTerminal: 3200
 --- !u!114 &1901058822163742037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1574,9 +1575,8 @@ MonoBehaviour:
   enemiesLayer:
     serializedVersion: 2
     m_Bits: 768
-  lockOnRange: 30
-  focusedOnScreen: 0
-  unfocusedOnScreen: 0
+  lockOnRange: 40
+  lockOnMinDot: 0.4
   TimeUntilIdle: 20
 --- !u!114 &5193453761140963528
 MonoBehaviour:
@@ -1600,6 +1600,15 @@ MonoBehaviour:
   _powerLossAmount: 1
   easeOut: 0.12
   easeOutDelay: 0.18
+  _itemPrefabs:
+  - {fileID: 7865935160635239468, guid: 8991995bcdcc5f9448ce755d60709332, type: 3}
+  - {fileID: 7865935160635239468, guid: fc6c0dce4ee316d4a89e2bdac520d070, type: 3}
+  - {fileID: 7865935160635239468, guid: 6a2b3132088280e4da87ec7c6f94ee7d, type: 3}
+  - {fileID: 7865935160635239468, guid: 7ed72cef78bbfce4c9db2d98e60e7c80, type: 3}
+  - {fileID: 7865935160635239468, guid: 45518b7b8b4c1a44aa0b634050b17ec9, type: 3}
+  - {fileID: 7865935160635239468, guid: b041b96a0e0af1b48bcc93de588421bd, type: 3}
+  - {fileID: 7865935160635239468, guid: ce4b818389d341a4c9e0de4399b38e40, type: 3}
+  _cellSpawnCount: 7
 --- !u!114 &5746998331381051381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1620,7 +1629,7 @@ MonoBehaviour:
   - {fileID: 3377833172081100299}
   - {fileID: 3574428894867480786}
   - {fileID: 776720570792789159}
-  MAXUPGRADES: 30
+  MAXUPGRADES: 15
   minHealth: 50
   maxHealth: 160
   minShield: 40
@@ -1630,7 +1639,7 @@ MonoBehaviour:
   minJump: 1
   maxJump: 2.6
   minWeight: 0.6
-  maxWeight: 5
+  maxWeight: 4.2
   minAttack: 1
   maxAttack: 5
 --- !u!114 &3076140870130127852
@@ -1779,7 +1788,7 @@ HingeJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 0
-  m_MassScale: 20
+  m_MassScale: 15
   m_ConnectedMassScale: 1
 --- !u!1 &6441709666246281952
 GameObject:
@@ -1892,7 +1901,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 67fcad4aff1190042b98e910bdfe7a48, type: 2}
+  - {fileID: 2100000, guid: 03bdd28d58ec1d442abebf8b8fc95722, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2081,7 +2090,39 @@ MonoBehaviour:
   _rotationDeadzone: 0.2
   _tiltingDampening: 8
   _tiltingMult: 9
-  _flipGraph: {fileID: 11400000, guid: 20ae1d637162dcc46b9ed2e8ff2fb38e, type: 2}
+  _flipGraph:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.72260135
+      outSlope: 0.72260135
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.15656313
+    - serializedVersion: 3
+      time: 0.5003306
+      value: 0.5117924
+      inSlope: 2.171854
+      outSlope: 2.171854
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.06728342
+      outWeight: 0.08606236
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.39622673
+      outSlope: 0.39622673
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.15634687
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   disableRotation: 0
   facingInput: {x: 0, y: 0, z: 0}
   facingTarget: {fileID: 0}
@@ -2124,10 +2165,111 @@ MonoBehaviour:
   _idleMult: 0.3
   _fallMult: 1.6
   _deadMult: 0.9
-  _stepGraph: {fileID: 11400000, guid: d105e3352e7b8e94f82be1c6df8d9084, type: 2}
-  _idleGraph: {fileID: 11400000, guid: 8d38503b353117b4e9fdbebd87428edf, type: 2}
-  _fallGraph: {fileID: 11400000, guid: 5d40a20a35f8b154e9204417dc7022f5, type: 2}
-  _deadGraph: {fileID: 11400000, guid: 077046eff822eff49991833925e46f1b, type: 2}
+  _stepGraph:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.18457752
+      outSlope: 0.18457752
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.07666667
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.33962283
+      outSlope: 0.33962283
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.08333331
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _idleGraph:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.53459114
+      outSlope: 0.53459114
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.075
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.6289308
+      outSlope: 0.6289308
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.07499999
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _fallGraph:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.44549263
+      outSlope: 0.44549263
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.09
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _deadGraph:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.66422796
+      outSlope: 0.66422796
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.21509111
+    - serializedVersion: 3
+      time: 0.09648277
+      value: 0.03204123
+      inSlope: 0.0705088
+      outSlope: 0.0705088
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.37870237
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 3.2423353
+      outSlope: 3.2423353
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.040243335
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   _jumpingTransitionWidth: 4.6
 --- !u!1 &7364514729067292412
 GameObject:
@@ -2300,7 +2442,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 6373305451171964123, guid: ff082e4b1e7641140a2b42dc475be643, type: 3}
+  - {fileID: 2100000, guid: 0af63eb5167b1e2479e4c61bfb1fb5ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2943,7 +3085,7 @@ PrefabInstance:
     - target: {fileID: 4232252179734827381, guid: 280b55a2e946809418577ba6f4095e90,
         type: 3}
       propertyPath: _mouseSensitivity
-      value: 150
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5688443931053791714, guid: 280b55a2e946809418577ba6f4095e90,
         type: 3}
@@ -3005,8 +3147,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Camera
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6898264057537073433, guid: 280b55a2e946809418577ba6f4095e90, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 280b55a2e946809418577ba6f4095e90, type: 3}
 --- !u!20 &7231177892690207736 stripped
 Camera:
@@ -3088,10 +3229,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3993598426422289541, guid: d033bfc0218191f4ab56b0a944a51e42,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4035396028899063266, guid: d033bfc0218191f4ab56b0a944a51e42,
         type: 3}
       propertyPath: m_Name
       value: LizzyRagDoll
+      objectReference: {fileID: 0}
+    - target: {fileID: 4035396028899063266, guid: d033bfc0218191f4ab56b0a944a51e42,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4035396028899063267, guid: d033bfc0218191f4ab56b0a944a51e42,
         type: 3}

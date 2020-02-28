@@ -95,7 +95,7 @@ public class Panels : MonoBehaviour
 
     public int PlayerLeft()
     {
-        playerPanels.text = "Press Space or 'A' to Join";
+        playerPanels.text = "Press Space or 'Start' to Join";
         return playerNumber - 1;
     }
 }

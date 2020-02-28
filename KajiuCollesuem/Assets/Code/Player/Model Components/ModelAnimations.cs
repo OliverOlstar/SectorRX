@@ -21,11 +21,11 @@ public class ModelAnimations : MonoBehaviour
     private float _deadProgress = 0;
 
     [Header("Interpolation Graphs")]
-    [SerializeField] private SOGraph _stepGraph;
-    [SerializeField] private SOGraph _idleGraph;
-    [SerializeField] private SOGraph _fallGraph;
-    [SerializeField] private SOGraph _deadGraph;
-    private SOGraph _attackGraph;
+    [SerializeField] private AnimationCurve _stepGraph;
+    [SerializeField] private AnimationCurve _idleGraph;
+    [SerializeField] private AnimationCurve _fallGraph;
+    [SerializeField] private AnimationCurve _deadGraph;
+    private AnimationCurve _attackGraph = new AnimationCurve(new Keyframe(0, 0, 0, 0), new Keyframe(1, 1, 0, 0));
     
     [Space]
     [SerializeField] private float _jumpingTransitionWidth = 1;
@@ -55,7 +55,7 @@ public class ModelAnimations : MonoBehaviour
         _attackProgress = Mathf.Min(1, _attackProgress + Time.fixedDeltaTime / _attackLength);
 
         // Set progress value
-        _anim.SetFloat("Attacking Progress", _modelController.GetCatmullRomPosition(_attackProgress, _attackGraph).y);
+        _anim.SetFloat("Attacking Progress", _attackGraph.Evaluate(_attackProgress));
 
         // Return true if reached anim goal
         return _attackProgress == 1;
@@ -86,7 +86,7 @@ public class ModelAnimations : MonoBehaviour
         // Get SOAttack values
         SOAbilities curAbility = _modelController.abilities[pIndex];
         _attackLength = curAbility.abilityTime;
-        _attackGraph = curAbility.attackGraph;
+        _attackGraph = curAbility.abilitiesGraph;
 
         // Snap to first attack
         _anim.SetFloat("Attacking Index", pIndex + 3);
@@ -140,7 +140,7 @@ public class ModelAnimations : MonoBehaviour
 
         // Increase Falling Animation
         _fallProgress = increaseProgress(_fallProgress, _fallMult);
-        _anim.SetFloat("Falling Progress", _modelController.GetCatmullRomPosition(_fallProgress, _fallGraph).y);
+        _anim.SetFloat("Falling Progress", _fallGraph.Evaluate(_fallProgress));
     }
     #endregion
 
@@ -156,7 +156,7 @@ public class ModelAnimations : MonoBehaviour
         float steppingSpeed = _modelController.horizontalVelocity.magnitude / GetComponentInParent<MovementComponent>().maxSpeed;
 
         // Set Anim Stepping values
-        _anim.SetFloat("Stepping Progress", _modelController.GetCatmullRomPosition(time, _stepGraph).y + secondStep);
+        _anim.SetFloat("Stepping Progress", (_stepGraph.Evaluate(time) / 2) + secondStep);
         _anim.SetFloat("Stepping Speed", (steppingSpeed > 1) ? 1 : steppingSpeed);
 
         // Set Anim Direction
@@ -172,7 +172,7 @@ public class ModelAnimations : MonoBehaviour
     {
         // Increase Falling Animation
         _idleProgress = increaseProgress(_idleProgress, _idleMult);
-        _anim.SetFloat("Idle Progress", _modelController.GetCatmullRomPosition(_idleProgress, _idleGraph).y);
+        _anim.SetFloat("Idle Progress", _idleGraph.Evaluate(_idleProgress));
     }
     #endregion
 
@@ -181,7 +181,7 @@ public class ModelAnimations : MonoBehaviour
     {
         // Increase Falling Animation
         _deadProgress = increaseProgress(_deadProgress, _deadMult, false);
-        _anim.SetFloat("Dead Progress", _modelController.GetCatmullRomPosition(_deadProgress, _deadGraph).y);
+        _anim.SetFloat("Dead Progress", _deadGraph.Evaluate(_deadProgress));
     }
 
     public void PlayDead()

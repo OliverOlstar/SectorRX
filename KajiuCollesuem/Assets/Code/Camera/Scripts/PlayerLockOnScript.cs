@@ -21,10 +21,11 @@ public class PlayerLockOnScript : MonoBehaviour
     [Header("LockOn")]
     [SerializeField] private LayerMask enemiesLayer;
     [SerializeField] private float lockOnRange = 10.0f;
+    [SerializeField] [Range(-1, 1)] private float lockOnMinDot = 0.4f;
     //[SerializeField] [Range(0, 359.9999f)] private float lockOnAngle = 45;
-    
-    [HideInInspector] public bool focusedOnScreen = false;
-    [HideInInspector] public bool unfocusedOnScreen = false;
+
+    private Transform lockOnTargetTransform;
+    private IAttributes lockOnTargetAttributes;
 
     [Header("Idle")]
     [SerializeField] private float TimeUntilIdle = 20f;
@@ -42,8 +43,13 @@ public class PlayerLockOnScript : MonoBehaviour
     {
         if (_stateController._playerCamera == null) return;
 
-        // TODO make work with pause screen
-        //Toggle Idle Camera
+        if (_stateController._playerCamera.lockOnTarget != null)
+        {
+            if (Vector3.Distance(transform.position, lockOnTargetTransform.position) > lockOnRange || lockOnTargetAttributes.IsDead())
+                UnlockOn();
+        }
+
+        // Toggle Idle Camera
         if (Time.time - _stateController.LastInputTime > TimeUntilIdle)
         {
             if (_playerCamera.targetIdle == false && _playerCamera.lockOnTarget == null)
@@ -54,7 +60,7 @@ public class PlayerLockOnScript : MonoBehaviour
         }
         else if (_playerCamera.targetIdle == true && _playerCamera.lockOnTarget == null)
         {
-            //Leave Idle Camera
+            // Leave Idle Camera
             _playerCamera.targetIdle = false;
             if (_aiming)
                 _playerCamera.SwitchToAimingCamera(cameraTransSpeed);
@@ -81,34 +87,51 @@ public class PlayerLockOnScript : MonoBehaviour
     // Called by InputPlayer
     public void OnLockOn()
     {
-        //Toggle LockOn Camera
+        // Toggle LockOn Camera
         if (_stateController._playerCamera.lockOnTarget == null)
         {
-            //Start LockOn
+            // Start LockOn
             Transform target = pickTarget();
 
-            //If Target Found
+            // If Target Found
             if (target != null)
             {
-                _playerCamera.lockOnTarget = target;
-                _stateController._modelController.SetLockOn(target);
-                _playerCamera.SwitchToLockOnCamera(cameraTransSpeed);
+                IAttributes targetAttributes = target.GetComponent<IAttributes>();
+
+                // If target isn't dead
+                if (targetAttributes.IsDead() == false)
+                {
+                    _playerCamera.lockOnTarget = target;
+                    _stateController._modelController.SetLockOn(target);
+                    _playerCamera.SwitchToLockOnCamera(cameraTransSpeed);
+
+                    lockOnTargetAttributes = targetAttributes;
+                    lockOnTargetTransform = target.transform;
+                }
             }
         }
         else
         {
-            //Leave LockOn
-            _playerCamera.lockOnTarget = null;
-            _stateController._modelController.SetLockOn(null);
-            _playerCamera.ReturnToDefaultPlayerCamera(cameraTransSpeed);
+            UnlockOn();
         }
+    }
+
+    private void UnlockOn()
+    {
+        // Leave LockOn
+        _playerCamera.lockOnTarget = null;
+        _stateController._modelController.SetLockOn(null);
+        _playerCamera.ReturnToDefaultPlayerCamera(cameraTransSpeed);
+
+        lockOnTargetAttributes = null;
+        lockOnTargetTransform = null;
     }
 
     //Function To Find Intial Target
     public Transform pickTarget()
     {
         //Get Possible Targets
-        List<Collider> possibleTargets = Physics.OverlapSphere(_stateController._playerCamera.transform.position + _stateController._playerCamera.transform.forward * lockOnRange / 2, lockOnRange, enemiesLayer).ToList();
+        List<Collider> possibleTargets = Physics.OverlapSphere(_stateController._playerCamera.transform.position, lockOnRange, enemiesLayer).ToList();
 
         //Remove myself
         if (possibleTargets.Contains(_bumperCollider))
@@ -124,6 +147,9 @@ public class PlayerLockOnScript : MonoBehaviour
 
         //Sort Targets
         possibleTargets.Sort((col1, col2) => (Vector3.Dot(col2.transform.position - _stateController._playerCamera.transform.position, forwardVector)).CompareTo(Vector3.Dot(col1.transform.position - _stateController._playerCamera.transform.position, forwardVector)));
+
+        if (Vector3.Dot(possibleTargets[0].transform.position - _stateController._playerCamera.transform.position, forwardVector) < lockOnMinDot)
+            return null;
 
         //Return Best Target
         return possibleTargets[0].transform;
@@ -168,14 +194,4 @@ public class PlayerLockOnScript : MonoBehaviour
 
     //    return possibleTargets[0].transform;
     //}
-
-    public void TargetDead(Transform pTarget)
-    {
-        //If LockOn Target dies return to default camera
-        if (pTarget == _stateController._playerCamera.lockOnTarget)
-        {
-            _stateController._playerCamera.lockOnTarget = null;
-            _stateController._playerCamera.ReturnToDefaultPlayerCamera(cameraTransSpeed);
-        }
-    }
 }
