@@ -10,16 +10,22 @@ public class EnemySFX : MonoBehaviour
 
     public void BiteSound()
     {
-
+        enemySource.clip = enemySFX[0];
+        enemySource.volume = 0.6f;
+        enemySource.Play();
     }
 
     public void ShotSound()
     {
-
+        enemySource.clip = enemySFX[1];
+        enemySource.volume = 0.6f;
+        enemySource.Play();
     }
 
     public void DeathSound()
     {
-
+        enemySource.clip = enemySFX[Random.Range(2, 3)];
+        enemySource.volume = 0.6f;
+        enemySource.Play();
     }
 }
