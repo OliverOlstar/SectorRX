@@ -72,13 +72,13 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         }
         _tm.playerAttributes = pAttacker.GetComponent<PlayerAttributes>();
 
-        _decision.UpdateTarget(pAttacker.transform);
+        //_decision.UpdateTarget(pAttacker.transform);
 
-        if (_decision != null)
-        {
-            _decision.ForceStateSwitch(_stunnedState);
+        //if (_decision != null)
+        //{
+          //  _decision.ForceStateSwitch(_stunnedState);
             _rb.AddForce(pKnockback / _weight, ForceMode.Impulse);
-        }
+        //}
         
         return false;
     }
