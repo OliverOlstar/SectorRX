@@ -10,6 +10,7 @@ public class TestPlayerScript : MonoBehaviour
     [SerializeField] private float _moveSpeed = 10, _rotateSpeed = 50, _maxForce, _incForce, _incTime, _halfPlayerHeight = 0.52f, _jumpUpForce = 4,
         _cooldown = 1, _knockbackForce;
     [SerializeField] private int _inflictDamage;
+    [SerializeField] private ParticleSystem _ps;
 
     // Start is called before the first frame update
     void Start()
@@ -35,11 +36,15 @@ public class TestPlayerScript : MonoBehaviour
 
         //Runs claculation for charge
         if (!_charge && _force <= 0)
+        {
+            _ps.Stop();
             transform.Translate(new Vector3(0, 0, _move));
+        }
         else if (_charge && _force < _maxForce)
         {
             _force += (_force / _incTime) + _incForce;
             Debug.Log(_force);
+            _ps.Play();
             _onGroundCharge = true;
         }
         
