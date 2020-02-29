@@ -25,10 +25,7 @@ public class TestPlayerScript : MonoBehaviour
         _rotate = Input.GetAxis("Horizontal");
 
         //Input for charge hold
-        if (Input.GetKey(KeyCode.C))
-            _charge = true;
-        else
-            _charge = false;
+        _charge = Input.GetKey(KeyCode.C);
 
         //Input to jump (while charging or not charging)
         if (Input.GetKeyDown(KeyCode.Space) && !_charge)
