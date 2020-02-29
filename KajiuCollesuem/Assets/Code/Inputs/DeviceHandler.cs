@@ -64,8 +64,14 @@ public class DeviceHandler : MonoBehaviour
         }
         else
         {
+            StartCoroutine(LeaveWaitTime());
             return playerPanel.PlayerLeft();
         }
+    }
+
+    IEnumerator LeaveWaitTime()
+    {
+        yield return new WaitForSeconds(1.0f);
     }
 
     private void OnColorPicking()

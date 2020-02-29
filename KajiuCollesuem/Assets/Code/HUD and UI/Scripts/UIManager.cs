@@ -31,7 +31,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            mainMenu.DOAnchorPos(new Vector2(44, 21), 0.4f);
+            StartCoroutine(StartMenu());
         }
     }
 
@@ -105,4 +105,10 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(0.75f);
         videoPlayer.isLooping = false;
     }
-}
+
+    IEnumerator StartMenu()
+    {
+        yield return new WaitForSeconds(7.0f);
+        mainMenu.DOAnchorPos(new Vector2(44, 21), 0.4f);
+    }
+ }
