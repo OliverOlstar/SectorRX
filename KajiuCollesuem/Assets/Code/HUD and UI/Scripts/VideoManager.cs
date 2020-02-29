@@ -37,10 +37,8 @@ public class VideoManager : MonoBehaviour
     {
         yield return new WaitForSeconds(6.5f);
         mainMenu.SetActive(true);
-        if(videoPlayer.targetCameraAlpha > 0)
-        {
-            videoPlayer.targetCameraAlpha -= fadeSpeed * Time.deltaTime;
-            videoPlayer.SetDirectAudioVolume(0, 0);
-        }
+        videoPlayer.SetDirectAudioVolume(0, 0);
+        yield return new WaitForSeconds(0.5f);
+        videoPlayer.gameObject.SetActive(false);
     }
 }
