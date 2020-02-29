@@ -62,9 +62,10 @@ public class MovementComponent : MonoBehaviour
             _stateController._modelController.AddCrouching(1, 0.1f, 0.05f);
 
             // Shake
-            _stateController._CameraShake.ShakeOnce(1.0f, 0.4f, )
+            _stateController._CameraShake.PlayShake(1.0f, 0.4f, 0.2f, 0.4f);
 
             // Sound
+            _stateController._Sound.JumpSound(0.0f);
         }
     }
 

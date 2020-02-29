@@ -21,115 +21,121 @@ public class PlayerSFX : MonoBehaviour
 
     #region PlayerReactions
     //Plays sound when player takes damage.
-    public void HitByAttackSound()
+    public void HitByAttackSound(float pDelay)
     {
-        sfxSource.clip = playerHit[0];
-        sfxSource.Play();
+        PlaySound(pDelay, 1.0f, playerHit[0]);
     }
 
     //Plays sound when player touches the tar.
-    public void HitTarSound()
+    public void HitTarSound(float pDelay)
     {
-        sfxSource.clip = playerHit[1];
-        sfxSource.Play();
+        PlaySound(pDelay, 1.0f, playerHit[1]);
     }
 
     //Plays sound when the player dies.
-    public void PlayerDeathSound()
+    public void PlayerDeathSound(float pDelay)
     {
-        sfxSource.clip = playerHit[2];
-        sfxSource.Play();
+        PlaySound(pDelay, 1.0f, playerHit[2]);
     }
 
     //Plays sound when the player has collected a stat increasing item
-    public void StatUpSound(PlayerCollectibles.Upgrades pStat)
+    public void StatUpSound(PlayerCollectibles.Upgrades pStat, float pDelay)
     {
-        sfxSource.clip = collectStat[(int)pStat];
-        sfxSource.Play();
+        PlaySound(pDelay, 1.0f, collectStat[(int)pStat]);
     }
     #endregion
 
     #region Locomotion
     //Plays sound when the player performs a dodge
-    public void DodgeSound()
+    public void DodgeSound(float pDelay)
     {
-        sfxSource.clip = movement[0];
-        sfxSource.Play();
+        PlaySound(pDelay, 1.0f, movement[0]);
     }
 
     //Plays sound the player lands after a jump or falling
-    public void LandingSound()
+    public void LandingSound(float pDelay)
     {
-        sfxSource.clip = movement[2];
-        sfxSource.Play();
+        PlaySound(pDelay, 1.0f, movement[2]);
     }
 
     //Plays sound the player is walking on a sand surface
-    public void WalkingSand()
+    public void WalkingSand(float pDelay)
     {
-        walkingSource.clip = surfaces[0];
-        walkingSource.Play();
+        PlaySound(pDelay, 1.0f, surfaces[0]);
     }
 
     //Plays sound the player is walking on a metal surface
-    public void WalkingMetal()
+    public void WalkingMetal(float pDelay)
     {
-        walkingSource.clip = surfaces[1];
-        walkingSource.Play();
+        PlaySound(pDelay, 1.0f, surfaces[1]);
     }
     #endregion
 
     #region PlayerActions
     //Plays sound when the player jumps.
-    public void JumpSound()
+    public void JumpSound(float pDelay)
     {
-        sfxSource.clip = movement[1];
-        sfxSource.Play();
+        PlaySound(pDelay, 1.0f, movement[1]);
     }
 
     //Randomly plays one of two sounds when the player performs a light attack.
-    public void LightAttackSound()
+    public void LightAttackSound(float pDelay)
     {
-        sfxSource.clip = lightAttack[Random.Range(0, 1)];
-        sfxSource.Play();
+        PlaySound(pDelay, 1.0f, lightAttack[Random.Range(0, 1)]);
     }
 
     //Randomly plays one of two sounds when the player performs a heavy attack.
-    public void HeavyAttackSound()
+    public void HeavyAttackSound(float pDelay)
     {
-        sfxSource.clip = lightAttack[Random.Range(0, 1)];
-        sfxSource.pitch = 0.5f;
-        sfxSource.Play();
+        PlaySound(pDelay, 0.5f, lightAttack[Random.Range(0, 1)]);
     }
     #endregion
 
     #region Abilities
     //Plays sound when playeer uses Plasma Breath ability.
-    public void PlasmaBreathSound()
+    public void PlasmaBreathSound(float pDelay)
     {
-        sfxSource.clip = abilitySounds[0];
-        sfxSource.Play();
+        PlaySound(pDelay, 1.0f, abilitySounds[0]);
     }
 
     //Plays sound when playeer uses Roll Attack ability.
-    public void RollAttackSound()
+    public void RollAttackSound(float pDelay)
     {
-        sfxSource.clip = abilitySounds[1];
-        sfxSource.Play();
+        PlaySound(pDelay, 1.0f, abilitySounds[1]);
     }
 
     //Plays sound when playeer uses Plasma Ball ability.
-    public void PlasmaBallSound()
+    public void PlasmaBallSound(float pDelay)
     {
-        sfxSource.clip = abilitySounds[2];
-        sfxSource.Play();
+        PlaySound(pDelay, 1.0f, abilitySounds[2]);
     }
 
     //Plays sound when playeer uses Ground Pound ability.
-    public void GroundPoundSound()
+    public void GroundPoundSound(float pDelay)
     {
-        sfxSource.clip = abilitySounds[3];
-        sfxSource.Play();
+        PlaySound(pDelay, 1.0f, abilitySounds[3]);
     }
     #endregion
+
+    private void PlaySound(float pDelay, float pPitch, AudioClip pClip)
+    {
+        if (pDelay > 0)
+        {
+            StartCoroutine(SoundDelay(pDelay, pPitch, pClip));
+        }
+        else
+        {
+            sfxSource.clip = pClip;
+            sfxSource.pitch = pPitch;
+            sfxSource.Play();
+        }
+    }
+
+    private IEnumerator SoundDelay(float pDelay, float pPitch, AudioClip pClip)
+    {
+        yield return new WaitForSeconds(pDelay);
+        sfxSource.clip = pClip;
+        sfxSource.pitch = pPitch;
+        sfxSource.Play();
+    }
 }

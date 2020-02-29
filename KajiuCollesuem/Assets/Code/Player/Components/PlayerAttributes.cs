@@ -202,15 +202,15 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _stateController._Rb.AddForce(pKnockback / (pIgnoreWeight ? 1 : weight), ForceMode.Impulse);
 
         // Add Shake
-        _stateController._CameraShake.ShakeOnce(5.0f, 2.0f, 0.3f, 0.5f);
+        _stateController._CameraShake.PlayShake(5.0f, 2.0f, 0.3f, 0.5f);
 
         // Sound
         if (died)
-            _stateController._Sound.PlayerDeathSound();
+            _stateController._Sound.PlayerDeathSound(0.5f);
         else if (pAttacker != null)
-            _stateController._Sound.HitTarSound();
+            _stateController._Sound.HitTarSound(0.0f);
         else
-            _stateController._Sound.HitByAttackSound();
+            _stateController._Sound.HitByAttackSound(0.0f);
 
         if (died == false)
             _stateController._modelController.AddStunned(1, (Random.value - 0.5f) * 2, easeOutDelay, easeOut);

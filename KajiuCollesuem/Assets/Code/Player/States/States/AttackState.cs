@@ -145,6 +145,9 @@ public class AttackState : BaseState
         float PreAttackTime = curAttack.holdStartPosTime;
         SetAttackValues(curAttack, PreAttackTime);
 
+        _stateController._CameraShake.PlayShake(5.0f, 0.1f, 0.3f, 0.5f, curAttack.shakeTime + PreAttackTime);
+        _stateController._Sound.LightAttackSound(PreAttackTime + curAttack.soundTime);
+
         _stateController._modelController.PlayAttack(0, false);
 
         // Disallow jumping during attack 
@@ -165,7 +168,10 @@ public class AttackState : BaseState
     {
         //Debug.Log("AttackState: ReleaseHeavyAttack");
         SOAttack curAttack = _stateController._modelController.attacks[1];
-        SetAttackValues(curAttack); // TODO Add charging mult to hitbox
+        SetAttackValues(curAttack);
+
+        _stateController._CameraShake.PlayShake(6.0f, 0.15f, 0.3f, 0.5f, curAttack.shakeTime);
+        _stateController._Sound.HeavyAttackSound(curAttack.soundTime);
 
         // TODO send through how long attack was charged for and use that to know how fast the attack should move.
         _stateController._modelController.DoneChargingAttack();

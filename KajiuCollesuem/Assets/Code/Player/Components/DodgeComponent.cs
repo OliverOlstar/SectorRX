@@ -80,7 +80,7 @@ public class DodgeComponent : MonoBehaviour
         shakeDone = false;
 
         // Sound
-        _stateController._Sound.DodgeSound();
+        _stateController._Sound.DodgeSound(0.1f);
 
         //Run Dodge Force
         while (Time.time <= dodgeEndTime)
@@ -91,7 +91,7 @@ public class DodgeComponent : MonoBehaviour
             // Shake
             if (shakeDone == false && Time.time >= dodgeShakeDelay)
             {
-                _stateController._CameraShake.ShakeOnce(4.5f, 0.5f, 0.3f, 0.3f);
+                _stateController._CameraShake.PlayShake(4.5f, 0.7f, 0.3f, 0.3f, 0.1f);
                 shakeDone = true;
             }
 

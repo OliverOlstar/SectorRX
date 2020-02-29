@@ -1673,6 +1673,7 @@ GameObject:
   - component: {fileID: 5193453761140963528}
   - component: {fileID: 5746998331381051381}
   - component: {fileID: 3076140870130127852}
+  - component: {fileID: 8770599668221244573}
   m_Layer: 8
   m_Name: LizzyPrefab
   m_TagString: Untagged
@@ -1762,7 +1763,7 @@ MonoBehaviour:
   _playerCamera: {fileID: 0}
   _ragdollManager: {fileID: 4815557517036656904}
   _Sound: {fileID: 0}
-  _CameraShake: {fileID: 2616924851063215958}
+  _CameraShake: {fileID: 0}
   _Rb: {fileID: 0}
   _Camera: {fileID: 4584261535203141963}
   hitboxes:
@@ -1819,7 +1820,6 @@ MonoBehaviour:
   doneDodge: 0
   shortDodgeCooldown: 0.5
   longDodgeCooldown: 0.5
-  dodgeSoundDelay: 0.1
   dodgeShakeDelay: 0.2
   shortDodgeMaxSpeed: 30
   shortDodgeDuration: 0.2
@@ -1948,6 +1948,19 @@ MonoBehaviour:
   _plasmaBreathPrefab: {fileID: 1601903843534470252, guid: dc52f3e137c83ac4494fcd01d6979b85,
     type: 3}
   _mouthMuzzle: {fileID: 2198764737386935211}
+--- !u!114 &8770599668221244573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5193453761140963537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a070acc6c7634a418fb25098e498da5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Shaker: {fileID: 2616924851063215958}
 --- !u!1 &5473236086391889948
 GameObject:
   m_ObjectHideFlags: 0
