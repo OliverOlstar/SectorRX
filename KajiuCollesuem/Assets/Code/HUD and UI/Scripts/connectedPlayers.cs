@@ -19,22 +19,18 @@ public struct UsedDevices
 public class connectedPlayers : MonoBehaviour
 {
     public static int playersConnected = 0;
-    public static int playersToSpawn = 0;
-    public bool canJoin;
-    public bool hasJoined;
-    private List<int> playerSlots = new List<int>(){0, 1, 2, 3, 4, 5, 6, 7, 8};
+    private List<int> playerSlots = new List<int>() {0, 1, 2, 3, 4, 5, 6, 7, 8};
     public static List<UsedDevices> playerIndex = new List<UsedDevices>();
     public GameObject devicePrefab;
     public GameObject startButton;
 
-    [SerializeField] public DeviceHandler[] _Devices; 
+    private DeviceHandler[] _Devices = new DeviceHandler[9]; 
     [SerializeField] private Text _PlayerCount;
     [SerializeField] private Panels[] playerPanels;
 
     private void Awake()
     {
         playersConnected = 0;
-        playersToSpawn = 0;
         playerIndex.Clear();
         if(UIManager.menuProperties == true)
         {
@@ -42,55 +38,31 @@ public class connectedPlayers : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if(_Devices.Length >= 2)
-        {
-            startButton.SetActive(true);
-
-
-
-
-
-
-        }
-        else
-        {
-            //startButton.SetActive(false);
-        }
-    }
-
-    public void OnPlayerJoined()
-    {
-        _Devices = FindObjectsOfType<DeviceHandler>();
-        _Devices[0]._AddPlayer = this;
-    }
-
+    // When you enter the join game screen
     public void EnableJoin()
     { 
-        if(!canJoin)
-            canJoin = true;
+        for (int i = 0; i < _Devices.Length; i++)
+        {
+            _Devices[i] = Instantiate(devicePrefab).GetComponent<DeviceHandler>();
+            _Devices[i]._AddPlayer = this;
+        }
     }
 
+    // When you leave the join game screen
     public void ResetPlayers()
     {
-        if(canJoin)
+        //Disconnects players
+        for (int i = 0; i < _Devices.Length; i++)
         {
-            canJoin = false;
+            _Devices[i].DisableConnecting();
+            Destroy(_Devices[i].gameObject);
+            _Devices[i] = null;
         }
 
-        if(hasJoined)
-        {
-            hasJoined = false;
-        }
+        playersConnected = 0;
+        _PlayerCount.text = " ";
 
-        foreach(DeviceHandler d in _Devices)
-        {
-            if(d != null)
-            {
-                d.OnLeaving();
-            }
-        }
+        playerSlots = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
     }
 
     //Check user device index and set struct ints to user number
@@ -112,31 +84,22 @@ public class connectedPlayers : MonoBehaviour
     public Panels OnDeviceJoined()
     {
         //Checks if on join screen
-        if (canJoin)
-        {
-            //Allows players to connect if on join screen
-            playersConnected++;
-            playersToSpawn++;
-            Debug.Log("OnPlayerJoined " + playersConnected);
-            _PlayerCount.text = "Number of Players: " + playersConnected.ToString();
-            hasJoined = true;
 
-            //Sets player panel to first open slot and then removes it from list
-            int slot = playerSlots[0];
-            playerSlots.Remove(slot);
-            return playerPanels[slot];
-        }
-        else
-        {
-            return null;
-        }
+        //Allows players to connect if on join screen
+        playersConnected++;
+        Debug.Log("OnPlayerJoined " + playersConnected);
+        _PlayerCount.text = "Number of Players: " + playersConnected.ToString();
+
+        //Sets player panel to first open slot and then removes it from list
+        int slot = playerSlots[0];
+        playerSlots.Remove(slot);
+        return playerPanels[slot];
     }
 
     public void OnDeviceLeaves(int pSlot)
     {
         //Disconnects player
         playersConnected--;
-        playersToSpawn--;
         Debug.Log("OnPlayerLeaves " + playersConnected);
         _PlayerCount.text = "Number of Players: " + playersConnected.ToString();
 

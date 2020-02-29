@@ -26,12 +26,13 @@ public class PlayerSpawn : MonoBehaviour
 
     [SerializeField] private Color[] boarderColors = new Color[9];
 
+    public float playersToSpawn = 0;
+
     public void MatchStartup()
     {
         //If no players are entered, automatically set to 2.
-        if (connectedPlayers.playersToSpawn <= 0)
+        if (connectedPlayers.playersConnected <= 0)
         {
-            connectedPlayers.playersToSpawn = 2;
             connectedPlayers.playersConnected = 2;
             
             connectedPlayers.playerIndex.Clear();
@@ -44,8 +45,7 @@ public class PlayerSpawn : MonoBehaviour
             connectedPlayers.playerIndex.Add(player);
         }
 
-        //Sets number of connected players equal to how many need to be spawned. Helps with match restarts after a player wins.
-        connectedPlayers.playersConnected = connectedPlayers.playersToSpawn;
+        playersToSpawn = connectedPlayers.playersConnected;
         Debug.Log(connectedPlayers.playersConnected);
     }
 
@@ -60,7 +60,7 @@ public class PlayerSpawn : MonoBehaviour
     public void InputSetup()
     {
         //Find required number of players to spawn
-        for (int i = 0; i < connectedPlayers.playersToSpawn; i++)
+        for (int i = 0; i < playersToSpawn; i++)
         {
             //Check each connected players device index from Main Menu scene
             for (int j = 0; j < connectedPlayers.playerIndex.Count; j++)
@@ -97,9 +97,9 @@ public class PlayerSpawn : MonoBehaviour
     public void SpawnAllPlayers()
     {
         //Spawn number of connected players.
-        Debug.Log("Spawning " + connectedPlayers.playersToSpawn + " players");
+        Debug.Log("Spawning " + playersToSpawn + " players");
 
-        if (playerSpawns.Count < connectedPlayers.playersToSpawn)
+        if (playerSpawns.Count < playersToSpawn)
         {
             Debug.Log("Not enough spawnpoints available");
             return;
@@ -131,9 +131,9 @@ public class PlayerSpawn : MonoBehaviour
 
     private void SpawnPlayers()
     {
-        for (int i = 0; i < connectedPlayers.playersToSpawn; i++)
+        for (int i = 0; i < playersToSpawn; i++)
         {
-            _SpawnPointIndex = Random.Range(0, (connectedPlayers.playersToSpawn <= 4 ? 4 : 9) - i);
+            _SpawnPointIndex = Random.Range(0, (playersToSpawn <= 4 ? 4 : 9) - i);
             Transform _EightSpawnPos = playerSpawns[_SpawnPointIndex];
             playerSpawns.RemoveAt(_SpawnPointIndex);
             GameObject playerCharacter = Instantiate(playerPrefab, _EightSpawnPos.position, transform.rotation);
@@ -152,7 +152,7 @@ public class PlayerSpawn : MonoBehaviour
     {
         yield return new WaitForSeconds(3.5f);
         
-        if (connectedPlayers.playersToSpawn > 1)
+        if (playersToSpawn > 1)
         {
             musicManager.mainAudio.Stop();
             transitionScreen.DOAnchorPos(new Vector2(0, 0), 0.4f);

@@ -12,7 +12,7 @@ public class DeviceHandler : MonoBehaviour
     [SerializeField] public AbilitySet ability;
 
     //Disconnects the player device from assigned slot if player has left and panel was assigned
-    public void OnLeaving()
+    public void OnBackward()
     {
         if(playerPanel != null)
         {
@@ -22,17 +22,24 @@ public class DeviceHandler : MonoBehaviour
         }
     }
 
+    public void DisableConnecting()
+    {
+        if (playerPanel != null)
+        {
+            playerPanel.PlayerLeft();
+            playerPanel = null;
+        }
+
+        _AddPlayer = null;
+    }
+
     //Connects the player device to an open slot if player a panel has not been assigned to
-    public void OnJoining()
+    public void OnForward()
     {
         if (playerPanel == null)
         {
             playerPanel = _AddPlayer.OnDeviceJoined();
-
-            if (playerPanel != null)
-            {
-                playerPanel.PlayerJoined();
-            }
+            playerPanel.PlayerJoined();
         }
         else
         {

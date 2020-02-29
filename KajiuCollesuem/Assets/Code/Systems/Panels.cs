@@ -24,11 +24,6 @@ public class Panels : MonoBehaviour
         ability[1].GetComponent<Image>().sprite = abilityIcons[3];
     }
 
-    private void Update()
-    {
-        Debug.Log(presetNumber);
-    }
-
     public void OnJoining()
     {
         switch (stateValue)
