@@ -49,16 +49,24 @@ public class OnGroundComponent : MonoBehaviour
                 _stateController._modelController.AddCrouching(_downForce / _downForceTerminal, 0.08f, 0.25f);
 
                 // Shake
-                _stateController._CameraShake.PlayShake(_downForce / _downForceTerminal * 2.0f, 5.0f, 0.1f, 0.3f);
+                _stateController._CameraShake.PlayShake(_downForce / _downForceTerminal * 3.0f, 10.0f, 0.1f, 0.32f);
 
                 // Sound
                 _stateController._Sound.LandingSound(0.0f);
             }
+
+            if (hit.collider.tag == "Sand")
+                _stateController.groundMaterial = 0;
+            else if (hit.collider.tag == "Metal")
+                _stateController.groundMaterial = 1;
+            else
+                _stateController.groundMaterial = -1;
         }
         // Off ground
         else if (_stateController.onGround == true)
         {
             _stateController.onGround = false;
+            _stateController.groundMaterial = -1;
         }
     }
 

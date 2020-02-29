@@ -16,6 +16,7 @@ public class PlayerStateController : MonoBehaviour
 
     // On Ground
     [HideInInspector] public bool onGround = false;
+    [HideInInspector] public int groundMaterial = -1;
     [HideInInspector] public bool Stunned = false;
     [HideInInspector] public float AttackStateReturnDelay = 0;
     [HideInInspector] public float AbilityStateReturnDelay = 0;

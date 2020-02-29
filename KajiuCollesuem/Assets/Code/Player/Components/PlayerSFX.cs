@@ -58,15 +58,14 @@ public class PlayerSFX : MonoBehaviour
         PlaySound(pDelay, 1.0f, movement[2]);
     }
 
-    //Plays sound the player is walking on a sand surface
-    public void WalkingSand(float pDelay)
+    //Plays sound the player is walking on a sand or metal surface
+    public void Walking(int pGroundMaterial, float pSpeed, float pDelay)
     {
-        PlaySound(pDelay, 1.0f, surfaces[0]);
-    }
+        if (pSpeed > 0.6f)
+        {
+            PlaySound(pDelay, 1.0f, surfaces[pGroundMaterial]);
+        }
 
-    //Plays sound the player is walking on a metal surface
-    public void WalkingMetal(float pDelay)
-    {
         PlaySound(pDelay, 1.0f, surfaces[1]);
     }
     #endregion

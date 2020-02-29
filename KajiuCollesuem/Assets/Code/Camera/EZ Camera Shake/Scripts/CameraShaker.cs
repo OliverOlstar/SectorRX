@@ -9,8 +9,8 @@ namespace EZCameraShake
         /// <summary>
         /// The single instance of the CameraShaker in the current scene. Do not use if you have multiple instances.
         /// </summary>
-        public static CameraShaker Instance;
-        static Dictionary<string, CameraShaker> instanceList = new Dictionary<string, CameraShaker>();
+        //public static CameraShaker Instance;
+        //static Dictionary<string, CameraShaker> instanceList = new Dictionary<string, CameraShaker>();
 
         /// <summary>
         /// The default position influcence of all shakes created by this shaker.
@@ -33,11 +33,11 @@ namespace EZCameraShake
 
         List<CameraShakeInstance> cameraShakeInstances = new List<CameraShakeInstance>();
 
-        void Awake()
-        {
-            Instance = this;
-            instanceList.Add(gameObject.name, this);
-        }
+        //void Awake()
+        //{
+        //    Instance = this;
+        //    instanceList.Add(gameObject.name, this);
+        //}
 
         void Update()
         {
@@ -72,17 +72,17 @@ namespace EZCameraShake
         /// </summary>
         /// <param name="name">The name of the camera shaker instance.</param>
         /// <returns></returns>
-        public static CameraShaker GetInstance(string name)
-        {
-            CameraShaker c;
+        //public static CameraShaker GetInstance(string name)
+        //{
+        //    CameraShaker c;
 
-            if (instanceList.TryGetValue(name, out c))
-                return c;
+        //    if (instanceList.TryGetValue(name, out c))
+        //        return c;
 
-            Debug.LogError("CameraShake " + name + " not found!");
+        //    Debug.LogError("CameraShake " + name + " not found!");
 
-            return null;
-        }
+        //    return null;
+        //}
 
         /// <summary>
         /// Starts a shake using the given preset.
@@ -175,9 +175,9 @@ namespace EZCameraShake
         public List<CameraShakeInstance> ShakeInstances
         { get { return new List<CameraShakeInstance>(cameraShakeInstances); } }
 
-        void OnDestroy()
-        {
-            instanceList.Remove(gameObject.name);
-        }
+        //void OnDestroy()
+        //{
+        //    instanceList.Remove(gameObject.name);
+        //}
     }
 }

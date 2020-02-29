@@ -91,7 +91,7 @@ public class DodgeComponent : MonoBehaviour
             // Shake
             if (shakeDone == false && Time.time >= dodgeShakeDelay)
             {
-                _stateController._CameraShake.PlayShake(4.5f, 0.7f, 0.3f, 0.3f, 0.1f);
+                _stateController._CameraShake.PlayShake(5.0f, 1.6f, 0.2f, 0.4f, 0.03f);
                 shakeDone = true;
             }
 

@@ -202,7 +202,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _stateController._Rb.AddForce(pKnockback / (pIgnoreWeight ? 1 : weight), ForceMode.Impulse);
 
         // Add Shake
-        _stateController._CameraShake.PlayShake(5.0f, 2.0f, 0.3f, 0.5f);
+        _stateController._CameraShake.PlayShake(pAmount / 4, 6.0f, 0.5f, 0.8f);
 
         // Sound
         if (died)
