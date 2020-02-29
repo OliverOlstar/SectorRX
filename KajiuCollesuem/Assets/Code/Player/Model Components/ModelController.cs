@@ -140,6 +140,13 @@ public class ModelController : MonoBehaviour
         _modelMovement.disableRotation = true;
     }
 
+    public void OverChargedAttack()
+    {
+        _AttackingState = 0;
+        _modelMovement.disableRotation = false;
+        _modelWeights.SetUpperbodyWeight(0.0f, 3.7f);
+    }
+
     // Coroutines
     private IEnumerator PlayAttackWithDelay(float pDelay)
     {

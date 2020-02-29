@@ -11,6 +11,7 @@ public class SOAttack : ScriptableObject
     
     [Header("Post Attack")]
     [Min(0)] public float holdEndPosTime = 0.1f;
+    [Min(0)] public float returnToStateDelay = 0.2f;
 
     [Header("Pre Attack")]
     [Min(0)] public float holdStartPosTime = 0.1f;
