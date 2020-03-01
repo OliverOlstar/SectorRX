@@ -43,6 +43,11 @@ public class SplitscreenManager : MonoBehaviour
             
             return;
         }
+        else
+        {
+            // Don't change anything if singleplayer
+            return;
+        }
 
         float hor = 1.0f / horizontalSplit;
         float ver = 1.0f / verticalSplit;

@@ -21,13 +21,21 @@ public class FireballHitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        IAttributes otherAttributes = other.gameObject.GetComponent<PlayerAttributes>();
-        if (otherAttributes == null && other.transform.parent != null)
-            otherAttributes = other.transform.parent.GetComponent<PlayerAttributes>();
-
-        if (otherAttributes != null && otherAttributes.IsDead() == false)
+        if (other.CompareTag("Player"))
         {
-            otherAttributes.TakeDamage(damageAmount, GetComponent<Rigidbody>().velocity.normalized * knockForce, this.gameObject);
+            IAttributes otherAttributes = other.gameObject.GetComponent<PlayerAttributes>();
+            if (otherAttributes == null && other.transform.parent != null)
+                otherAttributes = other.transform.parent.GetComponent<PlayerAttributes>();
+
+            if (otherAttributes != null && otherAttributes.IsDead() == false)
+            {
+                otherAttributes.TakeDamage(damageAmount, GetComponent<Rigidbody>().velocity.normalized * knockForce, this.gameObject);
+                DestroyFireball();
+            }
+        }
+
+        if (!other.CompareTag("Enemy"))
+        {
             DestroyFireball();
         }
     }

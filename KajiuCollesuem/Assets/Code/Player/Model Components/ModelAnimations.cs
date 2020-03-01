@@ -200,7 +200,7 @@ public class ModelAnimations : MonoBehaviour
     }
     #endregion
 
-    private float increaseProgress(float pProgress, float pMult, bool pLoop = true, float pShakeForce = 0.0f)
+    private float increaseProgress(float pProgress, float pMult, bool pLoop = true)
     {
         pProgress += Time.fixedDeltaTime * pMult;
         
@@ -209,10 +209,6 @@ public class ModelAnimations : MonoBehaviour
             if (pLoop)
             {
                 pProgress -= 1;
-
-                // Special case for walking
-                if (pShakeForce != 0)
-                    _modelController.TookStep(pShakeForce);
             }
             else
             {

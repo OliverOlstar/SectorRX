@@ -11,6 +11,7 @@ public class Panels : MonoBehaviour
     [SerializeField] private connectedPlayers _AddPlayer;
     public Text playerPanels;
     private int stateValue = 0;
+    [SerializeField] private MenuLizzy _myLizzy;
 
     [HideInInspector] public DeviceHandler myDevice = null;
 
@@ -55,6 +56,7 @@ public class Panels : MonoBehaviour
                     abilityTwoRect.DOAnchorPos(new Vector2(0, -2110), 1.6f);
                     abilityLocked = true;
                     stateValue = 1;
+                    _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.LockedIn);
                 }
                 break;
             
@@ -110,6 +112,8 @@ public class Panels : MonoBehaviour
         presetNumber = 0;
         ability[0].GetComponent<SpriteRenderer>().sprite = abilityIcons[2];
         ability[1].GetComponent<SpriteRenderer>().sprite = abilityIcons[3];
+
+        _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.Joined);
     }
 
     public int PlayerLeft()
@@ -119,6 +123,9 @@ public class Panels : MonoBehaviour
         playerPanels.text = "Press 'Space'\nor\n'Start' to Join";
         animBool = false;
         stateValue = 0;
+
+        _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.NotJoined);
+
         return playerNumber - 1;
     }
 }
