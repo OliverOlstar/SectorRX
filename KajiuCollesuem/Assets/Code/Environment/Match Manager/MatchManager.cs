@@ -32,6 +32,8 @@ public class MatchManager : MonoBehaviour
         {
             cluster.SpawnEnemies();
         }
+
+        Debug.Log("HERE");
     }
 
     public void Update()
@@ -53,5 +55,7 @@ public class MatchManager : MonoBehaviour
 
         spawnPlayerScript.SpawnAllPlayers();
         splitscreenScript.SetSplitScreen(this);
+
+        Debug.Log("HERE");
     }
 }

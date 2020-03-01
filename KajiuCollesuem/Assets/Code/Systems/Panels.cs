@@ -49,7 +49,7 @@ public class Panels : MonoBehaviour
             case 0:
                 if(stateValue == 0)
                 {
-                    playerPanels.text = "Player " + playerNumber + " Ready!";
+                    playerPanels.text = " ";
                     animBool = true;
                     abilityOneRect.DOAnchorPos(new Vector2(0, -1930), 1.6f);
                     abilityTwoRect.DOAnchorPos(new Vector2(0, -2110), 1.6f);
@@ -106,7 +106,7 @@ public class Panels : MonoBehaviour
     {
         myDevice = pDevice;
 
-        playerPanels.text = "Player " + playerNumber + " Joined";
+        playerPanels.text = " ";
         presetNumber = 0;
         ability[0].GetComponent<SpriteRenderer>().sprite = abilityIcons[2];
         ability[1].GetComponent<SpriteRenderer>().sprite = abilityIcons[3];
@@ -116,7 +116,7 @@ public class Panels : MonoBehaviour
     {
         myDevice = null;
 
-        playerPanels.text = "Press Space or 'Start' to Join";
+        playerPanels.text = "Press 'Space'\nor\n'Start' to Join";
         animBool = false;
         stateValue = 0;
         return playerNumber - 1;

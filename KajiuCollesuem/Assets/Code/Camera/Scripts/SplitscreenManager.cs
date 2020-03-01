@@ -9,10 +9,10 @@ using UnityEngine.UI;
 
 public class SplitscreenManager : MonoBehaviour
 {
-    public List<Camera> playerCams = new List<Camera>();
+    [HideInInspector] public List<Camera> playerCams = new List<Camera>();
     [SerializeField] private SOCamera[] cameraPresets = new SOCamera[4];
-    private float verticalSplit = 1;
-    private float horizontalSplit = 1;
+    private int verticalSplit = 1;
+    private int horizontalSplit = 1;
 
     public void SetSplitScreen(MatchManager pManager)
     {
@@ -48,10 +48,17 @@ public class SplitscreenManager : MonoBehaviour
         float ver = 1.0f / verticalSplit;
 
         //Set vertical and horizontal values for all connected cameras
-        for (int i = 0; i < playerCams.Count; i++)
+        for (int y = 0; y < verticalSplit; y++) 
         {
-            playerCams[i].rect = new Rect(hor * (i % horizontalSplit), (ver * (verticalSplit - 1)) - ver * Mathf.Floor(i / verticalSplit), hor, ver);
-            //Debug.Log("Ver: " + Mathf.Floor(i / verticalSplit));
+            for (int x = 0; x < horizontalSplit; x++)
+            {
+                int index = y * horizontalSplit + x;
+
+                if (index >= connectedPlayers.playersConnected)
+                    break;
+
+                playerCams[index].rect = new Rect(hor * x, 0.5f - (ver * y), hor, ver);
+            }
         }
     }
 }

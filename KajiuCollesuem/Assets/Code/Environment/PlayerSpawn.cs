@@ -18,13 +18,12 @@ public class PlayerSpawn : MonoBehaviour
     public RectTransform transitionScreen;
 
     public MusicManager musicManager;
-    [SerializeField] private Transform _MapCentre;
     [HideInInspector] public List<Transform> playerSpawns = new List<Transform>();
     private int _SpawnPointIndex;
     [SerializeField] private MatchInputHandler[] _PlayerInputs = new MatchInputHandler[6];
-    [SerializeField] private List<MatchInputHandler> _ActiveInputs = new List<MatchInputHandler>();
+    private List<MatchInputHandler> _ActiveInputs = new List<MatchInputHandler>();
 
-    [SerializeField] private Color[] boarderColors = new Color[6];
+    //[SerializeField] private Color[] boarderColors = new Color[6];
 
     public float playersToSpawn = 0;
 
@@ -37,12 +36,13 @@ public class PlayerSpawn : MonoBehaviour
             
             connectedPlayers.playerIndex.Clear();
             UsedDevices player = new UsedDevices();
-            player.deviceUser = 0;
-            player.playerIndex = 0;
-            connectedPlayers.playerIndex.Add(player);
-            player.deviceUser = 1;
-            player.playerIndex = 1;
-            connectedPlayers.playerIndex.Add(player);
+
+            for (int i = 0; i < connectedPlayers.playersConnected; i++)
+            {
+                player.deviceUser = i;
+                player.playerIndex = i;
+                connectedPlayers.playerIndex.Add(player);
+            }
         }
 
         playersToSpawn = connectedPlayers.playersConnected;
@@ -100,41 +100,35 @@ public class PlayerSpawn : MonoBehaviour
             return;
         }
 
-        Debug.Log("HERE3");
         InputSetup();
-        Debug.Log("HERE4");
 
         // Randomly spawn players at listed locations.
         SpawnPlayers();
-        Debug.Log("HERE5");
 
         //SetHUDBoarders();
-        Debug.Log("HERE6");
 
         DisableUnusedDevices();
-        Debug.Log("HERE7");
     }
 
-    private void SetHUDBoarders()
-    {
-        BorderChange border;
-        for (int i  = 0; i < players.Count; i++)
-        {
-            border = players[i].GetComponentInChildren<BorderChange>();
+    //private void SetHUDBoarders()
+    //{
+    //    BorderChange border;
+    //    for (int i  = 0; i < players.Count; i++)
+    //    {
+    //        border = players[i].GetComponentInChildren<BorderChange>();
 
-            if(border)
-            {
-                border.SetBoarderColor(boarderColors[i]);
-            }
-        }
-    }
+    //        if(border)
+    //        {
+    //            border.SetBoarderColor(boarderColors[i]);
+    //        }
+    //    }
+    //}
 
     private void SpawnPlayers()
     {
         for (int i = 0; i < playersToSpawn; i++)
         {
-            Debug.Log("Loop " + i);
-            _SpawnPointIndex = Random.Range(0, (playersToSpawn <= 4 ? 4 : 9) - i);
+            _SpawnPointIndex = Random.Range(0, (playersToSpawn <= 4 ? 4 : 8) - i);
             Transform _EightSpawnPos = playerSpawns[_SpawnPointIndex];
             playerSpawns.RemoveAt(_SpawnPointIndex);
             GameObject playerCharacter = Instantiate(playerPrefab, _EightSpawnPos.position, transform.rotation);
