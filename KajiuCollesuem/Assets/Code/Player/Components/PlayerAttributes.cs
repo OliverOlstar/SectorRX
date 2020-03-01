@@ -85,7 +85,6 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         // Return If Dead or Not
         if (_health <= 0)
         {
-            connectedPlayers.playersConnected--;
             MatchManager.instance.ManagerEnd();
             _stateController._playerCamera.targetDead = true;
             return true;

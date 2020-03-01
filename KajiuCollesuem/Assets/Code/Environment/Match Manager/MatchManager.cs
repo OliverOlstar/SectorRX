@@ -55,7 +55,5 @@ public class MatchManager : MonoBehaviour
 
         spawnPlayerScript.SpawnAllPlayers();
         splitscreenScript.SetSplitScreen(this);
-
-        Debug.Log("HERE");
     }
 }
