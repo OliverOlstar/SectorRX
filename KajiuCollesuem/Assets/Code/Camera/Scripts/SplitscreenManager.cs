@@ -23,12 +23,7 @@ public class SplitscreenManager : MonoBehaviour
         }
 
         //Track amount of player cameras in game do determine horizontal and vertical split
-        if(playerCams.Count >= 7)
-        {
-            horizontalSplit = 3;
-            verticalSplit = 3;
-        }
-        else if(playerCams.Count >= 5)
+        if(playerCams.Count >= 5)
         {
             horizontalSplit = 3;
             verticalSplit = 2;
@@ -56,7 +51,7 @@ public class SplitscreenManager : MonoBehaviour
         for (int i = 0; i < playerCams.Count; i++)
         {
             playerCams[i].rect = new Rect(hor * (i % horizontalSplit), (ver * (verticalSplit - 1)) - ver * Mathf.Floor(i / verticalSplit), hor, ver);
-            Debug.Log("Ver: " + Mathf.Floor(i / verticalSplit));
+            //Debug.Log("Ver: " + Mathf.Floor(i / verticalSplit));
         }
     }
 }

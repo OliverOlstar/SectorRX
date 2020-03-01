@@ -78,7 +78,7 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
         videoPlayer.Play();
-        operation.allowSceneActivation = false;
+        //operation.allowSceneActivation = false;
         while (!operation.isDone)
         {
             float progress = Mathf.Clamp01(operation.progress / 0.9f);
@@ -88,7 +88,7 @@ public class UIManager : MonoBehaviour
             {
                 videoPlayer.loopPointReached += EndReached;
                 yield return new WaitForSeconds(2.0f);
-                operation.allowSceneActivation = true;
+                //operation.allowSceneActivation = true;
             }
 
             yield return null;

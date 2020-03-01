@@ -31,7 +31,6 @@ public class TransitionDown : MonoBehaviour
         gameOverTransition.DOAnchorPos(new Vector2(0, -640), 0.4f);
         yield return new WaitForSeconds(0.5f);
         SceneManager.LoadSceneAsync(0);
-
     }
 
     IEnumerator screenPausedMove()

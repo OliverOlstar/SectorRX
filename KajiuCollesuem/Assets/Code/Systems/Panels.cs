@@ -12,6 +12,8 @@ public class Panels : MonoBehaviour
     public Text playerPanels;
     private int stateValue = 0;
 
+    [HideInInspector] public DeviceHandler myDevice = null;
+
     public Sprite[] abilityIcons;
     public SpriteRenderer[] ability = new SpriteRenderer[2];
     public RectTransform abilityOneRect, abilityTwoRect;
@@ -31,8 +33,6 @@ public class Panels : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(presetNumber);
-
         if (animShield.GetCurrentAnimatorStateInfo(0).IsName("Has Left"))
         {
             abilityOneRect.DOAnchorPos(new Vector2(0, 34), 0.4f);
@@ -62,7 +62,7 @@ public class Panels : MonoBehaviour
                 if (connectedPlayers.playersConnected >= 2 && abilityLocked)
                 {
                     _AddPlayer.SetPlayerOrder();
-                    SceneManager.LoadScene(1);
+                    SceneManager.LoadSceneAsync(1);
                 }
                 break;
         }
@@ -102,8 +102,10 @@ public class Panels : MonoBehaviour
         ability[1].GetComponent<SpriteRenderer>().sprite = abilityIcons[presetNumber * 2 + 1];
     }
 
-    public void PlayerJoined()
+    public void PlayerJoined(DeviceHandler pDevice)
     {
+        myDevice = pDevice;
+
         playerPanels.text = "Player " + playerNumber + " Joined";
         presetNumber = 0;
         ability[0].GetComponent<SpriteRenderer>().sprite = abilityIcons[2];
@@ -112,6 +114,8 @@ public class Panels : MonoBehaviour
 
     public int PlayerLeft()
     {
+        myDevice = null;
+
         playerPanels.text = "Press Space or 'Start' to Join";
         animBool = false;
         stateValue = 0;

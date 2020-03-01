@@ -9,10 +9,19 @@ public class DeviceHandler : MonoBehaviour
 {
     [SerializeField] public connectedPlayers _AddPlayer;
     [SerializeField] private Panels playerPanel;
-    [SerializeField] public AbilitySet ability;
 
-    //Disconnects the player device from assigned slot if player has left and panel was assigned
-    public void OnBackward()
+    // If device gets disconnected
+    public void OnDeviceLost()
+    {
+        if (playerPanel != null)
+        {
+            int playerSlot = playerPanel.PlayerLeft();
+            _AddPlayer.OnDeviceLeaves(playerSlot);
+        }
+    }
+
+    // Disconnects the player device from assigned slot if player has left and panel was assigned
+    private void OnBackward()
     {
         if(playerPanel != null)
         {
@@ -22,24 +31,13 @@ public class DeviceHandler : MonoBehaviour
         }
     }
 
-    public void DisableConnecting()
-    {
-        if (playerPanel != null)
-        {
-            playerPanel.PlayerLeft();
-            playerPanel = null;
-        }
-
-        _AddPlayer = null;
-    }
-
     //Connects the player device to an open slot if player a panel has not been assigned to
     public void OnForward()
     {
         if (playerPanel == null)
         {
             playerPanel = _AddPlayer.OnDeviceJoined();
-            playerPanel.PlayerJoined();
+            playerPanel.PlayerJoined(this);
         }
         else
         {
@@ -71,19 +69,24 @@ public class DeviceHandler : MonoBehaviour
         }
         else
         {
-            StartCoroutine(LeaveWaitTime());
             return playerPanel.PlayerLeft();
         }
-    }
-
-    IEnumerator LeaveWaitTime()
-    {
-        yield return new WaitForSeconds(1.0f);
     }
 
     private void OnColorPicking()
     {
         //if (playerPanel)
         //    playerPanel;
+    }
+
+    public void DisableConnecting()
+    {
+        if (playerPanel != null)
+        {
+            playerPanel.PlayerLeft();
+            playerPanel = null;
+        }
+
+        _AddPlayer = null;
     }
 }

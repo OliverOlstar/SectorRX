@@ -21,10 +21,10 @@ public class PlayerSpawn : MonoBehaviour
     [SerializeField] private Transform _MapCentre;
     [HideInInspector] public List<Transform> playerSpawns = new List<Transform>();
     private int _SpawnPointIndex;
-    [SerializeField] private MatchInputHandler[] _PlayerInputs = new MatchInputHandler[9];
+    [SerializeField] private MatchInputHandler[] _PlayerInputs = new MatchInputHandler[6];
     [SerializeField] private List<MatchInputHandler> _ActiveInputs = new List<MatchInputHandler>();
 
-    [SerializeField] private Color[] boarderColors = new Color[9];
+    [SerializeField] private Color[] boarderColors = new Color[6];
 
     public float playersToSpawn = 0;
 
@@ -59,20 +59,25 @@ public class PlayerSpawn : MonoBehaviour
 
     public void InputSetup()
     {
-        //Find required number of players to spawn
+        Debug.Log("playersToSpawn " + playersToSpawn);
+        Debug.Log("connectedPlayers.playerIndex.Count " + connectedPlayers.playerIndex.Count);
+        Debug.Log("_PlayerInputs.Length " + _PlayerInputs.Length);
+
+        // Repeat this for every player that needs to be spawned
         for (int i = 0; i < playersToSpawn; i++)
         {
-            //Check each connected players device index from Main Menu scene
+            // Check each connected players device index from Main Menu scene
             for (int j = 0; j < connectedPlayers.playerIndex.Count; j++)
             {
-                //Set devices in Game Scene as same order as Main Menu scene
+                // Set devices in Game Scene as same order as Main Menu scene
                 if (connectedPlayers.playerIndex[j].playerIndex == i)
                 {
-                    //Check all devices for ones that match user index
+                    // Check all devices for matching device
                     foreach (MatchInputHandler input in _PlayerInputs)
                     {
                         if (input.GetComponent<PlayerInput>().user.index == connectedPlayers.playerIndex[j].deviceUser)
                         {
+                            Debug.Log("Add activeDevice");
                             _ActiveInputs.Add(input);
                             break;
                         }
@@ -80,16 +85,6 @@ public class PlayerSpawn : MonoBehaviour
                     break;
                 }
             }
-        }
-    }
-
-    public void DisableUnusedDevices()
-    {
-        //Disable InputHandlers that aren't connected to a player
-        foreach(MatchInputHandler input in _PlayerInputs)
-        {
-            if (input.playerStateController == null)
-                input.gameObject.SetActive(false);
         }
     }
 
@@ -105,14 +100,19 @@ public class PlayerSpawn : MonoBehaviour
             return;
         }
 
+        Debug.Log("HERE3");
         InputSetup();
+        Debug.Log("HERE4");
 
         // Randomly spawn players at listed locations.
         SpawnPlayers();
+        Debug.Log("HERE5");
 
-        SetHUDBoarders();
+        //SetHUDBoarders();
+        Debug.Log("HERE6");
 
         DisableUnusedDevices();
+        Debug.Log("HERE7");
     }
 
     private void SetHUDBoarders()
@@ -133,6 +133,7 @@ public class PlayerSpawn : MonoBehaviour
     {
         for (int i = 0; i < playersToSpawn; i++)
         {
+            Debug.Log("Loop " + i);
             _SpawnPointIndex = Random.Range(0, (playersToSpawn <= 4 ? 4 : 9) - i);
             Transform _EightSpawnPos = playerSpawns[_SpawnPointIndex];
             playerSpawns.RemoveAt(_SpawnPointIndex);
@@ -145,6 +146,16 @@ public class PlayerSpawn : MonoBehaviour
             playerCharacter.GetComponentInChildren<PlayerStateController>();
             _ActiveInputs[i].playerStateController = playerCharacter.GetComponentInChildren<PlayerStateController>();
             //musicManager.battleMusic[0].Play();
+        }
+    }
+
+    public void DisableUnusedDevices()
+    {
+        //Disable InputHandlers that aren't connected to a player
+        foreach (MatchInputHandler input in _PlayerInputs)
+        {
+            if (input.playerStateController == null)
+                input.gameObject.SetActive(false);
         }
     }
 

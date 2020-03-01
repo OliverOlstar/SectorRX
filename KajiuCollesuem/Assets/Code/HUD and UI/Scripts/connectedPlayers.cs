@@ -19,12 +19,12 @@ public struct UsedDevices
 public class connectedPlayers : MonoBehaviour
 {
     public static int playersConnected = 0;
-    private List<int> playerSlots = new List<int>() {0, 1, 2, 3, 4, 5, 6, 7, 8};
+    private List<int> playerSlots = new List<int>() { 0, 1, 2, 3, 4, 5 };
     public static List<UsedDevices> playerIndex = new List<UsedDevices>();
     public GameObject devicePrefab;
     public GameObject startButton;
 
-    private DeviceHandler[] _Devices = new DeviceHandler[9]; 
+    private DeviceHandler[] _Devices = new DeviceHandler[6]; 
     [SerializeField] private Text _PlayerCount;
     [SerializeField] private Panels[] playerPanels;
 
@@ -62,24 +62,46 @@ public class connectedPlayers : MonoBehaviour
         playersConnected = 0;
         _PlayerCount.text = " ";
 
-        playerSlots = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+        playerSlots = new List<int>() { 0, 1, 2, 3, 4, 5 };
     }
 
     //Check user device index and set struct ints to user number
+    //public void SetPlayerOrder()
+    //{
+    //    playerIndex.Clear();
+    //    foreach (DeviceHandler device in _Devices)
+    //    {
+    //        if (device.GetPlayerIndex() != -1)
+    //        {
+    //            UsedDevices user = new UsedDevices();
+    //            user.deviceUser = device.GetComponent<PlayerInput>().user.index;
+    //            user.playerIndex = device.GetPlayerIndex();
+    //            playerIndex.Add(user);
+    //        }
+    //    }
+    //}
+
     public void SetPlayerOrder()
     {
         playerIndex.Clear();
-        foreach (DeviceHandler d in _Devices)
+        int numberOfNotFound = 0;
+
+        foreach (Panels panel in playerPanels)
         {
-            if(d != null)
+            if (panel != null && panel.myDevice != null)
             {
                 UsedDevices user = new UsedDevices();
-                user.deviceUser = d.GetComponent<PlayerInput>().user.index;
-                user.playerIndex = d.GetPlayerIndex();
+                user.deviceUser = panel.myDevice.GetComponent<PlayerInput>().user.index;
+                user.playerIndex = panel.myDevice.GetPlayerIndex() - numberOfNotFound;
                 playerIndex.Add(user);
+            }
+            else
+            {
+                numberOfNotFound++;
             }
         }
     }
+
 
     public Panels OnDeviceJoined()
     {
@@ -87,7 +109,7 @@ public class connectedPlayers : MonoBehaviour
 
         //Allows players to connect if on join screen
         playersConnected++;
-        Debug.Log("OnPlayerJoined " + playersConnected);
+        //Debug.Log("OnPlayerJoined " + playersConnected);
         _PlayerCount.text = "Number of Players: " + playersConnected.ToString();
 
         //Sets player panel to first open slot and then removes it from list
@@ -100,7 +122,7 @@ public class connectedPlayers : MonoBehaviour
     {
         //Disconnects player
         playersConnected--;
-        Debug.Log("OnPlayerLeaves " + playersConnected);
+        //Debug.Log("OnPlayerLeaves " + playersConnected);
         _PlayerCount.text = "Number of Players: " + playersConnected.ToString();
 
         //Adds new open player slot to list then properly sorts list
