@@ -49,7 +49,7 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when the player performs a dodge
     public void DodgeSound(float pDelay)
     {
-        PlaySound(pDelay, 0.4f, 1.0f, movement[0], sfxSource);
+        PlaySound(pDelay, 0.4f, 0.5f, movement[0], sfxSource);
     }
 
     //Plays sound the player lands after a jump or falling
