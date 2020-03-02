@@ -50,7 +50,7 @@ public class Panels : MonoBehaviour
             case 0:
                 if(stateValue == 0)
                 {
-                    playerPanels.text = " ";
+                    playerPanels.text = "READY!";
                     animBool = true;
                     abilityOneRect.DOAnchorPos(new Vector2(0, -1930), 1.6f);
                     abilityTwoRect.DOAnchorPos(new Vector2(0, -2110), 1.6f);
