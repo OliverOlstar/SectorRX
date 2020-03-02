@@ -14,10 +14,12 @@ public class Panels : MonoBehaviour
     [SerializeField] private MenuLizzy _myLizzy;
 
     [HideInInspector] public DeviceHandler myDevice = null;
+    public UIManager uiMan;
 
     public Sprite[] abilityIcons;
     public SpriteRenderer[] ability = new SpriteRenderer[2];
     public RectTransform abilityOneRect, abilityTwoRect;
+    public RectTransform dPadLeftRect, dPadRightRect;
     private int presetNumber = 0;
     public bool setOne;
     public bool setTwo;
@@ -37,7 +39,17 @@ public class Panels : MonoBehaviour
         if (animShield.GetCurrentAnimatorStateInfo(0).IsName("Has Left"))
         {
             abilityOneRect.DOAnchorPos(new Vector2(0, 34), 0.4f);
+            dPadLeftRect.DOAnchorPos(new Vector2(-157, -201), 0.4f);
             abilityTwoRect.DOAnchorPos(new Vector2(0, -145), 0.4f);
+            dPadRightRect.DOAnchorPos(new Vector2(157, -201), 0.4f);
+        }
+
+        if (uiMan.panelCheck == true)
+        {
+            abilityOneRect.DOAnchorPos(new Vector2(0, 34), 0.01f);
+            dPadLeftRect.DOAnchorPos(new Vector2(-157, -201), 0.01f);
+            abilityTwoRect.DOAnchorPos(new Vector2(0, -145), 0.01f);
+            dPadRightRect.DOAnchorPos(new Vector2(157, -201), 0.01f);
         }
         animShield.SetBool("hasJoined", animBool);
         animMask.SetBool("maskJoined", animBool);
@@ -53,7 +65,9 @@ public class Panels : MonoBehaviour
                     playerPanels.text = " ";
                     animBool = true;
                     abilityOneRect.DOAnchorPos(new Vector2(0, -1930), 1.6f);
+                    dPadLeftRect.DOAnchorPos(new Vector2(-157, -2131), 1.6f);
                     abilityTwoRect.DOAnchorPos(new Vector2(0, -2110), 1.6f);
+                    dPadRightRect.DOAnchorPos(new Vector2(157, -2131), 1.6f);
                     abilityLocked = true;
                     stateValue = 1;
                     _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.LockedIn);
@@ -110,6 +124,10 @@ public class Panels : MonoBehaviour
 
         playerPanels.text = " ";
         presetNumber = 0;
+        abilityOneRect.DOAnchorPos(new Vector2(0, 34), 0.4f);
+        dPadLeftRect.DOAnchorPos(new Vector2(-157, -201), 0.4f);
+        abilityTwoRect.DOAnchorPos(new Vector2(0, -145), 0.4f);
+        dPadRightRect.DOAnchorPos(new Vector2(157, -201), 0.4f);
         ability[0].GetComponent<SpriteRenderer>().sprite = abilityIcons[2];
         ability[1].GetComponent<SpriteRenderer>().sprite = abilityIcons[3];
 

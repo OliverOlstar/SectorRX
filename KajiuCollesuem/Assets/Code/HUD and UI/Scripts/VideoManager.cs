@@ -12,13 +12,10 @@ public class VideoManager : MonoBehaviour
     public AudioSource audioSource;
     public GameObject mainMenu;
     public GameObject logoVisual;
-    //public RectTransform logo;
     public Animator logo;
     public Image background;
-
     public bool introEnded;
 
-    // Start is called before the first frame update
     void Start()
     {
         mainMenu.SetActive(false);
