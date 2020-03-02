@@ -32,7 +32,7 @@ public class PlayerSpawn : MonoBehaviour
         //If no players are entered, automatically set to 2.
         if (connectedPlayers.playersConnected <= 0)
         {
-            connectedPlayers.playersConnected = 2;
+            connectedPlayers.playersConnected = 1;
             
             connectedPlayers.playerIndex.Clear();
             UsedDevices player = new UsedDevices();
