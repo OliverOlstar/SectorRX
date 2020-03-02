@@ -60,7 +60,7 @@ public class CellMagnet : MonoBehaviour
             // Set force
             _rb.velocity = jumpDir * _magnetInitialVelocity + Vector3.up * jumpUpMult;
 
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(1.6f);
         }
         // Check if still colliding
         while (collidersInMagnet.Contains(other));
