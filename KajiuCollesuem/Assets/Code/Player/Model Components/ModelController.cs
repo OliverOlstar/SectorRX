@@ -174,10 +174,9 @@ public class ModelController : MonoBehaviour
     {
         if (_stateController._movementComponent.disableMovement == false && _stateController.groundMaterial != -1)
         {
-            
             _stateController._CameraShake.PlayShake(pShakeForce * 1f, 4.0f, 0.05f, 0.2f);
-        } 
-
+            _stateController._Sound.Walking(_stateController.groundMaterial, pShakeForce, 0.0f);
+        }
     }
 
     public void PlayDodge(Vector2 pDirection, float pSpeed)
