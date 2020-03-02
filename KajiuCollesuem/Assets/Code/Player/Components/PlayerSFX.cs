@@ -41,7 +41,7 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when the player has collected a stat increasing item
     public void StatUpSound(PlayerCollectibles.Upgrades pStat, float pDelay)
     {
-        PlaySound(pDelay, 0.4f, 1.0f, collectStat[(int)pStat]);
+        PlaySound(pDelay, 0.4f, 1.0f, collectStat[(int)pStat], sfxSource);
     }
     #endregion
 
