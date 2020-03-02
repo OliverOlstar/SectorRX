@@ -5,5 +5,5 @@ using UnityEngine;
 public interface IAttributes
 {
     bool IsDead();
-    bool TakeDamage(int pDamage, Vector3 pKnockback, GameObject pAttacker);
+    bool TakeDamage(int pDamage, Vector3 pKnockback, GameObject pAttacker, bool pIgnoreWeight = false);
 }

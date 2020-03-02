@@ -40,7 +40,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5688443931472006256}
-  - component: {fileID: 6898264057537073433}
   - component: {fileID: 1528327713476937411}
   m_Layer: 8
   m_Name: PlayerCamera
@@ -63,22 +62,6 @@ Transform:
   m_Father: {fileID: 2457618514464848117}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6898264057537073433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5688443931472006255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ab8353b5ebd32545867da143199a814, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DefaultPosInfluence: {x: 0.15, y: 0.15, z: 0.15}
-  DefaultRotInfluence: {x: 1, y: 1, z: 1}
-  RestPositionOffset: {x: 0, y: 0, z: 0}
-  RestRotationOffset: {x: 0, y: 0, z: 0}
 --- !u!20 &1528327713476937411
 Camera:
   m_ObjectHideFlags: 0
@@ -178,7 +161,7 @@ MonoBehaviour:
   _cameraCollisionDampening: 20
   _cameraCollisionMinDisPercent: 0.1
   _cameraCollisionOffset: 0.14
-  _mouseSensitivity: 5
+  _mouseSensitivity: 150
   _defaultPreset: {fileID: 11400000, guid: 0fd6f18ae13c5be4dbf3686890111a6d, type: 2}
   _idlePreset: {fileID: 11400000, guid: 67ad0d9b288e04043ae10b57d85fe6c2, type: 2}
   _lockOnPreset: {fileID: 11400000, guid: 9aed1e3693ccc6149ac1471b451f36be, type: 2}

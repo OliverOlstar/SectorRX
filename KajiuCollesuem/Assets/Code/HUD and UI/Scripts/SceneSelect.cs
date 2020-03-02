@@ -5,6 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class SceneSelect : MonoBehaviour
 {
+    private void Start()
+    {
+        if (SceneManager.GetActiveScene().name != "Finalbox For Build")
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Debug.Log("Unlock Cursor");
+        }
+    }
 
     public void LoadScene(int sceneIndex)
     {

@@ -31,13 +31,6 @@ public class HUDManager : MonoBehaviour
         }
     }
 
-    //IEnumerator CellUIOff()
-    //{
-    //    yield return new WaitForSeconds(1.5f);
-    //    cellUI.SetActive(false);
-    //    cellUIOn = false;
-    //}
-
     //Navigate between upgrade Menus
     public void goPowUpgrade(GameObject pTarget)
     {

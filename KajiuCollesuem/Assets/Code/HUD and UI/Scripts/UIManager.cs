@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using UnityEngine.Video;
 using DG.Tweening;
 
 /*
@@ -16,8 +17,9 @@ public class UIManager : MonoBehaviour
 {
     public static bool menuProperties;
     public RectTransform mainMenu, playerInputMenu, loadingScreen;
-    public GameObject targetUI;
+    public GameObject targetUI, backButton;
     public Slider loadingProgress;
+    public VideoPlayer videoPlayer;
 
     public void Start()
     {
@@ -25,6 +27,7 @@ public class UIManager : MonoBehaviour
         if (menuProperties == true)
         {
             playerInputMenu.DOAnchorPos(new Vector2(69, -2), 0.4f);
+            targetUI = backButton;
         }
         else
         {
@@ -49,7 +52,7 @@ public class UIManager : MonoBehaviour
     public void BackToMainMenu(GameObject pTarget)
     {
         mainMenu.DOAnchorPos(new Vector2(44, 21), 0.4f);
-        playerInputMenu.DOAnchorPos(new Vector2(69, 823), 0.4f);
+        playerInputMenu.DOAnchorPos(new Vector2(69, 4120), 0.4f);
         menuProperties = false;
         targetUI = pTarget;
     }
@@ -57,14 +60,15 @@ public class UIManager : MonoBehaviour
     public void GoToPlayer(GameObject pTarget)
     {
         playerInputMenu.DOAnchorPos(new Vector2(69, -2), 0.4f);
-        mainMenu.DOAnchorPos(new Vector2(44, -755), 0.4f);
+        mainMenu.DOAnchorPos(new Vector2(44, -4120), 0.4f);
         menuProperties = true;
         targetUI = pTarget;
     }
 
     public void LoadLevel(int sceneIndex)
     {
-        playerInputMenu.DOAnchorPos(new Vector2(71, -823), 0.4f);
+        videoPlayer.Prepare();
+        playerInputMenu.DOAnchorPos(new Vector2(71, -4120), 0.4f);
         loadingScreen.DOAnchorPos(new Vector2(0, 0), 0.4f);
         StartCoroutine(LoadAsyncLevel(sceneIndex));
     }
@@ -73,17 +77,32 @@ public class UIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
+        videoPlayer.Play();
+        operation.allowSceneActivation = false;
         while (!operation.isDone)
         {
-            //show logo loader
             float progress = Mathf.Clamp01(operation.progress / 0.9f);
             loadingProgress.value = progress;
+
+            if (videoPlayer.isPlaying)
+            {
+                videoPlayer.loopPointReached += EndReached;
+                yield return new WaitForSeconds(2.0f);
+                operation.allowSceneActivation = true;
+            }
+
             yield return null;
         }
+    }
 
-        if (operation.isDone)
-        {
-            //show broken logo
-        }
+    void EndReached(UnityEngine.Video.VideoPlayer videoPlayer)
+    {
+        StartCoroutine(CompleteLoadVisual());  
+    }
+
+    IEnumerator CompleteLoadVisual()
+    {
+        yield return new WaitForSeconds(0.75f);
+        videoPlayer.isLooping = false;
     }
 }

@@ -17,11 +17,11 @@ public class ModelController : MonoBehaviour
     [HideInInspector] public Vector3 horizontalVelocity;
     // 0 - done attack, 1 - attacking, 2 - sitting on a delay between attacking
     private int _AttackingState;
-    private bool _AttackingDirection;
 
     private bool _DontUpdateWeights;
 
-    public SOAttack[] attacks;
+    public SOAttack[] attacks = new SOAttack[3];
+     public SOAbilities[] abilities = new SOAbilities[2];
     private float _doneAttackDelay = 0;
     
     void Start()
@@ -49,15 +49,13 @@ public class ModelController : MonoBehaviour
         {
             if (_AttackingState == 1)
             {
-                if (_modelAnimation.AttackingAnim(_AttackingDirection))
+                if (_modelAnimation.AttackingAnim())
                 {
                     StartCoroutine("DoneAttackWithDelay");
                 }
             }
-            else if (_AttackingState == 0)
-            {
-                _modelWeights.UpdateWeights();
-            }
+
+            _modelWeights.UpdateWeights();
         }
         else
         {
@@ -75,12 +73,14 @@ public class ModelController : MonoBehaviour
     }
 
     #region Attacking
-    public void PlayAttack(int pIndex, bool pHeavy, bool pChargable)
+    public void PlayAttack(int pIndex, bool pChargable)
     {
-        SOAttack curAttack = attacks[pIndex + (pHeavy ? 3 : 0)];
+        SOAttack curAttack = attacks[pIndex];
 
         StopCoroutine("DoneAttackWithDelay");
         StopCoroutine("PlayAttackWithDelay");
+
+        _modelMovement.disableRotation = true;
 
         // Chargeable Attack - wait for done charging before starting attack
         if (pChargable == true)
@@ -93,13 +93,51 @@ public class ModelController : MonoBehaviour
             StartCoroutine("PlayAttackWithDelay", curAttack.holdStartPosTime);
         }
 
-        _AttackingDirection = pIndex == 1 ? false : true;
         _doneAttackDelay = curAttack.holdEndPosTime;
-        _modelMovement.disableRotation = true;
-        _modelWeights.SetWeights(0, 0, 1, 0, 0);
-        _modelAnimation.StartAttack(pIndex, pHeavy);
+        _modelWeights.SetUpperbodyWeight(1, 15);
+        _modelAnimation.StartAttack(pIndex);
     }
 
+    public void PlayAbility(int pIndex, bool pChargable)
+    {
+        SOAbilities curAbility = abilities[pIndex];
+
+        StopCoroutine("DoneAttackWithDelay");
+        StopCoroutine("PlayAttackWithDelay");
+
+        _modelMovement.disableRotation = true;
+
+        // Chargeable Attack - wait for done charging before starting attack
+        if (pChargable == true)
+        {
+            _AttackingState = 2;
+        }
+        // Non-Chargable Attack
+        else
+        {
+            StartCoroutine("PlayAttackWithDelay", curAbility.holdStartPosTime);
+        }
+
+        _doneAttackDelay = curAbility.holdEndPosTime;
+        _modelWeights.SetUpperbodyWeight(1, curAbility.transitionInDampening);
+        _modelAnimation.StartAbility(pIndex);
+    }
+
+    public void DoneAttack()
+    {
+        _AttackingState = 0;
+        _modelMovement.disableRotation = false;
+        _modelWeights.SetUpperbodyWeight(0.0f, 5.0f);
+    }
+
+    public void DoneChargingAttack()
+    {
+        // End Charging
+        _AttackingState = 1;
+        _modelMovement.disableRotation = true;
+    }
+
+    // Coroutines
     private IEnumerator PlayAttackWithDelay(float pDelay)
     {
         _AttackingState = 2;
@@ -114,19 +152,7 @@ public class ModelController : MonoBehaviour
         DoneAttack();
     }
 
-    public void DoneAttack()
-    {
-        _AttackingState = 0;
-        _modelMovement.disableRotation = false;
-        _modelWeights.SetWeights(0, 0, 0, 0, 0);
-    }
-
-    public void DoneChargingAttack()
-    {
-        // End Charging
-        _AttackingState = 1;
-    }
-
+    // Set rotation
     public void SetInputDirection(Vector3 pInput)
     {
         _modelMovement.facingInput = pInput;
@@ -137,14 +163,14 @@ public class ModelController : MonoBehaviour
     public void PlayDodge(Vector2 pDirection, float pSpeed)
     {
         _DontUpdateWeights = true;
-        _modelWeights.SetWeights(0, 0, 0, 1, 0);
+        _modelWeights.SetWeights(0, 0, 1, 0);
         _modelMovement.PlayFlipParent(pDirection, pSpeed);
     }
 
     public void DoneDodge()
     {
         _DontUpdateWeights = false;
-        _modelWeights.SetWeights(0, 0, 0, 0, 0);
+        _modelWeights.SetWeights(0, 0, 0, 0);
     }
     #endregion
 
@@ -175,23 +201,8 @@ public class ModelController : MonoBehaviour
     {
         _DontUpdateWeights = true;
         _modelMovement.disableRotation = true;
-        _modelWeights.SetWeights(0, 0, 0, 0, 1);
+        _modelWeights.SetWeights(0, 0, 0, 1);
         _modelAnimation.PlayDead();
     }
     #endregion
-
-    public Vector2 GetCatmullRomPosition(float pTime, SOGraph pGraph)
-    {
-        Vector2 startPoint = Vector2.zero;
-        Vector2 endPoint = new Vector2(1, pGraph.EndValue);
-
-        Vector2 a = 2f * startPoint;
-        Vector2 b = endPoint - pGraph.firstBender;
-        Vector2 c = 2f * pGraph.firstBender - 5f * startPoint + 4f * endPoint - pGraph.secondBender;
-        Vector2 d = -pGraph.firstBender + 3f * startPoint - 3f * endPoint + pGraph.secondBender;
-
-        Vector2 pos = 0.5f * (a + (b * pTime) + (c * pTime * pTime) + (d * pTime * pTime * pTime));
-
-        return pos;
-    }
 }

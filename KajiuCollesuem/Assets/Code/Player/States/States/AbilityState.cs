@@ -23,7 +23,6 @@ public class AbilityState : BaseState
     public override void Enter()
     {
         Debug.Log("AbilityState: Enter");
-        _stateController._movementComponent.disableMovement = true;
         _RequestedToExit = false;
 
         CheckForPress();
@@ -33,7 +32,6 @@ public class AbilityState : BaseState
     {
         Debug.Log("AbilityState: Exit");
         _stateController.AttackStateReturnDelay = Time.time + _abilityStateReturnDelayLength;
-        _stateController._movementComponent.disableMovement = false;
 
         _curAbility.Exit();
         ClearInputs();
@@ -67,7 +65,7 @@ public class AbilityState : BaseState
         {
             _Index = 1;
             _curAbility = _stateController._AbilityScript1;
-            _curSOAbility = _stateController._AbilitySO1;
+            _curSOAbility = _stateController._modelController.abilities[0];
             PressedAbility();
         }
         // ON PRESSED ABILITY 2 (Called Once)
@@ -75,7 +73,7 @@ public class AbilityState : BaseState
         {
             _Index = 2;
             _curAbility = _stateController._AbilityScript2;
-            _curSOAbility = _stateController._AbilitySO2;
+            _curSOAbility = _stateController._modelController.abilities[1];
             PressedAbility();
         }
     }

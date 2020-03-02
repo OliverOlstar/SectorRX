@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7162989524907027930}
   - component: {fileID: 11974227442048662}
   - component: {fileID: 3981620326565092024}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fireball
   m_TagString: Fireball
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 273117d84f8de3c429667db383a2eeaa, type: 2}
+  - {fileID: 2100000, guid: 67fcad4aff1190042b98e910bdfe7a48, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -92,7 +92,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.45
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &11974227442048662
 Rigidbody:
@@ -122,5 +122,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d98228f6eefe704f9b4e202ead790ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 20
+  damageAmount: 6
   maxTime: 10
+  knockForce: 35

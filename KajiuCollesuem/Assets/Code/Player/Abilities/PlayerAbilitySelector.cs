@@ -25,8 +25,8 @@ public class PlayerAbilitySelector : MonoBehaviour
     {
         pStateController._AbilityScript1 = AddAbility(ability1, pStateController);
         pStateController._AbilityScript2 = AddAbility(ability2, pStateController);
-        pStateController._AbilitySO1 = _AbilitySO[(int)ability1];
-        pStateController._AbilitySO2 = _AbilitySO[(int)ability2];
+        pStateController._modelController.abilities[0] = _AbilitySO[(int)ability1];
+        pStateController._modelController.abilities[1] = _AbilitySO[(int)ability2];
 
         Destroy(this);
     }

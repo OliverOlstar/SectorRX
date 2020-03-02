@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class AttackHitbox : MonoBehaviour
 {
-    [SerializeField] private int damage = 40;
+    [SerializeField] private int _damage = 40;
+    [SerializeField] private int _knockForce = 40;
+    [SerializeField] private int _knockupForce = 40;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -13,7 +15,7 @@ public class AttackHitbox : MonoBehaviour
         //If collided with the player model, player takes damage
         if (otherAttributes != null)
         {
-            otherAttributes.TakeDamage(damage, Vector3.zero, this.gameObject);
+            otherAttributes.TakeDamage(_damage, transform.forward * _knockForce + Vector3.up * _knockupForce, this.gameObject);
         }
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using EZCameraShake;
 
 /*
 Programmer: Robert Fowley
@@ -40,14 +39,11 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     [SerializeField] [Range(0, 0.5f)] private float easeOut = 0.15f;
     [SerializeField] [Range(0, 0.5f)] private float easeOutDelay = 0.15f;
 
-    public bool IsDead() { return _health == 0; }
+    [Header("Spawn Stats")]
+    [SerializeField] private GameObject[] _itemPrefabs;
+    [SerializeField] private int _cellSpawnCount = 5;
 
-    private void Update()
-    {
-        // DELETE THIS (testing)
-        if (Input.GetKeyDown(KeyCode.Z))
-            _stateController._modelController.AddStunned(1, (Random.value - 0.5f) * 2, easeOutDelay, easeOut);
-    }
+    public bool IsDead() { return _health == 0; }
 
     void Awake()
     {
@@ -90,6 +86,8 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         if (_health <= 0)
         {
             connectedPlayers.playersConnected--;
+            MatchManager.instance.ManagerEnd();
+            _stateController._playerCamera.targetDead = true;
             return true;
         }
         return false;
@@ -157,7 +155,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
     #region General Functions
     //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
-    public bool TakeDamage(int pAmount, Vector3 pKnockback, GameObject pAttacker)
+    public bool TakeDamage(int pAmount, Vector3 pKnockback, GameObject pAttacker, bool pIgnoreWeight = false)
     {
         //Debug.Log("PlayerAttributes: TakeDamage");
 
@@ -201,13 +199,35 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         }
 
         // Add Knockback
-        _stateController._Rb.AddForce(pKnockback / weight, ForceMode.Impulse);
+        _stateController._Rb.AddForce(pKnockback / (pIgnoreWeight ? 1 : weight), ForceMode.Impulse);
 
         if (died == false)
             _stateController._modelController.AddStunned(1, (Random.value - 0.5f) * 2, easeOutDelay, easeOut);
+        else
+            SpawnStatUps();
 
         // Return If Dead or Not
         return died;
+    }
+
+    private void SpawnStatUps()
+    {
+        // Can't Collect them myself
+        Destroy(GetComponent<PlayerCollectibles>());
+
+        StartCoroutine(SpawnStatUpsDelay());
+    }
+
+    private IEnumerator SpawnStatUpsDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        // Coins disperse
+        for (int i = 0; i < _cellSpawnCount; ++i)
+        {
+            GameObject tmp = Instantiate(_itemPrefabs[Random.Range(0, _itemPrefabs.Length)]);
+            tmp.transform.position = transform.position + Vector3.up * 0.1f;
+        }
     }
 
     public void RecivePower(int pPower)

@@ -16,21 +16,31 @@ public class MatchManager : MonoBehaviour
     public SplitscreenManager splitscreenScript;
     public SpawnRandomEnemies[] spawnEnemyScript;
     public SpawnEditLava spawnLavaScript;
+    public static MatchManager instance = null;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     public void Start()
     {
+        StartCoroutine("CinemaOff");
+        spawnPlayerScript.MatchStartup();
+
         foreach (SpawnRandomEnemies cluster in spawnEnemyScript)
         {
             cluster.SpawnEnemies();
         }
-
-        StartCoroutine("CinemaOff");
-        spawnPlayerScript.MatchStartup();
     }
 
     public void Update()
     {
         spawnLavaScript.lavaTimer();
+    }
+
+    public void ManagerEnd()
+    {
         spawnPlayerScript.MatchEnd();
     }
 

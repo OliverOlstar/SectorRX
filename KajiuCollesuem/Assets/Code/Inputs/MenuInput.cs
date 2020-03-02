@@ -19,10 +19,18 @@ public class @MenuInput : IInputActionCollection, IDisposable
             ""id"": ""0ec84224-54a5-4ff4-ac63-7c5082bdbc15"",
             ""actions"": [
                 {
-                    ""name"": ""MenuMovement"",
-                    ""type"": ""PassThrough"",
+                    ""name"": ""Left"",
+                    ""type"": ""Button"",
                     ""id"": ""5f63826f-d0ce-4e17-b963-4567b48e2fbc"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Right"",
+                    ""type"": ""Button"",
+                    ""id"": ""2e8a1c66-2270-4d44-927d-2a1cfde9a0b2"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
@@ -53,68 +61,35 @@ public class @MenuInput : IInputActionCollection, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""666ea405-5f57-4da4-9793-c2c7e7aabaf7"",
-                    ""path"": ""2DVector"",
+                    ""name"": """",
+                    ""id"": ""e374f01f-8a7f-48d9-9cf4-56b584fb3816"",
+                    ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MenuMovement"",
-                    ""isComposite"": true,
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Left"",
+                    ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""up"",
-                    ""id"": ""d15c470e-b812-4b62-97a6-eff030cc42e7"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""name"": """",
+                    ""id"": ""2bd9d036-9f14-4d2f-bb03-887fc1e22222"",
+                    ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""MenuMovement"",
+                    ""action"": ""Left"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""down"",
-                    ""id"": ""1f34497e-3361-44ef-a53d-fb27b7c2e67f"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""MenuMovement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""a6429a02-f502-413d-9f1a-76c6c4457dc6"",
+                    ""name"": """",
+                    ""id"": ""38a0b812-50aa-41b6-98f0-151dca0b1d25"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""MenuMovement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""55422a56-ad14-4c12-a49b-61e17974e31f"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""MenuMovement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e374f01f-8a7f-48d9-9cf4-56b584fb3816"",
-                    ""path"": ""<Gamepad>/dpad"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""MenuMovement"",
+                    ""action"": ""Left"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -144,6 +119,17 @@ public class @MenuInput : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""3e3aa30e-824d-48f0-84a9-d3268ce443d7"",
                     ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Leaving"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8c3ec617-45dd-4851-9b0c-771c656212ce"",
+                    ""path"": ""<Keyboard>/backspace"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -183,6 +169,39 @@ public class @MenuInput : IInputActionCollection, IDisposable
                     ""action"": ""ColorPicking"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cc00fb23-6396-4bbf-b29f-711424f455d4"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fcb4029a-c6a6-46fc-9d1b-014bdcbb9c47"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2db1344a-5b10-4c0f-bc67-106f44d0d477"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -219,7 +238,8 @@ public class @MenuInput : IInputActionCollection, IDisposable
 }");
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
-        m_Menu_MenuMovement = m_Menu.FindAction("MenuMovement", throwIfNotFound: true);
+        m_Menu_Left = m_Menu.FindAction("Left", throwIfNotFound: true);
+        m_Menu_Right = m_Menu.FindAction("Right", throwIfNotFound: true);
         m_Menu_Joining = m_Menu.FindAction("Joining", throwIfNotFound: true);
         m_Menu_Leaving = m_Menu.FindAction("Leaving", throwIfNotFound: true);
         m_Menu_ColorPicking = m_Menu.FindAction("ColorPicking", throwIfNotFound: true);
@@ -272,7 +292,8 @@ public class @MenuInput : IInputActionCollection, IDisposable
     // Menu
     private readonly InputActionMap m_Menu;
     private IMenuActions m_MenuActionsCallbackInterface;
-    private readonly InputAction m_Menu_MenuMovement;
+    private readonly InputAction m_Menu_Left;
+    private readonly InputAction m_Menu_Right;
     private readonly InputAction m_Menu_Joining;
     private readonly InputAction m_Menu_Leaving;
     private readonly InputAction m_Menu_ColorPicking;
@@ -280,7 +301,8 @@ public class @MenuInput : IInputActionCollection, IDisposable
     {
         private @MenuInput m_Wrapper;
         public MenuActions(@MenuInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @MenuMovement => m_Wrapper.m_Menu_MenuMovement;
+        public InputAction @Left => m_Wrapper.m_Menu_Left;
+        public InputAction @Right => m_Wrapper.m_Menu_Right;
         public InputAction @Joining => m_Wrapper.m_Menu_Joining;
         public InputAction @Leaving => m_Wrapper.m_Menu_Leaving;
         public InputAction @ColorPicking => m_Wrapper.m_Menu_ColorPicking;
@@ -293,9 +315,12 @@ public class @MenuInput : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_MenuActionsCallbackInterface != null)
             {
-                @MenuMovement.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnMenuMovement;
-                @MenuMovement.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnMenuMovement;
-                @MenuMovement.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnMenuMovement;
+                @Left.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnLeft;
+                @Left.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnLeft;
+                @Left.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnLeft;
+                @Right.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnRight;
+                @Right.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnRight;
+                @Right.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnRight;
                 @Joining.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnJoining;
                 @Joining.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnJoining;
                 @Joining.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnJoining;
@@ -309,9 +334,12 @@ public class @MenuInput : IInputActionCollection, IDisposable
             m_Wrapper.m_MenuActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @MenuMovement.started += instance.OnMenuMovement;
-                @MenuMovement.performed += instance.OnMenuMovement;
-                @MenuMovement.canceled += instance.OnMenuMovement;
+                @Left.started += instance.OnLeft;
+                @Left.performed += instance.OnLeft;
+                @Left.canceled += instance.OnLeft;
+                @Right.started += instance.OnRight;
+                @Right.performed += instance.OnRight;
+                @Right.canceled += instance.OnRight;
                 @Joining.started += instance.OnJoining;
                 @Joining.performed += instance.OnJoining;
                 @Joining.canceled += instance.OnJoining;
@@ -345,7 +373,8 @@ public class @MenuInput : IInputActionCollection, IDisposable
     }
     public interface IMenuActions
     {
-        void OnMenuMovement(InputAction.CallbackContext context);
+        void OnLeft(InputAction.CallbackContext context);
+        void OnRight(InputAction.CallbackContext context);
         void OnJoining(InputAction.CallbackContext context);
         void OnLeaving(InputAction.CallbackContext context);
         void OnColorPicking(InputAction.CallbackContext context);

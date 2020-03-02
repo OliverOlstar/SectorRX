@@ -15,7 +15,7 @@ public class ModelMovement : MonoBehaviour
     [SerializeField] private float _tiltingMult = 5;
 
     [Header("Flip")]
-    [SerializeField] private SOGraph _flipGraph;
+    [SerializeField] private AnimationCurve _flipGraph;
     private float _flipProgress;
     private float _flipYRotation;
 
@@ -111,7 +111,7 @@ public class ModelMovement : MonoBehaviour
             if (_flipProgress >= 1)
                 _flipProgress = 1;
             
-            transform.parent.localEulerAngles = new Vector3(Mathf.Lerp(0, 360, _modelController.GetCatmullRomPosition(_flipProgress, _flipGraph).y), _flipYRotation, 0);
+            transform.parent.localEulerAngles = new Vector3(Mathf.Lerp(0, 360, _flipGraph.Evaluate(_flipProgress)), _flipYRotation, 0);
             yield return null;
         }
 
