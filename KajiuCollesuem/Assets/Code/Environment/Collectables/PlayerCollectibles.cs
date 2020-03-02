@@ -26,6 +26,7 @@ public class PlayerCollectibles : MonoBehaviour
 
     // VARS
     [SerializeField] private GameObject[] statTexts = new GameObject[7];
+    [SerializeField] private Slider[] statSliders = new Slider[7];
     [SerializeField] private int MAXUPGRADES = 10;
     private float[] upgradeCounts = new float[7];
 
