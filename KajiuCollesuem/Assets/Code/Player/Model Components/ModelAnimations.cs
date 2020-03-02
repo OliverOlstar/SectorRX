@@ -8,8 +8,8 @@ public class ModelAnimations : MonoBehaviour
     private Rigidbody _rb;
     private Animator _anim;
 
-    [Header("Animation Lengths")]
-    [SerializeField] private float _stepMult = 1;
+    [Header("Animation Lengths (stepMult is overriden by playerCollectables")]
+    public float stepMult = 1;
     [SerializeField] private float _idleMult = 1;
     [SerializeField] private float _fallMult = 1;
     [SerializeField] private float _deadMult = 1;
@@ -35,6 +35,8 @@ public class ModelAnimations : MonoBehaviour
     //private float _attackTransitionRate = 0;
 
     //private int _doneAttackTransition = 0;
+
+    private float _SecondStep = 0.0f;
 
     public void Init(ModelController pController, Rigidbody pRb, Animator pAnim)
     {
@@ -148,15 +150,23 @@ public class ModelAnimations : MonoBehaviour
     public void SteppingAnim()
     {
         // Increase Stepping Animation
-        _stepProgress = increaseProgress(_stepProgress, _stepMult);
-
-        float secondStep = (_stepProgress <= 0.5f) ? 0 : 0.5f;
-        float time = (_stepProgress - secondStep) * 2;
-
         float steppingSpeed = _modelController.horizontalVelocity.magnitude / GetComponentInParent<MovementComponent>().maxSpeed;
+        _stepProgress += Time.fixedDeltaTime * stepMult;
+
+        if (_stepProgress >= 1.0f)
+        {
+            _stepProgress -= 1.0f;
+            _SecondStep = (_SecondStep == 0.0f) ? 0.5f : 0.0f;
+
+            // Shake & Sound
+            if (steppingSpeed != 0.0f)
+                _modelController.TookStep(steppingSpeed);
+
+        }
 
         // Set Anim Stepping values
-        _anim.SetFloat("Stepping Progress", (_stepGraph.Evaluate(time) / 2) + secondStep);
+        _anim.SetFloat("Stepping Progress", _stepGraph.Evaluate(_stepProgress) / 2 + _SecondStep);
+        //_anim.SetFloat("Stepping Progress", (_stepGraph.Evaluate(time) / 2) + secondStep);
         _anim.SetFloat("Stepping Speed", (steppingSpeed > 1) ? 1 : steppingSpeed);
 
         // Set Anim Direction
@@ -197,9 +207,13 @@ public class ModelAnimations : MonoBehaviour
         if (pProgress >= 1)
         {
             if (pLoop)
+            {
                 pProgress -= 1;
+            }
             else
+            {
                 return 1;
+            }
         }
 
         return pProgress;

@@ -18,7 +18,7 @@ public class MatchInputHandler : MonoBehaviour
     public void OnHeavyAttack(InputValue ctx) { if (playerStateController != null) playerStateController.OnHeavyAttack(ctx);}
     public void OnJump() { if (playerStateController != null) playerStateController.OnJump();}
     public void OnLockOn() { if (playerStateController != null) playerStateController.OnLockOn();}
-    public void OnPause() { if (_PauseMenu != null) _PauseMenu.TogglePause();}
+    public void OnPause() { if (_PauseMenu != null && playerStateController != null) _PauseMenu.TogglePause();}
     public void OnAnyInput() { if (playerStateController != null) playerStateController.OnAnyInput();}
     #endregion
 }

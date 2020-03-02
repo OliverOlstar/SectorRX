@@ -7,6 +7,8 @@ public class ModelController : MonoBehaviour
     private Rigidbody _rb;
     private Animator _anim;
 
+    private PlayerStateController _stateController;
+
     [HideInInspector] public bool onGround = false;
     [HideInInspector] public Vector3 acceleration;
 
@@ -32,6 +34,7 @@ public class ModelController : MonoBehaviour
         _modelMovement = GetComponent<ModelMovement>();
 
         // Get Other Components
+        _stateController = GetComponentInParent<PlayerStateController>();
         _rb = GetComponentInParent<Rigidbody>();
         _anim = GetComponent<Animator>();
 
@@ -137,6 +140,13 @@ public class ModelController : MonoBehaviour
         _modelMovement.disableRotation = true;
     }
 
+    public void OverChargedAttack()
+    {
+        _AttackingState = 0;
+        _modelMovement.disableRotation = false;
+        _modelWeights.SetUpperbodyWeight(0.0f, 3.7f);
+    }
+
     // Coroutines
     private IEnumerator PlayAttackWithDelay(float pDelay)
     {
@@ -159,7 +169,17 @@ public class ModelController : MonoBehaviour
     }
     #endregion
 
-    #region Dodging
+    #region Locomotion
+    public void TookStep(float pShakeForce)
+    {
+        if (_stateController._movementComponent.disableMovement == false && _stateController.groundMaterial != -1)
+        {
+            
+            _stateController._CameraShake.PlayShake(pShakeForce * 1f, 4.0f, 0.05f, 0.2f);
+        } 
+
+    }
+
     public void PlayDodge(Vector2 pDirection, float pSpeed)
     {
         _DontUpdateWeights = true;

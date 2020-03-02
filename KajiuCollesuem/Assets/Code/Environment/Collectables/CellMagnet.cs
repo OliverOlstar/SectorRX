@@ -16,6 +16,8 @@ public class CellMagnet : MonoBehaviour
     [SerializeField] private float _magnetInitialVelocity = 10;
     [SerializeField] private float _magnetInitialUpVelocity = 10;
 
+    private List<Collider> collidersInMagnet = new List<Collider>();
+
     void Start()
     {
         _rb = GetComponentInParent<Rigidbody>();
@@ -42,6 +44,14 @@ public class CellMagnet : MonoBehaviour
         // Jump at player
         if (other.CompareTag("Player"))
         {
+            StartCoroutine(magnetRoutine(other));
+            collidersInMagnet.Add(other);
+        }
+    }
+    IEnumerator magnetRoutine(Collider other)
+    {
+        do
+        {
             // Get direction
             Vector3 jumpDir = other.transform.position - transform.position;
             float jumpUpMult = Mathf.Clamp(jumpDir.y * _magnetInitialUpVelocity, -3, 9);
@@ -49,6 +59,16 @@ public class CellMagnet : MonoBehaviour
 
             // Set force
             _rb.velocity = jumpDir * _magnetInitialVelocity + Vector3.up * jumpUpMult;
+
+            yield return new WaitForSeconds(1.0f);
         }
+        // Check if still colliding
+        while (collidersInMagnet.Contains(other));
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (collidersInMagnet.Contains(other))
+            collidersInMagnet.Remove(other);
     }
 }

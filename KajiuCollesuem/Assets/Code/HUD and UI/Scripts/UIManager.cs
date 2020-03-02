@@ -31,7 +31,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            mainMenu.DOAnchorPos(new Vector2(44, 21), 0.4f);
+            StartCoroutine(StartMenu());
         }
     }
 
@@ -78,7 +78,7 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
         videoPlayer.Play();
-        operation.allowSceneActivation = false;
+        //operation.allowSceneActivation = false;
         while (!operation.isDone)
         {
             float progress = Mathf.Clamp01(operation.progress / 0.9f);
@@ -88,7 +88,7 @@ public class UIManager : MonoBehaviour
             {
                 videoPlayer.loopPointReached += EndReached;
                 yield return new WaitForSeconds(2.0f);
-                operation.allowSceneActivation = true;
+                //operation.allowSceneActivation = true;
             }
 
             yield return null;
@@ -105,4 +105,10 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(0.75f);
         videoPlayer.isLooping = false;
     }
-}
+
+    IEnumerator StartMenu()
+    {
+        yield return new WaitForSeconds(7.0f);
+        mainMenu.DOAnchorPos(new Vector2(44, 21), 0.4f);
+    }
+ }

@@ -15,6 +15,10 @@ public class DodgeComponent : MonoBehaviour
     private float _dodgeDelay = 0.0f;
 
     [Space]
+    [SerializeField] private float dodgeShakeDelay = 0.2f;
+    private bool shakeDone = false;
+
+    [Space]
     [SerializeField] private float shortDodgeMaxSpeed = 6.0f;
     [SerializeField] private float shortDodgeDuration = 0.2f;
     [SerializeField] private float shortDodgeAcceleration = 100;
@@ -71,11 +75,25 @@ public class DodgeComponent : MonoBehaviour
         _dodgeDelay = Time.time + pCooldown + pDuration;
         float dodgeEndTime = Time.time + pDuration;
 
+        // Shake
+        dodgeShakeDelay = Time.time + 0.1f;
+        shakeDone = false;
+
+        // Sound
+        _stateController._Sound.DodgeSound(0.1f);
+
         //Run Dodge Force
         while (Time.time <= dodgeEndTime)
         {
             //Can end early
             if (doneDodge) break;
+
+            // Shake
+            if (shakeDone == false && Time.time >= dodgeShakeDelay)
+            {
+                _stateController._CameraShake.PlayShake(5.0f, 1.6f, 0.2f, 0.4f, 0.03f);
+                shakeDone = true;
+            }
 
             //Move player
             Vector3 dodgeVector = new Vector3(pDirection.x, 0, pDirection.y).normalized * pAcceleration * Time.deltaTime;

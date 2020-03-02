@@ -18,61 +18,63 @@ public class PlayerSpawn : MonoBehaviour
     public RectTransform transitionScreen;
 
     public MusicManager musicManager;
-    [SerializeField] private Transform _MapCentre;
     [HideInInspector] public List<Transform> playerSpawns = new List<Transform>();
     private int _SpawnPointIndex;
-    [SerializeField] private MatchInputHandler[] _PlayerInputs = new MatchInputHandler[9];
-    [SerializeField] private List<MatchInputHandler> _ActiveInputs = new List<MatchInputHandler>();
+    [SerializeField] private MatchInputHandler[] _PlayerInputs = new MatchInputHandler[6];
+    private List<MatchInputHandler> _ActiveInputs = new List<MatchInputHandler>();
 
-    [SerializeField] private Color[] boarderColors = new Color[9];
+    //[SerializeField] private Color[] boarderColors = new Color[6];
+
+    public float playersToSpawn = 0;
 
     public void MatchStartup()
     {
         //If no players are entered, automatically set to 2.
-        if (connectedPlayers.playersToSpawn <= 0)
+        if (connectedPlayers.playersConnected <= 0)
         {
-            connectedPlayers.playersToSpawn = 2;
             connectedPlayers.playersConnected = 2;
             
             connectedPlayers.playerIndex.Clear();
             UsedDevices player = new UsedDevices();
-            player.deviceUser = 0;
-            player.playerIndex = 0;
-            connectedPlayers.playerIndex.Add(player);
-            player.deviceUser = 1;
-            player.playerIndex = 1;
-            connectedPlayers.playerIndex.Add(player);
+
+            for (int i = 0; i < connectedPlayers.playersConnected; i++)
+            {
+                player.deviceUser = i;
+                player.playerIndex = i;
+                connectedPlayers.playerIndex.Add(player);
+            }
         }
 
-        //Sets number of connected players equal to how many need to be spawned. Helps with match restarts after a player wins.
-        connectedPlayers.playersConnected = connectedPlayers.playersToSpawn;
+        playersToSpawn = connectedPlayers.playersConnected;
         Debug.Log(connectedPlayers.playersConnected);
     }
 
     public void MatchEnd()
     {
-        if (connectedPlayers.playersConnected <= 1)
-        {
+        playersToSpawn--;
+
+        // Check if match is over
+        if (playersToSpawn <= 1)
             StartCoroutine("VictoryReset");
-        }
     }
 
     public void InputSetup()
     {
-        //Find required number of players to spawn
-        for (int i = 0; i < connectedPlayers.playersToSpawn; i++)
+        // Repeat this for every player that needs to be spawned
+        for (int i = 0; i < playersToSpawn; i++)
         {
-            //Check each connected players device index from Main Menu scene
+            // Check each connected players device index from Main Menu scene
             for (int j = 0; j < connectedPlayers.playerIndex.Count; j++)
             {
-                //Set devices in Game Scene as same order as Main Menu scene
+                // Set devices in Game Scene as same order as Main Menu scene
                 if (connectedPlayers.playerIndex[j].playerIndex == i)
                 {
-                    //Check all devices for ones that match user index
+                    // Check all devices for matching device
                     foreach (MatchInputHandler input in _PlayerInputs)
                     {
                         if (input.GetComponent<PlayerInput>().user.index == connectedPlayers.playerIndex[j].deviceUser)
                         {
+                            Debug.Log("Add activeDevice");
                             _ActiveInputs.Add(input);
                             break;
                         }
@@ -83,23 +85,13 @@ public class PlayerSpawn : MonoBehaviour
         }
     }
 
-    public void DisableUnusedDevices()
-    {
-        //Disable InputHandlers that aren't connected to a player
-        foreach(MatchInputHandler input in _PlayerInputs)
-        {
-            if (input.playerStateController == null)
-                input.gameObject.SetActive(false);
-        }
-    }
-
     //Waits three seconds then spawns players in one of the avaiable locations randomly (only one player per location).
     public void SpawnAllPlayers()
     {
         //Spawn number of connected players.
-        Debug.Log("Spawning " + connectedPlayers.playersToSpawn + " players");
+        Debug.Log("Spawning " + playersToSpawn + " players");
 
-        if (playerSpawns.Count < connectedPlayers.playersToSpawn)
+        if (playerSpawns.Count < playersToSpawn)
         {
             Debug.Log("Not enough spawnpoints available");
             return;
@@ -110,30 +102,30 @@ public class PlayerSpawn : MonoBehaviour
         // Randomly spawn players at listed locations.
         SpawnPlayers();
 
-        SetHUDBoarders();
+        //SetHUDBoarders();
 
         DisableUnusedDevices();
     }
 
-    private void SetHUDBoarders()
-    {
-        BorderChange border;
-        for (int i  = 0; i < players.Count; i++)
-        {
-            border = players[i].GetComponentInChildren<BorderChange>();
+    //private void SetHUDBoarders()
+    //{
+    //    BorderChange border;
+    //    for (int i  = 0; i < players.Count; i++)
+    //    {
+    //        border = players[i].GetComponentInChildren<BorderChange>();
 
-            if(border)
-            {
-                border.SetBoarderColor(boarderColors[i]);
-            }
-        }
-    }
+    //        if(border)
+    //        {
+    //            border.SetBoarderColor(boarderColors[i]);
+    //        }
+    //    }
+    //}
 
     private void SpawnPlayers()
     {
-        for (int i = 0; i < connectedPlayers.playersToSpawn; i++)
+        for (int i = 0; i < playersToSpawn; i++)
         {
-            _SpawnPointIndex = Random.Range(0, (connectedPlayers.playersToSpawn <= 4 ? 4 : 9) - i);
+            _SpawnPointIndex = Random.Range(0, (playersToSpawn <= 4 ? 4 : 8) - i);
             Transform _EightSpawnPos = playerSpawns[_SpawnPointIndex];
             playerSpawns.RemoveAt(_SpawnPointIndex);
             GameObject playerCharacter = Instantiate(playerPrefab, _EightSpawnPos.position, transform.rotation);
@@ -148,16 +140,23 @@ public class PlayerSpawn : MonoBehaviour
         }
     }
 
+    public void DisableUnusedDevices()
+    {
+        //Disable InputHandlers that aren't connected to a player
+        foreach (MatchInputHandler input in _PlayerInputs)
+        {
+            if (input.playerStateController == null)
+                input.gameObject.SetActive(false);
+        }
+    }
+
     IEnumerator VictoryReset()
     {
         yield return new WaitForSeconds(3.5f);
-        
-        if (connectedPlayers.playersToSpawn > 1)
-        {
-            musicManager.mainAudio.Stop();
-            transitionScreen.DOAnchorPos(new Vector2(0, 0), 0.4f);
-            yield return new WaitForSeconds(0.5f);
-            SceneManager.LoadSceneAsync(2);
-        }
+
+        musicManager.mainAudio.Stop();
+        transitionScreen.DOAnchorPos(new Vector2(0, 0), 0.4f);
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadSceneAsync(2);
     }
 }

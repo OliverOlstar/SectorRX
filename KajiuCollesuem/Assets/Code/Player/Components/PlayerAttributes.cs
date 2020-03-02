@@ -85,7 +85,6 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         // Return If Dead or Not
         if (_health <= 0)
         {
-            connectedPlayers.playersConnected--;
             MatchManager.instance.ManagerEnd();
             _stateController._playerCamera.targetDead = true;
             return true;
@@ -200,6 +199,17 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
         // Add Knockback
         _stateController._Rb.AddForce(pKnockback / (pIgnoreWeight ? 1 : weight), ForceMode.Impulse);
+
+        // Add Shake
+        _stateController._CameraShake.PlayShake(pAmount / 4, 6.0f, 0.5f, 0.8f);
+
+        // Sound
+        if (died)
+            _stateController._Sound.PlayerDeathSound(0.5f);
+        else if (pAttacker != null)
+            _stateController._Sound.HitTarSound(0.0f);
+        else
+            _stateController._Sound.HitByAttackSound(0.0f);
 
         if (died == false)
             _stateController._modelController.AddStunned(1, (Random.value - 0.5f) * 2, easeOutDelay, easeOut);

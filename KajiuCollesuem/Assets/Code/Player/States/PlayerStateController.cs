@@ -16,6 +16,7 @@ public class PlayerStateController : MonoBehaviour
 
     // On Ground
     [HideInInspector] public bool onGround = false;
+    [HideInInspector] public int groundMaterial = -1;
     [HideInInspector] public bool Stunned = false;
     [HideInInspector] public float AttackStateReturnDelay = 0;
     [HideInInspector] public float AbilityStateReturnDelay = 0;
@@ -47,6 +48,9 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public PlayerCamera _playerCamera;
     public RagdollManager _ragdollManager;
 
+    [HideInInspector] public PlayerSFX _Sound;
+    [HideInInspector] public CameraShakeCont _CameraShake;
+
     [HideInInspector] public Rigidbody _Rb;
     public Transform _Camera;
     public PlayerHitbox[] hitboxes = new PlayerHitbox[0];
@@ -68,6 +72,9 @@ public class PlayerStateController : MonoBehaviour
 
         _playerAttributes = GetComponent<PlayerAttributes>();
         _modelController = GetComponentInChildren<ModelController>();
+
+        _CameraShake = GetComponent<CameraShakeCont>();
+        _Sound = GetComponentInChildren<PlayerSFX>();
 
         _stateMachine = GetComponent<PlayerStateMachine>();
         InitializeStateMachine();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class Panels : MonoBehaviour
 {
@@ -10,23 +11,36 @@ public class Panels : MonoBehaviour
     [SerializeField] private connectedPlayers _AddPlayer;
     public Text playerPanels;
     private int stateValue = 0;
+    [SerializeField] private MenuLizzy _myLizzy;
+
+    [HideInInspector] public DeviceHandler myDevice = null;
 
     public Sprite[] abilityIcons;
-    public Image[] ability = new Image[2];
+    public SpriteRenderer[] ability = new SpriteRenderer[2];
+    public RectTransform abilityOneRect, abilityTwoRect;
     private int presetNumber = 0;
     public bool setOne;
     public bool setTwo;
     public bool abilityLocked;
+    public bool animBool;
+    public Animator animShield;
+    public Animator animMask;
 
     private void Start()
     {
-        ability[0].GetComponent<Image>().sprite = abilityIcons[2];
-        ability[1].GetComponent<Image>().sprite = abilityIcons[3];
+        ability[0].GetComponent<SpriteRenderer>().sprite = abilityIcons[2];
+        ability[1].GetComponent<SpriteRenderer>().sprite = abilityIcons[3];
     }
 
     private void Update()
     {
-        Debug.Log(presetNumber);
+        if (animShield.GetCurrentAnimatorStateInfo(0).IsName("Has Left"))
+        {
+            abilityOneRect.DOAnchorPos(new Vector2(0, 34), 0.4f);
+            abilityTwoRect.DOAnchorPos(new Vector2(0, -145), 0.4f);
+        }
+        animShield.SetBool("hasJoined", animBool);
+        animMask.SetBool("maskJoined", animBool);
     }
 
     public void OnJoining()
@@ -36,8 +50,13 @@ public class Panels : MonoBehaviour
             case 0:
                 if(stateValue == 0)
                 {
+                    playerPanels.text = " ";
+                    animBool = true;
+                    abilityOneRect.DOAnchorPos(new Vector2(0, -1930), 1.6f);
+                    abilityTwoRect.DOAnchorPos(new Vector2(0, -2110), 1.6f);
                     abilityLocked = true;
                     stateValue = 1;
+                    _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.LockedIn);
                 }
                 break;
             
@@ -45,7 +64,7 @@ public class Panels : MonoBehaviour
                 if (connectedPlayers.playersConnected >= 2 && abilityLocked)
                 {
                     _AddPlayer.SetPlayerOrder();
-                    SceneManager.LoadScene(1);
+                    SceneManager.LoadSceneAsync(1);
                 }
                 break;
         }
@@ -81,21 +100,32 @@ public class Panels : MonoBehaviour
             presetNumber = 0;
         }
 
-        ability[0].GetComponent<Image>().sprite = abilityIcons[presetNumber * 2];
-        ability[1].GetComponent<Image>().sprite = abilityIcons[presetNumber * 2 + 1];
+        ability[0].GetComponent<SpriteRenderer>().sprite = abilityIcons[presetNumber * 2];
+        ability[1].GetComponent<SpriteRenderer>().sprite = abilityIcons[presetNumber * 2 + 1];
     }
 
-    public void PlayerJoined()
+    public void PlayerJoined(DeviceHandler pDevice)
     {
-        playerPanels.text = "Player " + playerNumber + " Joined";
+        myDevice = pDevice;
+
+        playerPanels.text = " ";
         presetNumber = 0;
-        ability[0].GetComponent<Image>().sprite = abilityIcons[2];
-        ability[1].GetComponent<Image>().sprite = abilityIcons[3];
+        ability[0].GetComponent<SpriteRenderer>().sprite = abilityIcons[2];
+        ability[1].GetComponent<SpriteRenderer>().sprite = abilityIcons[3];
+
+        _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.Joined);
     }
 
     public int PlayerLeft()
     {
-        playerPanels.text = "Press Space or 'Start' to Join";
+        myDevice = null;
+
+        playerPanels.text = "Press 'Space'\nor\n'Start' to Join";
+        animBool = false;
+        stateValue = 0;
+
+        _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.NotJoined);
+
         return playerNumber - 1;
     }
 }

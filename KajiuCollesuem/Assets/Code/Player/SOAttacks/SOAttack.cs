@@ -11,6 +11,7 @@ public class SOAttack : ScriptableObject
     
     [Header("Post Attack")]
     [Min(0)] public float holdEndPosTime = 0.1f;
+    [Min(0)] public float returnToStateDelay = 0.2f;
 
     [Header("Pre Attack")]
     [Min(0)] public float holdStartPosTime = 0.1f;
@@ -26,6 +27,10 @@ public class SOAttack : ScriptableObject
     public float HitboxKnockup = 10.0f;
     public float HitboxKnockback = 20.0f;
     public int HitboxDamage = 20;
+
+    [Space]
+    public float shakeTime = 0.1f;
+    public float soundTime = 0.1f;
 
     [Header("Transtion Dampenings")]
     public float transitionInDampening = 5.0f;

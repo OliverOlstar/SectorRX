@@ -35,7 +35,7 @@ public class @MenuInput : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Joining"",
+                    ""name"": ""Forward"",
                     ""type"": ""Button"",
                     ""id"": ""77d10590-8300-46b8-8eb6-f3bc7248f920"",
                     ""expectedControlType"": """",
@@ -43,7 +43,7 @@ public class @MenuInput : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Leaving"",
+                    ""name"": ""Backward"",
                     ""type"": ""Button"",
                     ""id"": ""b865d8cb-87fb-4985-a7fe-ac2b74c6ac62"",
                     ""expectedControlType"": """",
@@ -100,7 +100,7 @@ public class @MenuInput : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Joining"",
+                    ""action"": ""Forward"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -111,7 +111,7 @@ public class @MenuInput : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Joining"",
+                    ""action"": ""Forward"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -122,7 +122,7 @@ public class @MenuInput : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Leaving"",
+                    ""action"": ""Backward"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -133,7 +133,7 @@ public class @MenuInput : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Leaving"",
+                    ""action"": ""Backward"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -144,14 +144,14 @@ public class @MenuInput : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Leaving"",
+                    ""action"": ""Backward"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""217d3596-0e10-4f34-9b04-3a1501b08134"",
-                    ""path"": ""<Keyboard>/r"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -240,8 +240,8 @@ public class @MenuInput : IInputActionCollection, IDisposable
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Left = m_Menu.FindAction("Left", throwIfNotFound: true);
         m_Menu_Right = m_Menu.FindAction("Right", throwIfNotFound: true);
-        m_Menu_Joining = m_Menu.FindAction("Joining", throwIfNotFound: true);
-        m_Menu_Leaving = m_Menu.FindAction("Leaving", throwIfNotFound: true);
+        m_Menu_Forward = m_Menu.FindAction("Forward", throwIfNotFound: true);
+        m_Menu_Backward = m_Menu.FindAction("Backward", throwIfNotFound: true);
         m_Menu_ColorPicking = m_Menu.FindAction("ColorPicking", throwIfNotFound: true);
     }
 
@@ -294,8 +294,8 @@ public class @MenuInput : IInputActionCollection, IDisposable
     private IMenuActions m_MenuActionsCallbackInterface;
     private readonly InputAction m_Menu_Left;
     private readonly InputAction m_Menu_Right;
-    private readonly InputAction m_Menu_Joining;
-    private readonly InputAction m_Menu_Leaving;
+    private readonly InputAction m_Menu_Forward;
+    private readonly InputAction m_Menu_Backward;
     private readonly InputAction m_Menu_ColorPicking;
     public struct MenuActions
     {
@@ -303,8 +303,8 @@ public class @MenuInput : IInputActionCollection, IDisposable
         public MenuActions(@MenuInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Left => m_Wrapper.m_Menu_Left;
         public InputAction @Right => m_Wrapper.m_Menu_Right;
-        public InputAction @Joining => m_Wrapper.m_Menu_Joining;
-        public InputAction @Leaving => m_Wrapper.m_Menu_Leaving;
+        public InputAction @Forward => m_Wrapper.m_Menu_Forward;
+        public InputAction @Backward => m_Wrapper.m_Menu_Backward;
         public InputAction @ColorPicking => m_Wrapper.m_Menu_ColorPicking;
         public InputActionMap Get() { return m_Wrapper.m_Menu; }
         public void Enable() { Get().Enable(); }
@@ -321,12 +321,12 @@ public class @MenuInput : IInputActionCollection, IDisposable
                 @Right.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnRight;
                 @Right.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnRight;
                 @Right.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnRight;
-                @Joining.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnJoining;
-                @Joining.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnJoining;
-                @Joining.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnJoining;
-                @Leaving.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnLeaving;
-                @Leaving.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnLeaving;
-                @Leaving.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnLeaving;
+                @Forward.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnForward;
+                @Forward.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnForward;
+                @Forward.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnForward;
+                @Backward.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnBackward;
+                @Backward.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnBackward;
+                @Backward.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnBackward;
                 @ColorPicking.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnColorPicking;
                 @ColorPicking.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnColorPicking;
                 @ColorPicking.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnColorPicking;
@@ -340,12 +340,12 @@ public class @MenuInput : IInputActionCollection, IDisposable
                 @Right.started += instance.OnRight;
                 @Right.performed += instance.OnRight;
                 @Right.canceled += instance.OnRight;
-                @Joining.started += instance.OnJoining;
-                @Joining.performed += instance.OnJoining;
-                @Joining.canceled += instance.OnJoining;
-                @Leaving.started += instance.OnLeaving;
-                @Leaving.performed += instance.OnLeaving;
-                @Leaving.canceled += instance.OnLeaving;
+                @Forward.started += instance.OnForward;
+                @Forward.performed += instance.OnForward;
+                @Forward.canceled += instance.OnForward;
+                @Backward.started += instance.OnBackward;
+                @Backward.performed += instance.OnBackward;
+                @Backward.canceled += instance.OnBackward;
                 @ColorPicking.started += instance.OnColorPicking;
                 @ColorPicking.performed += instance.OnColorPicking;
                 @ColorPicking.canceled += instance.OnColorPicking;
@@ -375,8 +375,8 @@ public class @MenuInput : IInputActionCollection, IDisposable
     {
         void OnLeft(InputAction.CallbackContext context);
         void OnRight(InputAction.CallbackContext context);
-        void OnJoining(InputAction.CallbackContext context);
-        void OnLeaving(InputAction.CallbackContext context);
+        void OnForward(InputAction.CallbackContext context);
+        void OnBackward(InputAction.CallbackContext context);
         void OnColorPicking(InputAction.CallbackContext context);
     }
 }

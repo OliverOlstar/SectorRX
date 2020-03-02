@@ -22,12 +22,12 @@ public class PlayerCollectibles : MonoBehaviour
 
     // COMPONENTS
     private PlayerStateController _stateController;
+    private ModelAnimations _modelAnimations;
 
     // VARS
     [SerializeField] private GameObject[] statTexts = new GameObject[7];
     [SerializeField] private int MAXUPGRADES = 10;
-    private int[] upgradeCounts = new int[7];
-    private float[] upgradeMults = new float[7];
+    private float[] upgradeCounts = new float[7];
 
     [Header("Health")]
     [SerializeField] private int minHealth = 60;
@@ -40,8 +40,12 @@ public class PlayerCollectibles : MonoBehaviour
     //[Header("Power")]
 
     [Header("Speed")]
-    [SerializeField] [Range(1, 1)] private float minSpeed = 1.0f;
-    [SerializeField] private float maxSpeed = 2.0f;
+    [SerializeField] [Range(1, 1)] private float minWalkSpeed = 1.0f;
+    [SerializeField] private float maxWalkSpeed = 2.0f;
+    [SerializeField] [Range(1, 1)] private float minDodgeSpeed = 1.0f;
+    [SerializeField] private float maxDodgeSpeed = 2.0f;
+    [SerializeField] private float minAnimSpeed = 2.0f;
+    [SerializeField] private float maxAnimSpeed = 3.0f;
 
     [Header("Jump")]
     [SerializeField] [Range(1,1)] private float minJump = 1.0f;
@@ -58,9 +62,9 @@ public class PlayerCollectibles : MonoBehaviour
     // SETUP
     private void Start()
     {
-        int index = 0;
         _stateController = GetComponent<PlayerStateController>();
-        
+        _modelAnimations = GetComponentInChildren<ModelAnimations>();
+
         //Text for when stats are raised
         statTexts[0].SetActive(false);
         statTexts[1].SetActive(false);
@@ -72,57 +76,41 @@ public class PlayerCollectibles : MonoBehaviour
 
         // Health
         _stateController._playerAttributes.setMaxHealth(minHealth);
-        upgradeMults[index] = (maxHealth - minHealth) / MAXUPGRADES;
-        index++;
 
         // Shield
         _stateController._playerAttributes.setMaxDefense(minShield);
-        upgradeMults[index] = (maxShield - minShield) / MAXUPGRADES;
-        index++;
-
-        // Power
-        index++;
 
         // Speed
-        upgradeMults[index] = (maxSpeed - minSpeed) / MAXUPGRADES;
-        index++;
-
-        // Jump
-        upgradeMults[index] = (maxJump - minJump) / MAXUPGRADES;
-        index++;
+        _modelAnimations.stepMult = minAnimSpeed;
 
         // Weight
         _stateController._playerAttributes.weight = minWeight;
-        upgradeMults[index] = (maxWeight - minWeight) / MAXUPGRADES;
-        index++;
 
-        // Attack
-        upgradeMults[index] = (maxAttack - minAttack) / MAXUPGRADES;
     }
 
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Alpha1))
-    //        CollectedItem(Upgrades.Health);
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            CollectedItem(Upgrades.Health);
 
-    //    if (Input.GetKeyDown(KeyCode.Alpha2))
-    //        CollectedItem(Upgrades.Shield);
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            CollectedItem(Upgrades.Shield);
 
-    //    if (Input.GetKeyDown(KeyCode.Alpha3))
-    //        CollectedItem(Upgrades.Power);
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            CollectedItem(Upgrades.Power);
 
-    //    if (Input.GetKeyDown(KeyCode.Alpha4))
-    //        CollectedItem(Upgrades.Speed);
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+            CollectedItem(Upgrades.Speed);
 
-    //    if (Input.GetKeyDown(KeyCode.Alpha5))
-    //        CollectedItem(Upgrades.Jump);
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+            CollectedItem(Upgrades.Jump);
 
-    //    if (Input.GetKeyDown(KeyCode.Alpha6))
-    //        CollectedItem(Upgrades.Weight);
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+            CollectedItem(Upgrades.Weight);
 
-    //    if (Input.GetKeyDown(KeyCode.Alpha7))
-    //        CollectedItem(Upgrades.Attack);
-    //}
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+            CollectedItem(Upgrades.Attack);
+    }
 
     // MIDGAME UPGRADE (return true if collected, false if already at max collect)
     public bool CollectedItem(Upgrades pStat)
@@ -134,16 +122,20 @@ public class PlayerCollectibles : MonoBehaviour
         if (upgradeCounts[index] > MAXUPGRADES)
             return false;
 
+        int value;
+
         switch (pStat)
         {
             case Upgrades.Health:
                 statTexts[0].SetActive(true);
-                _stateController._playerAttributes.setMaxHealth(Mathf.FloorToInt(minHealth + (upgradeMults[index] * upgradeCounts[index])));
+                value = Mathf.RoundToInt(Mathf.Lerp(minHealth, maxHealth, upgradeCounts[index] / MAXUPGRADES));
+                _stateController._playerAttributes.setMaxHealth(value);
                 break;
 
             case Upgrades.Shield:
                 statTexts[1].SetActive(true);
-                _stateController._playerAttributes.setMaxDefense(Mathf.FloorToInt(minShield + (upgradeMults[index] * upgradeCounts[index])));
+                value = Mathf.RoundToInt(Mathf.Lerp(minShield, maxShield, upgradeCounts[index] / MAXUPGRADES));
+                _stateController._playerAttributes.setMaxDefense(value);
                 break;
 
             case Upgrades.Power:
@@ -152,28 +144,41 @@ public class PlayerCollectibles : MonoBehaviour
 
             case Upgrades.Speed:
                 statTexts[4].SetActive(true);
-                _stateController._movementComponent.speedMult = minSpeed + (upgradeMults[index] * upgradeCounts[index]);
-                _stateController._dodgeComponent.speedMult = minSpeed + (upgradeMults[index] * upgradeCounts[index]);
+                value = Mathf.RoundToInt(Mathf.Lerp(minWalkSpeed, maxWalkSpeed, upgradeCounts[index] / MAXUPGRADES));
+                _stateController._movementComponent.speedMult = value;
+
+                value = Mathf.RoundToInt(Mathf.Lerp(minDodgeSpeed, maxDodgeSpeed, upgradeCounts[index] / MAXUPGRADES));
+                _stateController._dodgeComponent.speedMult = value;
+
+                value = Mathf.RoundToInt(Mathf.Lerp(minAnimSpeed, maxAnimSpeed, upgradeCounts[index] / MAXUPGRADES));
+                _modelAnimations.stepMult = value;
                 break;
 
             case Upgrades.Jump:
                 statTexts[5].SetActive(true);
-                _stateController._movementComponent.jumpMult = minJump + (upgradeMults[index] * upgradeCounts[index]);
+                value = Mathf.RoundToInt(Mathf.Lerp(minJump, maxJump, upgradeCounts[index] / MAXUPGRADES));
+                _stateController._movementComponent.jumpMult = value;
                 break;
 
             case Upgrades.Weight:
                 statTexts[6].SetActive(true);
-                _stateController._playerAttributes.weight = minWeight + (upgradeMults[index] * upgradeCounts[index]);
+                value = Mathf.RoundToInt(Mathf.Lerp(minWeight, maxWeight, upgradeCounts[index] / MAXUPGRADES));
+                _stateController._playerAttributes.weight = value;
                 break;
 
             case Upgrades.Attack:
                 statTexts[3].SetActive(true);
+
+                value = Mathf.RoundToInt(Mathf.Lerp(minAttack, maxAttack, upgradeCounts[index] / MAXUPGRADES));
                 foreach (PlayerHitbox hitbox in _stateController.hitboxes)
                 {
-                    hitbox.attackMult = minAttack + (upgradeMults[index] * upgradeCounts[index]);
+                    hitbox.attackMult = value;
                 }
                 break;
         }
+
+        // Sound
+        _stateController._Sound.StatUpSound(pStat, 0.0f);
 
         return true;
     }
