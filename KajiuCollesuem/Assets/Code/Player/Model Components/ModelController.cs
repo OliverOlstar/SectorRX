@@ -48,15 +48,16 @@ public class ModelController : MonoBehaviour
     {
         horizontalVelocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
 
+        if (_AttackingState == 1)
+        {
+            if (_modelAnimation.AttackingAnim())
+            {
+                StartCoroutine("DoneAttackWithDelay");
+            }
+        }
+
         if (_DontUpdateWeights == false)
         {
-            if (_AttackingState == 1)
-            {
-                if (_modelAnimation.AttackingAnim())
-                {
-                    StartCoroutine("DoneAttackWithDelay");
-                }
-            }
 
             _modelWeights.UpdateWeights();
         }
@@ -101,36 +102,50 @@ public class ModelController : MonoBehaviour
         _modelAnimation.StartAttack(pIndex);
     }
 
-    public void PlayAbility(int pIndex, bool pChargable)
+    public void TransitionToAbility(int pIndex)
     {
         SOAbilities curAbility = abilities[pIndex];
 
-        StopCoroutine("DoneAttackWithDelay");
-        StopCoroutine("PlayAttackWithDelay");
+        //StopCoroutine("DoneAttackWithDelay");
+        //StopCoroutine("PlayAttackWithDelay");
 
         _modelMovement.disableRotation = true;
 
-        // Chargeable Attack - wait for done charging before starting attack
-        if (pChargable == true)
-        {
-            _AttackingState = 2;
-        }
-        // Non-Chargable Attack
-        else
-        {
-            StartCoroutine("PlayAttackWithDelay", curAbility.holdStartPosTime);
-        }
+        _modelWeights.SetWeights(0, 0, 0, 0, 1);
+        _DontUpdateWeights = true;
+        //_modelAnimation.StartAbility(pIndex);
+    }
 
-        _doneAttackDelay = curAbility.holdEndPosTime;
-        _modelWeights.SetUpperbodyWeight(1, curAbility.transitionInDampening);
+    public void PlayAbility(int pIndex)
+    {
+        SOAbilities curAbility = abilities[pIndex];
+
+        //StopCoroutine("DoneAttackWithDelay");
+        //StopCoroutine("PlayAttackWithDelay");
+
+        _modelMovement.disableRotation = true;
+
+        StartCoroutine("PlayAttackWithDelay", curAbility.holdStartPosTime);
+
+        _doneAttackDelay = 99999999;
         _modelAnimation.StartAbility(pIndex);
+    }
+
+    public void DoneAbility()
+    {
+        _AttackingState = 0;
+        _modelMovement.disableRotation = false;
+
+        _modelWeights.SetWeights(0, 0, 0, 0, 0);
+        _DontUpdateWeights = false;
     }
 
     public void DoneAttack()
     {
         _AttackingState = 0;
         _modelMovement.disableRotation = false;
-        _modelWeights.SetUpperbodyWeight(0.0f, 5.0f);
+
+        _modelWeights.SetUpperbodyWeight(0, 5);
     }
 
     public void DoneChargingAttack()

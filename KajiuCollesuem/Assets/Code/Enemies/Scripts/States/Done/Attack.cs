@@ -132,17 +132,22 @@ public class Attack : MonoBehaviour, IState
     //Animation Events //////////////
     public void AEEnableHitbox()
     {
-        _hitbox.SetActive(true);
+        if (_enabled)
+            _hitbox.SetActive(true);
     }
 
     public void AEDisableHitbox()
     {
-        _hitbox.SetActive(false);
+        if (_enabled)
+            _hitbox.SetActive(false);
     }
 
     public void AEDoneAttack()
     {
-        _onGroundCheckTime = Time.time + 0.2f;
-        _subState = 1;
+        if (_enabled)
+        {
+            _onGroundCheckTime = Time.time + 0.2f;
+            _subState = 1;
+        }
     }
 }
