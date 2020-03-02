@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
 {
     public static bool menuProperties;
     public RectTransform mainMenu, playerInputMenu, loadingScreen;
+    public RectTransform logo;
     public GameObject targetUI, backButton;
     public Slider loadingProgress;
     public VideoPlayer videoPlayer;
@@ -108,7 +109,7 @@ public class UIManager : MonoBehaviour
 
     IEnumerator StartMenu()
     {
-        yield return new WaitForSeconds(7.0f);
+        yield return new WaitForSeconds(7.5f);
         mainMenu.DOAnchorPos(new Vector2(44, 21), 0.4f);
     }
  }
