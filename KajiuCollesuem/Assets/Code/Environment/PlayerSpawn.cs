@@ -51,18 +51,15 @@ public class PlayerSpawn : MonoBehaviour
 
     public void MatchEnd()
     {
-        if (connectedPlayers.playersConnected <= 1)
-        {
+        playersToSpawn--;
+
+        // Check if match is over
+        if (playersToSpawn <= 1)
             StartCoroutine("VictoryReset");
-        }
     }
 
     public void InputSetup()
     {
-        Debug.Log("playersToSpawn " + playersToSpawn);
-        Debug.Log("connectedPlayers.playerIndex.Count " + connectedPlayers.playerIndex.Count);
-        Debug.Log("_PlayerInputs.Length " + _PlayerInputs.Length);
-
         // Repeat this for every player that needs to be spawned
         for (int i = 0; i < playersToSpawn; i++)
         {
@@ -156,13 +153,10 @@ public class PlayerSpawn : MonoBehaviour
     IEnumerator VictoryReset()
     {
         yield return new WaitForSeconds(3.5f);
-        
-        if (playersToSpawn > 1)
-        {
-            musicManager.mainAudio.Stop();
-            transitionScreen.DOAnchorPos(new Vector2(0, 0), 0.4f);
-            yield return new WaitForSeconds(0.5f);
-            SceneManager.LoadSceneAsync(2);
-        }
+
+        musicManager.mainAudio.Stop();
+        transitionScreen.DOAnchorPos(new Vector2(0, 0), 0.4f);
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadSceneAsync(2);
     }
 }
