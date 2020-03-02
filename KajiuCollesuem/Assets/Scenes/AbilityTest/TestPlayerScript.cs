@@ -6,15 +6,16 @@ public class TestPlayerScript : MonoBehaviour
 {
     private Rigidbody _rb;
     private bool _charge = false, _space = false, _isTouchingGround = true, _onGroundCharge = false;
-    private float _force = 0, _move, _rotate, _inAirCheckTime = 0;
-    [SerializeField] private float _moveSpeed = 10, _rotateSpeed = 50, _maxForce, _incForce, _incTime, _halfPlayerHeight = 0.52f, _jumpUpForce = 4,
-        _cooldown = 1, _knockbackForce;
+    private float _force = 0, _move, _rotate, _inAirCheckTime = 0, _rotateSpeed;
+    [SerializeField] private float _moveSpeed = 10, _normalRotateSpeed = 50, _chargeRotateSpeed, _maxForce, _incForce, _incTime, _halfPlayerHeight = 0.52f, 
+        _jumpUpForce = 4, _cooldown = 1, _knockbackForce;
     [SerializeField] private int _inflictDamage;
     [SerializeField] private ParticleSystem _ps;
 
     // Start is called before the first frame update
     void Start()
     {
+        _rotateSpeed = _normalRotateSpeed;
         _rb = GetComponent<Rigidbody>();
     }
 
@@ -22,7 +23,7 @@ public class TestPlayerScript : MonoBehaviour
     void Update()
     {
         _move = Input.GetAxis("Vertical") * Time.deltaTime * _moveSpeed;
-        _rotate = Input.GetAxis("Horizontal");
+        _rotate = Input.GetAxis("Horizontal") * _rotateSpeed;
 
         //Input for charge hold
         _charge = Input.GetKey(KeyCode.C);
@@ -69,6 +70,7 @@ public class TestPlayerScript : MonoBehaviour
         //Simulates charge physics
         if (_force > 0 && !_charge)
         {
+            _rotateSpeed = _chargeRotateSpeed;
             _rb.AddForce(transform.forward * _force, ForceMode.Impulse);
 
             //Helps with changing direction while adding force to the charge
@@ -131,6 +133,7 @@ public class TestPlayerScript : MonoBehaviour
     //Interrupt charge
     private void InterruptCharge()
     {
+        _rotateSpeed = _normalRotateSpeed;
         _rb.velocity = Vector3.zero;
     }
 }

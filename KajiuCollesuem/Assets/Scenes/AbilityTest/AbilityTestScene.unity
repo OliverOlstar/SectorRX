@@ -245,7 +245,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 10
-  _rotateSpeed: 3
+  _normalRotateSpeed: 2
+  _chargeRotateSpeed: 0.3
   _maxForce: 7.5
   _incForce: 1
   _incTime: 10
@@ -451,6 +452,26 @@ PrefabInstance:
     - target: {fileID: 1969429415045013407, guid: 2d5a8e544e5092341ac064a73afeb473,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2181977689270446451, guid: 2d5a8e544e5092341ac064a73afeb473,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2181977689270446451, guid: 2d5a8e544e5092341ac064a73afeb473,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4335242773834267300, guid: 2d5a8e544e5092341ac064a73afeb473,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4335242773834267300, guid: 2d5a8e544e5092341ac064a73afeb473,
+        type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4606156574004842864, guid: 2d5a8e544e5092341ac064a73afeb473,
