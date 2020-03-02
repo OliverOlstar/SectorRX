@@ -55,7 +55,7 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound the player lands after a jump or falling
     public void LandingSound(float pDelay)
     {
-        PlaySound(pDelay, 0.4f, 1.0f, movement[2], sfxSource);
+        PlaySound(pDelay, 0.35f, 1.0f, movement[2], sfxSource);
     }
 
     //Plays sound the player is walking on a sand or metal surface
