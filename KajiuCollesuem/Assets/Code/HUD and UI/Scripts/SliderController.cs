@@ -20,7 +20,7 @@ public class SliderController : MonoBehaviour
     public Slider[] RegSlider;
     public Slider[] MaskSlider;
 
-    private Coroutine[] _lerpCoroutineArray = new Coroutine[4];
+    private Coroutine[] _lerpCoroutineArray = new Coroutine[10];
 
     public float lerpTimer = 1;
 
