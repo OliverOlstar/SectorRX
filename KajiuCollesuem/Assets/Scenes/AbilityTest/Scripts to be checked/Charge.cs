@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestPlayerScript : MonoBehaviour
+public class Charge : MonoBehaviour
 {
     private Rigidbody _rb;
     private bool _charge = false, _space = false, _isTouchingGround = true, _onGroundCharge = false;
@@ -82,6 +82,9 @@ public class TestPlayerScript : MonoBehaviour
                 _rb.velocity = transform.forward * mag;
             }
             --_force;
+
+            if (_force == 0)
+                _rotateSpeed = _normalRotateSpeed;
         }
 
         //Simulates jump while charging
