@@ -23,7 +23,7 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when player takes damage.
     public void HitByAttackSound(float pDelay)
     {
-        PlaySound(pDelay, 0.4f, 1.0f, playerHit[0], sfxSource);
+        PlaySound(pDelay, 0.4f, Random.Range(1.0f, 2.0f), playerHit[0], sfxSource);
     }
 
     //Plays sound when player touches the tar.
@@ -35,7 +35,7 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when the player dies.
     public void PlayerDeathSound(float pDelay)
     {
-        PlaySound(pDelay, 0.5f, 1.0f, playerHit[2], sfxSource);
+        PlaySound(pDelay, 0.5f, Random.Range(1.0f, 2.0f), playerHit[2], sfxSource);
     }
 
     //Plays sound when the player has collected a stat increasing item
