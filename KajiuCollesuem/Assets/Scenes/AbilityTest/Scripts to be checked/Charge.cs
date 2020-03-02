@@ -82,10 +82,11 @@ public class Charge : MonoBehaviour
                 _rb.velocity = transform.forward * mag;
             }
             --_force;
-
-            if (_force == 0)
-                _rotateSpeed = _normalRotateSpeed;
+            
         }
+
+        if (_rb.velocity.magnitude < 0.01f)
+            _rotateSpeed = _normalRotateSpeed;
 
         //Simulates jump while charging
         if (_space)
