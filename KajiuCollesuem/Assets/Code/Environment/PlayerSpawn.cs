@@ -23,8 +23,6 @@ public class PlayerSpawn : MonoBehaviour
     [SerializeField] private MatchInputHandler[] _PlayerInputs = new MatchInputHandler[6];
     private List<MatchInputHandler> _ActiveInputs = new List<MatchInputHandler>();
 
-    //[SerializeField] private Color[] boarderColors = new Color[6];
-
     public float playersToSpawn = 0;
 
     public void MatchStartup()
@@ -32,7 +30,7 @@ public class PlayerSpawn : MonoBehaviour
         //If no players are entered, automatically set to 2.
         if (connectedPlayers.playersConnected <= 0)
         {
-            connectedPlayers.playersConnected = 1;
+            connectedPlayers.playersConnected = 2;
             
             connectedPlayers.playerIndex.Clear();
             UsedDevices player = new UsedDevices();
@@ -102,24 +100,8 @@ public class PlayerSpawn : MonoBehaviour
         // Randomly spawn players at listed locations.
         SpawnPlayers();
 
-        //SetHUDBoarders();
-
         DisableUnusedDevices();
     }
-
-    //private void SetHUDBoarders()
-    //{
-    //    BorderChange border;
-    //    for (int i  = 0; i < players.Count; i++)
-    //    {
-    //        border = players[i].GetComponentInChildren<BorderChange>();
-
-    //        if(border)
-    //        {
-    //            border.SetBoarderColor(boarderColors[i]);
-    //        }
-    //    }
-    //}
 
     private void SpawnPlayers()
     {
@@ -134,13 +116,14 @@ public class PlayerSpawn : MonoBehaviour
             players.Add(playerCharacter);
 
             //Taking list of joined players and setting them to their correct device, with inputs enabled
-            playerCharacter.GetComponentInChildren<PlayerStateController>();
             _ActiveInputs[i].playerStateController = playerCharacter.GetComponentInChildren<PlayerStateController>();
-            //musicManager.battleMusic[0].Play();
+
+            // Set Color
+            playerCharacter.GetComponent<ColorSetter>().SetColor(connectedPlayers.playerIndex[i].playerColorSet);
         }
     }
 
-    public void DisableUnusedDevices()
+    private void DisableUnusedDevices()
     {
         //Disable InputHandlers that aren't connected to a player
         foreach (MatchInputHandler input in _PlayerInputs)

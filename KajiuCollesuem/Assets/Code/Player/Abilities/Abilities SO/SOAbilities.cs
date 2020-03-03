@@ -9,6 +9,7 @@ public class SOAbilities : ScriptableObject
 
     [Header("Attack itself")]
     [Min(0)] public float abilityTime = 0.5f;
+    [Min(0)] public float abilityAnimTime = 1.0f;
     public AnimationCurve abilitiesGraph;
 
     [Space]

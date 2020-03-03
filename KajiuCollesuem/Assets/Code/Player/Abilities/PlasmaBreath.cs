@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlasmaBreath : MonoBehaviour, IAbility
 {
     private PlayerStateController _stateController;
+    private Transform _modelTransform;
     private float _nextSubStateTime = 0;
     private bool _charging = false;
 
@@ -16,11 +17,14 @@ public class PlasmaBreath : MonoBehaviour, IAbility
     // SET IN CODE VARS
     private float _RotateDampening = 3.0f;
 
-    private AbilityState _CurrentState;
+    private AbilityState _MyState;
 
     public void Init(PlayerStateController pStateController, Transform pMuzzle, GameObject pPrefab)
     {
         _stateController = pStateController;
+
+        // Get model
+        _modelTransform = _stateController._modelController.transform;
 
         // Setup Hitbox / Visuals
         _SpawnedLaser = Instantiate(pPrefab, pMuzzle).transform;
@@ -32,12 +36,13 @@ public class PlasmaBreath : MonoBehaviour, IAbility
 
     public void Pressed(AbilityState pState)
     {
-        _CurrentState = pState;
+        _MyState = pState;
 
         _charging = true;
         _nextSubStateTime = Time.time + 1;
         _stateController._lockOnComponent.ToggleScopedIn(0.05f);
-        _stateController._modelController.PlayAbility(0, false);
+        _stateController._modelController.TransitionToAbility(0);
+        _stateController._modelController.PlayAbility(0);
     }
 
     public void Released()
@@ -45,22 +50,23 @@ public class PlasmaBreath : MonoBehaviour, IAbility
         Debug.Log("PlasmaBreath: Released");
 
         // If released while still charging, timer resets to zero.
-        if (_charging)
-        {
-            _CurrentState.RequestExitState();
-        }
+        //if (_charging)
+        //{
+        //    _MyState.RequestExitState();
+        //}
     }
 
     public void Exit()
     {
         Debug.Log("PlasmaBreath: Exit");
         _stateController._lockOnComponent.ToggleScopedIn(1.0f);
+        _stateController._modelController.DoneAbility();
         _SpawnedLaser.gameObject.SetActive(false);
     }
 
     public void Tick()
     {
-        transform.GetChild(1).GetChild(0).forward = Vector3.Slerp(Horizontalize(transform.GetChild(1).GetChild(0).forward), Horizontalize(_stateController._Camera.forward), Time.deltaTime * _RotateDampening);
+        _modelTransform.forward = Vector3.Slerp(Horizontalize(_modelTransform.forward), Horizontalize(_stateController._Camera.forward), Time.deltaTime * _RotateDampening);
 
         // Once timer reaches 2, attacki begins, enabling the beam particle with a hitbox.
         if (_nextSubStateTime <= Time.time)

@@ -16,6 +16,7 @@ public class ModelWeights : MonoBehaviour
     [SerializeField] [Range(0, 1)] private float stunnedWeight = 0;
     [SerializeField] [Range(0, 1)] private float stunnedDirection = 0;
     [SerializeField] [Range(0, 1)] private float deadWeight = 0;
+    [SerializeField] [Range(0, 1)] private float abilityWeight = 0;
 
     [Space]
     [SerializeField] private float _weightChangeDampening = 10;
@@ -56,6 +57,7 @@ public class ModelWeights : MonoBehaviour
         LerpWeight("Stunned Weight", stunnedWeight);
         LerpWeight("Stunned Direction", stunnedDirection);
         LerpWeight("Dead Weight", deadWeight);
+        LerpWeight("Abilities Weight", abilityWeight);
     }
 
     public void SetUpperbodyWeight(float pWeight, float pDampening)
@@ -89,7 +91,7 @@ public class ModelWeights : MonoBehaviour
         _anim.SetFloat(pWeight, currentValue);
     }
 
-    public void SetWeights(float pStepWeight, float pJumpWeight, float pDodgeWeight, float pDeadWeight)
+    public void SetWeights(float pStepWeight, float pJumpWeight, float pDodgeWeight, float pDeadWeight, float pAbilityWeight = 0)
     {
         stepWeight = pStepWeight;
         jumpWeight = pJumpWeight;
@@ -97,6 +99,7 @@ public class ModelWeights : MonoBehaviour
         //attackWeight = pAttackWeight;
         dodgeWeight = pDodgeWeight;
         deadWeight = pDeadWeight;
+        abilityWeight = pAbilityWeight;
     }
 
     public void AddCrouching(float pValue, float pGoingToLength, float pGoingAwayLength)

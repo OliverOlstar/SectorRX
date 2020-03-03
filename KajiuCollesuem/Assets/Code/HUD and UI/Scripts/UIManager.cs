@@ -16,13 +16,15 @@ Description: Managing UI, loading, starting level, etc.
 public class UIManager : MonoBehaviour
 {
     public static bool menuProperties;
-    public RectTransform mainMenu, playerInputMenu, loadingScreen;
+    public RectTransform mainMenu, playerInputMenu, loadingScreen, logo;
+    public Animator logoAnim;
     public GameObject targetUI, backButton;
-    public Slider loadingProgress;
     public VideoPlayer videoPlayer;
+    public bool panelCheck = false;
 
     public void Start()
     {
+        logoAnim = logoAnim.GetComponent<Animator>();
         Time.timeScale = 1;
         if (menuProperties == true)
         {
@@ -51,6 +53,8 @@ public class UIManager : MonoBehaviour
 
     public void BackToMainMenu(GameObject pTarget)
     {
+        panelCheck = true;
+        logo.DOAnchorPos(new Vector2(401, 6), 0.4f);
         mainMenu.DOAnchorPos(new Vector2(44, 21), 0.4f);
         playerInputMenu.DOAnchorPos(new Vector2(69, 4120), 0.4f);
         menuProperties = false;
@@ -59,8 +63,10 @@ public class UIManager : MonoBehaviour
 
     public void GoToPlayer(GameObject pTarget)
     {
+        panelCheck = false;
+        logo.DOAnchorPos(new Vector2(401, -2057), 0.4f);
         playerInputMenu.DOAnchorPos(new Vector2(69, -2), 0.4f);
-        mainMenu.DOAnchorPos(new Vector2(44, -4120), 0.4f);
+        mainMenu.DOAnchorPos(new Vector2(44, -2060), 0.4f);
         menuProperties = true;
         targetUI = pTarget;
     }
@@ -78,17 +84,14 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
         videoPlayer.Play();
-        //operation.allowSceneActivation = false;
         while (!operation.isDone)
         {
             float progress = Mathf.Clamp01(operation.progress / 0.9f);
-            loadingProgress.value = progress;
 
             if (videoPlayer.isPlaying)
             {
                 videoPlayer.loopPointReached += EndReached;
                 yield return new WaitForSeconds(2.0f);
-                //operation.allowSceneActivation = true;
             }
 
             yield return null;
@@ -108,7 +111,8 @@ public class UIManager : MonoBehaviour
 
     IEnumerator StartMenu()
     {
-        yield return new WaitForSeconds(7.0f);
+        yield return new WaitForSeconds(7.5f);
+        logoAnim.enabled = false;
         mainMenu.DOAnchorPos(new Vector2(44, 21), 0.4f);
     }
  }

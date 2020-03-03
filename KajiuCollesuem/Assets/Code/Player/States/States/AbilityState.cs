@@ -63,7 +63,9 @@ public class AbilityState : BaseState
         // ON PRESSED ABILITY 1 (Called Once)
         if (_stateController.ability1input == 1)
         {
+            // Tells me what release input to listen for
             _Index = 1;
+
             _curAbility = _stateController._AbilityScript1;
             _curSOAbility = _stateController._modelController.abilities[0];
             PressedAbility();
@@ -71,7 +73,9 @@ public class AbilityState : BaseState
         // ON PRESSED ABILITY 2 (Called Once)
         else if (_stateController.ability2input == 1)
         {
+            // Tells me what release input to listen for
             _Index = 2;
+
             _curAbility = _stateController._AbilityScript2;
             _curSOAbility = _stateController._modelController.abilities[1];
             PressedAbility();

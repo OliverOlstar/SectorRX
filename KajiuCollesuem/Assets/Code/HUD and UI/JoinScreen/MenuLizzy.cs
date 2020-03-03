@@ -6,6 +6,10 @@ public class MenuLizzy : MonoBehaviour
 {
     private Animator _Anim;
 
+    [SerializeField] private SkinnedMeshRenderer[] _Renderers;
+    [SerializeField] private SkinnedMeshRenderer _FeathersRender;
+    [SerializeField] private GameObject[] _LizzyArmour;
+
     private float _State = 0.0f;
     private Coroutine _Routine;
     private Coroutine _LockedRoutine;
@@ -33,7 +37,7 @@ public class MenuLizzy : MonoBehaviour
         LockedIn
     }
 
-    void Start()
+    void Awake()
     {
         _Anim = GetComponentInChildren<Animator>();
     }
@@ -108,23 +112,11 @@ public class MenuLizzy : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            ChangeWeights(menuLizzyStates.NotJoined);
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            ChangeWeights(menuLizzyStates.Joined);
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            ChangeWeights(menuLizzyStates.LockedIn);
-
         _CrouchProgress = IncreaseProgress(_CrouchProgress, _CrouchMult);
         _Anim.SetFloat("Crouch Progress", _CrouchGraph.Evaluate(_CrouchProgress));
 
         _IdleProgress = IncreaseProgress(_IdleProgress, _IdleMult);
         _Anim.SetFloat("Idle Progress", _IdleGraph.Evaluate(_IdleProgress));
-
-        //_LockedInProgress = IncreaseProgress(_LockedInProgress, _LockedInMult, true);
-        //_Anim.SetFloat("LockedIn Progress", _LockedInGraph.Evaluate(_LockedInProgress));
     }
 
     private float IncreaseProgress(float pProgress, float pMult)
@@ -135,5 +127,40 @@ public class MenuLizzy : MonoBehaviour
             pProgress -= 1;
 
         return pProgress;
+    }
+
+    public void SetColors(ColorSet pSet)
+    {
+        foreach (SkinnedMeshRenderer renderer in _Renderers)
+        {
+            renderer.material = pSet.lizzyMat;
+        }
+
+        if (_FeathersRender != null)
+            _FeathersRender.material = pSet.feathersMat;
+    }
+
+    public void SetAbilities(int pAbilities)
+    {
+        switch (pAbilities)
+        {
+            case 0:
+                _LizzyArmour[0].SetActive(false);
+                _LizzyArmour[1].SetActive(false);
+                _FeathersRender.enabled = false;
+                break;
+
+            case 1:
+                _LizzyArmour[0].SetActive(true);
+                _LizzyArmour[1].SetActive(true);
+                _FeathersRender.enabled = false;
+                break;
+
+            case 2:
+                _LizzyArmour[0].SetActive(false);
+                _LizzyArmour[1].SetActive(false);
+                _FeathersRender.enabled = true;
+                break;
+        }
     }
 }

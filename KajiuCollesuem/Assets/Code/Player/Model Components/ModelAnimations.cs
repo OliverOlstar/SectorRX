@@ -87,7 +87,7 @@ public class ModelAnimations : MonoBehaviour
 
         // Get SOAttack values
         SOAbilities curAbility = _modelController.abilities[pIndex];
-        _attackLength = curAbility.abilityTime;
+        _attackLength = curAbility.abilityAnimTime;
         _attackGraph = curAbility.abilitiesGraph;
 
         // Snap to first attack
