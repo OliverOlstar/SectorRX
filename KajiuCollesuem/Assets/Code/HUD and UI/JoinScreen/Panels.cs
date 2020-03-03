@@ -13,7 +13,7 @@ public class Panels : MonoBehaviour
     public Text playerPanels;
     private int stateValue = 0;
     [SerializeField] private MenuLizzy _myLizzy;
-    [SerializeField] private Renderer[] _myLizzyRenders;
+    [HideInInspector] public ColorSet myColorSet;
 
     [HideInInspector] public DeviceHandler myDevice = null;
 
@@ -27,6 +27,7 @@ public class Panels : MonoBehaviour
     public bool abilityLocked;
     public Animator animShield;
     public Animator animMask;
+    private SpriteRenderer _animMaskRenderer;
 
     public AudioClip[] lockedIn = new AudioClip[4];
     public AudioSource sfxSource;
@@ -36,17 +37,14 @@ public class Panels : MonoBehaviour
 
     private void Start()
     {
-        _myLizzyRenders = GetComponentsInChildren<Renderer>();
-
+        _animMaskRenderer = animMask.GetComponent<SpriteRenderer>();
+        
         UpdateIcons();
 
+        RemoveAbilitiesUI();
+
         ColorSet set = _ColorPicker.StartingColor();
-        _CurrentColorIndex = set.index;
-        foreach(Renderer render in _myLizzyRenders)
-        {
-            render.material = set.lizzyMat;
-        }
-        animMask.GetComponent<Renderer>().material.color = set.color;
+        SetColors(set);
     }
 
     public void OnJoining()
@@ -84,15 +82,16 @@ public class Panels : MonoBehaviour
 
     public void OnColorPicking()
     {
-        Debug.Log("ColorPicking");
-
         ColorSet set = _ColorPicker.SwitchColor(_CurrentColorIndex);
-        _CurrentColorIndex = set.index;
-        foreach (Renderer render in _myLizzyRenders)
-        {
-            render.material = set.lizzyMat;
-        }
-        animMask.GetComponent<Renderer>().material.color = set.color;
+        SetColors(set);
+    }
+
+    private void SetColors(ColorSet pSet)
+    {
+        _CurrentColorIndex = pSet.index;
+        myColorSet = pSet;
+        _myLizzy.SetColors(pSet);
+        _animMaskRenderer.color = pSet.color;
     }
 
     public void OnLeft()
