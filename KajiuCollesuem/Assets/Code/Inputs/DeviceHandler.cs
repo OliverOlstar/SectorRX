@@ -45,6 +45,14 @@ public class DeviceHandler : MonoBehaviour
         }
     }
 
+    private void OnColorPicking()
+    {
+        if (playerPanel != null)
+        {
+            playerPanel.OnColorPicking();
+        }
+    }
+
     private void OnLeft()
     {
         if (playerPanel != null)
@@ -71,12 +79,6 @@ public class DeviceHandler : MonoBehaviour
         {
             return playerPanel.PlayerLeft();
         }
-    }
-
-    private void OnColorPicking()
-    {
-        //if (playerPanel)
-        //    playerPanel;
     }
 
     public void DisableConnecting()

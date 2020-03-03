@@ -13,6 +13,7 @@ public class Panels : MonoBehaviour
     public Text playerPanels;
     private int stateValue = 0;
     [SerializeField] private MenuLizzy _myLizzy;
+    [SerializeField] private Renderer[] _myLizzyRenders;
 
     [HideInInspector] public DeviceHandler myDevice = null;
 
@@ -30,9 +31,22 @@ public class Panels : MonoBehaviour
     public AudioClip[] lockedIn = new AudioClip[4];
     public AudioSource sfxSource;
 
+    [SerializeField] private ColorPicker _ColorPicker;
+    private int _CurrentColorIndex = 0;
+
     private void Start()
     {
+        _myLizzyRenders = GetComponentsInChildren<Renderer>();
+
         UpdateIcons();
+
+        ColorSet set = _ColorPicker.StartingColor();
+        _CurrentColorIndex = set.index;
+        foreach(Renderer render in _myLizzyRenders)
+        {
+            render.material = set.lizzyMat;
+        }
+        animMask.GetComponent<Renderer>().material.color = set.color;
     }
 
     public void OnJoining()
@@ -66,6 +80,19 @@ public class Panels : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public void OnColorPicking()
+    {
+        Debug.Log("ColorPicking");
+
+        ColorSet set = _ColorPicker.SwitchColor(_CurrentColorIndex);
+        _CurrentColorIndex = set.index;
+        foreach (Renderer render in _myLizzyRenders)
+        {
+            render.material = set.lizzyMat;
+        }
+        animMask.GetComponent<Renderer>().material.color = set.color;
     }
 
     public void OnLeft()
