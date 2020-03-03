@@ -15,7 +15,6 @@ public class Panels : MonoBehaviour
     [SerializeField] private MenuLizzy _myLizzy;
 
     [HideInInspector] public DeviceHandler myDevice = null;
-    public UIManager uiMan;
 
     public Sprite[] abilityIcons;
     public SpriteRenderer[] ability = new SpriteRenderer[2];
@@ -25,7 +24,6 @@ public class Panels : MonoBehaviour
     public bool setOne;
     public bool setTwo;
     public bool abilityLocked;
-    public bool animBool;
     public Animator animShield;
     public Animator animMask;
 
@@ -34,29 +32,7 @@ public class Panels : MonoBehaviour
 
     private void Start()
     {
-        ability[0].GetComponent<SpriteRenderer>().sprite = abilityIcons[2];
-        ability[1].GetComponent<SpriteRenderer>().sprite = abilityIcons[3];
-    }
-
-    private void Update()
-    {
-        if (animShield.GetCurrentAnimatorStateInfo(0).IsName("Has Left"))
-        {
-            abilityOneRect.DOAnchorPos(new Vector2(0, 34), 0.4f);
-            dPadLeftRect.DOAnchorPos(new Vector2(-157, -201), 0.4f);
-            abilityTwoRect.DOAnchorPos(new Vector2(0, -145), 0.4f);
-            dPadRightRect.DOAnchorPos(new Vector2(157, -201), 0.4f);
-        }
-
-        if (uiMan.panelCheck == true)
-        {
-            abilityOneRect.DOAnchorPos(new Vector2(0, 34), 0.01f);
-            dPadLeftRect.DOAnchorPos(new Vector2(-157, -201), 0.01f);
-            abilityTwoRect.DOAnchorPos(new Vector2(0, -145), 0.01f);
-            dPadRightRect.DOAnchorPos(new Vector2(157, -201), 0.01f);
-        }
-        animShield.SetBool("hasJoined", animBool);
-        animMask.SetBool("maskJoined", animBool);
+        UpdateIcons();
     }
 
     public void OnJoining()
@@ -64,24 +40,25 @@ public class Panels : MonoBehaviour
         switch (stateValue)
         {
             case 0:
+                // Player Locked In
                 if(stateValue == 0)
                 {
                     sfxSource.clip = lockedIn[Random.Range(0, 3)];
                     sfxSource.volume = Random.Range(0.6f, 0.8f);
                     sfxSource.PlayDelayed(0.25f);
                     playerPanels.text = "READY!";
-                    animBool = true;
-                    abilityOneRect.DOAnchorPos(new Vector2(0, -1930), 1.6f);
-                    dPadLeftRect.DOAnchorPos(new Vector2(-157, -2131), 1.6f);
-                    abilityTwoRect.DOAnchorPos(new Vector2(0, -2110), 1.6f);
-                    dPadRightRect.DOAnchorPos(new Vector2(157, -2131), 1.6f);
+                    RemoveAbilitiesUI();
                     abilityLocked = true;
                     stateValue = 1;
                     _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.LockedIn);
+
+                    animShield.SetBool("hasJoined", true);
+                    animMask.SetBool("maskJoined", true);
                 }
                 break;
             
             case 1:
+                // Player Enters to Start Match
                 if (connectedPlayers.playersConnected >= 2 && abilityLocked)
                 {
                     _AddPlayer.SetPlayerOrder();
@@ -121,36 +98,71 @@ public class Panels : MonoBehaviour
             presetNumber = 0;
         }
 
+        UpdateIcons();
+    }
+
+    private void UpdateIcons()
+    {
         ability[0].GetComponent<SpriteRenderer>().sprite = abilityIcons[presetNumber * 2];
         ability[1].GetComponent<SpriteRenderer>().sprite = abilityIcons[presetNumber * 2 + 1];
     }
 
+    // Player Enters To Join
     public void PlayerJoined(DeviceHandler pDevice)
     {
         myDevice = pDevice;
 
         playerPanels.text = " ";
+
+        // Abilities
         presetNumber = 0;
-        abilityOneRect.DOAnchorPos(new Vector2(0, 34), 0.4f);
-        dPadLeftRect.DOAnchorPos(new Vector2(-157, -201), 0.4f);
-        abilityTwoRect.DOAnchorPos(new Vector2(0, -145), 0.4f);
-        dPadRightRect.DOAnchorPos(new Vector2(157, -201), 0.4f);
-        ability[0].GetComponent<SpriteRenderer>().sprite = abilityIcons[2];
-        ability[1].GetComponent<SpriteRenderer>().sprite = abilityIcons[3];
+        UpdateIcons();
+        ShowAbilitiesUI();
 
         _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.Joined);
     }
 
+    // Player Enters to Leave Match
     public int PlayerLeft()
     {
         myDevice = null;
 
-        playerPanels.text = "Press 'Space'\nor\n'Start' to Join";
-        animBool = false;
+        playerPanels.text = "Press 'Space'\n or \n'Start' to Join";
         stateValue = 0;
 
         _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.NotJoined);
 
+        RemoveAbilitiesUI();
+
+        animShield.SetBool("hasJoined", false);
+        animMask.SetBool("maskJoined", false);
+
         return playerNumber - 1;
+    }
+
+    private void ShowAbilitiesUI()
+    {
+        CancelPreviousAbilitiesTweens();
+        abilityOneRect.DOAnchorPos(new Vector2(0, 34), 0.4f);
+        dPadLeftRect.DOAnchorPos(new Vector2(-157, -201), 0.4f);
+        abilityTwoRect.DOAnchorPos(new Vector2(0, -145), 0.4f);
+        dPadRightRect.DOAnchorPos(new Vector2(157, -201), 0.4f);
+    }
+
+    private void RemoveAbilitiesUI()
+    {
+        CancelPreviousAbilitiesTweens();
+        abilityOneRect.DOAnchorPos(new Vector2(0, -1930), 1.6f);
+        dPadLeftRect.DOAnchorPos(new Vector2(-157, -2131), 1.6f);
+        abilityTwoRect.DOAnchorPos(new Vector2(0, -2110), 1.6f);
+        dPadRightRect.DOAnchorPos(new Vector2(157, -2131), 1.6f);
+    }
+
+    private void CancelPreviousAbilitiesTweens()
+    {
+        abilityOneRect.DOKill();
+        dPadLeftRect.DOKill();
+        abilityTwoRect.DOKill();
+        dPadRightRect.DOKill();
     }
 }
