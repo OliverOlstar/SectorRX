@@ -268,7 +268,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -379,9 +379,15 @@ MonoBehaviour:
   lightAttack:
   - {fileID: 8300000, guid: bc4e471c95b8eaf45b51a4d6204876b2, type: 3}
   - {fileID: 8300000, guid: 7c6609d206480994d8a3a3840967d5a4, type: 3}
+  lightAttackVA:
+  - {fileID: 8300000, guid: e9f0525c05cde6c4cbbc2f69103b76da, type: 3}
+  - {fileID: 8300000, guid: 5d9514edc4ddffd4ba458e42d803924b, type: 3}
   heavyAttack:
   - {fileID: 8300000, guid: 2f7f47fb0e8513d42b3073e48773257c, type: 3}
   - {fileID: 8300000, guid: 87962eaeadcc18646b0a983aaef3af22, type: 3}
+  heavyAttackVA:
+  - {fileID: 0}
+  - {fileID: 0}
   collectStat:
   - {fileID: 8300000, guid: 192d05a72ad09484cb8dcdd12a32dde6, type: 3}
   - {fileID: 8300000, guid: 094d2f63ec66e8541aa3514d3a11480f, type: 3}

@@ -38,7 +38,7 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when the player dies.
     public void PlayerDeathSound(float pDelay)
     {
-        PlaySound(pDelay, 0.5f, Random.Range(1.0f, 2.0f), playerHit[2], sfxSource);
+        PlaySound(pDelay, 0.8f, Random.Range(1.0f, 2.0f), playerHit[2], sfxSource);
     }
 
     //Plays sound when the player has collected a stat increasing item
@@ -52,7 +52,7 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when the player performs a dodge
     public void DodgeSound(float pDelay)
     {
-        PlaySound(pDelay, 0.7f, 1.0f, movement[0], sfxSource);
+        PlaySound(pDelay, 0.8f, 1.0f, movement[0], sfxSource);
     }
 
     //Plays sound the player lands after a jump or falling
@@ -83,7 +83,8 @@ public class PlayerSFX : MonoBehaviour
     //Randomly plays one of two sounds when the player performs a light attack.
     public void LightAttackSound(float pDelay)
     {
-        PlaySound(pDelay, 0.3f, 1.0f, lightAttack[Random.Range(0, 1)], sfxSource);
+        PlaySound(pDelay, 0.5f, 1.0f, lightAttack[Random.Range(0, 1)], sfxSource);
+        PlaySound(pDelay, 0.7f, Random.Range(0.7f, 1.0f), lightAttackVA[Random.Range(0, 1)], voiceSource);
     }
 
     //Randomly plays one of two sounds when the player performs a heavy attack.
