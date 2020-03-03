@@ -55,6 +55,7 @@ public class PlayerCollectibles : MonoBehaviour
     [SerializeField] private float maxJump = 2.0f;
 
     [Header("Weight")]
+    [SerializeField] private float offsetWeight = 0.65f;
     [SerializeField] private float minWeight = 1.0f;
     [SerializeField] private float maxWeight = 3.0f;
 
@@ -96,7 +97,7 @@ public class PlayerCollectibles : MonoBehaviour
         _modelAnimations.stepMult = minAnimSpeed;
 
         // Weight
-        _stateController._playerAttributes.weight = minWeight;
+        _stateController._playerAttributes.weight = offsetWeight + minWeight;
 
     }
 
@@ -181,7 +182,7 @@ public class PlayerCollectibles : MonoBehaviour
                 statTexts[6].SetActive(true);
                 sliderController.UpdateBars(9, upgradeCounts[index]);
                 value = Mathf.RoundToInt(Mathf.Lerp(minWeight, maxWeight, upgradeCounts[index] / MAXUPGRADES));
-                _stateController._playerAttributes.weight = value;
+                _stateController._playerAttributes.weight = offsetWeight + Mathf.Pow(value, 2);
                 break;
 
             case Upgrades.Attack:

@@ -45,6 +45,7 @@ public class Panels : MonoBehaviour
 
         ColorSet set = _ColorPicker.StartingColor();
         SetColors(set);
+        _myLizzy.SetAbilities(0);
     }
 
     public void OnJoining()
@@ -99,6 +100,7 @@ public class Panels : MonoBehaviour
         if(stateValue == 0)
         {
             ChangeIcons(-1);
+            _myLizzy.SetAbilities(presetNumber);
         }
     }
 
@@ -107,6 +109,7 @@ public class Panels : MonoBehaviour
         if (stateValue == 0)
         {
             ChangeIcons(1);
+            _myLizzy.SetAbilities(presetNumber);
         }
     }
 
@@ -141,8 +144,6 @@ public class Panels : MonoBehaviour
         playerPanels.text = " ";
 
         // Abilities
-        presetNumber = 0;
-        UpdateIcons();
         ShowAbilitiesUI();
 
         _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.Joined);

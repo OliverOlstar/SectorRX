@@ -13,7 +13,7 @@ public class AttackState : BaseState
 
     private float _attackStateReturnDelayLength = 0.2f;
     private float _minChargeTime = 0.0f;
-    private float _maxCharge = 5.0f;
+    private float _maxCharge = 3.0f;
 
     private bool _onHolding = false;
     private bool _alreadyReleased = false;

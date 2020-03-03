@@ -6,8 +6,9 @@ public class MenuLizzy : MonoBehaviour
 {
     private Animator _Anim;
 
-    private SkinnedMeshRenderer[] _Renderers;
+    [SerializeField] private SkinnedMeshRenderer[] _Renderers;
     [SerializeField] private SkinnedMeshRenderer _FeathersRender;
+    [SerializeField] private GameObject[] _LizzyArmour;
 
     private float _State = 0.0f;
     private Coroutine _Routine;
@@ -39,7 +40,6 @@ public class MenuLizzy : MonoBehaviour
     void Awake()
     {
         _Anim = GetComponentInChildren<Animator>();
-        _Renderers = GetComponentsInChildren<SkinnedMeshRenderer>();
     }
 
     public void ChangeWeights(menuLizzyStates pState)
@@ -138,5 +138,29 @@ public class MenuLizzy : MonoBehaviour
 
         if (_FeathersRender != null)
             _FeathersRender.material = pSet.feathersMat;
+    }
+
+    public void SetAbilities(int pAbilities)
+    {
+        switch (pAbilities)
+        {
+            case 0:
+                _LizzyArmour[0].SetActive(false);
+                _LizzyArmour[1].SetActive(false);
+                _FeathersRender.enabled = false;
+                break;
+
+            case 1:
+                _LizzyArmour[0].SetActive(true);
+                _LizzyArmour[1].SetActive(true);
+                _FeathersRender.enabled = false;
+                break;
+
+            case 2:
+                _LizzyArmour[0].SetActive(false);
+                _LizzyArmour[1].SetActive(false);
+                _FeathersRender.enabled = true;
+                break;
+        }
     }
 }
