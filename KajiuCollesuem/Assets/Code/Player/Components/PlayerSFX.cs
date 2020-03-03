@@ -11,9 +11,9 @@ public class PlayerSFX : MonoBehaviour
     [SerializeField] private AudioClip[] movement = new AudioClip[3]; //Sound effects for dodging, jumping, and landing.
     [SerializeField] private AudioClip[] playerHit = new AudioClip[3]; //Sound effects for when the player takes damage from something or dies.
     [SerializeField] private AudioClip[] lightAttack = new AudioClip[2]; //Sound effects for the light attack.
-    [SerializeField] private AudioClip[] lightAttackVA = new AudioClip[2]; //Voice sounds for the light attack.
+    [SerializeField] private AudioClip lightAttackVA; //Voice sound for the light attack.
     [SerializeField] private AudioClip[] heavyAttack = new AudioClip[2]; //Sound effects for the heavy attack.
-    [SerializeField] private AudioClip[] heavyAttackVA = new AudioClip[2]; //Voice sounds for the heavy attack.
+    [SerializeField] private AudioClip heavyAttackVA; //Voice sound for the heavy attack.
     [SerializeField] private AudioClip[] collectStat = new AudioClip[7]; //One different sound effect for each of the seven collectibles.
     [SerializeField] private AudioClip[] abilitySounds = new AudioClip[4]; //Sound effects for the various player abilities.
     [SerializeField] private AudioSource sfxSource; //Audio Source which handles single playback of sounds.
@@ -77,20 +77,21 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when the player jumps.
     public void JumpSound(float pDelay)
     {
-        PlaySound(pDelay, 0.4f, 1.0f, movement[1], sfxSource);
+        PlaySound(pDelay, 0.7f, Random.Range(0.7f, 1.0f), movement[1], sfxSource);
     }
 
     //Randomly plays one of two sounds when the player performs a light attack.
     public void LightAttackSound(float pDelay)
     {
-        PlaySound(pDelay, 0.5f, 1.0f, lightAttack[Random.Range(0, 1)], sfxSource);
-        PlaySound(pDelay, 0.7f, Random.Range(0.7f, 1.0f), lightAttackVA[Random.Range(0, 1)], voiceSource);
+        PlaySound(pDelay, 0.6f, 1.0f, lightAttack[Random.Range(0, 1)], sfxSource);
+        PlaySound(pDelay, 0.6f, Random.Range(0.7f, 1.0f), lightAttackVA, voiceSource);
     }
 
     //Randomly plays one of two sounds when the player performs a heavy attack.
     public void HeavyAttackSound(float pDelay)
     {
-        PlaySound(pDelay, 0.3f, 0.5f, lightAttack[Random.Range(0, 1)], sfxSource);
+        PlaySound(pDelay, 0.6f, 0.5f, heavyAttack[Random.Range(0, 1)], sfxSource);
+        PlaySound(pDelay, 0.6f, Random.Range(0.8f, 1.2f), heavyAttackVA, voiceSource);
     }
     #endregion
 
