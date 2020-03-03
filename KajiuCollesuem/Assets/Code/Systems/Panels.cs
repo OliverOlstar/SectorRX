@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 
@@ -27,6 +28,9 @@ public class Panels : MonoBehaviour
     public bool animBool;
     public Animator animShield;
     public Animator animMask;
+
+    public AudioClip[] lockedIn = new AudioClip[4];
+    public AudioSource sfxSource;
 
     private void Start()
     {
@@ -62,7 +66,10 @@ public class Panels : MonoBehaviour
             case 0:
                 if(stateValue == 0)
                 {
-                    playerPanels.text = " ";
+                    sfxSource.clip = lockedIn[Random.Range(0, 3)];
+                    sfxSource.volume = Random.Range(0.6f, 0.8f);
+                    sfxSource.PlayDelayed(0.25f);
+                    playerPanels.text = "READY!";
                     animBool = true;
                     abilityOneRect.DOAnchorPos(new Vector2(0, -1930), 1.6f);
                     dPadLeftRect.DOAnchorPos(new Vector2(-157, -2131), 1.6f);

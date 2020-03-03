@@ -23,10 +23,13 @@ public class PlayerCollectibles : MonoBehaviour
     // COMPONENTS
     private PlayerStateController _stateController;
     private ModelAnimations _modelAnimations;
+    [SerializeField] SliderController sliderController;
 
     // VARS
     [SerializeField] private GameObject[] statTexts = new GameObject[7];
+    [SerializeField] private Slider[] statSliders = new Slider[7];
     [SerializeField] private int MAXUPGRADES = 10;
+    //private int statUpMeters = 1;
     private float[] upgradeCounts = new float[7];
 
     [Header("Health")]
@@ -73,6 +76,15 @@ public class PlayerCollectibles : MonoBehaviour
         statTexts[4].SetActive(false);
         statTexts[5].SetActive(false);
         statTexts[6].SetActive(false);
+
+        //Set stat slider values to 0
+        statSliders[0].value = 0;
+        statSliders[1].value = 0;
+        statSliders[2].value = 0;
+        statSliders[3].value = 0;
+        statSliders[4].value = 0;
+        statSliders[5].value = 0;
+        statSliders[6].value = 0;
 
         // Health
         _stateController._playerAttributes.setMaxHealth(minHealth);
@@ -128,22 +140,26 @@ public class PlayerCollectibles : MonoBehaviour
         {
             case Upgrades.Health:
                 statTexts[0].SetActive(true);
+                sliderController.UpdateBars(3, upgradeCounts[index]);
                 value = Mathf.RoundToInt(Mathf.Lerp(minHealth, maxHealth, upgradeCounts[index] / MAXUPGRADES));
                 _stateController._playerAttributes.setMaxHealth(value);
                 break;
 
             case Upgrades.Shield:
                 statTexts[1].SetActive(true);
+                sliderController.UpdateBars(4, upgradeCounts[index]);
                 value = Mathf.RoundToInt(Mathf.Lerp(minShield, maxShield, upgradeCounts[index] / MAXUPGRADES));
                 _stateController._playerAttributes.setMaxDefense(value);
                 break;
 
             case Upgrades.Power:
                 statTexts[2].SetActive(true);
+                sliderController.UpdateBars(5, upgradeCounts[index]);
                 break;
 
             case Upgrades.Speed:
                 statTexts[4].SetActive(true);
+                sliderController.UpdateBars(7, upgradeCounts[index]);
                 value = Mathf.RoundToInt(Mathf.Lerp(minWalkSpeed, maxWalkSpeed, upgradeCounts[index] / MAXUPGRADES));
                 _stateController._movementComponent.speedMult = value;
 
@@ -156,18 +172,21 @@ public class PlayerCollectibles : MonoBehaviour
 
             case Upgrades.Jump:
                 statTexts[5].SetActive(true);
+                sliderController.UpdateBars(8, upgradeCounts[index]);
                 value = Mathf.RoundToInt(Mathf.Lerp(minJump, maxJump, upgradeCounts[index] / MAXUPGRADES));
                 _stateController._movementComponent.jumpMult = value;
                 break;
 
             case Upgrades.Weight:
                 statTexts[6].SetActive(true);
+                sliderController.UpdateBars(9, upgradeCounts[index]);
                 value = Mathf.RoundToInt(Mathf.Lerp(minWeight, maxWeight, upgradeCounts[index] / MAXUPGRADES));
                 _stateController._playerAttributes.weight = value;
                 break;
 
             case Upgrades.Attack:
                 statTexts[3].SetActive(true);
+                sliderController.UpdateBars(6, upgradeCounts[index]);
 
                 value = Mathf.RoundToInt(Mathf.Lerp(minAttack, maxAttack, upgradeCounts[index] / MAXUPGRADES));
                 foreach (PlayerHitbox hitbox in _stateController.hitboxes)

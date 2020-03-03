@@ -23,25 +23,25 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when player takes damage.
     public void HitByAttackSound(float pDelay)
     {
-        PlaySound(pDelay, 1.0f, playerHit[0]);
+        PlaySound(pDelay, 0.4f, Random.Range(1.0f, 2.0f), playerHit[0], sfxSource);
     }
 
     //Plays sound when player touches the tar.
     public void HitTarSound(float pDelay)
     {
-        PlaySound(pDelay, 1.0f, playerHit[1]);
+        PlaySound(pDelay, 0.5f, 1.0f, playerHit[1], sfxSource);
     }
 
     //Plays sound when the player dies.
     public void PlayerDeathSound(float pDelay)
     {
-        PlaySound(pDelay, 1.0f, playerHit[2]);
+        PlaySound(pDelay, 0.5f, Random.Range(1.0f, 2.0f), playerHit[2], sfxSource);
     }
 
     //Plays sound when the player has collected a stat increasing item
     public void StatUpSound(PlayerCollectibles.Upgrades pStat, float pDelay)
     {
-        PlaySound(pDelay, 1.0f, collectStat[(int)pStat]);
+        PlaySound(pDelay, 0.4f, 1.0f, collectStat[(int)pStat], sfxSource);
     }
     #endregion
 
@@ -49,13 +49,13 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when the player performs a dodge
     public void DodgeSound(float pDelay)
     {
-        PlaySound(pDelay, 1.0f, movement[0]);
+        PlaySound(pDelay, 0.4f, 0.5f, movement[0], sfxSource);
     }
 
     //Plays sound the player lands after a jump or falling
     public void LandingSound(float pDelay)
     {
-        PlaySound(pDelay, 1.0f, movement[2]);
+        PlaySound(pDelay, 0.35f, 1.0f, movement[2], sfxSource);
     }
 
     //Plays sound the player is walking on a sand or metal surface
@@ -63,10 +63,10 @@ public class PlayerSFX : MonoBehaviour
     {
         if (pSpeed > 0.6f)
         {
-            PlaySound(pDelay, 1.0f, surfaces[pGroundMaterial]);
+            PlaySound(pDelay, 0.4f, 1.0f, surfaces[pGroundMaterial], walkingSource);
         }
 
-        PlaySound(pDelay, 1.0f, surfaces[1]);
+        PlaySound(pDelay, 0.4f, 1.0f, surfaces[1], walkingSource);
     }
     #endregion
 
@@ -74,19 +74,19 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when the player jumps.
     public void JumpSound(float pDelay)
     {
-        PlaySound(pDelay, 1.0f, movement[1]);
+        PlaySound(pDelay, 0.4f, 1.0f, movement[1], sfxSource);
     }
 
     //Randomly plays one of two sounds when the player performs a light attack.
     public void LightAttackSound(float pDelay)
     {
-        PlaySound(pDelay, 1.0f, lightAttack[Random.Range(0, 1)]);
+        PlaySound(pDelay, 0.3f, 1.0f, lightAttack[Random.Range(0, 1)], sfxSource);
     }
 
     //Randomly plays one of two sounds when the player performs a heavy attack.
     public void HeavyAttackSound(float pDelay)
     {
-        PlaySound(pDelay, 0.5f, lightAttack[Random.Range(0, 1)]);
+        PlaySound(pDelay, 0.3f, 0.5f, lightAttack[Random.Range(0, 1)], sfxSource);
     }
     #endregion
 
@@ -94,29 +94,29 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when playeer uses Plasma Breath ability.
     public void PlasmaBreathSound(float pDelay)
     {
-        PlaySound(pDelay, 1.0f, abilitySounds[0]);
+        PlaySound(pDelay, 0.4f, 1.0f, abilitySounds[0], sfxSource);
     }
 
     //Plays sound when playeer uses Roll Attack ability.
     public void RollAttackSound(float pDelay)
     {
-        PlaySound(pDelay, 1.0f, abilitySounds[1]);
+        PlaySound(pDelay, 0.4f, 1.0f, abilitySounds[1], sfxSource);
     }
 
     //Plays sound when playeer uses Plasma Ball ability.
     public void PlasmaBallSound(float pDelay)
     {
-        PlaySound(pDelay, 1.0f, abilitySounds[2]);
+        PlaySound(pDelay, 0.4f, 1.0f, abilitySounds[2], sfxSource);
     }
 
     //Plays sound when playeer uses Ground Pound ability.
     public void GroundPoundSound(float pDelay)
     {
-        PlaySound(pDelay, 1.0f, abilitySounds[3]);
+        PlaySound(pDelay, 0.4f, 1.0f, abilitySounds[3], sfxSource);
     }
     #endregion
 
-    private void PlaySound(float pDelay, float pPitch, AudioClip pClip)
+    private void PlaySound(float pDelay, float pVolume, float pPitch, AudioClip pClip, AudioSource pSource)
     {
         if (pDelay > 0)
         {
@@ -124,7 +124,9 @@ public class PlayerSFX : MonoBehaviour
         }
         else
         {
+            sfxSource = pSource;
             sfxSource.clip = pClip;
+            sfxSource.volume = pVolume;
             sfxSource.pitch = pPitch;
             sfxSource.Play();
         }
