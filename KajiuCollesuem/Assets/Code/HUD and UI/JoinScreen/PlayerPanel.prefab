@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7129233238786463337
 RectTransform:
   m_ObjectHideFlags: 0
@@ -188,6 +188,7 @@ MonoBehaviour:
   playerNumber: 1
   _AddPlayer: {fileID: 0}
   playerPanels: {fileID: 5701965146055477170}
+  _myLizzy: {fileID: 0}
   myDevice: {fileID: 0}
   abilityIcons:
   - {fileID: 21300000, guid: 624c462ed63d79d4085bd6f7ee0bc5f9, type: 3}
@@ -199,12 +200,19 @@ MonoBehaviour:
   - {fileID: 1712537446878393038}
   abilityOneRect: {fileID: 5000724206881845145}
   abilityTwoRect: {fileID: 7129233238786463337}
+  dPadLeftRect: {fileID: 0}
+  dPadRightRect: {fileID: 0}
   setOne: 0
   setTwo: 0
   abilityLocked: 0
-  animBool: 0
   animShield: {fileID: 7631772526642291607}
   animMask: {fileID: 4165875243030734223}
+  lockedIn:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  sfxSource: {fileID: 0}
 --- !u!95 &5701965147974925916
 Animator:
   serializedVersion: 3
@@ -347,7 +355,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5494802492830799867
 RectTransform:
   m_ObjectHideFlags: 0
@@ -464,7 +472,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5000724206881845145
 RectTransform:
   m_ObjectHideFlags: 0
@@ -897,7 +905,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1950889384233047720
 RectTransform:
   m_ObjectHideFlags: 0
