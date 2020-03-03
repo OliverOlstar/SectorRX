@@ -12,7 +12,7 @@ public struct UsedDevices
 {
     public int deviceUser;
     public int playerIndex;
-    //Add Colour variable
+    public ColorSet playerColorSet;
     //Add Ability Presets variable
 }
 
@@ -65,22 +65,6 @@ public class connectedPlayers : MonoBehaviour
         playerSlots = new List<int>() { 0, 1, 2, 3, 4, 5 };
     }
 
-    //Check user device index and set struct ints to user number
-    //public void SetPlayerOrder()
-    //{
-    //    playerIndex.Clear();
-    //    foreach (DeviceHandler device in _Devices)
-    //    {
-    //        if (device.GetPlayerIndex() != -1)
-    //        {
-    //            UsedDevices user = new UsedDevices();
-    //            user.deviceUser = device.GetComponent<PlayerInput>().user.index;
-    //            user.playerIndex = device.GetPlayerIndex();
-    //            playerIndex.Add(user);
-    //        }
-    //    }
-    //}
-
     public void SetPlayerOrder()
     {
         playerIndex.Clear();
@@ -93,6 +77,7 @@ public class connectedPlayers : MonoBehaviour
                 UsedDevices user = new UsedDevices();
                 user.deviceUser = panel.myDevice.GetComponent<PlayerInput>().user.index;
                 user.playerIndex = panel.myDevice.GetPlayerIndex() - numberOfNotFound;
+                user.playerColorSet = panel.myColorSet;
                 playerIndex.Add(user);
             }
             else

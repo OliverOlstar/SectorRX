@@ -6,6 +6,9 @@ public class MenuLizzy : MonoBehaviour
 {
     private Animator _Anim;
 
+    private SkinnedMeshRenderer[] _Renderers;
+    [SerializeField] private SkinnedMeshRenderer _FeathersRender;
+
     private float _State = 0.0f;
     private Coroutine _Routine;
     private Coroutine _LockedRoutine;
@@ -33,9 +36,10 @@ public class MenuLizzy : MonoBehaviour
         LockedIn
     }
 
-    void Start()
+    void Awake()
     {
         _Anim = GetComponentInChildren<Animator>();
+        _Renderers = GetComponentsInChildren<SkinnedMeshRenderer>();
     }
 
     public void ChangeWeights(menuLizzyStates pState)
@@ -108,23 +112,11 @@ public class MenuLizzy : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            ChangeWeights(menuLizzyStates.NotJoined);
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            ChangeWeights(menuLizzyStates.Joined);
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            ChangeWeights(menuLizzyStates.LockedIn);
-
         _CrouchProgress = IncreaseProgress(_CrouchProgress, _CrouchMult);
         _Anim.SetFloat("Crouch Progress", _CrouchGraph.Evaluate(_CrouchProgress));
 
         _IdleProgress = IncreaseProgress(_IdleProgress, _IdleMult);
         _Anim.SetFloat("Idle Progress", _IdleGraph.Evaluate(_IdleProgress));
-
-        //_LockedInProgress = IncreaseProgress(_LockedInProgress, _LockedInMult, true);
-        //_Anim.SetFloat("LockedIn Progress", _LockedInGraph.Evaluate(_LockedInProgress));
     }
 
     private float IncreaseProgress(float pProgress, float pMult)
@@ -135,5 +127,16 @@ public class MenuLizzy : MonoBehaviour
             pProgress -= 1;
 
         return pProgress;
+    }
+
+    public void SetColors(ColorSet pSet)
+    {
+        foreach (SkinnedMeshRenderer renderer in _Renderers)
+        {
+            renderer.material = pSet.lizzyMat;
+        }
+
+        if (_FeathersRender != null)
+            _FeathersRender.material = pSet.feathersMat;
     }
 }

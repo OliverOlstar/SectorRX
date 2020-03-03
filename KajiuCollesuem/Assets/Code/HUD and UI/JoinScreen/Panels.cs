@@ -13,6 +13,7 @@ public class Panels : MonoBehaviour
     public Text playerPanels;
     private int stateValue = 0;
     [SerializeField] private MenuLizzy _myLizzy;
+    [HideInInspector] public ColorSet myColorSet;
 
     [HideInInspector] public DeviceHandler myDevice = null;
 
@@ -26,13 +27,24 @@ public class Panels : MonoBehaviour
     public bool abilityLocked;
     public Animator animShield;
     public Animator animMask;
+    private SpriteRenderer _animMaskRenderer;
 
     public AudioClip[] lockedIn = new AudioClip[4];
     public AudioSource sfxSource;
 
+    [SerializeField] private ColorPicker _ColorPicker;
+    private int _CurrentColorIndex = 0;
+
     private void Start()
     {
+        _animMaskRenderer = animMask.GetComponent<SpriteRenderer>();
+        
         UpdateIcons();
+
+        RemoveAbilitiesUI();
+
+        ColorSet set = _ColorPicker.StartingColor();
+        SetColors(set);
     }
 
     public void OnJoining()
@@ -66,6 +78,20 @@ public class Panels : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public void OnColorPicking()
+    {
+        ColorSet set = _ColorPicker.SwitchColor(_CurrentColorIndex);
+        SetColors(set);
+    }
+
+    private void SetColors(ColorSet pSet)
+    {
+        _CurrentColorIndex = pSet.index;
+        myColorSet = pSet;
+        _myLizzy.SetColors(pSet);
+        _animMaskRenderer.color = pSet.color;
     }
 
     public void OnLeft()
