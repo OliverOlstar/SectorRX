@@ -26,7 +26,7 @@ public class MenuCamera : MonoBehaviour
     private void Update()
     {
         transform.position = Vector3.Lerp(transform.position, _postions[curIndex], Time.deltaTime * _positionDampening);
-        transform.rotation = Quaternion.Lerp(transform.rotation, _rotations[curIndex], Time.deltaTime * _rotationDampening);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(_rotationEulers[curIndex]), Time.deltaTime * _rotationDampening);
     }
 
     public void ToggleCamera(int pIndex) => curIndex = pIndex;

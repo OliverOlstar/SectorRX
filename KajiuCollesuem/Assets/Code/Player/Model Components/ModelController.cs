@@ -218,7 +218,6 @@ public class ModelController : MonoBehaviour
     #region Stunned
     public void AddStunned(float pValue, float pDirection, float pGoingAwayDelay, float pGoingAwayLength)
     {
-        Debug.Log("ModelController: AddStunned");
         _modelWeights.AddStunned(pValue, pDirection, pGoingAwayDelay, pGoingAwayLength);
     }
     #endregion

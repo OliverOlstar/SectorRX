@@ -187,6 +187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNumber: 1
   _AddPlayer: {fileID: 0}
+  _CanPlayChecker: {fileID: 0}
   playerPanels: {fileID: 5701965146055477170}
   _myLizzy: {fileID: 0}
   myDevice: {fileID: 0}
@@ -200,8 +201,8 @@ MonoBehaviour:
   - {fileID: 1712537446878393038}
   abilityOneRect: {fileID: 5000724206881845145}
   abilityTwoRect: {fileID: 7129233238786463337}
-  dPadLeftRect: {fileID: 0}
-  dPadRightRect: {fileID: 0}
+  dPadLeftRect: {fileID: 1950889384233047720}
+  dPadRightRect: {fileID: 5494802492830799867}
   setOne: 0
   setTwo: 0
   abilityLocked: 0
@@ -213,6 +214,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   sfxSource: {fileID: 0}
+  _ColorPicker: {fileID: 0}
 --- !u!95 &5701965147974925916
 Animator:
   serializedVersion: 3
@@ -614,7 +616,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 7cb2912222469634ba17a77055919ea8, type: 3}
-    m_FontSize: 54
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -625,7 +627,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Press 'Space' or \n'Start' to Join"
+  m_Text: "Press 'Space' \nor \n'Start' to Join"
 --- !u!1 &5701965147877480078
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,7 +796,7 @@ RectTransform:
   m_GameObject: {fileID: 6245761883946214530}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_Children:
   - {fileID: 8566133196936411524}
   - {fileID: 7611276306060225565}
@@ -1299,7 +1301,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -153.44, y: -156}
+  m_AnchoredPosition: {x: -153.44, y: -173}
   m_SizeDelta: {x: -283.11, y: -216.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2216799270778208938
