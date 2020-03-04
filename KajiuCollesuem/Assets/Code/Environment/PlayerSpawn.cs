@@ -14,7 +14,7 @@ using DG.Tweening;
 public class PlayerSpawn : MonoBehaviour
 {
     public GameObject playerPrefab;
-    public List<GameObject> players = new List<GameObject>();
+    [HideInInspector] public List<GameObject> players = new List<GameObject>();
     public RectTransform transitionScreen;
 
     public MusicManager musicManager;
@@ -23,7 +23,10 @@ public class PlayerSpawn : MonoBehaviour
     [SerializeField] private MatchInputHandler[] _PlayerInputs = new MatchInputHandler[6];
     private List<MatchInputHandler> _ActiveInputs = new List<MatchInputHandler>();
 
-    public float playersToSpawn = 0;
+    private float playersToSpawn = 0;
+
+    [Space]
+    [SerializeField] private Material _defaultMaterial;
 
     public void MatchStartup()
     {
@@ -39,6 +42,11 @@ public class PlayerSpawn : MonoBehaviour
             {
                 player.deviceUser = i;
                 player.playerIndex = i;
+
+                ColorSet set = new ColorSet();
+                set.lizzyMat = _defaultMaterial;
+                player.playerColorSet = set;
+
                 connectedPlayers.playerIndex.Add(player);
             }
         }
