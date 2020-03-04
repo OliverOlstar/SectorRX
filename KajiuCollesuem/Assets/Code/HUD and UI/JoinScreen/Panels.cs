@@ -60,7 +60,7 @@ public class Panels : MonoBehaviour
                     sfxSource.volume = Random.Range(0.6f, 0.8f);
                     sfxSource.PlayDelayed(0.25f);
                     playerPanels.text = "READY!";
-                    RemoveAbilitiesUI();
+                    StartCoroutine(RemoveAbilitiesUI());
                     abilityLocked = true;
                     stateValue = 1;
                     _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.LockedIn);
@@ -159,7 +159,7 @@ public class Panels : MonoBehaviour
 
         _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.NotJoined);
 
-        RemoveAbilitiesUI();
+        StartCoroutine(RemoveAbilitiesUI());
 
         animShield.SetBool("hasJoined", false);
         animMask.SetBool("maskJoined", false);
@@ -169,6 +169,11 @@ public class Panels : MonoBehaviour
 
     private void ShowAbilitiesUI()
     {
+        StopAllCoroutines();
+        abilityOneRect.gameObject.SetActive(true);
+        dPadLeftRect.gameObject.SetActive(true);
+        abilityTwoRect.gameObject.SetActive(true);
+        dPadRightRect.gameObject.SetActive(true);
         CancelPreviousAbilitiesTweens();
         abilityOneRect.DOAnchorPos(new Vector2(0, 34), 0.4f);
         dPadLeftRect.DOAnchorPos(new Vector2(-157, -201), 0.4f);
@@ -176,13 +181,18 @@ public class Panels : MonoBehaviour
         dPadRightRect.DOAnchorPos(new Vector2(157, -201), 0.4f);
     }
 
-    private void RemoveAbilitiesUI()
+    IEnumerator RemoveAbilitiesUI()
     {
         CancelPreviousAbilitiesTweens();
         abilityOneRect.DOAnchorPos(new Vector2(0, -1930), 1.6f);
         dPadLeftRect.DOAnchorPos(new Vector2(-157, -2131), 1.6f);
         abilityTwoRect.DOAnchorPos(new Vector2(0, -2110), 1.6f);
         dPadRightRect.DOAnchorPos(new Vector2(157, -2131), 1.6f);
+        yield return new WaitForSeconds(1.6f);
+        abilityOneRect.gameObject.SetActive(false);
+        dPadLeftRect.gameObject.SetActive(false);
+        abilityTwoRect.gameObject.SetActive(false);
+        dPadRightRect.gameObject.SetActive(false);
     }
 
     private void CancelPreviousAbilitiesTweens()

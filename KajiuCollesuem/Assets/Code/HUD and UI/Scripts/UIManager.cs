@@ -18,9 +18,12 @@ public class UIManager : MonoBehaviour
     public static bool menuProperties;
     public RectTransform mainMenu, playerInputMenu, loadingScreen, logo;
     public Animator logoAnim;
+    public Animator buttonAnim;
+    public Button startButton;
     public GameObject targetUI, backButton;
     public VideoPlayer videoPlayer;
     public bool panelCheck = false;
+    public bool interact = false;
 
     public void Start()
     {
@@ -39,10 +42,20 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
+        buttonAnim.SetBool("Interactable", interact);
+
         if (targetUI != null)
         {
             EventSystem.current.SetSelectedGameObject(targetUI);
             targetUI = null;
+        }
+        if (interact == true)
+        {
+            startButton.interactable = true;
+        }
+        if (interact == false)
+        {
+            startButton.interactable = false;
         }
     }
 
