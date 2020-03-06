@@ -28,7 +28,9 @@ public class Panels : MonoBehaviour
     private SpriteRenderer _animMaskRenderer;
 
     public AudioClip[] lockedIn = new AudioClip[4];
+    public AudioClip combatantHere;
     public AudioSource sfxSource;
+
 
     [SerializeField] private ColorPicker _ColorPicker;
     private int _CurrentColorIndex = 0;
