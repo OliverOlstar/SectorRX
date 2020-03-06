@@ -9,7 +9,7 @@ public class PlayerSFX : MonoBehaviour
 {
     [SerializeField] private AudioClip[] surfaces = new AudioClip[2]; //Walking sound effects.
     [SerializeField] private AudioClip[] movement = new AudioClip[3]; //Sound effects for dodging, jumping, and landing.
-    [SerializeField] private AudioClip[] playerHit = new AudioClip[3]; //Sound effects for when the player takes damage from something or dies.
+    [SerializeField] private AudioClip[] playerHit = new AudioClip[4]; //Sound effects for when the player takes damage from something or dies.
     [SerializeField] private AudioClip[] lightAttack = new AudioClip[2]; //Sound effects for the light attack.
     [SerializeField] private AudioClip lightAttackVA; //Voice sound for the light attack.
     [SerializeField] private AudioClip[] heavyAttack = new AudioClip[2]; //Sound effects for the heavy attack.
@@ -26,7 +26,7 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when player takes damage.
     public void HitByAttackSound(float pDelay)
     {
-        PlaySound(pDelay, 0.8f, Random.Range(0.6f, 1.2f), playerHit[0], sfxSource);
+        PlaySound(pDelay, 0.6f, Random.Range(0.8f, 1.0f), playerHit[0], sfxSource);
     }
 
     //Plays sound when player touches the tar.
@@ -38,7 +38,7 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when the player dies.
     public void PlayerDeathSound(float pDelay)
     {
-        PlaySound(pDelay, 0.8f, Random.Range(0.6f, 1.2f), playerHit[2], sfxSource);
+        PlaySound(pDelay, 0.8f, Random.Range(0.6f, 1.2f), playerHit[2], voiceSource);
     }
 
     //Plays sound when the player has collected a stat increasing item
@@ -52,13 +52,13 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when the player performs a dodge
     public void DodgeSound(float pDelay)
     {
-        PlaySound(pDelay, 0.8f, 1.0f, movement[0], sfxSource);
+        PlaySound(pDelay, 0.95f, Random.Range(0.6f, 0.8f), movement[0], sfxSource);
     }
 
     //Plays sound the player lands after a jump or falling
     public void LandingSound(float pDelay)
     {
-        PlaySound(pDelay, 0.35f, 1.0f, movement[2], sfxSource);
+        PlaySound(pDelay, 0.2f, 1.0f, movement[2], sfxSource);
     }
 
     //Plays sound the player is walking on a sand or metal surface
@@ -66,10 +66,10 @@ public class PlayerSFX : MonoBehaviour
     {
         if (pSpeed > 0.6f)
         {
-            PlaySound(pDelay, 0.4f, 1.0f, surfaces[pGroundMaterial], walkingSource);
+            PlaySound(pDelay, 0.2f, Random.Range(0.4f, 0.6f), surfaces[pGroundMaterial], walkingSource);
         }
 
-        PlaySound(pDelay, 0.4f, 1.0f, surfaces[1], walkingSource);
+        PlaySound(pDelay, 0.2f, Random.Range(0.4f, 0.6f), surfaces[0], walkingSource);
     }
     #endregion
 
@@ -84,14 +84,14 @@ public class PlayerSFX : MonoBehaviour
     public void LightAttackSound(float pDelay)
     {
         PlaySound(pDelay, 0.6f, 1.0f, lightAttack[Random.Range(0, 1)], sfxSource);
-        PlaySound(pDelay, 0.6f, Random.Range(0.7f, 1.0f), lightAttackVA, voiceSource);
+        PlaySound(pDelay, 0.6f, Random.Range(0.6f, 0.8f), lightAttackVA, voiceSource);
     }
 
     //Randomly plays one of two sounds when the player performs a heavy attack.
     public void HeavyAttackSound(float pDelay)
     {
         PlaySound(pDelay, 0.6f, 0.5f, heavyAttack[Random.Range(0, 1)], sfxSource);
-        PlaySound(pDelay, 0.6f, Random.Range(0.8f, 1.2f), heavyAttackVA, voiceSource);
+        PlaySound(pDelay, 0.6f, Random.Range(0.6f, 0.75f), heavyAttackVA, voiceSource);
     }
     #endregion
 
