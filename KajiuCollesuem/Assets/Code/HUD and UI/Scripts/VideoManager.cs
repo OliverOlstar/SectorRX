@@ -21,7 +21,7 @@ public class VideoManager : MonoBehaviour
         mainMenu.SetActive(false);
         logoVisual.SetActive(false);
         videoPlayer.SetDirectAudioVolume(1, 0.5f);
-        announceSource.PlayDelayed(5.0f);
+        announceSource.PlayDelayed(4.9f);
         audioSource.PlayDelayed(7.5f);
     }
 

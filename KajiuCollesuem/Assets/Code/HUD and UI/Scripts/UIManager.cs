@@ -25,6 +25,9 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private int _PlayersReady = 0;
 
+    public AudioClip[] combatant = new AudioClip[4];
+    public AudioSource announceSource;
+
     public void Start()
     {
         Time.timeScale = 1;
@@ -98,7 +101,14 @@ public class UIManager : MonoBehaviour
     public void PlayerReadyToggle(bool pReady)
     {
         _PlayersReady += (pReady ? 1 : -1);
-
+        
+        //Announcer sound for player joining
+        if(pReady)
+        {
+            announceSource.clip = combatant[_PlayersReady - 1];
+            announceSource.Play();
+        }
+        
         PlayerReadyUpdateUI();
     }
 
