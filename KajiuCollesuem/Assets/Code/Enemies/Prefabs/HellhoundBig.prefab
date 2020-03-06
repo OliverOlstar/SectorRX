@@ -860,7 +860,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9d3e01810752376449f30ff0dc4a1667, type: 2}
+  - {fileID: 2100000, guid: 9a7a2a482edf3ec43a6748da59117ec2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1151,9 +1151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99a4d45b359b1fa4aba984ae0f0a0aab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stunnedStateMinTime: 0.8
+  _stunnedStateMinTime: 0.5
   _enabled: 0
-  _halfPlayerHeight: 0.32
 --- !u!114 &4631869177046432509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1223,7 +1222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 643df3d2147bc4a46b41176fdfc5f1af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 6
+  _rotationSpeed: 6.5
 --- !u!195 &1969429415045013407
 NavMeshAgent:
   m_ObjectHideFlags: 0

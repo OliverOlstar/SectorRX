@@ -18,7 +18,7 @@ public class Stunned : MonoBehaviour, IState
     [SerializeField] private float _stunnedStateMinTime = 0.2f;
 
     [SerializeField] private bool _enabled = false;
-    [SerializeField] private float _halfPlayerHeight = 0.52f;
+    //[SerializeField] private float _halfPlayerHeight = 0.52f;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent, EnemySmoothRotation pRotation)
     {
@@ -33,7 +33,8 @@ public class Stunned : MonoBehaviour, IState
         _leaveStateTime = Time.time + _stunnedStateMinTime;
 
         _anim.SetTrigger("Hurt");
-        //_agent.enabled = false;
+        _anim.SetFloat("Speed", 0);
+        _agent.isStopped = true;
         //_rb.isKinematic = false;
         _enabled = true;
     }
@@ -41,7 +42,7 @@ public class Stunned : MonoBehaviour, IState
     public void Exit()
     {
         //_rb.isKinematic = true;
-        //_agent.enabled = true;
+        _agent.isStopped = false;
         _enabled = false;
     }
 
@@ -62,25 +63,25 @@ public class Stunned : MonoBehaviour, IState
 
     public void UpdateTarget(Transform pTarget) => _target = pTarget;
 
-    private bool IsOnGround()
-    {
-        // Linecast get two points
-        Vector3 lineStart = transform.position;
-        Vector3 vectorToSearch = new Vector3(lineStart.x, lineStart.y - _halfPlayerHeight, lineStart.z);
+    //private bool IsOnGround()
+    //{
+    //    // Linecast get two points
+    //    Vector3 lineStart = transform.position;
+    //    Vector3 vectorToSearch = new Vector3(lineStart.x, lineStart.y - _halfPlayerHeight, lineStart.z);
 
-        // Debug Line
-        Color color = new Color(0.0f, 0.0f, 1.0f);
-        Debug.DrawLine(lineStart, vectorToSearch, color);
+    //    // Debug Line
+    //    Color color = new Color(0.0f, 0.0f, 1.0f);
+    //    Debug.DrawLine(lineStart, vectorToSearch, color);
 
-        // Linecast
-        RaycastHit hitInfo;
-        if (Physics.Linecast(this.transform.position, vectorToSearch, out hitInfo))
-        {
-            // On Ground
-            return true;
-        }
+    //    // Linecast
+    //    RaycastHit hitInfo;
+    //    if (Physics.Linecast(this.transform.position, vectorToSearch, out hitInfo))
+    //    {
+    //        // On Ground
+    //        return true;
+    //    }
 
-        // Off Ground
-        return false;
-    }
+    //    // Off Ground
+    //    return false;
+    //}
 }
