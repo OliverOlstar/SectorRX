@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 60765c309baefbe4cb11e928d59e37e3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -40,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: b4a34f8e3edc62446963f557dd5fdbb4, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0239d4f61c50a7c46a8d96c968918391, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -67,8 +67,8 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _LightSmoothness: 0
-    - _LightThreshold: 0.036
+    - _LightSmoothness: 1
+    - _LightThreshold: 0.06
     - _MKEditorShowDetailBehavior: 0
     - _MKEditorShowDissolveBehavior: 0
     - _MKEditorShowLightBehavior: 1
@@ -85,16 +85,16 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Outline: 0.03
-    - _OutlineSize: 0.02
+    - _OutlineSize: 0.04
     - _Parallax: 0.02
     - _RimIntensity: 0.124
     - _RimSize: 1.48
     - _RimSmoothness: 0
-    - _ShadowIntensity: 1.116
+    - _ShadowIntensity: 1.22
     - _Shininess: 0.275
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SpecularIntensity: 0.539
+    - _SpecularIntensity: 0
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
