@@ -7,12 +7,12 @@ public class RaiseStat : MonoBehaviour
     [SerializeField] private PlayerCollectibles.Upgrades statType;
 
     [Space]
-    private float _CanCollectDelay = 0.1f;
+    private float _CanCollectDelay = 0.22f;
     private bool _CanCollect = false;
 
     private void Start()
     {
-        StartCoroutine("EnableCollectDelay");
+        StartCoroutine(EnableCollectDelay());
     }
 
     private IEnumerator EnableCollectDelay()
@@ -21,7 +21,7 @@ public class RaiseStat : MonoBehaviour
         _CanCollect = true;
     } 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (_CanCollect && other.gameObject.tag == "Player")
         {
@@ -30,6 +30,7 @@ public class RaiseStat : MonoBehaviour
             if (otherCollectibles != null)
             {
                 otherCollectibles.CollectedItem(statType);
+                _CanCollect = false;
                 Destroy(transform.parent.gameObject);
             }
         }
