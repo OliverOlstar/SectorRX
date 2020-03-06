@@ -20,7 +20,8 @@ public class UIManager : MonoBehaviour
     public Animator logoAnim;
     private Animator buttonAnim;
     public Button startButton;
-    public VideoPlayer videoPlayer;
+    public VideoPlayer loadVideoPlayer;
+    public VideoManager introVideoPlayer;
     [SerializeField] private MenuCamera _Camera;
 
     [SerializeField] private int _PlayersReady = 0;
@@ -32,14 +33,16 @@ public class UIManager : MonoBehaviour
 
         if (menuProperties == true)
         {
-            // Set menu Animation to be done
-
+            Debug.Log("menu = true");
+            introVideoPlayer.background.gameObject.SetActive(false);
+            introVideoPlayer.videoPlayer.gameObject.SetActive(false);
             playerInputMenu.DOAnchorPos(new Vector2(69, -2), 0.4f);
             EventSystem.current.SetSelectedGameObject(null);
             _Camera.ToggleCamera(1);
         }
-        else
+        if (menuProperties == false)
         {
+            Debug.Log("menu = false");
             StartCoroutine(StartMenu());
         }
 
@@ -55,12 +58,12 @@ public class UIManager : MonoBehaviour
         logo.DOAnchorPos(new Vector2(401, 6), 0.4f);
         mainMenu.DOAnchorPos(new Vector2(44, 21), 0.4f);
         playerInputMenu.DOAnchorPos(new Vector2(69, 4120), 0.4f);
-        menuProperties = false;
         EventSystem.current.SetSelectedGameObject(pTarget);
     }
 
     public void GoToPlayer()
     {
+        Debug.Log("menu = true");
         logo.DOAnchorPos(new Vector2(401, -2057), 0.4f);
         playerInputMenu.DOAnchorPos(new Vector2(69, -2), 0.4f);
         mainMenu.DOAnchorPos(new Vector2(44, -2060), 0.4f);
@@ -70,7 +73,7 @@ public class UIManager : MonoBehaviour
 
     public void LoadLevel(int sceneIndex)
     {
-        videoPlayer.Prepare();
+        loadVideoPlayer.Prepare();
         playerInputMenu.DOAnchorPos(new Vector2(71, -4120), 0.4f);
         loadingScreen.DOAnchorPos(new Vector2(0, 0), 0.4f);
         StartCoroutine(LoadAsyncLevel(sceneIndex));
@@ -80,14 +83,14 @@ public class UIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
-        videoPlayer.Play();
+        loadVideoPlayer.Play();
         while (!operation.isDone)
         {
             float progress = Mathf.Clamp01(operation.progress / 0.9f);
 
-            if (videoPlayer.isPlaying)
+            if (loadVideoPlayer.isPlaying)
             {
-                videoPlayer.loopPointReached += EndReached;
+                loadVideoPlayer.loopPointReached += EndReached;
                 yield return new WaitForSeconds(2.0f);
             }
 
@@ -109,7 +112,7 @@ public class UIManager : MonoBehaviour
         startButton.interactable = canStart;
     }
 
-    void EndReached(UnityEngine.Video.VideoPlayer videoPlayer)
+    void EndReached(UnityEngine.Video.VideoPlayer loadVideoPlayer)
     {
         StartCoroutine(CompleteLoadVisual());  
     }
@@ -117,7 +120,7 @@ public class UIManager : MonoBehaviour
     IEnumerator CompleteLoadVisual()
     {
         yield return new WaitForSeconds(0.75f);
-        videoPlayer.isLooping = false;
+        loadVideoPlayer.isLooping = false;
     }
 
     IEnumerator StartMenu()
