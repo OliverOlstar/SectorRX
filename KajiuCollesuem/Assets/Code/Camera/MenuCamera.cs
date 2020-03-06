@@ -10,10 +10,17 @@ public class MenuCamera : MonoBehaviour
     [SerializeField] private float _rotationDampening = 10.0f;
     [SerializeField] private float _positionDampening = 10.0f;
 
+    [Space]
+    [SerializeField] private float _ScaleMult = 0.1f;
+    [SerializeField] private float _ScaleOffset = 1.0f;
+    private Camera _Camera;
+
     private int curIndex;
 
     private void Awake()
     {
+        _Camera = GetComponent<Camera>();
+
         // Pre convert eulers to quaternions
         _rotations = new Quaternion[_rotationEulers.Length];
 
@@ -27,6 +34,8 @@ public class MenuCamera : MonoBehaviour
     {
         transform.position = Vector3.Lerp(transform.position, _postions[curIndex], Time.deltaTime * _positionDampening);
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(_rotationEulers[curIndex]), Time.deltaTime * _rotationDampening);
+
+        _Camera.orthographicSize =  Mathf.Sqrt(Screen.width * Screen.height) * _ScaleMult + _ScaleOffset;
     }
 
     public void ToggleCamera(int pIndex) => curIndex = pIndex;
