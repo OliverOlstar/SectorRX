@@ -87,7 +87,7 @@ public class Attack : MonoBehaviour, IState
                 break;
 
             //Jump Back Start
-            case 1:
+            case 2:
                 _anim.SetBool("Attacking", false);
                 _rb.isKinematic = false;
                 _rb.AddForce(-transform.forward * _jumpbackForce + Vector3.up * _jumpbackUpForce, ForceMode.Impulse);
@@ -95,7 +95,7 @@ public class Attack : MonoBehaviour, IState
                 break;
 
             //Jump State
-            case 2:
+            case 1:
                 if (_onGroundCheckTime <= Time.time && IsOnGround())
                 {
                     _enabled = false;

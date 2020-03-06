@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 7865328268153840597}
   - component: {fileID: 4475393891921436460}
   - component: {fileID: 4071688678945650849}
+  - component: {fileID: 1076259239}
+  - component: {fileID: 1396695234}
   m_Layer: 0
   m_Name: SM_FuelTank_low
   m_TagString: Metal
@@ -58,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0f9be56fa1ae65045a4f157228585b4c, type: 2}
+  - {fileID: 2100000, guid: 606094c9d9ef0ff4bb3e73f682c76465, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -93,3 +95,41 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: -2439609701357536162, guid: d18b21d4f8ea7904da627526a1b91e1c, type: 3}
+--- !u!114 &1076259239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2749198003779415024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de2173df09a39347b025b6f88357c34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Health: 3
+  _FallSpeed: 8
+  _itemPrefabs:
+  - {fileID: 7865935160635239468, guid: 8991995bcdcc5f9448ce755d60709332, type: 3}
+  - {fileID: 7865935160635239468, guid: fc6c0dce4ee316d4a89e2bdac520d070, type: 3}
+  - {fileID: 7865935160635239468, guid: 6a2b3132088280e4da87ec7c6f94ee7d, type: 3}
+  - {fileID: 7865935160635239468, guid: 45518b7b8b4c1a44aa0b634050b17ec9, type: 3}
+  - {fileID: 7865935160635239468, guid: b041b96a0e0af1b48bcc93de588421bd, type: 3}
+  - {fileID: 7865935160635239468, guid: ce4b818389d341a4c9e0de4399b38e40, type: 3}
+  _collectablesSpawnCount: 3
+  _collectableUpOffset: 5
+--- !u!114 &1396695234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2749198003779415024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfa5e0e0e5704df45a9c74443b531904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _frequency: 90
+  _magnitudeMult: 0.6
+  _reductionRate: 6

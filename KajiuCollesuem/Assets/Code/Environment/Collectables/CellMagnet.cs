@@ -42,7 +42,7 @@ public class CellMagnet : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Jump at player
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && other.GetComponentInParent<IAttributes>().IsDead() == false)
         {
             StartCoroutine(magnetRoutine(other));
             collidersInMagnet.Add(other);

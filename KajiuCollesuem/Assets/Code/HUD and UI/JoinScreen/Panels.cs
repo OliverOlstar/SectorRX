@@ -10,6 +10,7 @@ public class Panels : MonoBehaviour
 {
     [SerializeField] int playerNumber;
     [SerializeField] private connectedPlayers _AddPlayer;
+    [SerializeField] private UIManager _CanPlayChecker;
     public Text playerPanels;
     private int stateValue = 0;
     [SerializeField] private MenuLizzy _myLizzy;
@@ -22,9 +23,6 @@ public class Panels : MonoBehaviour
     public RectTransform abilityOneRect, abilityTwoRect;
     public RectTransform dPadLeftRect, dPadRightRect;
     private int presetNumber = 0;
-    public bool setOne;
-    public bool setTwo;
-    public bool abilityLocked;
     public Animator animShield;
     public Animator animMask;
     private SpriteRenderer _animMaskRenderer;
@@ -56,27 +54,26 @@ public class Panels : MonoBehaviour
                 // Player Locked In
                 if(stateValue == 0)
                 {
+                    stateValue = 1;
+
                     sfxSource.clip = lockedIn[Random.Range(0, 3)];
                     sfxSource.volume = Random.Range(0.6f, 0.8f);
                     sfxSource.PlayDelayed(0.25f);
                     playerPanels.text = "READY!";
-                    RemoveAbilitiesUI();
-                    abilityLocked = true;
-                    stateValue = 1;
+                    StartCoroutine(RemoveAbilitiesUI());
                     _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.LockedIn);
 
                     animShield.SetBool("hasJoined", true);
                     animMask.SetBool("maskJoined", true);
+
+                    _CanPlayChecker.PlayerReadyToggle(true);
                 }
                 break;
             
             case 1:
                 // Player Enters to Start Match
-                if (connectedPlayers.playersConnected >= 2 && abilityLocked)
-                {
-                    _AddPlayer.SetPlayerOrder();
-                    SceneManager.LoadSceneAsync(1);
-                }
+                _AddPlayer.SetPlayerOrder();
+                SceneManager.LoadSceneAsync(1);
                 break;
         }
     }
@@ -147,6 +144,8 @@ public class Panels : MonoBehaviour
         ShowAbilitiesUI();
 
         _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.Joined);
+
+        _CanPlayChecker.PlayerReadyUpdateUI();
     }
 
     // Player Enters to Leave Match
@@ -159,16 +158,24 @@ public class Panels : MonoBehaviour
 
         _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.NotJoined);
 
-        RemoveAbilitiesUI();
+        StartCoroutine(RemoveAbilitiesUI());
 
         animShield.SetBool("hasJoined", false);
         animMask.SetBool("maskJoined", false);
+
+        if (stateValue == 0)
+            _CanPlayChecker.PlayerReadyToggle(false);
 
         return playerNumber - 1;
     }
 
     private void ShowAbilitiesUI()
     {
+        StopAllCoroutines();
+        abilityOneRect.gameObject.SetActive(true);
+        dPadLeftRect.gameObject.SetActive(true);
+        abilityTwoRect.gameObject.SetActive(true);
+        dPadRightRect.gameObject.SetActive(true);
         CancelPreviousAbilitiesTweens();
         abilityOneRect.DOAnchorPos(new Vector2(0, 34), 0.4f);
         dPadLeftRect.DOAnchorPos(new Vector2(-157, -201), 0.4f);
@@ -176,13 +183,18 @@ public class Panels : MonoBehaviour
         dPadRightRect.DOAnchorPos(new Vector2(157, -201), 0.4f);
     }
 
-    private void RemoveAbilitiesUI()
+    IEnumerator RemoveAbilitiesUI()
     {
         CancelPreviousAbilitiesTweens();
         abilityOneRect.DOAnchorPos(new Vector2(0, -1930), 1.6f);
         dPadLeftRect.DOAnchorPos(new Vector2(-157, -2131), 1.6f);
         abilityTwoRect.DOAnchorPos(new Vector2(0, -2110), 1.6f);
         dPadRightRect.DOAnchorPos(new Vector2(157, -2131), 1.6f);
+        yield return new WaitForSeconds(1.6f);
+        abilityOneRect.gameObject.SetActive(false);
+        dPadLeftRect.gameObject.SetActive(false);
+        abilityTwoRect.gameObject.SetActive(false);
+        dPadRightRect.gameObject.SetActive(false);
     }
 
     private void CancelPreviousAbilitiesTweens()

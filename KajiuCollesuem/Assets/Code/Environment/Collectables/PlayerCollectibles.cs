@@ -28,7 +28,7 @@ public class PlayerCollectibles : MonoBehaviour
     // VARS
     [SerializeField] private GameObject[] statTexts = new GameObject[7];
     [SerializeField] private Slider[] statSliders = new Slider[7];
-    [SerializeField] private int MAXUPGRADES = 10;
+    [SerializeField] private float MAXUPGRADES = 10;
     //private int statUpMeters = 1;
     private float[] upgradeCounts = new float[7];
 
@@ -101,6 +101,7 @@ public class PlayerCollectibles : MonoBehaviour
 
     }
 
+    [ExecuteInEditMode]
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -135,22 +136,22 @@ public class PlayerCollectibles : MonoBehaviour
         if (upgradeCounts[index] > MAXUPGRADES)
             return false;
 
-        int value;
+        float value;
 
         switch (pStat)
         {
             case Upgrades.Health:
                 statTexts[0].SetActive(true);
                 sliderController.UpdateBars(3, upgradeCounts[index]);
-                value = Mathf.RoundToInt(Mathf.Lerp(minHealth, maxHealth, upgradeCounts[index] / MAXUPGRADES));
-                _stateController._playerAttributes.setMaxHealth(value);
+                value = Mathf.Lerp(minHealth, maxHealth, upgradeCounts[index] / MAXUPGRADES);
+                _stateController._playerAttributes.setMaxHealth(Mathf.RoundToInt(value));
                 break;
 
             case Upgrades.Shield:
                 statTexts[1].SetActive(true);
                 sliderController.UpdateBars(4, upgradeCounts[index]);
-                value = Mathf.RoundToInt(Mathf.Lerp(minShield, maxShield, upgradeCounts[index] / MAXUPGRADES));
-                _stateController._playerAttributes.setMaxDefense(value);
+                value = Mathf.Lerp(minShield, maxShield, upgradeCounts[index] / MAXUPGRADES);
+                _stateController._playerAttributes.setMaxDefense(Mathf.RoundToInt(value));
                 break;
 
             case Upgrades.Power:
@@ -161,27 +162,27 @@ public class PlayerCollectibles : MonoBehaviour
             case Upgrades.Speed:
                 statTexts[4].SetActive(true);
                 sliderController.UpdateBars(7, upgradeCounts[index]);
-                value = Mathf.RoundToInt(Mathf.Lerp(minWalkSpeed, maxWalkSpeed, upgradeCounts[index] / MAXUPGRADES));
+                value = Mathf.Lerp(minWalkSpeed, maxWalkSpeed, upgradeCounts[index] / MAXUPGRADES);
                 _stateController._movementComponent.speedMult = value;
 
-                value = Mathf.RoundToInt(Mathf.Lerp(minDodgeSpeed, maxDodgeSpeed, upgradeCounts[index] / MAXUPGRADES));
+                value = Mathf.Lerp(minDodgeSpeed, maxDodgeSpeed, upgradeCounts[index] / MAXUPGRADES);
                 _stateController._dodgeComponent.speedMult = value;
 
-                value = Mathf.RoundToInt(Mathf.Lerp(minAnimSpeed, maxAnimSpeed, upgradeCounts[index] / MAXUPGRADES));
+                value = Mathf.Lerp(minAnimSpeed, maxAnimSpeed, upgradeCounts[index] / MAXUPGRADES);
                 _modelAnimations.stepMult = value;
                 break;
 
             case Upgrades.Jump:
                 statTexts[5].SetActive(true);
                 sliderController.UpdateBars(8, upgradeCounts[index]);
-                value = Mathf.RoundToInt(Mathf.Lerp(minJump, maxJump, upgradeCounts[index] / MAXUPGRADES));
+                value = Mathf.Lerp(minJump, maxJump, upgradeCounts[index] / MAXUPGRADES);
                 _stateController._movementComponent.jumpMult = value;
                 break;
 
             case Upgrades.Weight:
                 statTexts[6].SetActive(true);
                 sliderController.UpdateBars(9, upgradeCounts[index]);
-                value = Mathf.RoundToInt(Mathf.Lerp(minWeight, maxWeight, upgradeCounts[index] / MAXUPGRADES));
+                value = Mathf.Lerp(minWeight, maxWeight, upgradeCounts[index] / MAXUPGRADES);
                 _stateController._playerAttributes.weight = offsetWeight + Mathf.Pow(value, 2);
                 break;
 
@@ -189,7 +190,7 @@ public class PlayerCollectibles : MonoBehaviour
                 statTexts[3].SetActive(true);
                 sliderController.UpdateBars(6, upgradeCounts[index]);
 
-                value = Mathf.RoundToInt(Mathf.Lerp(minAttack, maxAttack, upgradeCounts[index] / MAXUPGRADES));
+                value = Mathf.Lerp(minAttack, maxAttack, upgradeCounts[index] / MAXUPGRADES);
                 foreach (PlayerHitbox hitbox in _stateController.hitboxes)
                 {
                     hitbox.attackMult = value;

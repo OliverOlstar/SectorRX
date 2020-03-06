@@ -574,8 +574,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 10
-  _knockForce: 25
-  _knockupForce: 15
+  _knockForce: 12
+  _knockupForce: 8
 --- !u!114 &3089522045494249724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1020,10 +1020,10 @@ CapsuleCollider:
   m_Material: {fileID: 13400000, guid: c95ab51d4c3b06e43ab3be2e23f2800c, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 1.05
+  m_Radius: 1.15
   m_Height: 4.9
   m_Direction: 2
-  m_Center: {x: 0, y: 1.5, z: 0.22}
+  m_Center: {x: 0, y: 1.59, z: 0.22}
 --- !u!136 &5978189636624838347
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1072,7 +1072,7 @@ MonoBehaviour:
   _jumpbackUpForce: 4
   _halfPlayerHeight: 0.32
   _onGroundCheckTime: 0.3
-  _allowedDotValue: 0.1
+  _allowedDotValue: 0.05
   _enabled: 0
 --- !u!114 &642284532420701670
 MonoBehaviour:
@@ -1138,7 +1138,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7706da75738bcd47974c0182c534b33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  homeReachedDistance: 2
   _enabled: 0
 --- !u!114 &7908808925985318757
 MonoBehaviour:
@@ -1152,10 +1151,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99a4d45b359b1fa4aba984ae0f0a0aab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stunnedStateMinTime: 0.1
+  _stunnedStateMinTime: 0.8
   _enabled: 0
   _halfPlayerHeight: 0.32
-  _onGroundCheckTime: 0
 --- !u!114 &4631869177046432509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1169,13 +1167,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemPrefabs:
-  - {fileID: 7865935160635239468, guid: fc6c0dce4ee316d4a89e2bdac520d070, type: 3}
-  - {fileID: 7865935160635239468, guid: 45518b7b8b4c1a44aa0b634050b17ec9, type: 3}
-  - {fileID: 7865935160635239468, guid: 7ed72cef78bbfce4c9db2d98e60e7c80, type: 3}
   - {fileID: 7865935160635239468, guid: 8991995bcdcc5f9448ce755d60709332, type: 3}
+  - {fileID: 7865935160635239468, guid: fc6c0dce4ee316d4a89e2bdac520d070, type: 3}
+  - {fileID: 7865935160635239468, guid: 6a2b3132088280e4da87ec7c6f94ee7d, type: 3}
+  - {fileID: 7865935160635239468, guid: 45518b7b8b4c1a44aa0b634050b17ec9, type: 3}
   - {fileID: 7865935160635239468, guid: b041b96a0e0af1b48bcc93de588421bd, type: 3}
   - {fileID: 7865935160635239468, guid: ce4b818389d341a4c9e0de4399b38e40, type: 3}
-  - {fileID: 7865935160635239468, guid: 6a2b3132088280e4da87ec7c6f94ee7d, type: 3}
   _cellSpawnCount: 3
   _enabled: 0
 --- !u!114 &3771036346408154702

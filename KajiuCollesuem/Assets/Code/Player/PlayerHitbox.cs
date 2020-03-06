@@ -15,7 +15,6 @@ public class PlayerHitbox : MonoBehaviour
 
     private PlayerAttributes _playerAttributes;
     private IAttributes _playerIAttributes;
-    private PlayerLockOnScript _lockOnScript;
 
     private List<IAttributes> hitAttributes = new List<IAttributes>();
 
@@ -29,7 +28,6 @@ public class PlayerHitbox : MonoBehaviour
     {
         _playerAttributes = GetComponentInParent<PlayerAttributes>();
         _playerIAttributes = _playerAttributes.GetComponent<IAttributes>();
-        _lockOnScript = _playerAttributes.GetComponent<PlayerLockOnScript>();
     }
 
     private void OnTriggerEnter (Collider other)

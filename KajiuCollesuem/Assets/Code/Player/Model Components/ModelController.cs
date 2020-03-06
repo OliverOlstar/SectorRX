@@ -104,24 +104,15 @@ public class ModelController : MonoBehaviour
 
     public void TransitionToAbility(int pIndex)
     {
-        SOAbilities curAbility = abilities[pIndex];
-
-        //StopCoroutine("DoneAttackWithDelay");
-        //StopCoroutine("PlayAttackWithDelay");
-
         _modelMovement.disableRotation = true;
 
         _modelWeights.SetWeights(0, 0, 0, 0, 1);
         _DontUpdateWeights = true;
-        //_modelAnimation.StartAbility(pIndex);
     }
 
     public void PlayAbility(int pIndex)
     {
         SOAbilities curAbility = abilities[pIndex];
-
-        //StopCoroutine("DoneAttackWithDelay");
-        //StopCoroutine("PlayAttackWithDelay");
 
         _modelMovement.disableRotation = true;
 
@@ -131,11 +122,19 @@ public class ModelController : MonoBehaviour
         _modelAnimation.StartAbility(pIndex);
     }
 
-    public void DoneAbility()
+    public void DoneAbility(int pIndex)
     {
-        _AttackingState = 0;
-        _modelMovement.disableRotation = false;
+        SOAbilities curAbility = abilities[pIndex];
+        StartCoroutine("DoneAbilityWithDelay", curAbility.holdEndPosTime);
+    }
 
+    IEnumerator DoneAbilityWithDelay(float pDelay)
+    {
+        _AttackingState = 2;
+        yield return new WaitForSeconds(pDelay);
+        _AttackingState = 0;
+
+        _modelMovement.disableRotation = false;
         _modelWeights.SetWeights(0, 0, 0, 0, 0);
         _DontUpdateWeights = false;
     }
@@ -144,7 +143,6 @@ public class ModelController : MonoBehaviour
     {
         _AttackingState = 0;
         _modelMovement.disableRotation = false;
-
         _modelWeights.SetUpperbodyWeight(0, 5);
     }
 
@@ -218,7 +216,6 @@ public class ModelController : MonoBehaviour
     #region Stunned
     public void AddStunned(float pValue, float pDirection, float pGoingAwayDelay, float pGoingAwayLength)
     {
-        Debug.Log("ModelController: AddStunned");
         _modelWeights.AddStunned(pValue, pDirection, pGoingAwayDelay, pGoingAwayLength);
     }
     #endregion

@@ -11,11 +11,14 @@ public class PlayerSFX : MonoBehaviour
     [SerializeField] private AudioClip[] movement = new AudioClip[3]; //Sound effects for dodging, jumping, and landing.
     [SerializeField] private AudioClip[] playerHit = new AudioClip[3]; //Sound effects for when the player takes damage from something or dies.
     [SerializeField] private AudioClip[] lightAttack = new AudioClip[2]; //Sound effects for the light attack.
+    [SerializeField] private AudioClip lightAttackVA; //Voice sound for the light attack.
     [SerializeField] private AudioClip[] heavyAttack = new AudioClip[2]; //Sound effects for the heavy attack.
+    [SerializeField] private AudioClip heavyAttackVA; //Voice sound for the heavy attack.
     [SerializeField] private AudioClip[] collectStat = new AudioClip[7]; //One different sound effect for each of the seven collectibles.
     [SerializeField] private AudioClip[] abilitySounds = new AudioClip[4]; //Sound effects for the various player abilities.
     [SerializeField] private AudioSource sfxSource; //Audio Source which handles single playback of sounds.
     [SerializeField] private AudioSource walkingSource; //Audio Source which will be looping the walking sounds. Adjust playback speed depending on movement speed.
+    [SerializeField] private AudioSource voiceSource; //Audio Source which handles playing Character Dialog;
 
     //[SerializeField] private PlayerCollectibles.Upgrades _statName;
 
@@ -23,25 +26,25 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when player takes damage.
     public void HitByAttackSound(float pDelay)
     {
-        PlaySound(pDelay, 0.4f, Random.Range(1.0f, 2.0f), playerHit[0], sfxSource);
+        PlaySound(pDelay, 0.8f, Random.Range(0.6f, 1.2f), playerHit[0], sfxSource);
     }
 
     //Plays sound when player touches the tar.
     public void HitTarSound(float pDelay)
     {
-        PlaySound(pDelay, 0.5f, 1.0f, playerHit[1], sfxSource);
+        PlaySound(pDelay, 0.7f, 1.0f, playerHit[1], sfxSource);
     }
 
     //Plays sound when the player dies.
     public void PlayerDeathSound(float pDelay)
     {
-        PlaySound(pDelay, 0.5f, Random.Range(1.0f, 2.0f), playerHit[2], sfxSource);
+        PlaySound(pDelay, 0.8f, Random.Range(0.6f, 1.2f), playerHit[2], sfxSource);
     }
 
     //Plays sound when the player has collected a stat increasing item
     public void StatUpSound(PlayerCollectibles.Upgrades pStat, float pDelay)
     {
-        PlaySound(pDelay, 0.4f, 1.0f, collectStat[(int)pStat], sfxSource);
+        PlaySound(pDelay, 0.7f, 1.0f, collectStat[(int)pStat], sfxSource);
     }
     #endregion
 
@@ -49,7 +52,7 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when the player performs a dodge
     public void DodgeSound(float pDelay)
     {
-        PlaySound(pDelay, 0.4f, 0.5f, movement[0], sfxSource);
+        PlaySound(pDelay, 0.8f, 1.0f, movement[0], sfxSource);
     }
 
     //Plays sound the player lands after a jump or falling
@@ -74,19 +77,21 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when the player jumps.
     public void JumpSound(float pDelay)
     {
-        PlaySound(pDelay, 0.4f, 1.0f, movement[1], sfxSource);
+        PlaySound(pDelay, 0.7f, Random.Range(0.7f, 1.0f), movement[1], sfxSource);
     }
 
     //Randomly plays one of two sounds when the player performs a light attack.
     public void LightAttackSound(float pDelay)
     {
-        PlaySound(pDelay, 0.3f, 1.0f, lightAttack[Random.Range(0, 1)], sfxSource);
+        PlaySound(pDelay, 0.6f, 1.0f, lightAttack[Random.Range(0, 1)], sfxSource);
+        PlaySound(pDelay, 0.6f, Random.Range(0.7f, 1.0f), lightAttackVA, voiceSource);
     }
 
     //Randomly plays one of two sounds when the player performs a heavy attack.
     public void HeavyAttackSound(float pDelay)
     {
-        PlaySound(pDelay, 0.3f, 0.5f, lightAttack[Random.Range(0, 1)], sfxSource);
+        PlaySound(pDelay, 0.6f, 0.5f, heavyAttack[Random.Range(0, 1)], sfxSource);
+        PlaySound(pDelay, 0.6f, Random.Range(0.8f, 1.2f), heavyAttackVA, voiceSource);
     }
     #endregion
 

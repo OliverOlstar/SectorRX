@@ -18,57 +18,54 @@ public class UIManager : MonoBehaviour
     public static bool menuProperties;
     public RectTransform mainMenu, playerInputMenu, loadingScreen, logo;
     public Animator logoAnim;
-    public GameObject targetUI, backButton;
+    private Animator buttonAnim;
+    public Button startButton;
     public VideoPlayer videoPlayer;
-    public bool panelCheck = false;
+    [SerializeField] private MenuCamera _Camera;
+
+    [SerializeField] private int _PlayersReady = 0;
 
     public void Start()
     {
-        logoAnim = logoAnim.GetComponent<Animator>();
         Time.timeScale = 1;
+        logoAnim = logoAnim.GetComponent<Animator>();
+
         if (menuProperties == true)
         {
+            // Set menu Animation to be done
+
             playerInputMenu.DOAnchorPos(new Vector2(69, -2), 0.4f);
-            targetUI = backButton;
+            EventSystem.current.SetSelectedGameObject(null);
+            _Camera.ToggleCamera(1);
         }
         else
         {
             StartCoroutine(StartMenu());
         }
+
+        buttonAnim = startButton.GetComponent<Animator>();
     }
 
     private void Update()
     {
-        if (targetUI != null)
-        {
-            EventSystem.current.SetSelectedGameObject(targetUI);
-            targetUI = null;
-        }
-    }
-
-    public void SetTarget(GameObject pTarget)
-    {
-        targetUI = pTarget;
     }
 
     public void BackToMainMenu(GameObject pTarget)
     {
-        panelCheck = true;
         logo.DOAnchorPos(new Vector2(401, 6), 0.4f);
         mainMenu.DOAnchorPos(new Vector2(44, 21), 0.4f);
         playerInputMenu.DOAnchorPos(new Vector2(69, 4120), 0.4f);
         menuProperties = false;
-        targetUI = pTarget;
+        EventSystem.current.SetSelectedGameObject(pTarget);
     }
 
-    public void GoToPlayer(GameObject pTarget)
+    public void GoToPlayer()
     {
-        panelCheck = false;
         logo.DOAnchorPos(new Vector2(401, -2057), 0.4f);
         playerInputMenu.DOAnchorPos(new Vector2(69, -2), 0.4f);
         mainMenu.DOAnchorPos(new Vector2(44, -2060), 0.4f);
         menuProperties = true;
-        targetUI = pTarget;
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void LoadLevel(int sceneIndex)
@@ -96,6 +93,20 @@ public class UIManager : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    public void PlayerReadyToggle(bool pReady)
+    {
+        _PlayersReady += (pReady ? 1 : -1);
+
+        PlayerReadyUpdateUI();
+    }
+
+    public void PlayerReadyUpdateUI()
+    {
+        bool canStart = _PlayersReady > 0;
+        buttonAnim.SetBool("Interactable", canStart);
+        startButton.interactable = canStart;
     }
 
     void EndReached(UnityEngine.Video.VideoPlayer videoPlayer)

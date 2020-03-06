@@ -12,7 +12,7 @@ public class PlasmaBreath : MonoBehaviour, IAbility
     private float _nextSubStateTime = 0;
     private bool _charging = false;
 
-    private Transform _SpawnedLaser;
+    private GameObject _SpawnedLaser;
 
     // SET IN CODE VARS
     private float _RotateDampening = 3.0f;
@@ -27,16 +27,18 @@ public class PlasmaBreath : MonoBehaviour, IAbility
         _modelTransform = _stateController._modelController.transform;
 
         // Setup Hitbox / Visuals
-        _SpawnedLaser = Instantiate(pPrefab, pMuzzle).transform;
-        _SpawnedLaser.SetParent(pMuzzle);
-        _SpawnedLaser.localPosition = Vector3.zero;
-        _SpawnedLaser.localRotation = Quaternion.identity;
-        _SpawnedLaser.gameObject.SetActive(false);
+        _SpawnedLaser = Instantiate(pPrefab, pMuzzle);
+        _SpawnedLaser.transform.SetParent(pMuzzle);
+        _SpawnedLaser.transform.localPosition = Vector3.zero;
+        _SpawnedLaser.transform.localRotation = Quaternion.identity;
+        _SpawnedLaser.SetActive(false);
     }
 
     public void Pressed(AbilityState pState)
     {
         _MyState = pState;
+
+        _stateController._movementComponent.disableMovement = true;
 
         _charging = true;
         _nextSubStateTime = Time.time + 1;
@@ -59,9 +61,10 @@ public class PlasmaBreath : MonoBehaviour, IAbility
     public void Exit()
     {
         Debug.Log("PlasmaBreath: Exit");
+        _stateController._movementComponent.disableMovement = false;
         _stateController._lockOnComponent.ToggleScopedIn(1.0f);
-        _stateController._modelController.DoneAbility();
-        _SpawnedLaser.gameObject.SetActive(false);
+        _stateController._modelController.DoneAbility(0);
+        _SpawnedLaser.SetActive(false);
     }
 
     public void Tick()
@@ -78,7 +81,7 @@ public class PlasmaBreath : MonoBehaviour, IAbility
     //Sets laser prefab to being active.
     private void ToggleBreath()
     {
-        _SpawnedLaser.gameObject.SetActive(_charging);
+        _SpawnedLaser.SetActive(_charging);
         if (_charging == true)
             _nextSubStateTime = Time.time + _stateController._modelController.abilities[0].maxChargeTime;
 
