@@ -21,7 +21,7 @@ public class VideoManager : MonoBehaviour
         mainMenu.SetActive(false);
         logoVisual.SetActive(false);
         videoPlayer.SetDirectAudioVolume(1, 0.5f);
-        announceSource.PlayDelayed(4.9f);
+        announceSource.PlayDelayed(5.2f);
         audioSource.PlayDelayed(7.5f);
 
         if (UIManager.menuProperties == true)

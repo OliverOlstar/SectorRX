@@ -981,12 +981,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!95 &487024402 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 1328529938401308730, guid: 4b07021bc038f364f908054525b52c6d,
-    type: 3}
-  m_PrefabInstance: {fileID: 6200741579382770576}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &490692996 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6928358720895990943, guid: 4b07021bc038f364f908054525b52c6d,
@@ -1286,12 +1280,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9540259d81f8585459f3469508d615b0, type: 3}
---- !u!1 &996351214 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6200741580937006791, guid: 4b07021bc038f364f908054525b52c6d,
-    type: 3}
-  m_PrefabInstance: {fileID: 6200741579382770576}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1090111690
 GameObject:
   m_ObjectHideFlags: 0
@@ -2107,18 +2095,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b044e10f2b26b240a014d6cad95def7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1747996497 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3794003425246393516, guid: a78dc6afbf850b04ba6d196514ffa9bd,
-    type: 3}
-  m_PrefabInstance: {fileID: 1597582015}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1764424174 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1254579017613160801, guid: d7a9bbb040ac77a42816b42e2ff08684,
@@ -2585,26 +2561,6 @@ PrefabInstance:
       objectReference: {fileID: 30956141}
     - target: {fileID: 1644097025632614590, guid: c8780718f7106cd418050418dfd84028,
         type: 3}
-      propertyPath: backButton
-      value: 
-      objectReference: {fileID: 996351214}
-    - target: {fileID: 1644097025632614590, guid: c8780718f7106cd418050418dfd84028,
-        type: 3}
-      propertyPath: loadingProgress
-      value: 
-      objectReference: {fileID: 1747996497}
-    - target: {fileID: 1644097025632614590, guid: c8780718f7106cd418050418dfd84028,
-        type: 3}
-      propertyPath: videoPlayer
-      value: 
-      objectReference: {fileID: 1390678645}
-    - target: {fileID: 1644097025632614590, guid: c8780718f7106cd418050418dfd84028,
-        type: 3}
-      propertyPath: imageTex
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1644097025632614590, guid: c8780718f7106cd418050418dfd84028,
-        type: 3}
       propertyPath: logo
       value: 
       objectReference: {fileID: 1909707199}
@@ -2615,19 +2571,9 @@ PrefabInstance:
       objectReference: {fileID: 1909707202}
     - target: {fileID: 1644097025632614590, guid: c8780718f7106cd418050418dfd84028,
         type: 3}
-      propertyPath: buttonAnim
-      value: 
-      objectReference: {fileID: 487024402}
-    - target: {fileID: 1644097025632614590, guid: c8780718f7106cd418050418dfd84028,
-        type: 3}
       propertyPath: startButton
       value: 
       objectReference: {fileID: 487024399}
-    - target: {fileID: 1644097025632614590, guid: c8780718f7106cd418050418dfd84028,
-        type: 3}
-      propertyPath: _Camera
-      value: 
-      objectReference: {fileID: 1101546690}
     - target: {fileID: 1644097025632614590, guid: c8780718f7106cd418050418dfd84028,
         type: 3}
       propertyPath: loadVideoPlayer
@@ -2638,6 +2584,16 @@ PrefabInstance:
       propertyPath: introVideoPlayer
       value: 
       objectReference: {fileID: 305706412}
+    - target: {fileID: 1644097025632614590, guid: c8780718f7106cd418050418dfd84028,
+        type: 3}
+      propertyPath: _Camera
+      value: 
+      objectReference: {fileID: 1101546690}
+    - target: {fileID: 1644097025632614590, guid: c8780718f7106cd418050418dfd84028,
+        type: 3}
+      propertyPath: announceSource
+      value: 
+      objectReference: {fileID: 1266437495}
     - target: {fileID: 1644097025632614591, guid: c8780718f7106cd418050418dfd84028,
         type: 3}
       propertyPath: m_Name
