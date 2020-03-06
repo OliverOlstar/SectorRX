@@ -32,7 +32,7 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when player touches the tar.
     public void HitTarSound(float pDelay)
     {
-        PlaySound(pDelay, 0.7f, 1.0f, playerHit[1], sfxSource);
+        PlaySound(pDelay, 0.7f, 1.0f, playerHit[1], voiceSource);
     }
 
     //Plays sound when the player dies.
