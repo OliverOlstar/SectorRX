@@ -12,7 +12,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void Update()
     {
-        if(CurrentState == null)
+        if (CurrentState == null)
         {
             CurrentState = _States.Values.First();
         }

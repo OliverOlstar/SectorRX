@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WhichPower: 0
   abilityTime: 5
-  abilityAnimTime: 1
+  abilityAnimTime: 3
   abilitiesGraph:
     serializedVersion: 2
     m_Curve:
@@ -40,8 +40,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   powerRequired: 50
-  holdEndPosTime: 3
+  holdEndPosTime: 2
   holdStartPosTime: 0.5
-  maxChargeTime: 1
-  transitionInDampening: 5
-  transitionOutDampening: 15
+  maxChargeTime: 5

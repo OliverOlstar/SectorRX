@@ -21,8 +21,5 @@ public class SOAbilities : ScriptableObject
     [Header("Pre Attack")]
     [Min(0)] public float holdStartPosTime = 0.1f;
     [Min(0)] public float maxChargeTime = 0.1f;
-
-    [Header("Transtion Dampenings")]
-    public float transitionInDampening = 5.0f;
-    public float transitionOutDampening = 15.0f;
+    //[Min(0)] public float toggleEffectTime = 1.0f;
 }
