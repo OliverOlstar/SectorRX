@@ -17,11 +17,11 @@ public class Attack : MonoBehaviour, IState
 
     [SerializeField] private GameObject _hitbox;
 
-    [SerializeField] private float _jumpbackForce = 50;
-    [SerializeField] private float _jumpbackUpForce = 10;
+    //[SerializeField] private float _jumpbackForce = 50;
+    //[SerializeField] private float _jumpbackUpForce = 10;
 
-    [SerializeField] private float _halfPlayerHeight = 0.52f;
-    [SerializeField] private float _onGroundCheckTime = 0;
+    //[SerializeField] private float _halfPlayerHeight = 0.52f;
+    [SerializeField] private float _exitStateTime = 0;
 
     [SerializeField] [Range(0, 1)] private float _allowedDotValue = 0.6f;
 
@@ -86,17 +86,17 @@ public class Attack : MonoBehaviour, IState
             case 0:
                 break;
 
-            //Jump Back Start
-            case 2:
-                _anim.SetBool("Attacking", false);
-                _rb.isKinematic = false;
-                _rb.AddForce(-transform.forward * _jumpbackForce + Vector3.up * _jumpbackUpForce, ForceMode.Impulse);
-                _subState = 2;
-                break;
+            ////Jump Back Start
+            //case 2:
+            //    _anim.SetBool("Attacking", false);
+            //    _rb.isKinematic = false;
+            //    _rb.AddForce(-transform.forward * _jumpbackForce + Vector3.up * _jumpbackUpForce, ForceMode.Impulse);
+            //    _subState = 2;
+            //    break;
 
             //Jump State
             case 1:
-                if (_onGroundCheckTime <= Time.time && IsOnGround())
+                if (_exitStateTime <= Time.time /* && IsOnGround()*/)
                 {
                     _enabled = false;
                     _subState = 3;
@@ -105,27 +105,27 @@ public class Attack : MonoBehaviour, IState
         }
     }
 
-    private bool IsOnGround()
-    {
-        // Linecast get two points
-        Vector3 lineStart = transform.position;
-        Vector3 vectorToSearch = new Vector3(lineStart.x, lineStart.y - _halfPlayerHeight, lineStart.z);
+    //private bool IsOnGround()
+    //{
+    //    // Linecast get two points
+    //    Vector3 lineStart = transform.position;
+    //    Vector3 vectorToSearch = new Vector3(lineStart.x, lineStart.y - _halfPlayerHeight, lineStart.z);
 
-        // Debug Line
-        Color color = new Color(0.0f, 0.0f, 1.0f);
-        Debug.DrawLine(lineStart, vectorToSearch, color);
+    //    // Debug Line
+    //    Color color = new Color(0.0f, 0.0f, 1.0f);
+    //    Debug.DrawLine(lineStart, vectorToSearch, color);
 
-        // Linecast
-        RaycastHit hitInfo;
-        if (Physics.Linecast(this.transform.position, vectorToSearch, out hitInfo))
-        {
-            // On Ground
-            return true;
-        }
+    //    // Linecast
+    //    RaycastHit hitInfo;
+    //    if (Physics.Linecast(this.transform.position, vectorToSearch, out hitInfo))
+    //    {
+    //        // On Ground
+    //        return true;
+    //    }
 
-        // Off Ground
-        return false;
-    }
+    //    // Off Ground
+    //    return false;
+    //}
 
     public void UpdateTarget(Transform pTarget) => _target = pTarget;
 
@@ -146,7 +146,7 @@ public class Attack : MonoBehaviour, IState
     {
         if (_enabled)
         {
-            _onGroundCheckTime = Time.time + 0.2f;
+            _exitStateTime = Time.time + 0.2f;
             _subState = 1;
         }
     }
