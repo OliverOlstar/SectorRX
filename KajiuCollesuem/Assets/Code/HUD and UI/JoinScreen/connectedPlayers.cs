@@ -87,7 +87,6 @@ public class connectedPlayers : MonoBehaviour
         }
     }
 
-
     public Panels OnDeviceJoined()
     {
         //Checks if on join screen

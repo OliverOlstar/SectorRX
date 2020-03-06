@@ -10,6 +10,7 @@ public class DeviceHandler : MonoBehaviour
     [SerializeField] public connectedPlayers _AddPlayer;
     [SerializeField] private Panels playerPanel;
 
+
     // If device gets disconnected
     public void OnDeviceLost()
     {

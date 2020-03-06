@@ -8,8 +8,8 @@ using DG.Tweening;
 public class VideoManager : MonoBehaviour
 {
     public VideoPlayer videoPlayer;
-    public AudioClip audioClip;
     public AudioSource audioSource;
+    public AudioSource announceSource;
     public GameObject mainMenu;
     public GameObject logoVisual;
     public Animator logo;
@@ -21,7 +21,8 @@ public class VideoManager : MonoBehaviour
         mainMenu.SetActive(false);
         logoVisual.SetActive(false);
         videoPlayer.SetDirectAudioVolume(1, 0.5f);
-        audioSource.PlayDelayed(7.0f);
+        announceSource.PlayDelayed(4.9f);
+        audioSource.PlayDelayed(7.5f);
 
         if (UIManager.menuProperties == true)
         {
