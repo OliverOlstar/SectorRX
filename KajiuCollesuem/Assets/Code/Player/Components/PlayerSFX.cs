@@ -83,15 +83,15 @@ public class PlayerSFX : MonoBehaviour
     //Randomly plays one of two sounds when the player performs a light attack.
     public void LightAttackSound(float pDelay)
     {
-        PlaySound(pDelay, 0.6f, 1.0f, lightAttack[Random.Range(0, 1)], sfxSource);
-        PlaySound(pDelay, 0.6f, Random.Range(0.6f, 0.8f), lightAttackVA, voiceSource);
+        PlaySound(pDelay, 0.7f, 1.0f, lightAttack[Random.Range(0, 1)], sfxSource);
+        PlaySound(pDelay, 0.7f, Random.Range(0.6f, 0.8f), lightAttackVA, voiceSource);
     }
 
     //Randomly plays one of two sounds when the player performs a heavy attack.
     public void HeavyAttackSound(float pDelay)
     {
-        PlaySound(pDelay, 0.6f, 0.5f, heavyAttack[Random.Range(0, 1)], sfxSource);
-        PlaySound(pDelay, 0.6f, Random.Range(0.6f, 0.75f), heavyAttackVA, voiceSource);
+        PlaySound(pDelay, 0.7f, 0.5f, heavyAttack[Random.Range(0, 1)], sfxSource);
+        PlaySound(pDelay, 0.7f, Random.Range(0.6f, 0.75f), heavyAttackVA, voiceSource);
     }
     #endregion
 
