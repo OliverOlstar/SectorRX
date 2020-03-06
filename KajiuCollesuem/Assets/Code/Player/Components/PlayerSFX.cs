@@ -52,7 +52,7 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when the player performs a dodge
     public void DodgeSound(float pDelay)
     {
-        PlaySound(pDelay, 0.95f, Random.Range(0.6f, 0.8f), movement[0], sfxSource);
+        PlaySound(pDelay, 1.0f, Random.Range(0.7f, 1.0f), movement[0], voiceSource);
     }
 
     //Plays sound the player lands after a jump or falling
@@ -69,7 +69,7 @@ public class PlayerSFX : MonoBehaviour
             PlaySound(pDelay, 0.2f, Random.Range(0.4f, 0.6f), surfaces[pGroundMaterial], walkingSource);
         }
 
-        PlaySound(pDelay, 0.2f, Random.Range(0.4f, 0.6f), surfaces[0], walkingSource);
+        PlaySound(pDelay, 0.2f, Random.Range(0.4f, 0.6f), surfaces[1], walkingSource);
     }
     #endregion
 
