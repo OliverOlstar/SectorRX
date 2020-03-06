@@ -18,14 +18,14 @@ public class Stunned : MonoBehaviour, IState
     [SerializeField] private float _stunnedStateMinTime = 0.2f;
 
     [SerializeField] private bool _enabled = false;
-    [SerializeField] private float _halfPlayerHeight = 0.52f, _onGroundCheckTime = 0;
+    [SerializeField] private float _halfPlayerHeight = 0.52f;
 
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent, EnemySmoothRotation pRotation)
     {
         _target = pTarget;
         _anim = pAnim;
         _agent = pAgent;
-        _rb = GetComponent<Rigidbody>();
+        //_rb = GetComponent<Rigidbody>();
     }
 
     public void Enter()
@@ -33,17 +33,15 @@ public class Stunned : MonoBehaviour, IState
         _leaveStateTime = Time.time + _stunnedStateMinTime;
 
         _anim.SetTrigger("Hurt");
-        _agent.enabled = false;
-        _rb.isKinematic = false;
-        _onGroundCheckTime = Time.time + 0.2f;
+        //_agent.enabled = false;
+        //_rb.isKinematic = false;
         _enabled = true;
     }
 
     public void Exit()
     {
-        _agent.enabled = true;
-        _rb.isKinematic = true;
-        _agent.enabled = true;
+        //_rb.isKinematic = true;
+        //_agent.enabled = true;
         _enabled = false;
     }
 
@@ -54,12 +52,12 @@ public class Stunned : MonoBehaviour, IState
 
     public bool CanExit(float pDistance)
     {
-        return (Time.time > _leaveStateTime && IsOnGround());
+        return (Time.time > _leaveStateTime /*&& IsOnGround()*/);
     }
 
     public void Tick()
     {
-        _rb.AddForce(Vector3.down * Time.deltaTime * 50);
+        //_rb.AddForce(Vector3.down * Time.deltaTime * 50);
     }
 
     public void UpdateTarget(Transform pTarget) => _target = pTarget;

@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
     private Animator buttonAnim;
     public Button startButton;
     public VideoPlayer videoPlayer;
+    [SerializeField] private MenuCamera _Camera;
 
     [SerializeField] private int _PlayersReady = 0;
 
@@ -31,8 +32,11 @@ public class UIManager : MonoBehaviour
 
         if (menuProperties == true)
         {
+            // Set menu Animation to be done
+
             playerInputMenu.DOAnchorPos(new Vector2(69, -2), 0.4f);
             EventSystem.current.SetSelectedGameObject(null);
+            _Camera.ToggleCamera(1);
         }
         else
         {
@@ -95,13 +99,12 @@ public class UIManager : MonoBehaviour
     {
         _PlayersReady += (pReady ? 1 : -1);
 
-        Debug.Log(connectedPlayers.playersConnected + " | " + _PlayersReady);
         PlayerReadyUpdateUI();
     }
 
     public void PlayerReadyUpdateUI()
     {
-        bool canStart = _PlayersReady == connectedPlayers.playersConnected && connectedPlayers.playersConnected > 0;
+        bool canStart = _PlayersReady > 0;
         buttonAnim.SetBool("Interactable", canStart);
         startButton.interactable = canStart;
     }

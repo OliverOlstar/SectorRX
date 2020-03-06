@@ -160,7 +160,6 @@ public class AttackState : BaseState
         //Debug.Log("AttackState: PressedHeavyAttack");
         _stateController._modelController.PlayAttack(1, true);
 
-        Debug.Log("PressedHeavyAttack");
         _minChargeTime = Time.time + _stateController._modelController.attacks[1].holdStartPosTime;
         _chargeTime = _minChargeTime + _maxCharge;
         _onHolding = true;

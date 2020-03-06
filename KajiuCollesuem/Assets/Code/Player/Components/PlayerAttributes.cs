@@ -14,7 +14,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     private PlayerStateController _stateController;
     public SliderController sliderControl;
 
-    [HideInInspector] public float weight = 1;
+    public float weight = 1;
 
     [Header("Maxes")]
     private int _maxHealth = 100;
@@ -178,7 +178,6 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
             // Changing Health by remainder
             died = modifyHealth(-pAmount);
-            Debug.Log(pAmount);
         }
 
         // Restarting Shield Regening
