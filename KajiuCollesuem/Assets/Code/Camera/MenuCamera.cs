@@ -34,7 +34,7 @@ public class MenuCamera : MonoBehaviour
     {
         transform.position = Vector3.Lerp(transform.position, _postions[curIndex], Time.deltaTime * _positionDampening);
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(_rotationEulers[curIndex]), Time.deltaTime * _rotationDampening);
-
+         
         _Camera.orthographicSize =  Mathf.Abs(Screen.width - Screen.height) * _ScaleMult + _ScaleOffset;
     }
 

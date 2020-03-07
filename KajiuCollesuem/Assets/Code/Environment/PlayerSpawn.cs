@@ -121,7 +121,9 @@ public class PlayerSpawn : MonoBehaviour
             _ActiveInputs[i].playerStateController = playerCharacter.GetComponentInChildren<PlayerStateController>();
 
             // Set Color
-            playerCharacter.GetComponent<ColorSetter>().SetColor(connectedPlayers.playerIndex[i].playerColorSet);
+            ColorSetter colorSetter = playerCharacter.GetComponent<ColorSetter>();
+            colorSetter.SetColor(connectedPlayers.playerIndex[i].playerColorSet);
+            colorSetter.SetAbility(connectedPlayers.playerIndex[i].abilitySelected);
         }
     }
 

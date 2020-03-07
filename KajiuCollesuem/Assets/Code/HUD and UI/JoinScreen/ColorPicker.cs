@@ -17,7 +17,7 @@ public class ColorPicker : MonoBehaviour
     [SerializeField] private Color[] _Colors = new Color[8];
 
     private ColorSet[] _ColorSets = new ColorSet[8];
-    [SerializeField] private List<int> _OpenIndexs = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7 } ;
+    private List<int> _OpenIndexs = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7 } ;
 
     private void Awake()
     {
