@@ -9,6 +9,9 @@ public class ColorSetter : MonoBehaviour
 
     public void SetColor(ColorSet pSet)
     {
+        if (pSet.lizzyMat == null) 
+            return;
+
         foreach(SkinnedMeshRenderer renderer in _meshRenderers)
         {
             renderer.material = pSet.lizzyMat;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class CellMagnet : MonoBehaviour
+public class StatMagnet : MonoBehaviour
 {
     private Rigidbody _rb;
 

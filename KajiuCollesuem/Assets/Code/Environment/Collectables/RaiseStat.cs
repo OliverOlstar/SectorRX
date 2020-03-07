@@ -7,7 +7,7 @@ public class RaiseStat : MonoBehaviour
     [SerializeField] private PlayerCollectibles.Upgrades statType;
 
     [Space]
-    private float _CanCollectDelay = 0.2f;
+    private float _CanCollectDelay = 0.215f;
     private bool _CanCollect = false;
 
     private void Start()
