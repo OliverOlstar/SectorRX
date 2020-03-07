@@ -65,7 +65,7 @@ public class Dead : MonoBehaviour, IState
         for (int i = 0; i < _cellSpawnCount; ++i)
         {
             GameObject tmp = Instantiate(_itemPrefabs[Random.Range(0, _itemPrefabs.Length)]);
-            tmp.transform.position = transform.position + Vector3.up * 0.1f;
+            tmp.transform.position = transform.position + Vector3.up * 0.25f;
         }
         Destroy(this.gameObject);
     }
