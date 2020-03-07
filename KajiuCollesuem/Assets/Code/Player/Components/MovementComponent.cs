@@ -65,7 +65,7 @@ public class MovementComponent : MonoBehaviour
             _stateController._CameraShake.PlayShake(5.0f, 0.4f, 0.3f, 0.4f);
 
             // Sound
-            _stateController._Sound.JumpSound(0.0f);
+            _stateController._Sound.JumpSound();
         }
     }
 

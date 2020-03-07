@@ -40,7 +40,7 @@ public class ModelController : MonoBehaviour
 
         // Setup Components
         _modelWeights.Init(this, _anim);
-        _modelAnimation.Init(this, _rb, _anim);
+        _modelAnimation.Init(this, _rb, _anim, _stateController._movementComponent);
         _modelMovement.Init(this);
     }
 
@@ -74,34 +74,10 @@ public class ModelController : MonoBehaviour
         _modelAnimation.SteppingAnim();
         _modelAnimation.IdleAnim();
         _modelAnimation.JumpingAnim();
+        _modelAnimation.TarJumpAnim();
     }
 
-    #region Attacking
-    public void PlayAttack(int pIndex, bool pChargable)
-    {
-        SOAttack curAttack = attacks[pIndex];
-
-        StopCoroutine("DoneAttackWithDelay");
-        StopCoroutine("PlayAttackWithDelay");
-
-        _modelMovement.disableRotation = true;
-
-        // Chargeable Attack - wait for done charging before starting attack
-        if (pChargable == true)
-        {
-            _AttackingState = 2;
-        }
-        // Non-Chargable Attack
-        else
-        {
-            StartCoroutine("PlayAttackWithDelay", curAttack.holdStartPosTime);
-        }
-
-        _doneAttackDelay = curAttack.holdEndPosTime;
-        _modelWeights.SetUpperbodyWeight(1, 15);
-        _modelAnimation.StartAttack(pIndex);
-    }
-
+    #region Abilities
     public void TransitionToAbility(int pIndex)
     {
         _modelMovement.disableRotation = true;
@@ -137,6 +113,33 @@ public class ModelController : MonoBehaviour
         _modelMovement.disableRotation = false;
         _modelWeights.SetWeights(0, 0, 0, 0, 0);
         _DontUpdateWeights = false;
+    }
+    #endregion
+
+    #region Attacking
+    public void PlayAttack(int pIndex, bool pChargable)
+    {
+        SOAttack curAttack = attacks[pIndex];
+
+        StopCoroutine("DoneAttackWithDelay");
+        StopCoroutine("PlayAttackWithDelay");
+
+        _modelMovement.disableRotation = true;
+
+        // Chargeable Attack - wait for done charging before starting attack
+        if (pChargable == true)
+        {
+            _AttackingState = 2;
+        }
+        // Non-Chargable Attack
+        else
+        {
+            StartCoroutine("PlayAttackWithDelay", curAttack.holdStartPosTime);
+        }
+
+        _doneAttackDelay = curAttack.holdEndPosTime;
+        _modelWeights.SetUpperbodyWeight(1, 15);
+        _modelAnimation.StartAttack(pIndex);
     }
 
     public void DoneAttack()
@@ -185,10 +188,10 @@ public class ModelController : MonoBehaviour
     #region Locomotion
     public void TookStep(float pShakeForce)
     {
-        if (_stateController._movementComponent.disableMovement == false && _stateController.groundMaterial != -1)
+        if (_stateController._movementComponent.disableMovement == false && _stateController.groundMaterial != -1 && pShakeForce > 0.5f)
         {
-            _stateController._CameraShake.PlayShake(pShakeForce * 1f, 4.0f, 0.05f, 0.2f);
-            _stateController._Sound.Walking(_stateController.groundMaterial, pShakeForce, 0.0f);
+            _stateController._CameraShake.PlayShake(pShakeForce * 1.1f, 4.0f, 0.05f, 0.2f);
+            _stateController._Sound.Walking(_stateController.groundMaterial);
         }
     }
 
@@ -217,6 +220,13 @@ public class ModelController : MonoBehaviour
     public void AddStunned(float pValue, float pDirection, float pGoingAwayDelay, float pGoingAwayLength)
     {
         _modelWeights.AddStunned(pValue, pDirection, pGoingAwayDelay, pGoingAwayLength);
+    }
+    #endregion
+
+    #region TarJump
+    public void AddTarJump(float pValue, float pGoingToLength, float pGoingAwayDelay, float pGoingAwayLength)
+    {
+        _modelWeights.AddTarJump(pValue, pGoingToLength, pGoingAwayDelay, pGoingAwayLength);
     }
     #endregion
 

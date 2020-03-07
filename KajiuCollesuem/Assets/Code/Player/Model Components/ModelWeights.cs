@@ -17,6 +17,7 @@ public class ModelWeights : MonoBehaviour
     [SerializeField] [Range(0, 1)] private float stunnedDirection = 0;
     [SerializeField] [Range(0, 1)] private float deadWeight = 0;
     [SerializeField] [Range(0, 1)] private float abilityWeight = 0;
+    [SerializeField] [Range(0, 1)] private float tarJumpWeight = 0;
 
     [Space]
     [SerializeField] private float _weightChangeDampening = 10;
@@ -25,6 +26,7 @@ public class ModelWeights : MonoBehaviour
 
     private Coroutine crouchRoutineStored;
     private Coroutine stunnedRoutineStored;
+    private Coroutine tarJumpRoutineStored;
 
     public void Init(ModelController pController, Animator pAnim)
     {
@@ -58,6 +60,7 @@ public class ModelWeights : MonoBehaviour
         LerpWeight("Stunned Direction", stunnedDirection);
         LerpWeight("Dead Weight", deadWeight);
         LerpWeight("Abilities Weight", abilityWeight);
+        LerpWeight("TarJump Weight", tarJumpWeight);
     }
 
     public void SetUpperbodyWeight(float pWeight, float pDampening)
@@ -102,6 +105,7 @@ public class ModelWeights : MonoBehaviour
         abilityWeight = pAbilityWeight;
     }
 
+    #region Crouch
     public void AddCrouching(float pValue, float pGoingToLength, float pGoingAwayLength)
     {
         if (crouchRoutineStored != null)
@@ -132,7 +136,9 @@ public class ModelWeights : MonoBehaviour
         // Snap back to zero
         crouchWeight = 0;
     }
+    #endregion
 
+    #region Stun
     public void AddStunned(float pValue, float pDirection, float pGoingAwayDelay, float pGoingAwayLength)
     {
         stunnedDirection = pDirection;
@@ -158,4 +164,38 @@ public class ModelWeights : MonoBehaviour
         // Snap back to zero
         stunnedWeight = 0;
     }
+    #endregion
+
+    #region TarJump
+    public void AddTarJump(float pValue, float pGoingToLength, float pGoingAwayDelay, float pGoingAwayLength)
+    {
+        if (tarJumpRoutineStored != null)
+            StopCoroutine(tarJumpRoutineStored);
+        tarJumpRoutineStored = StartCoroutine(tarJumpRoutine(pValue, pGoingToLength, pGoingAwayDelay, pGoingAwayLength));
+    }
+
+    IEnumerator tarJumpRoutine(float pValue, float pGoingToLength, float pGoingAwayDelay, float pGoingAwayLength)
+    {
+        // Increase Value
+        while (tarJumpWeight < pValue)
+        {
+            tarJumpWeight += Time.deltaTime * (1 / pGoingToLength);
+            yield return null;
+        }
+
+        // Snap to target value for a frame
+        tarJumpWeight = pValue;
+        yield return new WaitForSeconds(pGoingAwayDelay);
+
+        // Decrease Value
+        while (tarJumpWeight > 0)
+        {
+            tarJumpWeight -= Time.deltaTime * (1 / pGoingAwayLength);
+            yield return null;
+        }
+
+        // Snap back to zero
+        tarJumpWeight = 0;
+    }
+    #endregion
 }

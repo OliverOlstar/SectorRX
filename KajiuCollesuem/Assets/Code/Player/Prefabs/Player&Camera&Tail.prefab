@@ -152,8 +152,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3eb55ae9208344441b39df2154921d19, type: 3}
   - {fileID: 8300000, guid: 053e9cfccdadb2f47a77f426b847105b, type: 3}
   playerHit:
-  - {fileID: 8300000, guid: c8022504ef8ca7146b6c3618f8f2754f, type: 3}
   - {fileID: 8300000, guid: e5707ad46bc9fb342a079159c3bc79ea, type: 3}
+  - {fileID: 8300000, guid: c8022504ef8ca7146b6c3618f8f2754f, type: 3}
   - {fileID: 8300000, guid: 69980bfbeba6fc344b5d5162c2f3ba33, type: 3}
   lightAttack:
   - {fileID: 8300000, guid: bc4e471c95b8eaf45b51a4d6204876b2, type: 3}
@@ -2673,6 +2673,7 @@ MonoBehaviour:
   stunnedDirection: 0
   deadWeight: 0
   abilityWeight: 0
+  tarJumpWeight: 0
   _weightChangeDampening: 10
   _weightChangeDeadzone: 0.01
   _upperbodyWeightDampening: 15
@@ -2691,6 +2692,7 @@ MonoBehaviour:
   stepMult: 1
   _idleMult: 0.3
   _fallMult: 1.6
+  _tarJumpMult: 2.6
   _deadMult: 0.9
   _stepGraph:
     serializedVersion: 2
@@ -2760,6 +2762,30 @@ MonoBehaviour:
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _tarJumpGraph:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.7232704
+      outSlope: 0.7232704
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.075
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.69109267
+      outSlope: 0.69109267
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.07166666
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -3002,11 +3028,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meshRenderers:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _feathersRenderer: {fileID: 0}
+  - {fileID: 1414602512910714745}
+  - {fileID: 1698556244835614755}
+  - {fileID: 6843187466196262596}
+  - {fileID: 7467795275297832928}
+  _feathersRenderer: {fileID: 8758360432454215647}
 --- !u!1 &8634281581487518870
 GameObject:
   m_ObjectHideFlags: 0

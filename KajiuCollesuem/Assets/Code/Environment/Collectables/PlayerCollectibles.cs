@@ -199,7 +199,7 @@ public class PlayerCollectibles : MonoBehaviour
         }
 
         // Sound
-        _stateController._Sound.StatUpSound(pStat, 0.0f);
+        _stateController._Sound.StatUpSound(pStat);
 
         return true;
     }
