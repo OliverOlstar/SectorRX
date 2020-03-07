@@ -41,19 +41,21 @@ public class StatMagnet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        IAttributes otherAttributes = other.GetComponentInParent<IAttributes>();
+
         // Jump at player
-        if (other.CompareTag("Player") && other.GetComponentInParent<IAttributes>().IsDead() == false)
+        if (other.CompareTag("Player") && otherAttributes.IsDead() == false)
         {
-            StartCoroutine(magnetRoutine(other));
+            StartCoroutine(magnetRoutine(other, otherAttributes));
             collidersInMagnet.Add(other);
         }
     }
-    IEnumerator magnetRoutine(Collider other)
+    IEnumerator magnetRoutine(Collider pOther, IAttributes pOtherAttributes)
     {
         do
         {
             // Get direction
-            Vector3 jumpDir = other.transform.position - transform.position;
+            Vector3 jumpDir = pOther.transform.position - transform.position;
             float jumpUpMult = Mathf.Clamp(jumpDir.y * _magnetInitialUpVelocity, -3, 9);
             jumpDir = new Vector3(jumpDir.x, 0, jumpDir.z).normalized;
 
@@ -63,7 +65,11 @@ public class StatMagnet : MonoBehaviour
             yield return new WaitForSeconds(1.6f);
         }
         // Check if still colliding
-        while (collidersInMagnet.Contains(other));
+        while (collidersInMagnet.Contains(pOther) && pOtherAttributes.IsDead() == false);
+
+        // If dead, remove
+        if (collidersInMagnet.Contains(pOther))
+            collidersInMagnet.Remove(pOther);
     }
 
     private void OnTriggerExit(Collider other)

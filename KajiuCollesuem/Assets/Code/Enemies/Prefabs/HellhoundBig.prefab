@@ -1066,12 +1066,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cooldown: 0.2
   _maxAttackRange: 4
-  _minAttackRange: 1
+  _minAttackRange: 0
   _hitbox: {fileID: 7630819354959702786}
-  _jumpbackForce: 20
-  _jumpbackUpForce: 4
-  _halfPlayerHeight: 0.32
-  _onGroundCheckTime: 0.3
+  _exitStateTime: 0
   _allowedDotValue: 0.05
   _enabled: 0
 --- !u!114 &642284532420701670
@@ -1091,7 +1088,7 @@ MonoBehaviour:
     type: 3}
   _fireballSpawnpoint: {fileID: 7013412660525921672}
   _fireballRangeMax: 46
-  _fireballRangeMin: 9
+  _fireballRangeMin: 7.5
   _targetOffset: {x: 0, y: 2, z: 0}
   _fireballSpeed: 1500
   _oddsOfSkipOver: 0.7
