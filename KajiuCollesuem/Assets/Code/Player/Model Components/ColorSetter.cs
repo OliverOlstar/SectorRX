@@ -9,6 +9,10 @@ public class ColorSetter : MonoBehaviour
 
     [SerializeField] private GameObject[] _armour = new GameObject[2];
 
+    [Space]
+    [SerializeField] private PlayerStateController _stateController;
+    [SerializeField] private PlayerAbilitySelector _abilitySelector;
+
     public void SetColor(ColorSet pSet)
     {
         if (pSet.lizzyMat == null) 
@@ -25,6 +29,10 @@ public class ColorSetter : MonoBehaviour
 
     public void SetAbility(int pAbility)
     {
+        // Add Abilities
+        _abilitySelector.SetupAbilities(pAbility, _stateController);
+
+        // Set Visuals
         switch (pAbility)
         {
             case 0:

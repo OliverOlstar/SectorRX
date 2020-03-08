@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f281108dc5741b459bcee4d4f1ecedd, type: 3}
   m_Name: PlasmaBreath
   m_EditorClassIdentifier: 
-  WhichPower: 0
-  abilityTime: 4
-  abilityAnimTime: 1
+  abilityAnimTime: 0.6
+  rotationDampening: 2
   abilitiesGraph:
     serializedVersion: 2
     m_Curve:
@@ -39,7 +38,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  powerRequired: 50
-  holdEndPosTime: 0.2
+  powerRequired: 0
+  holdEndPosTime: 3
   holdStartPosTime: 0.5
-  maxChargeTime: 3
+  hitBoxAppearTime: 1
+  hitBoxStayTime: 3
+  projectileSpeed: 0

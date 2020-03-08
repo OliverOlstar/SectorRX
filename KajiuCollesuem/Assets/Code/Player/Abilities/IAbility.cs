@@ -4,8 +4,8 @@ using UnityEngine;
 
 public interface IAbility
 {
-    void Pressed(AbilityState pState);
-    void Released();
+    void Pressed();
     void Tick();
     void Exit();
+    void Upgrade(float pValue);
 }

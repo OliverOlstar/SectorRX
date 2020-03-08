@@ -29,7 +29,6 @@ public class PlayerStateController : MonoBehaviour
     // 0 - Tapped, 1 - Held
     [HideInInspector] public float dodgeInput = -1.0f;
     [HideInInspector] public float abilityinput = -1.0f;
-    [HideInInspector] public float ability2input = -1.0f;
     [HideInInspector] public float lightAttackinput = -1.0f;
     // 0 - Released, 1 - Pressed
     [HideInInspector] public float heavyAttackinput = -1.0f;
@@ -45,7 +44,6 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public PlayerAttributes _playerAttributes;
     [HideInInspector] public ModelController _modelController;
     [HideInInspector] public PlayerCamera _playerCamera;
-    public RagdollManager _ragdollManager;
 
     [HideInInspector] public PlayerSFX _Sound;
     [HideInInspector] public CameraShakeCont _CameraShake;
@@ -55,8 +53,9 @@ public class PlayerStateController : MonoBehaviour
     public PlayerHitbox[] hitboxes = new PlayerHitbox[0];
 
     // Abilities
-    [HideInInspector] public IAbility _AbilityScript1;
-    [HideInInspector] public IAbility _AbilityScript2;
+    [HideInInspector] public IAbility _AbilityScript;
+
+    [HideInInspector] public bool usingAbility = false;
 
     [HideInInspector] public bool IgnoreNextHeavyRelease = false;
     [HideInInspector] public float IgnoreJumpInputTime = 0.0f;
@@ -80,9 +79,6 @@ public class PlayerStateController : MonoBehaviour
 
         _Rb = GetComponent<Rigidbody>();
         _playerCamera = _Camera.GetComponentInParent<PlayerCamera>();
-
-        // Add Abilities
-        GetComponent<PlayerAbilitySelector>().SetupAbilities(this);
     }
 
     #region Inputs
@@ -94,6 +90,10 @@ public class PlayerStateController : MonoBehaviour
     {
         // AbilityState is on cooldown
         if (AbilityStateReturnDelay > Time.time)
+            return;
+
+        // Not enough power
+        if (_playerAttributes.getPower() < _modelController.abilitySO.powerRequired)
             return;
 
         abilityinput = ctx.Get<float>();
@@ -153,7 +153,7 @@ public class PlayerStateController : MonoBehaviour
         }
 
         // Ability
-        if (abilityinput == 1.0f || ability2input == 1.0f)
+        if (abilityinput == 1.0f)
         {
             return typeof(AbilityState);
         }

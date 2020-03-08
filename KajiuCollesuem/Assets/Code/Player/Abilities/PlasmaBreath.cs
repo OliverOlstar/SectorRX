@@ -8,16 +8,14 @@ using UnityEngine;
 public class PlasmaBreath : MonoBehaviour, IAbility
 {
     private PlayerStateController _stateController;
+    private SOAbilities _AbilitySO;
     private Transform _modelTransform;
     private float _nextSubStateTime = 0;
+    private float _rotTime = 0;
     private bool _charging = false;
 
     private GameObject _SpawnedLaser;
-
-    // SET IN CODE VARS
-    private float _RotateDampening = 3.0f;
-
-    private AbilityState _MyState;
+    private PlayerMultHitbox _SpawnedLaserHitbox;
 
     public void Init(PlayerStateController pStateController, Transform pMuzzle, GameObject pPrefab)
     {
@@ -32,47 +30,43 @@ public class PlasmaBreath : MonoBehaviour, IAbility
         _SpawnedLaser.transform.localPosition = Vector3.zero;
         _SpawnedLaser.transform.localRotation = Quaternion.identity;
 
-        _SpawnedLaser.GetComponentInChildren<PlayerMultHitbox>().attacker = gameObject;
+        _SpawnedLaserHitbox = _SpawnedLaser.GetComponentInChildren<PlayerMultHitbox>();
+        _SpawnedLaserHitbox.attacker = gameObject;
 
         _SpawnedLaser.SetActive(false);
+
+        _AbilitySO = _stateController._modelController.abilitySO;
     }
 
-    public void Pressed(AbilityState pState)
+    public void Upgrade(float pValue)
     {
-        _MyState = pState;
+        _SpawnedLaserHitbox.attackMult = pValue;
+    }
 
+    public void Pressed()
+    {
         _stateController._movementComponent.disableMovement = true;
 
         _charging = true;
-        _nextSubStateTime = Time.time + 1;
+        _nextSubStateTime = Time.time + _AbilitySO.hitBoxAppearTime;
         _stateController._lockOnComponent.ToggleScopedIn(0.05f);
-        _stateController._modelController.TransitionToAbility(0);
-        _stateController._modelController.PlayAbility(0);
-    }
-
-    public void Released()
-    {
-        Debug.Log("PlasmaBreath: Released");
-
-        // If released while still charging, timer resets to zero.
-        //if (_charging)
-        //{
-        //    _MyState.RequestExitState();
-        //}
+        _stateController._modelController.TransitionToAbility();
+        _stateController._modelController.PlayAbility();
+        _rotTime = Time.time + _AbilitySO.holdStartPosTime;
     }
 
     public void Exit()
     {
-        Debug.Log("PlasmaBreath: Exit");
         _stateController._movementComponent.disableMovement = false;
         _stateController._lockOnComponent.ToggleScopedIn(1.0f);
-        _stateController._modelController.DoneAbility(0);
+        _stateController._modelController.DoneAbility();
         _SpawnedLaser.SetActive(false);
     }
 
     public void Tick()
     {
-        _modelTransform.forward = Vector3.Slerp(Horizontalize(_modelTransform.forward), Horizontalize(_stateController._Camera.forward), Time.deltaTime * _RotateDampening);
+        if (Time.time >= _rotTime)
+            _modelTransform.forward = Vector3.Slerp(Horizontalize(_modelTransform.forward), Horizontalize(_stateController._Camera.forward), Time.deltaTime * _AbilitySO.rotationDampening);
 
         // Once timer reaches 2, attacki begins, enabling the beam particle with a hitbox.
         if (_nextSubStateTime <= Time.time)
@@ -86,7 +80,7 @@ public class PlasmaBreath : MonoBehaviour, IAbility
     {
         _SpawnedLaser.SetActive(_charging);
         if (_charging == true)
-            _nextSubStateTime = Time.time + _stateController._modelController.abilities[0].maxChargeTime;
+            _nextSubStateTime = Time.time + _AbilitySO.hitBoxStayTime;
 
         _charging = !_charging;
     }

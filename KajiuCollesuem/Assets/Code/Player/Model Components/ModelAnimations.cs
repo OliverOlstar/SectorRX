@@ -84,20 +84,15 @@ public class ModelAnimations : MonoBehaviour
         //_doneAttackTransition = 2;
     }
 
-    public void StartAbility(int pIndex)
+    public void StartAbility()
     {
         // Reset attack progress
         _attackProgress = 0;
         _anim.SetFloat("Attacking Progress", 0);
 
         // Get SOAttack values
-        SOAbilities curAbility = _modelController.abilities[pIndex];
-        _attackLength = curAbility.abilityAnimTime;
-        _attackGraph = curAbility.abilitiesGraph;
-
-        // Snap to first attack
-        _anim.SetFloat("Attacking Index", pIndex + 3);
-        //_doneAttackTransition = 2;
+        _attackLength = _modelController.abilitySO.abilityAnimTime;
+        _attackGraph = _modelController.abilitySO.abilitiesGraph;
     }
 
     // Transition between attacks in combo

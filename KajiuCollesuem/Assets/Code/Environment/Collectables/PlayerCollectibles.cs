@@ -40,7 +40,9 @@ public class PlayerCollectibles : MonoBehaviour
     [SerializeField] private int minShield = 20;
     [SerializeField] private int maxShield = 60;
 
-    //[Header("Power")]
+    [Header("Abilities")]
+    [SerializeField] private float minAbility = 1.0f;
+    [SerializeField] private float maxAbility = 3.0f;
 
     [Header("Speed")]
     [SerializeField] [Range(1, 1)] private float minWalkSpeed = 1.0f;
@@ -156,6 +158,8 @@ public class PlayerCollectibles : MonoBehaviour
 
             case Upgrades.Power:
                 statTexts[2].SetActive(true);
+                value = Mathf.Lerp(minAbility, maxAbility, upgradeCounts[index] / MAXUPGRADES);
+                _stateController._AbilityScript.Upgrade(value);
                 sliderController.UpdateBars(5, upgradeCounts[index]);
                 break;
 

@@ -528,7 +528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackMult: 1
-  _Attacker: {fileID: 5193453761140963537}
+  attacker: {fileID: 0}
 --- !u!114 &1646513606999389503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -733,7 +733,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackMult: 1
-  _Attacker: {fileID: 5193453761140963537}
+  attacker: {fileID: 0}
 --- !u!114 &6949200276364996764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2384,7 +2384,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onGround: 0
   groundMaterial: -1
-  Stunned: 0
   AttackStateReturnDelay: 0
   AbilityStateReturnDelay: 0
   LastInputTime: 0
@@ -2393,8 +2392,7 @@ MonoBehaviour:
   moveRawInput: {x: 0, y: 0}
   LastMoveDirection: {x: 0, y: 0}
   dodgeInput: -1
-  ability1input: -1
-  ability2input: -1
+  abilityinput: -1
   lightAttackinput: -1
   heavyAttackinput: -1
   _stateMachine: {fileID: 0}
@@ -2405,7 +2403,6 @@ MonoBehaviour:
   _playerAttributes: {fileID: 0}
   _modelController: {fileID: 0}
   _playerCamera: {fileID: 0}
-  _ragdollManager: {fileID: 0}
   _Sound: {fileID: 0}
   _CameraShake: {fileID: 0}
   _Rb: {fileID: 0}
@@ -2413,6 +2410,7 @@ MonoBehaviour:
   hitboxes:
   - {fileID: 9179836059231498655}
   - {fileID: 459739093647060007}
+  usingAbility: 0
   IgnoreNextHeavyRelease: 0
   IgnoreJumpInputTime: 0
 --- !u!114 &5193453761140963542
@@ -2448,6 +2446,7 @@ MonoBehaviour:
   _jumpForceVelocityMult: 2
   _jumpGraceLength: 0.3
   disableMovement: 0
+  undisableJump: 0
 --- !u!114 &3809074611742880156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2471,8 +2470,8 @@ MonoBehaviour:
   longDodgeMaxSpeed: 40
   longDodgeDuration: 0.3
   longDodgeAcceleration: 12000
-  shortDodgeAnimSpeed: 2
-  longDodgeAnimSpeed: 1.6
+  shortDodgeAnimSpeed: 2.3
+  longDodgeAnimSpeed: 1.9
 --- !u!114 &8076739660519470048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2509,6 +2508,8 @@ MonoBehaviour:
   lockOnRange: 40
   lockOnMinDot: 0.4
   TimeUntilIdle: 20
+  _lookAt: {fileID: 7228211487614368373}
+  _cameraForward: {fileID: 3756421446152675430}
 --- !u!114 &5193453761140963528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2573,6 +2574,8 @@ MonoBehaviour:
   maxHealth: 160
   minShield: 50
   maxShield: 100
+  minAbility: 1
+  maxAbility: 3
   minWalkSpeed: 1
   maxWalkSpeed: 2
   minDodgeSpeed: 1
@@ -2598,11 +2601,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a868a39ca9eadb649b8f999bbab85f7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ability1: 0
-  ability2: 0
   _AbilitySO:
   - {fileID: 11400000, guid: 487042729fbbffe40804d11e78bc9536, type: 2}
+  - {fileID: 11400000, guid: 04ca014c209f39740b3483c4c925751b, type: 2}
+  - {fileID: 11400000, guid: c1126c84ebd8ccb4b84a57b5fbfa7171, type: 2}
   _plasmaBreathPrefab: {fileID: 1601903843534470252, guid: dc52f3e137c83ac4494fcd01d6979b85,
+    type: 3}
+  _plasmaBallPrefab: {fileID: 1368237500754117069, guid: cc2cb1f7f6457ce4e9a4bb8afae66f22,
+    type: 3}
+  _plasmaStrikePrefab: {fileID: 1368237500754117069, guid: 420ebd584d4966144a84c23ed2bc5949,
     type: 3}
   _mouthMuzzle: {fileID: 2198764737386935211}
 --- !u!114 &8770599668221244573
@@ -2933,7 +2940,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3756421446152675430}
   m_Layer: 8
-  m_Name: GameObject
+  m_Name: CameraForward
   m_TagString: Untagged
   m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -3203,9 +3210,7 @@ MonoBehaviour:
   attacks:
   - {fileID: 11400000, guid: 14a66436df1065d46bf9e6b1513243d2, type: 2}
   - {fileID: 11400000, guid: c843a2f1728f4f94f954983a281f0a14, type: 2}
-  abilities:
-  - {fileID: 0}
-  - {fileID: 0}
+  abilitySO: {fileID: 0}
 --- !u!114 &7045175382070652780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3642,6 +3647,8 @@ MonoBehaviour:
   _armour:
   - {fileID: 6190681726177927379}
   - {fileID: 8962762725060476419}
+  _stateController: {fileID: 5193453761140963529}
+  _abilitySelector: {fileID: 3076140870130127852}
 --- !u!1 &8634281581487518870
 GameObject:
   m_ObjectHideFlags: 0
@@ -4126,6 +4133,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 383972717494358942, guid: e749edb956cb680429bf63991e3bda43,
+        type: 3}
+      propertyPath: m_Type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 383972717494358942, guid: e749edb956cb680429bf63991e3bda43,
+        type: 3}
+      propertyPath: m_FillAmount
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 887477465479950125, guid: e749edb956cb680429bf63991e3bda43,
         type: 3}

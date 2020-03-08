@@ -34,6 +34,8 @@ public class PlayerMultHitbox : MonoBehaviour
     {
         //Check if collided with an Attributes Script
         IAttributes otherAttributes = other.GetComponent<IAttributes>();
+        if (otherAttributes == null) 
+            otherAttributes = other.GetComponentInParent<IAttributes>();
 
         if (otherAttributes != null && otherAttributes.IsDead() == false && otherAttributes != _playerIAttributes && !collidersInTrigger.Contains(other))
         {
@@ -53,7 +55,7 @@ public class PlayerMultHitbox : MonoBehaviour
         do
         {
             // Add Damage & Knockup
-            pAttributes.TakeDamage(Mathf.FloorToInt(_damage * attackMult), _knockForwardForce * transform.forward + Vector3.up * _knockUpForce, attacker);
+            pAttributes.TakeDamage(Mathf.FloorToInt(_damage * attackMult), _knockForwardForce * transform.up + Vector3.up * _knockUpForce, attacker);
 
             // Reset Falling Force
             if (pOtherOnGround != null)

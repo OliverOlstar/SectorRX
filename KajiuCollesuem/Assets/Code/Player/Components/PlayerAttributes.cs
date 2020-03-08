@@ -216,6 +216,9 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             _stateController._CameraShake.PlayShake(pAmount / 4, 6.0f, 0.5f, 0.8f);
         }
 
+        // If usingAbility, Cancel it
+        _stateController.usingAbility = false;
+
         // Return If Dead or Not
         return died;
     }

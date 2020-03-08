@@ -23,7 +23,7 @@ public class ModelController : MonoBehaviour
     private bool _DontUpdateWeights;
 
     public SOAttack[] attacks = new SOAttack[3];
-     public SOAbilities[] abilities = new SOAbilities[2];
+     public SOAbilities abilitySO;
     private float _doneAttackDelay = 0;
     
     void Start()
@@ -78,38 +78,24 @@ public class ModelController : MonoBehaviour
     }
 
     #region Abilities
-    public void TransitionToAbility(int pIndex)
+    public void TransitionToAbility()
     {
-        _modelMovement.disableRotation = true;
+        //_modelMovement.disableRotation = true;
 
         _modelWeights.SetWeights(0, 0, 0, 0, 1);
         _DontUpdateWeights = true;
     }
 
-    public void PlayAbility(int pIndex)
+    public void PlayAbility()
     {
-        SOAbilities curAbility = abilities[pIndex];
-
-        _modelMovement.disableRotation = true;
-
-        StartCoroutine("PlayAttackWithDelay", curAbility.holdStartPosTime);
+        StartCoroutine("PlayAttackWithDelay", abilitySO.holdStartPosTime);
 
         _doneAttackDelay = 99999999;
-        _modelAnimation.StartAbility(pIndex);
+        _modelAnimation.StartAbility();
     }
 
-    public void DoneAbility(int pIndex)
+    public void DoneAbility()
     {
-        SOAbilities curAbility = abilities[pIndex];
-        StartCoroutine("DoneAbilityWithDelay", curAbility.holdEndPosTime);
-    }
-
-    IEnumerator DoneAbilityWithDelay(float pDelay)
-    {
-        _AttackingState = 2;
-        yield return new WaitForSeconds(pDelay);
-        _AttackingState = 0;
-
         _modelMovement.disableRotation = false;
         _modelWeights.SetWeights(0, 0, 0, 0, 0);
         _DontUpdateWeights = false;
@@ -168,6 +154,7 @@ public class ModelController : MonoBehaviour
     {
         _AttackingState = 2;
         yield return new WaitForSeconds(pDelay);
+        _modelMovement.disableRotation = true;
         _AttackingState = 1;
     }
 

@@ -25,9 +25,7 @@ public class DodgeState : BaseState
     {
         //Debug.Log("DodgeState: Exit");
         _stateController._movementComponent.disableMovement = false;
-
-        // Stop Dodge
-        _stateController._modelController.DoneDodge();
+        _stateController._movementComponent.undisableJump = false;
 
         // Remove Input
         _stateController.dodgeInput = -1.0f;

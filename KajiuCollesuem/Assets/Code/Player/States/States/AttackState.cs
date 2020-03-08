@@ -214,7 +214,6 @@ public class AttackState : BaseState
         _stateController.lightAttackinput = -1.0f;
         _stateController.heavyAttackinput = -1.0f;
         _stateController.abilityinput = -1.0f;
-        _stateController.ability2input = -1.0f;
     }
     #endregion
 }

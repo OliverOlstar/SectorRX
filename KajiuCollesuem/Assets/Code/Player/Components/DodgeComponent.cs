@@ -106,6 +106,14 @@ public class DodgeComponent : MonoBehaviour
             yield return null;
         }
 
+        // Stop Dodge
+        _stateController._modelController.DoneDodge();
+
+        // Allow jumping before exiting state
+        _stateController._movementComponent.undisableJump = true;
+
+        yield return new WaitForSeconds(0.25f);
+
         doneDodge = true;
     }
 

@@ -59,7 +59,7 @@ public class ModelWeights : MonoBehaviour
         LerpWeight("Stunned Weight", stunnedWeight);
         LerpWeight("Stunned Direction", stunnedDirection);
         LerpWeight("Dead Weight", deadWeight);
-        LerpWeight("Abilities Weight", abilityWeight);
+        LerpWeight("Abilities Weight", abilityWeight - stunnedWeight, 0.25f);
         LerpWeight("TarJump Weight", tarJumpWeight);
     }
 
@@ -98,10 +98,11 @@ public class ModelWeights : MonoBehaviour
     {
         stepWeight = pStepWeight;
         jumpWeight = pJumpWeight;
-        //crouchWeight = pCrouchWeight;
-        //attackWeight = pAttackWeight;
         dodgeWeight = pDodgeWeight;
         deadWeight = pDeadWeight;
+        if (deadWeight > 0)
+            stunnedWeight = 0;
+
         abilityWeight = pAbilityWeight;
     }
 
