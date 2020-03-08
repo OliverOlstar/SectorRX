@@ -31,6 +31,9 @@ public class PlasmaBreath : MonoBehaviour, IAbility
         _SpawnedLaser.transform.SetParent(pMuzzle);
         _SpawnedLaser.transform.localPosition = Vector3.zero;
         _SpawnedLaser.transform.localRotation = Quaternion.identity;
+
+        _SpawnedLaser.GetComponentInChildren<PlayerMultHitbox>().attacker = gameObject;
+
         _SpawnedLaser.SetActive(false);
     }
 

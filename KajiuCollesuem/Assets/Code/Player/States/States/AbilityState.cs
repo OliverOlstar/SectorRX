@@ -39,10 +39,8 @@ public class AbilityState : BaseState
 
     public override Type Tick()
     {
-        _curAbility.Tick();
-
         // Stunned Or Dead
-        Type stunnedOrDead = _stateController.stunnedOrDeadCheck();
+        Type stunnedOrDead = _stateController.DeadCheck();
         if (stunnedOrDead != null)
             return stunnedOrDead;
 
@@ -52,6 +50,13 @@ public class AbilityState : BaseState
             return typeof(MovementState);
         }
 
+        //if (_stateController.dodgeInput != -1.0f)
+        //{
+        //    return typeof(DodgeState);
+        //}
+
+        _curAbility.Tick();
+       
         CheckForRelease();
 
         return null;
@@ -61,7 +66,7 @@ public class AbilityState : BaseState
     private void CheckForPress()
     {
         // ON PRESSED ABILITY 1 (Called Once)
-        if (_stateController.ability1input == 1)
+        if (_stateController.abilityinput == 1)
         {
             // Tells me what release input to listen for
             _Index = 1;
@@ -85,7 +90,7 @@ public class AbilityState : BaseState
     private void CheckForRelease()
     {
         // ON RELEASED ABILITY 1 || 2 (Called Once)
-        if ((_stateController.ability1input == 0 && _Index == 1) 
+        if ((_stateController.abilityinput == 0 && _Index == 1) 
          || (_stateController.ability2input == 0 && _Index == 2))
         {
             ReleasedAbility();
@@ -115,7 +120,7 @@ public class AbilityState : BaseState
     {
         _stateController.lightAttackinput = -1.0f;
         _stateController.heavyAttackinput = -1.0f;
-        _stateController.ability1input = -1.0f;
+        _stateController.abilityinput = -1.0f;
         _stateController.ability2input = -1.0f;
     }
     #endregion

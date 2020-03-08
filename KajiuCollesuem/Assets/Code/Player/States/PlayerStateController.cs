@@ -17,7 +17,6 @@ public class PlayerStateController : MonoBehaviour
     // On Ground
     [HideInInspector] public bool onGround = false;
     [HideInInspector] public int groundMaterial = -1;
-    [HideInInspector] public bool Stunned = false;
     [HideInInspector] public float AttackStateReturnDelay = 0;
     [HideInInspector] public float AbilityStateReturnDelay = 0;
 
@@ -29,7 +28,7 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public Vector2 LastMoveDirection = new Vector2(0, 0);
     // 0 - Tapped, 1 - Held
     [HideInInspector] public float dodgeInput = -1.0f;
-    [HideInInspector] public float ability1input = -1.0f;
+    [HideInInspector] public float abilityinput = -1.0f;
     [HideInInspector] public float ability2input = -1.0f;
     [HideInInspector] public float lightAttackinput = -1.0f;
     // 0 - Released, 1 - Pressed
@@ -91,21 +90,13 @@ public class PlayerStateController : MonoBehaviour
     public void OnCamera(InputValue ctx) => mouseInput = ctx.Get<Vector2>();
     public void OnMovement(InputValue ctx) => moveRawInput = ctx.Get<Vector2>();
     public void OnDodge(InputValue ctx) => dodgeInput = ctx.Get<float>();
-    public void OnAbility1(InputValue ctx)
+    public void OnAbility(InputValue ctx)
     {
         // AbilityState is on cooldown
         if (AbilityStateReturnDelay > Time.time)
             return;
 
-        ability1input = ctx.Get<float>();
-    }
-    public void OnAbility2(InputValue ctx)
-    {
-        // AbilityState is on cooldown
-        if (AbilityStateReturnDelay > Time.time)
-            return;
-
-        ability2input = ctx.Get<float>();
+        abilityinput = ctx.Get<float>();
     }
     public void OnLightAttack(InputValue ctx)
     {
@@ -142,18 +133,12 @@ public class PlayerStateController : MonoBehaviour
     #endregion
 
     #region StateChecks
-    public Type stunnedOrDeadCheck()
+    public Type DeadCheck()
     {
         //Dead
         if (_playerAttributes.getHealth() <= 0)
         {
             return typeof(DeathState);
-        }
-
-        //Stunned
-        if (Stunned)
-        {
-            return typeof(StunnedState);
         }
 
         return null;
@@ -168,7 +153,7 @@ public class PlayerStateController : MonoBehaviour
         }
 
         // Ability
-        if (ability1input == 1.0f || ability2input == 1.0f)
+        if (abilityinput == 1.0f || ability2input == 1.0f)
         {
             return typeof(AbilityState);
         }
@@ -205,7 +190,6 @@ public class PlayerStateController : MonoBehaviour
             {typeof(IdleState), new IdleState(controller:this) },
             {typeof(MovementState), new MovementState(controller:this) },
             {typeof(DodgeState), new DodgeState(controller:this) },
-            {typeof(StunnedState), new StunnedState(controller:this) },
             {typeof(AttackState), new AttackState(controller:this) },
             {typeof(AbilityState), new AbilityState(controller:this) },
             {typeof(DeathState), new DeathState(controller:this) }

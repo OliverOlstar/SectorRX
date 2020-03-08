@@ -36,7 +36,7 @@ public class DodgeState : BaseState
     public override Type Tick()
     {
         // Stunned Or Dead
-        Type stunnedOrDead = _stateController.stunnedOrDeadCheck();
+        Type stunnedOrDead = _stateController.DeadCheck();
         if (stunnedOrDead != null)
             return stunnedOrDead;
 
