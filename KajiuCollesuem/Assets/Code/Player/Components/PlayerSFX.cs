@@ -100,7 +100,7 @@ public class PlayerSFX : MonoBehaviour
     //Plays one of two sounds when playeer uses Plasma Ball ability.
     public void PlasmaBallSound()
     {
-        PlaySound(0.0f, 0.4f, 1.0f, abilitySounds[Random.Range(2, 3)], sfxSource);
+        PlaySound(0.0f, 0.8f, Random.Range(0.75f, 1.0f), abilitySounds[Random.Range(2, 3)], sfxSource);
     }
 
     //Plays sound when playeer uses Plasma Strike ability.
