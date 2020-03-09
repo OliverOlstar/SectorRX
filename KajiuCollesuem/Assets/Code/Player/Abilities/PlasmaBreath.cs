@@ -64,6 +64,7 @@ public class PlasmaBreath : MonoBehaviour, IAbility
         _stateController._lockOnComponent.ToggleScopedIn(1.0f);
         _stateController._modelController.DoneAbility();
         _SpawnedLaser.SetActive(false);
+        StopCoroutine("abilityLossRoutine");
     }
 
     public void Tick()
@@ -87,20 +88,16 @@ public class PlasmaBreath : MonoBehaviour, IAbility
             StartCoroutine("abilityLossRoutine");
             _nextSubStateTime = Time.time + _AbilitySO.hitBoxStayTime;
         }
-        else
-        {
-            StopCoroutine("abilityLossRoutine");
-        }
 
         _charging = !_charging;
     }
 
     IEnumerator abilityLossRoutine()
     {
-        while (_stateController._playerAttributes.getAbility() < 1)
+        while (_stateController._playerAttributes.getAbility() > 0)
         {
             _stateController._playerAttributes.modifyAbility(-1);
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
