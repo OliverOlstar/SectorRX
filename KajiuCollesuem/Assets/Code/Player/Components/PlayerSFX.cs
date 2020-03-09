@@ -94,7 +94,7 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when playeer uses Plasma Breath ability.
     public void PlasmaBreathSound()
     {
-        PlaySound(0.0f, 0.4f, 1.0f, abilitySounds[0], sfxSource);
+        PlaySound(0.6f, 1.0f, 1.2f, abilitySounds[0], sfxSource);
     }
 
     //Plays one of two sounds when playeer uses Plasma Ball ability.
