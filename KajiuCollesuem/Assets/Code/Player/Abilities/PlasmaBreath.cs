@@ -64,17 +64,23 @@ public class PlasmaBreath : MonoBehaviour, IAbility
         _stateController._lockOnComponent.ToggleScopedIn(1.0f);
         _stateController._modelController.DoneAbility();
         _SpawnedLaser.SetActive(false);
+        StopCoroutine("abilityLossRoutine");
     }
 
     public void Tick()
     {
         if (Time.time >= _rotTime)
             _modelTransform.forward = Vector3.Slerp(Horizontalize(_modelTransform.forward), Horizontalize(_stateController._Camera.forward), Time.deltaTime * _AbilitySO.rotationDampening);
-
+           
         // Once timer reaches 2, attacki begins, enabling the beam particle with a hitbox.
         if (_nextSubStateTime <= Time.time)
         {
             ToggleBreath();
+        }
+
+        if (_stateController._playerAttributes.getAbility() < 1 && _SpawnedLaser.activeSelf == true)
+        {
+            _stateController.usingAbility = false;
         }
     }
 
@@ -83,9 +89,21 @@ public class PlasmaBreath : MonoBehaviour, IAbility
     {
         _SpawnedLaser.SetActive(_charging);
         if (_charging == true)
+        {
+            StartCoroutine("abilityLossRoutine");
             _nextSubStateTime = Time.time + _AbilitySO.hitBoxStayTime;
+        }
 
         _charging = !_charging;
+    }
+
+    IEnumerator abilityLossRoutine()
+    {
+        while (_stateController._playerAttributes.getAbility() > 0)
+        {
+            _stateController._playerAttributes.modifyAbility(-2);
+            yield return new WaitForSeconds(0.12f);
+        }
     }
 
     //Get a normalized horizontal Vector

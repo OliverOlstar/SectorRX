@@ -19,7 +19,7 @@ public class Panels : MonoBehaviour
     [HideInInspector] public DeviceHandler myDevice = null;
 
     [SerializeField] private Sprite[] abilityIcons;
-    [SerializeField] private SpriteRenderer[] ability = new SpriteRenderer[2];
+    [SerializeField] private SpriteRenderer ability;
     [SerializeField] private RectTransform abilityOneRect, abilityTwoRect;
     [SerializeField] private RectTransform dPadLeftRect, dPadRightRect;
     [HideInInspector] public int abilityNumber = 0;
@@ -119,9 +119,9 @@ public class Panels : MonoBehaviour
         // Check if outside bounds
         if(abilityNumber < 0)
         {
-            abilityNumber = abilityIcons.Length / 2 - 1;
+            abilityNumber = abilityIcons.Length - 1;
         }
-        else if(abilityNumber >= abilityIcons.Length / 2)
+        else if(abilityNumber >= abilityIcons.Length)
         {
             abilityNumber = 0;
         }
@@ -131,8 +131,7 @@ public class Panels : MonoBehaviour
 
     private void UpdateIcons()
     {
-        ability[0].GetComponent<SpriteRenderer>().sprite = abilityIcons[abilityNumber * 2];
-        ability[1].GetComponent<SpriteRenderer>().sprite = abilityIcons[abilityNumber * 2 + 1];
+        ability.sprite = abilityIcons[abilityNumber];
     }
 
     // Player Enters To Join
@@ -176,12 +175,12 @@ public class Panels : MonoBehaviour
         StopAllCoroutines();
         abilityOneRect.gameObject.SetActive(true);
         dPadLeftRect.gameObject.SetActive(true);
-        abilityTwoRect.gameObject.SetActive(true);
+        //abilityTwoRect.gameObject.SetActive(true);
         dPadRightRect.gameObject.SetActive(true);
         CancelPreviousAbilitiesTweens();
-        abilityOneRect.DOAnchorPos(new Vector2(0, 34), 0.4f);
+        abilityOneRect.DOAnchorPos(new Vector2(0, -30), 0.4f);
         dPadLeftRect.DOAnchorPos(new Vector2(-157, -201), 0.4f);
-        abilityTwoRect.DOAnchorPos(new Vector2(0, -145), 0.4f);
+        //abilityTwoRect.DOAnchorPos(new Vector2(0, -145), 0.4f);
         dPadRightRect.DOAnchorPos(new Vector2(157, -201), 0.4f);
     }
 
@@ -190,12 +189,12 @@ public class Panels : MonoBehaviour
         CancelPreviousAbilitiesTweens();
         abilityOneRect.DOAnchorPos(new Vector2(0, -1930), 1.6f);
         dPadLeftRect.DOAnchorPos(new Vector2(-157, -2131), 1.6f);
-        abilityTwoRect.DOAnchorPos(new Vector2(0, -2110), 1.6f);
+        //abilityTwoRect.DOAnchorPos(new Vector2(0, -2110), 1.6f);
         dPadRightRect.DOAnchorPos(new Vector2(157, -2131), 1.6f);
         yield return new WaitForSeconds(1.6f);
         abilityOneRect.gameObject.SetActive(false);
         dPadLeftRect.gameObject.SetActive(false);
-        abilityTwoRect.gameObject.SetActive(false);
+        //abilityTwoRect.gameObject.SetActive(false);
         dPadRightRect.gameObject.SetActive(false);
     }
 
@@ -203,7 +202,7 @@ public class Panels : MonoBehaviour
     {
         abilityOneRect.DOKill();
         dPadLeftRect.DOKill();
-        abilityTwoRect.DOKill();
+        //abilityTwoRect.DOKill();
         dPadRightRect.DOKill();
     }
 }
