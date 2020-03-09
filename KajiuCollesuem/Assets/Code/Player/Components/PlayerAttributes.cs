@@ -80,7 +80,6 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         // Return If Dead or Not
         if (_health <= 0)
         {
-            Death();
             return true;
         }
         return false;
