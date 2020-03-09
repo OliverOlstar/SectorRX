@@ -92,15 +92,21 @@ public class PlayerSFX : MonoBehaviour
 
     #region Abilities
     //Plays sound when playeer uses Plasma Breath ability.
-    public void PlasmaBreathSound(float pDelay)
+    public void PlasmaBreathSound()
     {
-        PlaySound(pDelay, 0.4f, 1.0f, abilitySounds[0], sfxSource);
+        PlaySound(0.0f, 0.4f, 1.0f, abilitySounds[0], sfxSource);
     }
 
     //Plays sound when playeer uses Plasma Ball ability.
-    public void PlasmaBallSound(float pDelay)
+    public void PlasmaBallSound()
     {
-        PlaySound(pDelay, 0.4f, 1.0f, abilitySounds[2], sfxSource);
+        PlaySound(0.0f, 0.4f, 1.0f, abilitySounds[2], sfxSource);
+    }
+
+    //Plays sound when playeer uses Plasma Strike ability.
+    public void PlasmaStrikeSound()
+    {
+        PlaySound(0.0f, 0.4f, 1.0f, abilitySounds[3], sfxSource);
     }
     #endregion
 

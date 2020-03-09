@@ -93,7 +93,7 @@ public class PlayerStateController : MonoBehaviour
             return;
 
         // Not enough power
-        if (_playerAttributes.getPower() < _modelController.abilitySO.powerRequired)
+        if (_playerAttributes.getAbility() < _modelController.abilitySO.powerRequired)
             return;
 
         abilityinput = ctx.Get<float>();

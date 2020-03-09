@@ -62,6 +62,7 @@ public class PlasmaBall : MonoBehaviour, IAbility
         if (_ballSpawned == false && _spawnBallTime <= Time.time)
         {
             SpawnBall();
+            _stateController._Sound.PlasmaBallSound();
             _ballSpawned = true;
         }
     }

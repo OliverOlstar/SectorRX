@@ -62,6 +62,7 @@ public class PlasmaStrike : MonoBehaviour, IAbility
         if (_strikeSpawned == false && _spawnBallTime <= Time.time)
         {
             SpawnStrike();
+            _stateController._Sound.PlasmaStrikeSound();
             _strikeSpawned = true;
         }
     }

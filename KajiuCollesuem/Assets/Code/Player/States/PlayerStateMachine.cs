@@ -16,7 +16,6 @@ public class PlayerStateMachine : MonoBehaviour
         {
             CurrentState = _States.Values.First();
         }
-        Debug.Log(CurrentState);
 
         var nextState = CurrentState?.Tick();
 

@@ -52,6 +52,9 @@ public class PlasmaBreath : MonoBehaviour, IAbility
         _stateController._lockOnComponent.ToggleScopedIn(0.05f);
         _stateController._modelController.TransitionToAbility();
         _stateController._modelController.PlayAbility();
+
+        _stateController._Sound.PlasmaBreathSound();
+
         _rotTime = Time.time + _AbilitySO.holdStartPosTime;
     }
 
