@@ -36,24 +36,20 @@ public class UIManager : MonoBehaviour
 
         if (menuProperties == true)
         {
-            Debug.Log("menu = true");
+            //Debug.Log("menu = true");
             introVideoPlayer.background.gameObject.SetActive(false);
             introVideoPlayer.videoPlayer.gameObject.SetActive(false);
             playerInputMenu.DOAnchorPos(new Vector2(69, -2), 0.4f);
             EventSystem.current.SetSelectedGameObject(null);
             _Camera.ToggleCamera(1);
         }
-        if (menuProperties == false)
+        else
         {
-            Debug.Log("menu = false");
+            //Debug.Log("menu = false");
             StartCoroutine(StartMenu());
         }
 
         buttonAnim = startButton.GetComponent<Animator>();
-    }
-
-    private void Update()
-    {
     }
 
     public void BackToMainMenu(GameObject pTarget)
@@ -66,7 +62,7 @@ public class UIManager : MonoBehaviour
 
     public void GoToPlayer()
     {
-        Debug.Log("menu = true");
+        //Debug.Log("menu = true");
         logo.DOAnchorPos(new Vector2(401, -2057), 0.4f);
         playerInputMenu.DOAnchorPos(new Vector2(69, -2), 0.4f);
         mainMenu.DOAnchorPos(new Vector2(44, -2060), 0.4f);

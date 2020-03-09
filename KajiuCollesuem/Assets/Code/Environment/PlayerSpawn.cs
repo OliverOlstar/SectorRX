@@ -25,9 +25,6 @@ public class PlayerSpawn : MonoBehaviour
 
     private float playersToSpawn = 0;
 
-    [Space]
-    [SerializeField] private Material _defaultMaterial;
-
     public void MatchStartup()
     {
         //If no players are entered, automatically set to 2.
@@ -42,17 +39,14 @@ public class PlayerSpawn : MonoBehaviour
             {
                 player.deviceUser = i;
                 player.playerIndex = i;
-
-                ColorSet set = new ColorSet();
-                set.lizzyMat = _defaultMaterial;
-                player.playerColorSet = set;
+                player.playerColorSet = new ColorSet();
+                player.abilitySelected = 2;
 
                 connectedPlayers.playerIndex.Add(player);
             }
         }
 
         playersToSpawn = connectedPlayers.playersConnected;
-        Debug.Log(connectedPlayers.playersConnected);
     }
 
     public void MatchEnd()
@@ -127,7 +121,9 @@ public class PlayerSpawn : MonoBehaviour
             _ActiveInputs[i].playerStateController = playerCharacter.GetComponentInChildren<PlayerStateController>();
 
             // Set Color
-            playerCharacter.GetComponent<ColorSetter>().SetColor(connectedPlayers.playerIndex[i].playerColorSet);
+            ColorSetter colorSetter = playerCharacter.GetComponent<ColorSetter>();
+            colorSetter.SetColor(connectedPlayers.playerIndex[i].playerColorSet);
+            colorSetter.SetAbility(connectedPlayers.playerIndex[i].abilitySelected);
         }
     }
 

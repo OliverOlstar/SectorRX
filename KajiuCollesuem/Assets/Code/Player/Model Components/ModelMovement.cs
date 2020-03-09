@@ -22,7 +22,7 @@ public class ModelMovement : MonoBehaviour
     private Quaternion _parentDefaultRotation;
 
     [Space]
-    public bool disableRotation;
+    public bool disableRotation = false;
     public Vector3 facingInput;
     public Transform facingTarget;
 

@@ -26,6 +26,7 @@ public class MovementComponent : MonoBehaviour
 
     [Space]
     public bool disableMovement = false;
+    public bool undisableJump = false;
 
     void Start()
     {
@@ -35,11 +36,11 @@ public class MovementComponent : MonoBehaviour
 
     void Update()
     {
-        if (disableMovement) 
-            return;
-
         if (_stateController.onGround)
             _jumpGrace = Time.time + _jumpGraceLength;
+
+        if (disableMovement) 
+            return;
 
         //Movement
         Move();
@@ -47,7 +48,7 @@ public class MovementComponent : MonoBehaviour
 
     public void OnJump()
     {
-        if (_jumpGrace > Time.time && disableMovement == false)
+        if (_jumpGrace > Time.time && (disableMovement == false || undisableJump == true))
         {
             _jumpGrace = 0;
 
@@ -65,7 +66,10 @@ public class MovementComponent : MonoBehaviour
             _stateController._CameraShake.PlayShake(5.0f, 0.4f, 0.3f, 0.4f);
 
             // Sound
-            _stateController._Sound.JumpSound(0.0f);
+            _stateController._Sound.JumpSound();
+
+            // If using ability, stop
+            _stateController.usingAbility = false;
         }
     }
 

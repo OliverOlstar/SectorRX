@@ -59,7 +59,7 @@ public class AttackState : BaseState
     public override Type Tick()
     {
         // Stunned Or Dead
-        Type stunnedOrDead = _stateController.stunnedOrDeadCheck();
+        Type stunnedOrDead = _stateController.DeadCheck();
         if (stunnedOrDead != null)
             return stunnedOrDead;
 
@@ -213,8 +213,7 @@ public class AttackState : BaseState
     {
         _stateController.lightAttackinput = -1.0f;
         _stateController.heavyAttackinput = -1.0f;
-        _stateController.ability1input = -1.0f;
-        _stateController.ability2input = -1.0f;
+        _stateController.abilityinput = -1.0f;
     }
     #endregion
 }

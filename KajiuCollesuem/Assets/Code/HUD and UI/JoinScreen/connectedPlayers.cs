@@ -13,6 +13,7 @@ public struct UsedDevices
     public int deviceUser;
     public int playerIndex;
     public ColorSet playerColorSet;
+    public int abilitySelected;
     //Add Ability Presets variable
 }
 
@@ -32,10 +33,9 @@ public class connectedPlayers : MonoBehaviour
     {
         playersConnected = 0;
         playerIndex.Clear();
+
         if(UIManager.menuProperties == true)
-        {
             EnableJoin();
-        }
     }
 
     // When you enter the join game screen
@@ -78,6 +78,7 @@ public class connectedPlayers : MonoBehaviour
                 user.deviceUser = panel.myDevice.GetComponent<PlayerInput>().user.index;
                 user.playerIndex = panel.myDevice.GetPlayerIndex() - numberOfNotFound;
                 user.playerColorSet = panel.myColorSet;
+                user.abilitySelected = panel.abilityNumber;
                 playerIndex.Add(user);
             }
             else
@@ -89,11 +90,8 @@ public class connectedPlayers : MonoBehaviour
 
     public Panels OnDeviceJoined()
     {
-        //Checks if on join screen
-
         //Allows players to connect if on join screen
         playersConnected++;
-        //Debug.Log("OnPlayerJoined " + playersConnected);
         _PlayerCount.text = "Number of Players: " + playersConnected.ToString();
 
         //Sets player panel to first open slot and then removes it from list
@@ -106,7 +104,6 @@ public class connectedPlayers : MonoBehaviour
     {
         //Disconnects player
         playersConnected--;
-        //Debug.Log("OnPlayerLeaves " + playersConnected);
         _PlayerCount.text = "Number of Players: " + playersConnected.ToString();
 
         //Adds new open player slot to list then properly sorts list

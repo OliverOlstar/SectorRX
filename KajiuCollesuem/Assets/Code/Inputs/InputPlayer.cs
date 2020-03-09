@@ -67,20 +67,12 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Ability1"",
+                    ""name"": ""Ability"",
                     ""type"": ""Button"",
                     ""id"": ""e4cc26f1-fed4-45d0-8b0a-82352e0ad367"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Press(behavior=2)""
-                },
-                {
-                    ""name"": ""Ability2"",
-                    ""type"": ""Button"",
-                    ""id"": ""e466a29a-5b8b-4750-9d76-247e58a5b360"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": ""Press(behavior=2)""
+                    ""interactions"": """"
                 },
                 {
                     ""name"": ""LockOn"",
@@ -209,22 +201,22 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ed428a2c-8fc1-4228-aa8e-19546dcf1f83"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""id"": ""d6ba02ab-777f-45d3-9532-86a43df3a38b"",
+                    ""path"": ""<Mouse>/backButton"",
                     ""interactions"": ""Tap,Hold"",
                     ""processors"": """",
-                    ""groups"": ""Gamepad"",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""d6ba02ab-777f-45d3-9532-86a43df3a38b"",
-                    ""path"": ""<Mouse>/backButton"",
+                    ""id"": ""ed428a2c-8fc1-4228-aa8e-19546dcf1f83"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": ""Tap,Hold"",
                     ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -478,40 +470,18 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Ability1"",
+                    ""action"": ""Ability"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""b34c3423-a54b-4ced-a936-3bf8aa0a99ae"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Ability1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7018a187-8789-45ca-8632-6333f4de8847"",
-                    ""path"": ""<Keyboard>/f"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Ability2"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""881d8e13-6693-4fc7-81ef-ea4fae52d160"",
                     ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Ability2"",
+                    ""action"": ""Ability"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1034,8 +1004,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
         m_Player_LightAttack = m_Player.FindAction("LightAttack", throwIfNotFound: true);
         m_Player_HeavyAttack = m_Player.FindAction("HeavyAttack", throwIfNotFound: true);
         m_Player_Dodge = m_Player.FindAction("Dodge", throwIfNotFound: true);
-        m_Player_Ability1 = m_Player.FindAction("Ability1", throwIfNotFound: true);
-        m_Player_Ability2 = m_Player.FindAction("Ability2", throwIfNotFound: true);
+        m_Player_Ability = m_Player.FindAction("Ability", throwIfNotFound: true);
         m_Player_LockOn = m_Player.FindAction("LockOn", throwIfNotFound: true);
         m_Player_AnyInput = m_Player.FindAction("AnyInput", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
@@ -1108,8 +1077,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_LightAttack;
     private readonly InputAction m_Player_HeavyAttack;
     private readonly InputAction m_Player_Dodge;
-    private readonly InputAction m_Player_Ability1;
-    private readonly InputAction m_Player_Ability2;
+    private readonly InputAction m_Player_Ability;
     private readonly InputAction m_Player_LockOn;
     private readonly InputAction m_Player_AnyInput;
     private readonly InputAction m_Player_Pause;
@@ -1123,8 +1091,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
         public InputAction @LightAttack => m_Wrapper.m_Player_LightAttack;
         public InputAction @HeavyAttack => m_Wrapper.m_Player_HeavyAttack;
         public InputAction @Dodge => m_Wrapper.m_Player_Dodge;
-        public InputAction @Ability1 => m_Wrapper.m_Player_Ability1;
-        public InputAction @Ability2 => m_Wrapper.m_Player_Ability2;
+        public InputAction @Ability => m_Wrapper.m_Player_Ability;
         public InputAction @LockOn => m_Wrapper.m_Player_LockOn;
         public InputAction @AnyInput => m_Wrapper.m_Player_AnyInput;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
@@ -1155,12 +1122,9 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 @Dodge.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodge;
                 @Dodge.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodge;
                 @Dodge.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodge;
-                @Ability1.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility1;
-                @Ability1.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility1;
-                @Ability1.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility1;
-                @Ability2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility2;
-                @Ability2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility2;
-                @Ability2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility2;
+                @Ability.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility;
+                @Ability.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility;
+                @Ability.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility;
                 @LockOn.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockOn;
                 @LockOn.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockOn;
                 @LockOn.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockOn;
@@ -1192,12 +1156,9 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 @Dodge.started += instance.OnDodge;
                 @Dodge.performed += instance.OnDodge;
                 @Dodge.canceled += instance.OnDodge;
-                @Ability1.started += instance.OnAbility1;
-                @Ability1.performed += instance.OnAbility1;
-                @Ability1.canceled += instance.OnAbility1;
-                @Ability2.started += instance.OnAbility2;
-                @Ability2.performed += instance.OnAbility2;
-                @Ability2.canceled += instance.OnAbility2;
+                @Ability.started += instance.OnAbility;
+                @Ability.performed += instance.OnAbility;
+                @Ability.canceled += instance.OnAbility;
                 @LockOn.started += instance.OnLockOn;
                 @LockOn.performed += instance.OnLockOn;
                 @LockOn.canceled += instance.OnLockOn;
@@ -1358,8 +1319,7 @@ public class @InputPlayer : IInputActionCollection, IDisposable
         void OnLightAttack(InputAction.CallbackContext context);
         void OnHeavyAttack(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
-        void OnAbility1(InputAction.CallbackContext context);
-        void OnAbility2(InputAction.CallbackContext context);
+        void OnAbility(InputAction.CallbackContext context);
         void OnLockOn(InputAction.CallbackContext context);
         void OnAnyInput(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);

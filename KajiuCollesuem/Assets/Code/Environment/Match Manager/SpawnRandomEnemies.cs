@@ -10,7 +10,11 @@ Description: Spawns a random number of enemies, in preset locations randomly.
 
 public class SpawnRandomEnemies : MonoBehaviour
 {
-    public GameObject enemyToSpawn;
+    [SerializeField] private GameObject _enemyPrefab;
+    [SerializeField] private GameObject _goldEnemyPrefab;
+
+    [SerializeField] [Range(0, 1)] float _oddsOffGoldSpawn = 0.02f; 
+
     [SerializeField] private int enemySpawnCount = 12;
     
     private List<Transform> _enemySpawnPoints = new List<Transform>();
@@ -31,8 +35,15 @@ public class SpawnRandomEnemies : MonoBehaviour
 
         for (int i = 0; i < enemySpawnCount; i++)
         {
+            // Randomly Choose between normal and gold Hellhound
+            GameObject prefab;
+            if (Random.value < _oddsOffGoldSpawn)
+                prefab = _goldEnemyPrefab;
+            else
+                prefab = _enemyPrefab;
+
             _enemySpawnPointIndex = Random.Range(0, _enemySpawnPoints.Count);
-            Instantiate(enemyToSpawn, _enemySpawnPoints[_enemySpawnPointIndex].position, _enemySpawnPoints[_enemySpawnPointIndex].rotation);
+            Instantiate(prefab, _enemySpawnPoints[_enemySpawnPointIndex].position, _enemySpawnPoints[_enemySpawnPointIndex].rotation);
             _enemySpawnPoints.Remove(_enemySpawnPoints[_enemySpawnPointIndex]);
         }
     }
