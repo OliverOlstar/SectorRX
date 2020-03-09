@@ -32,8 +32,6 @@ public class MatchManager : MonoBehaviour
         {
             cluster.SpawnEnemies();
         }
-
-        Debug.Log("HERE");
     }
 
     public void Update()

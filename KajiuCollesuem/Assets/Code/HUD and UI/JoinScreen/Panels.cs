@@ -11,25 +11,25 @@ public class Panels : MonoBehaviour
     [SerializeField] int playerNumber;
     [SerializeField] private connectedPlayers _AddPlayer;
     [SerializeField] private UIManager _CanPlayChecker;
-    public Text playerPanels;
+    [SerializeField] private Text playerPanels;
     private int stateValue = 0;
     [SerializeField] private MenuLizzy _myLizzy;
     [HideInInspector] public ColorSet myColorSet;
 
     [HideInInspector] public DeviceHandler myDevice = null;
 
-    public Sprite[] abilityIcons;
-    public SpriteRenderer[] ability = new SpriteRenderer[2];
-    public RectTransform abilityOneRect, abilityTwoRect;
-    public RectTransform dPadLeftRect, dPadRightRect;
-    private int presetNumber = 0;
-    public Animator animShield;
-    public Animator animMask;
+    [SerializeField] private Sprite[] abilityIcons;
+    [SerializeField] private SpriteRenderer[] ability = new SpriteRenderer[2];
+    [SerializeField] private RectTransform abilityOneRect, abilityTwoRect;
+    [SerializeField] private RectTransform dPadLeftRect, dPadRightRect;
+    [HideInInspector] public int abilityNumber = 0;
+    [SerializeField] private Animator animShield;
+    [SerializeField] private Animator animMask;
     private SpriteRenderer _animMaskRenderer;
 
-    public AudioClip[] lockedIn = new AudioClip[4];
-    public AudioClip combatantHere;
-    public AudioSource sfxSource;
+    [SerializeField] private AudioClip[] lockedIn = new AudioClip[4];
+    [SerializeField] private AudioClip combatantHere;
+    [SerializeField] private AudioSource sfxSource;
 
 
     [SerializeField] private ColorPicker _ColorPicker;
@@ -99,7 +99,7 @@ public class Panels : MonoBehaviour
         if(stateValue == 0)
         {
             ChangeIcons(-1);
-            _myLizzy.SetAbilities(presetNumber);
+            _myLizzy.SetAbilities(abilityNumber);
         }
     }
 
@@ -108,22 +108,22 @@ public class Panels : MonoBehaviour
         if (stateValue == 0)
         {
             ChangeIcons(1);
-            _myLizzy.SetAbilities(presetNumber);
+            _myLizzy.SetAbilities(abilityNumber);
         }
     }
 
     public void ChangeIcons(int pDirection)
     {
-        presetNumber += pDirection;
+        abilityNumber += pDirection;
 
         // Check if outside bounds
-        if(presetNumber < 0)
+        if(abilityNumber < 0)
         {
-            presetNumber = abilityIcons.Length / 2 - 1;
+            abilityNumber = abilityIcons.Length / 2 - 1;
         }
-        else if(presetNumber >= abilityIcons.Length / 2)
+        else if(abilityNumber >= abilityIcons.Length / 2)
         {
-            presetNumber = 0;
+            abilityNumber = 0;
         }
 
         UpdateIcons();
@@ -131,8 +131,8 @@ public class Panels : MonoBehaviour
 
     private void UpdateIcons()
     {
-        ability[0].GetComponent<SpriteRenderer>().sprite = abilityIcons[presetNumber * 2];
-        ability[1].GetComponent<SpriteRenderer>().sprite = abilityIcons[presetNumber * 2 + 1];
+        ability[0].GetComponent<SpriteRenderer>().sprite = abilityIcons[abilityNumber * 2];
+        ability[1].GetComponent<SpriteRenderer>().sprite = abilityIcons[abilityNumber * 2 + 1];
     }
 
     // Player Enters To Join

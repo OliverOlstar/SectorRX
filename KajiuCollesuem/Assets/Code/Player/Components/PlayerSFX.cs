@@ -24,73 +24,68 @@ public class PlayerSFX : MonoBehaviour
 
     #region PlayerReactions
     //Plays sound when player takes damage.
-    public void HitByAttackSound(float pDelay)
+    public void HitByAttackSound()
     {
-        PlaySound(pDelay, 0.6f, Random.Range(0.8f, 1.0f), playerHit[0], sfxSource);
+        PlaySound(0.0f, 0.6f, Random.Range(0.8f, 1.0f), playerHit[0], sfxSource);
     }
 
     //Plays sound when player touches the tar.
-    public void HitTarSound(float pDelay)
+    public void HitTarSound()
     {
-        PlaySound(pDelay, 0.7f, 1.0f, playerHit[1], voiceSource);
+        PlaySound(0.0f, 0.7f, 1.0f, playerHit[1], voiceSource);
     }
 
     //Plays sound when the player dies.
-    public void PlayerDeathSound(float pDelay)
+    public void PlayerDeathSound()
     {
-        PlaySound(pDelay, 0.8f, Random.Range(0.6f, 1.2f), playerHit[2], voiceSource);
+        PlaySound(0.5f, 0.8f, Random.Range(0.6f, 1.2f), playerHit[2], voiceSource);
     }
 
     //Plays sound when the player has collected a stat increasing item
-    public void StatUpSound(PlayerCollectibles.Upgrades pStat, float pDelay)
+    public void StatUpSound(PlayerCollectibles.Upgrades pStat)
     {
-        PlaySound(pDelay, 0.7f, 1.0f, collectStat[(int)pStat], sfxSource);
+        PlaySound(0.0f, 0.7f, 1.0f, collectStat[(int)pStat], sfxSource);
     }
     #endregion
 
     #region Locomotion
     //Plays sound when the player performs a dodge
-    public void DodgeSound(float pDelay)
+    public void DodgeSound()
     {
-        PlaySound(pDelay, 1.0f, Random.Range(0.7f, 1.0f), movement[0], voiceSource);
+        PlaySound(0.1f, 1.0f, Random.Range(0.7f, 1.0f), movement[0], voiceSource);
     }
 
     //Plays sound the player lands after a jump or falling
-    public void LandingSound(float pDelay)
+    public void LandingSound()
     {
-        PlaySound(pDelay, 0.2f, 1.0f, movement[2], sfxSource);
+        PlaySound(0.0f, 0.2f, 1.0f, movement[2], sfxSource);
     }
 
     //Plays sound the player is walking on a sand or metal surface
-    public void Walking(int pGroundMaterial, float pSpeed, float pDelay)
+    public void Walking(int pGroundMaterial)
     {
-        if (pSpeed > 0.6f)
-        {
-            PlaySound(pDelay, 0.2f, Random.Range(0.4f, 0.6f), surfaces[pGroundMaterial], walkingSource);
-        }
-
-        PlaySound(pDelay, 0.2f, Random.Range(0.4f, 0.6f), surfaces[1], walkingSource);
+        PlaySound(0.0f, 1.0f, Random.Range(0.4f, 0.6f), surfaces[pGroundMaterial], walkingSource);
     }
     #endregion
 
     #region PlayerActions
     //Plays sound when the player jumps.
-    public void JumpSound(float pDelay)
+    public void JumpSound()
     {
-        PlaySound(pDelay, 0.7f, Random.Range(0.7f, 1.0f), movement[1], sfxSource);
+        PlaySound(0.0f, 0.7f, Random.Range(0.7f, 1.0f), movement[1], sfxSource);
     }
 
     //Randomly plays one of two sounds when the player performs a light attack.
     public void LightAttackSound(float pDelay)
     {
-        PlaySound(pDelay, 0.7f, 1.0f, lightAttack[Random.Range(0, 1)], sfxSource);
+        //PlaySound(pDelay, 0.7f, 1.0f, lightAttack[Random.Range(0, 1)], sfxSource);
         PlaySound(pDelay, 0.7f, Random.Range(0.6f, 0.8f), lightAttackVA, voiceSource);
     }
 
     //Randomly plays one of two sounds when the player performs a heavy attack.
     public void HeavyAttackSound(float pDelay)
     {
-        PlaySound(pDelay, 0.7f, 0.5f, heavyAttack[Random.Range(0, 1)], sfxSource);
+        //PlaySound(pDelay, 0.7f, 0.5f, heavyAttack[Random.Range(0, 1)], sfxSource);
         PlaySound(pDelay, 0.7f, Random.Range(0.6f, 0.75f), heavyAttackVA, voiceSource);
     }
     #endregion
@@ -102,22 +97,10 @@ public class PlayerSFX : MonoBehaviour
         PlaySound(pDelay, 0.4f, 1.0f, abilitySounds[0], sfxSource);
     }
 
-    //Plays sound when playeer uses Roll Attack ability.
-    public void RollAttackSound(float pDelay)
-    {
-        PlaySound(pDelay, 0.4f, 1.0f, abilitySounds[1], sfxSource);
-    }
-
     //Plays sound when playeer uses Plasma Ball ability.
     public void PlasmaBallSound(float pDelay)
     {
         PlaySound(pDelay, 0.4f, 1.0f, abilitySounds[2], sfxSource);
-    }
-
-    //Plays sound when playeer uses Ground Pound ability.
-    public void GroundPoundSound(float pDelay)
-    {
-        PlaySound(pDelay, 0.4f, 1.0f, abilitySounds[3], sfxSource);
     }
     #endregion
 

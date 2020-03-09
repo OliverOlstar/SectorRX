@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using RootMotion.FinalIK;
 
 public class PlayerLockOnScript : MonoBehaviour
 {
@@ -30,6 +31,10 @@ public class PlayerLockOnScript : MonoBehaviour
     [Header("Idle")]
     [SerializeField] private float TimeUntilIdle = 20f;
     
+    [Header("LookAt")]
+    [SerializeField] private LookAtIK _lookAt;
+    [SerializeField] private Transform _cameraForward;
+
     public void Start()
     {
         _stateController = GetComponent<PlayerStateController>();
@@ -107,6 +112,8 @@ public class PlayerLockOnScript : MonoBehaviour
 
                     lockOnTargetAttributes = targetAttributes;
                     lockOnTargetTransform = target.transform;
+
+                    _lookAt.solver.target = target.transform;
                 }
             }
         }
@@ -125,6 +132,8 @@ public class PlayerLockOnScript : MonoBehaviour
 
         lockOnTargetAttributes = null;
         lockOnTargetTransform = null;
+
+        _lookAt.solver.target = _cameraForward;
     }
 
     //Function To Find Intial Target

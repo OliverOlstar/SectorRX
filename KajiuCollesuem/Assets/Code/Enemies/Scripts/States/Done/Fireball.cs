@@ -115,7 +115,6 @@ public class Fireball : MonoBehaviour, IState
     public void AEDoneShooting()
     {
         //Debug.Log("Fireball: AEDoneShooting");
-        Debug.Log("Stunned");
-            _enabled = false;
+        _enabled = false;
     }
 }

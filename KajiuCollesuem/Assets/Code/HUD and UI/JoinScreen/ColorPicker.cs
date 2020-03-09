@@ -17,7 +17,7 @@ public class ColorPicker : MonoBehaviour
     [SerializeField] private Color[] _Colors = new Color[8];
 
     private ColorSet[] _ColorSets = new ColorSet[8];
-    [SerializeField] private List<int> _OpenIndexs = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7 } ;
+    private List<int> _OpenIndexs = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7 } ;
 
     private void Awake()
     {
@@ -50,14 +50,12 @@ public class ColorPicker : MonoBehaviour
             {
                 if (i + 1 < _OpenIndexs.Count)
                 {
-                    Debug.Log("Return next one");
                     int nextIndex = _OpenIndexs[i + 1];
                     _OpenIndexs.Remove(nextIndex);
                     return _ColorSets[nextIndex];
                 }
                 else
                 {
-                    Debug.Log("Return first one");
                     int firstIndex = _OpenIndexs[0];
                     _OpenIndexs.Remove(firstIndex);
                     return _ColorSets[firstIndex];
@@ -66,7 +64,6 @@ public class ColorPicker : MonoBehaviour
         }
 
         // Fail safe
-        Debug.Log("Return fail safe");
         return _ColorSets[0];
     }
 }

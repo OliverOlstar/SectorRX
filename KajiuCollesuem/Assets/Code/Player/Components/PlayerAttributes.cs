@@ -188,32 +188,36 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             StartCoroutine("shieldRegenStartDelay");
         }
 
-        // Restarting Power Loss over time
-        if (_power > 0)
-        {
-            StopCoroutine("powerLoss");
-            StopCoroutine("powerLossStartDelay");
-            StartCoroutine("powerLossStartDelay");
-        }
-
         // Add Knockback
         _stateController._Rb.AddForce(pKnockback / (pIgnoreWeight ? 1 : weight), ForceMode.Impulse);
 
         // Add Shake
-        _stateController._CameraShake.PlayShake(pAmount / 4, 6.0f, 0.5f, 0.8f);
 
         // Sound
         if (died)
-            _stateController._Sound.PlayerDeathSound(0.5f);
-        else if (pAttacker != null)
-            _stateController._Sound.HitTarSound(0.0f);
-        else
-            _stateController._Sound.HitByAttackSound(0.0f);
-
-        if (died == false)
-            _stateController._modelController.AddStunned(1, (Random.value - 0.5f) * 2, easeOutDelay, easeOut);
-        else
+        {
+            // Killed
+            _stateController._Sound.PlayerDeathSound();
             SpawnStatUps();
+        }
+        else if (pAttacker == null)
+        {
+            // Hit by tar
+            _stateController._Sound.HitTarSound();
+            _stateController._modelController.AddTarJump(1, 0.2f, 1.1f, 0.65f);
+            _stateController._modelController.AddCrouching(0.4f, 0.2f, 0.2f);
+            _stateController._CameraShake.PlayShake(6.0f, 8.0f, 0.6f, 0.6f);
+        }
+        else
+        {
+            // Hit by attack
+            _stateController._Sound.HitByAttackSound();
+            _stateController._modelController.AddStunned(1, (Random.value - 0.5f) * 2, easeOutDelay, easeOut);
+            _stateController._CameraShake.PlayShake(pAmount / 4, 6.0f, 0.5f, 0.8f);
+        }
+
+        // If usingAbility, Cancel it
+        _stateController.usingAbility = false;
 
         // Return If Dead or Not
         return died;

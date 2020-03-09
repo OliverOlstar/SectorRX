@@ -860,7 +860,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9d3e01810752376449f30ff0dc4a1667, type: 2}
+  - {fileID: 2100000, guid: 9a7a2a482edf3ec43a6748da59117ec2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1017,7 +1017,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8591727565542770311}
-  m_Material: {fileID: 13400000, guid: c95ab51d4c3b06e43ab3be2e23f2800c, type: 2}
+  m_Material: {fileID: 13400000, guid: ed66b9d4cfc602f45876f6ca92c728fd, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 1.15
@@ -1066,12 +1066,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cooldown: 0.2
   _maxAttackRange: 4
-  _minAttackRange: 1
+  _minAttackRange: 0
   _hitbox: {fileID: 7630819354959702786}
-  _jumpbackForce: 20
-  _jumpbackUpForce: 4
-  _halfPlayerHeight: 0.32
-  _onGroundCheckTime: 0.3
+  _exitStateTime: 0
   _allowedDotValue: 0.05
   _enabled: 0
 --- !u!114 &642284532420701670
@@ -1091,7 +1088,7 @@ MonoBehaviour:
     type: 3}
   _fireballSpawnpoint: {fileID: 7013412660525921672}
   _fireballRangeMax: 46
-  _fireballRangeMin: 9
+  _fireballRangeMin: 7.5
   _targetOffset: {x: 0, y: 2, z: 0}
   _fireballSpeed: 1500
   _oddsOfSkipOver: 0.7
@@ -1151,9 +1148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99a4d45b359b1fa4aba984ae0f0a0aab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stunnedStateMinTime: 0.8
+  _stunnedStateMinTime: 0.5
   _enabled: 0
-  _halfPlayerHeight: 0.32
 --- !u!114 &4631869177046432509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1208,7 +1204,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _visionRadius: 70
-  _visionDistance: 38
+  _visionDistance: 32
   _triggerDistance: 10
   playerAttributes: {fileID: 0}
 --- !u!114 &3379795131003389061
@@ -1223,7 +1219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 643df3d2147bc4a46b41176fdfc5f1af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 6
+  _rotationSpeed: 6.5
 --- !u!195 &1969429415045013407
 NavMeshAgent:
   m_ObjectHideFlags: 0

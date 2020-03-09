@@ -8,12 +8,7 @@ public class AbilityState : BaseState
     PlayerStateController _stateController;
 
     private float _exitStateTime = 0;
-    private float _abilityStateReturnDelayLength = 0.6f;
-    private IAbility _curAbility;
-    private SOAbilities _curSOAbility;
-
-    private int _Index = 0;
-    private bool _RequestedToExit = false;
+    private float _abilityStateReturnDelayLength = 0.8f;
 
     public AbilityState(PlayerStateController controller) : base(controller.gameObject)
     {
@@ -23,9 +18,14 @@ public class AbilityState : BaseState
     public override void Enter()
     {
         Debug.Log("AbilityState: Enter");
-        _RequestedToExit = false;
+        _stateController.usingAbility = true;
+        _stateController._movementComponent.undisableJump = true;
 
-        CheckForPress();
+        SOAbilities AbilitySO = _stateController._modelController.abilitySO;
+        _exitStateTime = Time.time + AbilitySO.holdStartPosTime + AbilitySO.abilityAnimTime + AbilitySO.holdEndPosTime;
+
+        _stateController._AbilityScript.Pressed();
+        _stateController._playerAttributes.RecivePower(-_stateController._modelController.abilitySO.powerRequired);
     }
 
     public override void Exit()
@@ -33,95 +33,34 @@ public class AbilityState : BaseState
         Debug.Log("AbilityState: Exit");
         _stateController.AttackStateReturnDelay = Time.time + _abilityStateReturnDelayLength;
 
-        _curAbility.Exit();
+        _stateController._movementComponent.undisableJump = false;
+
+        _stateController._AbilityScript.Exit();
         ClearInputs();
     }
 
     public override Type Tick()
     {
-        _curAbility.Tick();
-
         // Stunned Or Dead
-        Type stunnedOrDead = _stateController.stunnedOrDeadCheck();
+        Type stunnedOrDead = _stateController.DeadCheck();
         if (stunnedOrDead != null)
             return stunnedOrDead;
 
         // Leave state after attack
-        if (_RequestedToExit || Time.time > _exitStateTime)
+        if (_stateController.usingAbility == false || (_stateController.dodgeInput != -1.0f && _stateController.moveRawInput != Vector2.zero) || Time.time > _exitStateTime)
         {
             return typeof(MovementState);
         }
 
-        CheckForRelease();
+        _stateController._AbilityScript.Tick();
 
         return null;
-    }
-
-    #region Inputs
-    private void CheckForPress()
-    {
-        // ON PRESSED ABILITY 1 (Called Once)
-        if (_stateController.ability1input == 1)
-        {
-            // Tells me what release input to listen for
-            _Index = 1;
-
-            _curAbility = _stateController._AbilityScript1;
-            _curSOAbility = _stateController._modelController.abilities[0];
-            PressedAbility();
-        }
-        // ON PRESSED ABILITY 2 (Called Once)
-        else if (_stateController.ability2input == 1)
-        {
-            // Tells me what release input to listen for
-            _Index = 2;
-
-            _curAbility = _stateController._AbilityScript2;
-            _curSOAbility = _stateController._modelController.abilities[1];
-            PressedAbility();
-        }
-    }
-
-    private void CheckForRelease()
-    {
-        // ON RELEASED ABILITY 1 || 2 (Called Once)
-        if ((_stateController.ability1input == 0 && _Index == 1) 
-         || (_stateController.ability2input == 0 && _Index == 2))
-        {
-            ReleasedAbility();
-            _Index = 0;
-        }
-    }
-
-    private void PressedAbility()
-    {
-        _exitStateTime = Time.time + _curSOAbility.abilityTime;
-        _curAbility.Pressed(this);
-    }
-
-    private void ReleasedAbility()
-    {
-        _curAbility.Released();
-    }
-    #endregion
-
-    #region Set & Clear
-    private void SetAbilityValues(SOAbilities pAbilityVars)
-    {
-        _exitStateTime = Time.time + pAbilityVars.abilityTime;
     }
 
     private void ClearInputs()
     {
         _stateController.lightAttackinput = -1.0f;
         _stateController.heavyAttackinput = -1.0f;
-        _stateController.ability1input = -1.0f;
-        _stateController.ability2input = -1.0f;
-    }
-    #endregion
-
-    public void RequestExitState()
-    {
-        _RequestedToExit = true;
+        _stateController.abilityinput = -1.0f;
     }
 }

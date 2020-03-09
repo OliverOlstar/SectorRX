@@ -80,7 +80,7 @@ public class DodgeComponent : MonoBehaviour
         shakeDone = false;
 
         // Sound
-        _stateController._Sound.DodgeSound(0.1f);
+        _stateController._Sound.DodgeSound();
 
         //Run Dodge Force
         while (Time.time <= dodgeEndTime)
@@ -105,6 +105,14 @@ public class DodgeComponent : MonoBehaviour
 
             yield return null;
         }
+
+        // Stop Dodge
+        _stateController._modelController.DoneDodge();
+
+        // Allow jumping before exiting state
+        _stateController._movementComponent.undisableJump = true;
+
+        yield return new WaitForSeconds(0.25f);
 
         doneDodge = true;
     }

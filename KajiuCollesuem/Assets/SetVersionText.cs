@@ -7,6 +7,6 @@ public class SetVersionText : MonoBehaviour
 {
     private void Awake()
     {
-        GetComponent<Text>().text = "Pre-Alpha 0.4.1";
+        GetComponent<Text>().text = "Pre-Alpha 0.5.8";
     }
 }
