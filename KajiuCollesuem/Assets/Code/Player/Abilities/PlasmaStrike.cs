@@ -45,6 +45,8 @@ public class PlasmaStrike : MonoBehaviour, IAbility
         _rotTime = Time.time + _AbilitySO.holdStartPosTime;
         _spawnBallTime = Time.time + _AbilitySO.hitBoxAppearTime;
         _strikeSpawned = false;
+
+        _stateController._playerAttributes.modifyAbility(-_stateController._modelController.abilitySO.powerRequired);
     }
 
     public void Exit()
