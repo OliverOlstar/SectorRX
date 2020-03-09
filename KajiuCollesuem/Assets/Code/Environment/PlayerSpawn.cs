@@ -40,7 +40,7 @@ public class PlayerSpawn : MonoBehaviour
                 player.deviceUser = i;
                 player.playerIndex = i;
                 player.playerColorSet = new ColorSet();
-                player.abilitySelected = 2;
+                player.abilitySelected = Mathf.RoundToInt(Random.value * 2);
 
                 connectedPlayers.playerIndex.Add(player);
             }

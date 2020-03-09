@@ -17,12 +17,6 @@ public class PlayerStrikeHitbox : MonoBehaviour
 
     private List<Collider> collidersInTrigger = new List<Collider>();
 
-    private void OnDisable()
-    {
-        collidersInTrigger = new List<Collider>();
-        StopAllCoroutines();
-    }
-
     public void Init(IAttributes pPlayerAttributes, GameObject pAttacker, float pAttackMult, float pLifeTime)
     {
         _playerIAttributes = pPlayerAttributes;
@@ -35,6 +29,7 @@ public class PlayerStrikeHitbox : MonoBehaviour
     IEnumerator DestroyDelay(float pDelay)
     {
         yield return new WaitForSeconds(pDelay);
+        StopAllCoroutines();
         Destroy(gameObject);
     }
 
