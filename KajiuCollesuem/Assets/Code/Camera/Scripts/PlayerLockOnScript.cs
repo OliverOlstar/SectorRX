@@ -164,6 +164,12 @@ public class PlayerLockOnScript : MonoBehaviour
         return possibleTargets[0].transform;
     }
 
+    public void SwitchToDeadCamera()
+    {
+        _lookAt.solver.target = null;
+        _playerCamera.targetDead = true;
+    }
+
     //Function To Find Target to change too
     //public Transform changeTarget(Vector2 pInput)
     //{

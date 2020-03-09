@@ -50,7 +50,7 @@ public class PlayerHitbox : MonoBehaviour
             otherAttributes.TakeDamage(Mathf.FloorToInt(_damage * attackMult), _knockback, attacker);
 
             //Recieve Power
-            _playerAttributes.RecivePower(_powerRecivedOnHit);
+            _playerAttributes.modifyAbility(_powerRecivedOnHit);
         }
     }
 
