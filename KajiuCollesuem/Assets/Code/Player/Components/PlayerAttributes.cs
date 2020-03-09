@@ -90,11 +90,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _shield += x;
         _shield = Mathf.Clamp(_shield, 0, _maxShield);
 
-        //Changing Visuals
-        //if (sliderControl.RegSlider[1])
-        //{
-            sliderControl.UpdateBars(1, _shield);
-        //}
+        sliderControl.UpdateBars(1, _shield);
     }
 
     public void modifyAbility(int x)
@@ -103,11 +99,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _ability += x;
         _ability = Mathf.Clamp(_ability, 0, _maxAbility);
 
-        //Changing Visuals
-        //if (sliderControl.RegSlider[2])
-        //{
-            sliderControl.UpdateBars(2, _ability);
-        //}
+        sliderControl.UpdateBars(2, _ability);
     }
 
     //MODIFY MAXES

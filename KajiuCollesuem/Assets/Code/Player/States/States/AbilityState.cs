@@ -25,7 +25,6 @@ public class AbilityState : BaseState
         _exitStateTime = Time.time + AbilitySO.holdStartPosTime + AbilitySO.abilityAnimTime + AbilitySO.holdEndPosTime;
 
         _stateController._AbilityScript.Pressed();
-        _stateController._playerAttributes.modifyAbility(-_stateController._modelController.abilitySO.powerRequired);
     }
 
     public override void Exit()
