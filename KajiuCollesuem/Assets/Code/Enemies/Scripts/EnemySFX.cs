@@ -11,7 +11,7 @@ public class EnemySFX : MonoBehaviour
     public void AEAttackSound()
     {
         enemySource.clip = enemySFX[0];
-        enemySource.volume = 0.3f;
+        enemySource.volume = 0.2f;
         enemySource.Play();
     }
 
@@ -25,7 +25,7 @@ public class EnemySFX : MonoBehaviour
     public void AEDeathSound()
     {
         enemySource.clip = enemySFX[Random.Range(2, 3)];
-        enemySource.volume = 0.5f;
+        enemySource.volume = 0.4f;
         enemySource.Play();
     }
 
