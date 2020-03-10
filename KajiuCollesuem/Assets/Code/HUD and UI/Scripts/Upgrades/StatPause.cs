@@ -14,10 +14,13 @@ public class StatPause : MonoBehaviour
         {
             stats.SetActive(true);
         }
-
-        _StatParent.anchorMin = new Vector2(0.5f, 0.5f);
-        _StatParent.anchorMax = new Vector2(0.5f, 0.5f);
-        _StatParent.localPosition = new Vector2(-125, 0);
+        
+        if(connectedPlayers.playersConnected > 1)
+        {
+            _StatParent.anchorMin = new Vector2(0.5f, 0.5f);
+            _StatParent.anchorMax = new Vector2(0.5f, 0.5f);
+            _StatParent.localPosition = new Vector2(-125, 0);
+        }
     }
 
     public void ShowStatsOff()
@@ -27,8 +30,11 @@ public class StatPause : MonoBehaviour
             stats.SetActive(false);
         }
 
-        _StatParent.anchorMin = new Vector2(0.0f, 0.5f);
-        _StatParent.anchorMax = new Vector2(0.0f, 0.5f);
-        _StatParent.localPosition = new Vector2(-434.7542f, 0);
+        if(connectedPlayers.playersConnected > 1)
+        {
+            _StatParent.anchorMin = new Vector2(0.0f, 0.5f);
+            _StatParent.anchorMax = new Vector2(0.0f, 0.5f);
+            _StatParent.localPosition = new Vector2(-434.7542f, 0);
+        }
     }
 }
