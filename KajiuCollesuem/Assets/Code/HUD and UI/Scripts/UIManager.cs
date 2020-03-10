@@ -16,58 +16,63 @@ Description: Managing UI, loading, starting level, etc.
 public class UIManager : MonoBehaviour
 {
     public static bool menuProperties;
-    public RectTransform mainMenu, playerInputMenu, loadingScreen;
-    public GameObject targetUI, backButton;
-    public Slider loadingProgress;
-    public VideoPlayer videoPlayer;
+    public RectTransform mainMenu, playerInputMenu, loadingScreen, logo;
+    public Animator logoAnim;
+    private Animator buttonAnim;
+    public Button startButton;
+    public VideoPlayer loadVideoPlayer;
+    public VideoManager introVideoPlayer;
+    [SerializeField] private MenuCamera _Camera;
+
+    [SerializeField] private int _PlayersReady = 0;
+
+    public AudioClip[] combatant = new AudioClip[4];
+    public AudioSource announceSource;
 
     public void Start()
     {
         Time.timeScale = 1;
+        logoAnim = logoAnim.GetComponent<Animator>();
+
         if (menuProperties == true)
         {
+            //Debug.Log("menu = true");
+            introVideoPlayer.background.gameObject.SetActive(false);
+            introVideoPlayer.videoPlayer.gameObject.SetActive(false);
             playerInputMenu.DOAnchorPos(new Vector2(69, -2), 0.4f);
-            targetUI = backButton;
+            EventSystem.current.SetSelectedGameObject(null);
+            _Camera.ToggleCamera(1);
         }
         else
         {
-            mainMenu.DOAnchorPos(new Vector2(44, 21), 0.4f);
+            //Debug.Log("menu = false");
+            StartCoroutine(StartMenu());
         }
-    }
 
-    private void Update()
-    {
-        if (targetUI != null)
-        {
-            EventSystem.current.SetSelectedGameObject(targetUI);
-            targetUI = null;
-        }
-    }
-
-    public void SetTarget(GameObject pTarget)
-    {
-        targetUI = pTarget;
+        buttonAnim = startButton.GetComponent<Animator>();
     }
 
     public void BackToMainMenu(GameObject pTarget)
     {
+        logo.DOAnchorPos(new Vector2(401, 6), 0.4f);
         mainMenu.DOAnchorPos(new Vector2(44, 21), 0.4f);
         playerInputMenu.DOAnchorPos(new Vector2(69, 4120), 0.4f);
-        menuProperties = false;
-        targetUI = pTarget;
+        EventSystem.current.SetSelectedGameObject(pTarget);
     }
 
-    public void GoToPlayer(GameObject pTarget)
+    public void GoToPlayer()
     {
+        //Debug.Log("menu = true");
+        logo.DOAnchorPos(new Vector2(401, -2057), 0.4f);
         playerInputMenu.DOAnchorPos(new Vector2(69, -2), 0.4f);
-        mainMenu.DOAnchorPos(new Vector2(44, -4120), 0.4f);
+        mainMenu.DOAnchorPos(new Vector2(44, -2060), 0.4f);
         menuProperties = true;
-        targetUI = pTarget;
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void LoadLevel(int sceneIndex)
     {
-        videoPlayer.Prepare();
+        loadVideoPlayer.Prepare();
         playerInputMenu.DOAnchorPos(new Vector2(71, -4120), 0.4f);
         loadingScreen.DOAnchorPos(new Vector2(0, 0), 0.4f);
         StartCoroutine(LoadAsyncLevel(sceneIndex));
@@ -77,25 +82,43 @@ public class UIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
-        videoPlayer.Play();
-        operation.allowSceneActivation = false;
+        loadVideoPlayer.Play();
         while (!operation.isDone)
         {
             float progress = Mathf.Clamp01(operation.progress / 0.9f);
-            loadingProgress.value = progress;
 
-            if (videoPlayer.isPlaying)
+            if (loadVideoPlayer.isPlaying)
             {
-                videoPlayer.loopPointReached += EndReached;
+                loadVideoPlayer.loopPointReached += EndReached;
                 yield return new WaitForSeconds(2.0f);
-                operation.allowSceneActivation = true;
             }
 
             yield return null;
         }
     }
 
-    void EndReached(UnityEngine.Video.VideoPlayer videoPlayer)
+    public void PlayerReadyToggle(bool pReady)
+    {
+        _PlayersReady += (pReady ? 1 : -1);
+        
+        //Announcer sound for player joining
+        if(pReady)
+        {
+            announceSource.clip = combatant[_PlayersReady - 1];
+            announceSource.Play();
+        }
+        
+        PlayerReadyUpdateUI();
+    }
+
+    public void PlayerReadyUpdateUI()
+    {
+        bool canStart = _PlayersReady > 0;
+        buttonAnim.SetBool("Interactable", canStart);
+        startButton.interactable = canStart;
+    }
+
+    void EndReached(UnityEngine.Video.VideoPlayer loadVideoPlayer)
     {
         StartCoroutine(CompleteLoadVisual());  
     }
@@ -103,6 +126,13 @@ public class UIManager : MonoBehaviour
     IEnumerator CompleteLoadVisual()
     {
         yield return new WaitForSeconds(0.75f);
-        videoPlayer.isLooping = false;
+        loadVideoPlayer.isLooping = false;
     }
-}
+
+    IEnumerator StartMenu()
+    {
+        yield return new WaitForSeconds(7.5f);
+        logoAnim.enabled = false;
+        mainMenu.DOAnchorPos(new Vector2(44, 21), 0.4f);
+    }
+ }

@@ -8,75 +8,102 @@ using UnityEngine;
 public class PlasmaBreath : MonoBehaviour, IAbility
 {
     private PlayerStateController _stateController;
+    private SOAbilities _AbilitySO;
+    private Transform _modelTransform;
     private float _nextSubStateTime = 0;
+    private float _rotTime = 0;
     private bool _charging = false;
 
-    private Transform _SpawnedLaser;
-
-    // SET IN CODE VARS
-    private float _RotateDampening = 3.0f;
-
-    private AbilityState _CurrentState;
+    private GameObject _SpawnedLaser;
+    private PlayerMultHitbox _SpawnedLaserHitbox;
 
     public void Init(PlayerStateController pStateController, Transform pMuzzle, GameObject pPrefab)
     {
         _stateController = pStateController;
 
+        // Get model
+        _modelTransform = _stateController._modelController.transform;
+
         // Setup Hitbox / Visuals
-        _SpawnedLaser = Instantiate(pPrefab, pMuzzle).transform;
-        _SpawnedLaser.SetParent(pMuzzle);
-        _SpawnedLaser.localPosition = Vector3.zero;
-        _SpawnedLaser.localRotation = Quaternion.identity;
-        _SpawnedLaser.gameObject.SetActive(false);
+        _SpawnedLaser = Instantiate(pPrefab, pMuzzle);
+        _SpawnedLaser.transform.SetParent(pMuzzle);
+        _SpawnedLaser.transform.localPosition = Vector3.zero;
+        _SpawnedLaser.transform.localRotation = Quaternion.identity;
+
+        _SpawnedLaserHitbox = _SpawnedLaser.GetComponentInChildren<PlayerMultHitbox>();
+        _SpawnedLaserHitbox.attacker = gameObject;
+
+        _SpawnedLaser.SetActive(false);
+
+        _AbilitySO = _stateController._modelController.abilitySO;
     }
 
-    public void Pressed(AbilityState pState)
+    public void Upgrade(float pValue)
     {
-        _CurrentState = pState;
+        _SpawnedLaserHitbox.attackMult = pValue;
+    }
+
+    public void Pressed()
+    {
+        _stateController._movementComponent.disableMovement = true;
 
         _charging = true;
-        _nextSubStateTime = Time.time + 1;
+        _nextSubStateTime = Time.time + _AbilitySO.hitBoxAppearTime;
         _stateController._lockOnComponent.ToggleScopedIn(0.05f);
-        _stateController._modelController.PlayAbility(0, false);
-    }
+        _stateController._modelController.TransitionToAbility();
+        _stateController._modelController.PlayAbility();
 
-    public void Released()
-    {
-        Debug.Log("PlasmaBreath: Released");
+        _stateController._Sound.PlasmaBreathSound();
 
-        // If released while still charging, timer resets to zero.
-        if (_charging)
-        {
-            _CurrentState.RequestExitState();
-        }
+        _rotTime = Time.time + _AbilitySO.holdStartPosTime;
     }
 
     public void Exit()
     {
-        Debug.Log("PlasmaBreath: Exit");
+        _stateController._movementComponent.disableMovement = false;
         _stateController._lockOnComponent.ToggleScopedIn(1.0f);
-        _SpawnedLaser.gameObject.SetActive(false);
+        _stateController._modelController.DoneAbility();
+        _SpawnedLaser.SetActive(false);
+        StopCoroutine("abilityLossRoutine");
     }
 
     public void Tick()
     {
-        transform.GetChild(1).GetChild(0).forward = Vector3.Slerp(Horizontalize(transform.GetChild(1).GetChild(0).forward), Horizontalize(_stateController._Camera.forward), Time.deltaTime * _RotateDampening);
-
+        if (Time.time >= _rotTime)
+            _modelTransform.forward = Vector3.Slerp(Horizontalize(_modelTransform.forward), Horizontalize(_stateController._Camera.forward), Time.deltaTime * _AbilitySO.rotationDampening);
+           
         // Once timer reaches 2, attacki begins, enabling the beam particle with a hitbox.
         if (_nextSubStateTime <= Time.time)
         {
             ToggleBreath();
+        }
+
+        if (_stateController._playerAttributes.getAbility() < 1 && _SpawnedLaser.activeSelf == true)
+        {
+            _stateController.usingAbility = false;
         }
     }
 
     //Sets laser prefab to being active.
     private void ToggleBreath()
     {
-        _SpawnedLaser.gameObject.SetActive(_charging);
+        _SpawnedLaser.SetActive(_charging);
         if (_charging == true)
-            _nextSubStateTime = Time.time + _stateController._modelController.abilities[0].maxChargeTime;
+        {
+            StartCoroutine("abilityLossRoutine");
+            _nextSubStateTime = Time.time + _AbilitySO.hitBoxStayTime;
+        }
 
         _charging = !_charging;
+    }
+
+    IEnumerator abilityLossRoutine()
+    {
+        while (_stateController._playerAttributes.getAbility() > 0)
+        {
+            _stateController._playerAttributes.modifyAbility(-2);
+            yield return new WaitForSeconds(0.12f);
+        }
     }
 
     //Get a normalized horizontal Vector

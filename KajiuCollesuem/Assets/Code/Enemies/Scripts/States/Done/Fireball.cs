@@ -110,12 +110,13 @@ public class Fireball : MonoBehaviour, IState
         fireballInstance = Instantiate(_fireballPrefab) as Rigidbody;
         fireballInstance.transform.position = _fireballSpawnpoint.position;
         fireballInstance.AddForce(direction * _fireballSpeed);
+
+        fireballInstance.GetComponent<FireballHitbox>().attacker = this.gameObject;
     }
 
     public void AEDoneShooting()
     {
         //Debug.Log("Fireball: AEDoneShooting");
-        Debug.Log("Stunned");
-            _enabled = false;
+        _enabled = false;
     }
 }

@@ -16,13 +16,6 @@ public class DestructableObjectPool : MonoBehaviour
     private List<GameObject> myChildren = new List<GameObject>();
     private List<string> myChildrenName = new List<string>();
 
-    void Start()
-    {
-        //Ensuring it is in zero position to prevent errors
-        transform.position = Vector3.zero;
-        transform.eulerAngles = Vector3.zero;
-    }
-
     public void getObjectFromPool(GameObject pPrefab, Transform pTransform)
     {
         GameObject destructable = null;
@@ -35,12 +28,7 @@ public class DestructableObjectPool : MonoBehaviour
                 //If one found set active and reset pieces
                 destructable = myChildren[i];
                 destructable.SetActive(true);
-                
-                foreach (DestructablePieces piece in destructable.GetComponentsInChildren<DestructablePieces>())
-                {
-                    piece.ResetTransform();
-                }
-
+                //destructable.GetComponent<DestructablePieces>().ResetTransform();
                 break;
             }
         }

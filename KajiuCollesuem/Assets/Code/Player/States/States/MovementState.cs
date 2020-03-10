@@ -28,7 +28,7 @@ public class MovementState : BaseState
         // TODO Add Taunt system
 
         // Stunned Or Dead
-        Type returnedState = stateController.stunnedOrDeadCheck();
+        Type returnedState = stateController.DeadCheck();
         if (returnedState != null)
             return returnedState;
 

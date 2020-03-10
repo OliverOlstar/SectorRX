@@ -13,11 +13,11 @@ public class AttackState : BaseState
 
     private float _attackStateReturnDelayLength = 0.2f;
     private float _minChargeTime = 0.0f;
-    private float _maxCharge = 4.0f;
+    private float _maxCharge = 3.0f;
 
     private bool _onHolding = false;
     private bool _alreadyReleased = false;
-    private float _chargeTime = 0f;
+    private float _chargeTime = 0.0f;
 
     public AttackState(PlayerStateController controller) : base(controller.gameObject)
     {
@@ -59,7 +59,7 @@ public class AttackState : BaseState
     public override Type Tick()
     {
         // Stunned Or Dead
-        Type stunnedOrDead = _stateController.stunnedOrDeadCheck();
+        Type stunnedOrDead = _stateController.DeadCheck();
         if (stunnedOrDead != null)
             return stunnedOrDead;
 
@@ -105,10 +105,11 @@ public class AttackState : BaseState
                 // If Reached max charge release heavy attack
                 else if (Time.time >= _chargeTime)
                 {
+                    Debug.Log("Max Charge");
                     //Debug.Log("AttackState: CheckForAttack - HEAVY RELEASED Maxed Charge");
                     // Automatically did a release input so ignore the actual input
                     _stateController.IgnoreNextHeavyRelease = true;
-                    ReleaseHeavyAttack();
+                    OverchargedHeavy();
                 }
             }
         }
@@ -145,6 +146,9 @@ public class AttackState : BaseState
         float PreAttackTime = curAttack.holdStartPosTime;
         SetAttackValues(curAttack, PreAttackTime);
 
+        _stateController._CameraShake.PlayShake(5.0f, 0.1f, 0.3f, 0.5f, curAttack.shakeTime + PreAttackTime);
+        _stateController._Sound.LightAttackSound(PreAttackTime + curAttack.soundTime);
+
         _stateController._modelController.PlayAttack(0, false);
 
         // Disallow jumping during attack 
@@ -157,7 +161,7 @@ public class AttackState : BaseState
         _stateController._modelController.PlayAttack(1, true);
 
         _minChargeTime = Time.time + _stateController._modelController.attacks[1].holdStartPosTime;
-        _chargeTime = Time.time + _maxCharge + _minChargeTime;
+        _chargeTime = _minChargeTime + _maxCharge;
         _onHolding = true;
     }
 
@@ -165,14 +169,26 @@ public class AttackState : BaseState
     {
         //Debug.Log("AttackState: ReleaseHeavyAttack");
         SOAttack curAttack = _stateController._modelController.attacks[1];
-        SetAttackValues(curAttack); // TODO Add charging mult to hitbox
+        SetAttackValues(curAttack);
 
-        // TODO send through how long attack was charged for and use that to know how fast the attack should move.
+        _stateController._CameraShake.PlayShake(6.0f, 0.2f, 0.3f, 0.5f, curAttack.shakeTime);
+        _stateController._Sound.HeavyAttackSound(curAttack.soundTime);
+
         _stateController._modelController.DoneChargingAttack();
 
         // Disallow jumping during attack 
         _stateController.IgnoreJumpInputTime = Time.time + 9999999.0f;
 
+        _onHolding = false;
+    }
+
+    private void OverchargedHeavy()
+    {
+        //Debug.Log("AttackState: OverchargedHeavy");
+        _exitStateTime = 0;
+        _attackStateReturnDelayLength = 1.2f;
+
+        _stateController._modelController.OverChargedAttack();
         _onHolding = false;
     }
     #endregion
@@ -182,6 +198,7 @@ public class AttackState : BaseState
     {
         // Timings
         _exitStateTime = Time.time + pAttackVars.attackTime + pPreAttackTime + pAttackVars.holdEndPosTime;
+        _attackStateReturnDelayLength = pAttackVars.returnToStateDelay;
 
         // Hitbox
         _hitbox = _stateController.hitboxes[pAttackVars.hitboxIndex];
@@ -196,8 +213,7 @@ public class AttackState : BaseState
     {
         _stateController.lightAttackinput = -1.0f;
         _stateController.heavyAttackinput = -1.0f;
-        _stateController.ability1input = -1.0f;
-        _stateController.ability2input = -1.0f;
+        _stateController.abilityinput = -1.0f;
     }
     #endregion
 }

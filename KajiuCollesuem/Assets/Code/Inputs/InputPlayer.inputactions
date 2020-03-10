@@ -54,20 +54,12 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Ability1",
+                    "name": "Ability",
                     "type": "Button",
                     "id": "e4cc26f1-fed4-45d0-8b0a-82352e0ad367",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Press(behavior=2)"
-                },
-                {
-                    "name": "Ability2",
-                    "type": "Button",
-                    "id": "e466a29a-5b8b-4750-9d76-247e58a5b360",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "Press(behavior=2)"
+                    "interactions": ""
                 },
                 {
                     "name": "LockOn",
@@ -164,7 +156,7 @@
                 {
                     "name": "",
                     "id": "1deff0a8-facc-483c-9071-1072c4cc9854",
-                    "path": "<Keyboard>/leftShift",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -186,7 +178,18 @@
                 {
                     "name": "",
                     "id": "0c19303f-eee5-4166-b6fb-f0ae086396f7",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "Tap,Hold",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Dodge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d6ba02ab-777f-45d3-9532-86a43df3a38b",
+                    "path": "<Mouse>/backButton",
                     "interactions": "Tap,Hold",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -454,40 +457,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Ability1",
+                    "action": "Ability",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "b34c3423-a54b-4ced-a936-3bf8aa0a99ae",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Ability1",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "7018a187-8789-45ca-8632-6333f4de8847",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Ability2",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "881d8e13-6693-4fc7-81ef-ea4fae52d160",
                     "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Ability2",
+                    "action": "Ability",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -14,26 +14,21 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     private PlayerStateController _stateController;
     public SliderController sliderControl;
 
-    [HideInInspector] public float weight = 1;
+    public float weight = 1;
 
     [Header("Maxes")]
     private int _maxHealth = 100;
     private int _maxShield = 100;
-    private int _maxPower = 100;
+    [SerializeField] private int _maxAbility = 75;
 
     private int _health;
     private int _shield;
-    private int _power;
+    private int _ability;
 
     [Header("Regen & Loss over time")]
     [SerializeField] private float _shieldRegenStartDelaySeconds = 6f;
     [SerializeField] private float _shieldRegenDelaySeconds = 1f;
     [SerializeField] private int _shieldRegenAmount = 4;
-
-    [Space]
-    [SerializeField] private float _powerLossStartDelaySeconds = 8f;
-    [SerializeField] private float _powerLossDelaySeconds = 0.3f;
-    [SerializeField] private int _powerLossAmount = 1;
 
     [Header("Stunned Anim")]
     [SerializeField] [Range(0, 0.5f)] private float easeOut = 0.15f;
@@ -51,24 +46,24 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
         _health = _maxHealth;
         _shield = _maxShield;
-        _power = 0;
-        modifyPower(0);
+        _ability = 0;
+        modifyAbility(0);
 
         sliderControl.SetBars(0, _maxHealth);
         sliderControl.SetBars(1, _maxShield);
-        sliderControl.SetBars(2, _maxPower);
+        sliderControl.SetBars(2, _maxAbility);
     }
 
     #region Get & Sets
     //GET
     public int getHealth() { return _health; }
     public int getShield() { return _shield; }
-    public int getPower() { return _power; }
+    public int getAbility() { return _ability; }
 
     //SET
     public void setHealth(int pHealth) { modifyHealth(pHealth - _health); sliderControl.UpdateBars(0, pHealth); }
     public void setShield(int pShield) { modifyShield(pShield - _shield); sliderControl.UpdateBars(1, pShield); }
-    public void setPower(int pPower) { modifyPower(pPower - _power); sliderControl.UpdateBars(2, pPower); }
+    public void setAbility(int pAbility) { modifyAbility(pAbility - _ability); sliderControl.UpdateBars(2, pAbility); }
     #endregion
 
     #region Modify Vars
@@ -85,9 +80,6 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         // Return If Dead or Not
         if (_health <= 0)
         {
-            connectedPlayers.playersConnected--;
-            MatchManager.instance.ManagerEnd();
-            _stateController._playerCamera.targetDead = true;
             return true;
         }
         return false;
@@ -98,24 +90,16 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _shield += x;
         _shield = Mathf.Clamp(_shield, 0, _maxShield);
 
-        //Changing Visuals
-        //if (sliderControl.RegSlider[1])
-        //{
-            sliderControl.UpdateBars(1, _shield);
-        //}
+        sliderControl.UpdateBars(1, _shield);
     }
 
-    public void modifyPower(int x)
+    public void modifyAbility(int x)
     {
         //Changing Value
-        _power += x;
-        _power = Mathf.Clamp(_power, 0, _maxPower);
+        _ability += x;
+        _ability = Mathf.Clamp(_ability, 0, _maxAbility);
 
-        //Changing Visuals
-        //if (sliderControl.RegSlider[2])
-        //{
-            sliderControl.UpdateBars(2, _power);
-        //}
+        sliderControl.UpdateBars(2, _ability);
     }
 
     //MODIFY MAXES
@@ -143,13 +127,13 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         modifyShield(modifyAmount);
     }
 
-    public void setMaxPower(int pMaxPowerGuage)
+    public void setMaxAbility(int pMaxAbilityGuage)
     {
         //Change Value
-        _maxPower = pMaxPowerGuage;
+        _maxAbility = pMaxAbilityGuage;
 
         //Change respective bar length
-        sliderControl.SetBars(2, pMaxPowerGuage);
+        sliderControl.SetBars(2, pMaxAbilityGuage);
     }
     #endregion
 
@@ -157,13 +141,10 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
     public bool TakeDamage(int pAmount, Vector3 pKnockback, GameObject pAttacker, bool pIgnoreWeight = false)
     {
-        //Debug.Log("PlayerAttributes: TakeDamage");
-
         // Return if already dead
         if (_health <= 0)
             return true;
 
-        //Debug.Log("Damaging Player " + pAmount);
         bool died = false;
 
         if (_shield >= pAmount)
@@ -179,7 +160,6 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
             // Changing Health by remainder
             died = modifyHealth(-pAmount);
-            Debug.Log(pAmount);
         }
 
         // Restarting Shield Regening
@@ -190,21 +170,34 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             StartCoroutine("shieldRegenStartDelay");
         }
 
-        // Restarting Power Loss over time
-        if (_power > 0)
-        {
-            StopCoroutine("powerLoss");
-            StopCoroutine("powerLossStartDelay");
-            StartCoroutine("powerLossStartDelay");
-        }
-
         // Add Knockback
         _stateController._Rb.AddForce(pKnockback / (pIgnoreWeight ? 1 : weight), ForceMode.Impulse);
 
-        if (died == false)
-            _stateController._modelController.AddStunned(1, (Random.value - 0.5f) * 2, easeOutDelay, easeOut);
+        if (died)
+        {
+            // Killed
+            Death(pAttacker);
+        }
+        else if (pAttacker == null)
+        {
+            // Hit by tar
+            _stateController._Sound.HitTarSound();
+            _stateController._modelController.AddTarJump(1, 0.2f, 1.1f, 0.65f);
+            _stateController._modelController.AddCrouching(0.4f, 0.2f, 0.2f);
+            _stateController._CameraShake.PlayShake(6.0f, 8.0f, 0.6f, 0.6f);
+            Debug.Log("hit by tar");
+        }
         else
-            SpawnStatUps();
+        {
+            // Hit by attack
+            _stateController._Sound.HitByAttackSound();
+            _stateController._modelController.AddStunned(1, (Random.value - 0.5f) * 2, easeOutDelay, easeOut);
+            _stateController._CameraShake.PlayShake(pAmount / 4, 6.0f, 0.5f, 0.8f);
+            Debug.Log("hit by something");
+        }
+
+        // If usingAbility, Cancel it
+        _stateController.usingAbility = false;
 
         // Return If Dead or Not
         return died;
@@ -230,16 +223,32 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         }
     }
 
-    public void RecivePower(int pPower)
+    private void Death(GameObject pAttacker)
     {
-        modifyPower(pPower);
+        bool matchNotOver = MatchManager.instance.ManagerEnd();
+        _stateController._Sound.PlayerDeathSound();
+        _stateController._lockOnComponent.SwitchToDeadCamera();
+        if (matchNotOver) SpawnStatUps();
 
-        // Restarting Power Loss over time
-        if (_power > 0)
+        // Announcer
+        if (pAttacker == null)
         {
-            StopCoroutine("powerLoss");
-            StopCoroutine("powerLossStartDelay");
-            StartCoroutine("powerLossStartDelay");
+            Announcer._Instance.IncinKO();
+            Debug.Log("Null Killer");
+        }
+        else if (pAttacker.CompareTag("Player"))
+        {
+            Announcer._Instance.NormalKO();
+            Debug.Log("Player Killer");
+        }
+        else if (pAttacker.CompareTag("Enemy"))
+        {
+            Announcer._Instance.EvisKO();
+            Debug.Log("Enemy Killer");
+        }
+        else
+        {
+            Debug.Log("Untagged Killer");
         }
     }
     #endregion
@@ -259,23 +268,6 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         {
             modifyShield(_shieldRegenAmount);
             yield return new WaitForSeconds(_shieldRegenDelaySeconds);
-        }
-    }
-
-    //Power
-    private IEnumerator powerLossStartDelay()
-    {
-        yield return new WaitForSeconds(_powerLossStartDelaySeconds);
-        StartCoroutine("powerLoss");
-    }
-
-    private IEnumerator powerLoss()
-    {
-        while (_power > 0)
-        {
-            //Debug.Log("Power lost: " + _power);
-            modifyPower(-_powerLossAmount);
-            yield return new WaitForSeconds(_powerLossDelaySeconds);
         }
     }
     #endregion

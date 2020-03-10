@@ -22,7 +22,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Joining",
+                    "name": "Forward",
                     "type": "Button",
                     "id": "77d10590-8300-46b8-8eb6-f3bc7248f920",
                     "expectedControlType": "",
@@ -30,7 +30,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Leaving",
+                    "name": "Backward",
                     "type": "Button",
                     "id": "b865d8cb-87fb-4985-a7fe-ac2b74c6ac62",
                     "expectedControlType": "",
@@ -87,18 +87,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Joining",
+                    "action": "Forward",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "46f23923-e550-4e05-8521-8df3589226a8",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Forward",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a662ab0b-bb6e-44a7-bb3c-346e77b122cd",
                     "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Joining",
+                    "action": "Forward",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -109,7 +120,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Leaving",
+                    "action": "Backward",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -120,7 +131,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Leaving",
+                    "action": "Backward",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -131,14 +142,14 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Leaving",
+                    "action": "Backward",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "217d3596-0e10-4f34-9b04-3a1501b08134",
-                    "path": "<Keyboard>/r",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",

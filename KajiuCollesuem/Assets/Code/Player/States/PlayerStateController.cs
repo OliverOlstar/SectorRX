@@ -16,7 +16,7 @@ public class PlayerStateController : MonoBehaviour
 
     // On Ground
     [HideInInspector] public bool onGround = false;
-    [HideInInspector] public bool Stunned = false;
+    [HideInInspector] public int groundMaterial = -1;
     [HideInInspector] public float AttackStateReturnDelay = 0;
     [HideInInspector] public float AbilityStateReturnDelay = 0;
 
@@ -28,8 +28,7 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public Vector2 LastMoveDirection = new Vector2(0, 0);
     // 0 - Tapped, 1 - Held
     [HideInInspector] public float dodgeInput = -1.0f;
-    [HideInInspector] public float ability1input = -1.0f;
-    [HideInInspector] public float ability2input = -1.0f;
+    [HideInInspector] public float abilityinput = -1.0f;
     [HideInInspector] public float lightAttackinput = -1.0f;
     // 0 - Released, 1 - Pressed
     [HideInInspector] public float heavyAttackinput = -1.0f;
@@ -45,15 +44,18 @@ public class PlayerStateController : MonoBehaviour
     [HideInInspector] public PlayerAttributes _playerAttributes;
     [HideInInspector] public ModelController _modelController;
     [HideInInspector] public PlayerCamera _playerCamera;
-    public RagdollManager _ragdollManager;
+
+    [HideInInspector] public PlayerSFX _Sound;
+    [HideInInspector] public CameraShakeCont _CameraShake;
 
     [HideInInspector] public Rigidbody _Rb;
     public Transform _Camera;
     public PlayerHitbox[] hitboxes = new PlayerHitbox[0];
 
     // Abilities
-    [HideInInspector] public IAbility _AbilityScript1;
-    [HideInInspector] public IAbility _AbilityScript2;
+    [HideInInspector] public IAbility _AbilityScript;
+
+    [HideInInspector] public bool usingAbility = false;
 
     [HideInInspector] public bool IgnoreNextHeavyRelease = false;
     [HideInInspector] public float IgnoreJumpInputTime = 0.0f;
@@ -69,14 +71,14 @@ public class PlayerStateController : MonoBehaviour
         _playerAttributes = GetComponent<PlayerAttributes>();
         _modelController = GetComponentInChildren<ModelController>();
 
+        _CameraShake = GetComponent<CameraShakeCont>();
+        _Sound = GetComponentInChildren<PlayerSFX>();
+
         _stateMachine = GetComponent<PlayerStateMachine>();
         InitializeStateMachine();
 
         _Rb = GetComponent<Rigidbody>();
         _playerCamera = _Camera.GetComponentInParent<PlayerCamera>();
-
-        // Add Abilities
-        GetComponent<PlayerAbilitySelector>().SetupAbilities(this);
     }
 
     #region Inputs
@@ -84,21 +86,17 @@ public class PlayerStateController : MonoBehaviour
     public void OnCamera(InputValue ctx) => mouseInput = ctx.Get<Vector2>();
     public void OnMovement(InputValue ctx) => moveRawInput = ctx.Get<Vector2>();
     public void OnDodge(InputValue ctx) => dodgeInput = ctx.Get<float>();
-    public void OnAbility1(InputValue ctx)
+    public void OnAbility(InputValue ctx)
     {
         // AbilityState is on cooldown
         if (AbilityStateReturnDelay > Time.time)
             return;
 
-        ability1input = ctx.Get<float>();
-    }
-    public void OnAbility2(InputValue ctx)
-    {
-        // AbilityState is on cooldown
-        if (AbilityStateReturnDelay > Time.time)
+        // Not enough power
+        if (_playerAttributes.getAbility() < _modelController.abilitySO.powerRequired)
             return;
 
-        ability2input = ctx.Get<float>();
+        abilityinput = ctx.Get<float>();
     }
     public void OnLightAttack(InputValue ctx)
     {
@@ -135,18 +133,12 @@ public class PlayerStateController : MonoBehaviour
     #endregion
 
     #region StateChecks
-    public Type stunnedOrDeadCheck()
+    public Type DeadCheck()
     {
         //Dead
         if (_playerAttributes.getHealth() <= 0)
         {
             return typeof(DeathState);
-        }
-
-        //Stunned
-        if (Stunned)
-        {
-            return typeof(StunnedState);
         }
 
         return null;
@@ -161,7 +153,7 @@ public class PlayerStateController : MonoBehaviour
         }
 
         // Ability
-        if (ability1input == 1.0f || ability2input == 1.0f)
+        if (abilityinput == 1.0f)
         {
             return typeof(AbilityState);
         }
@@ -198,7 +190,6 @@ public class PlayerStateController : MonoBehaviour
             {typeof(IdleState), new IdleState(controller:this) },
             {typeof(MovementState), new MovementState(controller:this) },
             {typeof(DodgeState), new DodgeState(controller:this) },
-            {typeof(StunnedState), new StunnedState(controller:this) },
             {typeof(AttackState), new AttackState(controller:this) },
             {typeof(AbilityState), new AbilityState(controller:this) },
             {typeof(DeathState), new DeathState(controller:this) }

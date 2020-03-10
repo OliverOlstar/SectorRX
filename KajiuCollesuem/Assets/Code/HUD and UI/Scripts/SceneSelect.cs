@@ -7,7 +7,7 @@ public class SceneSelect : MonoBehaviour
 {
     private void Start()
     {
-        if (SceneManager.GetActiveScene().name != "Finalbox For Build")
+        if (SceneManager.GetActiveScene().buildIndex != 1)
         {
             Cursor.lockState = CursorLockMode.None;
             Debug.Log("Unlock Cursor");

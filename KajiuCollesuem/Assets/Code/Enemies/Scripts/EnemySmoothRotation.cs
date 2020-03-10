@@ -13,7 +13,12 @@ public class EnemySmoothRotation : MonoBehaviour
 
     void Update()
     {
-        Quaternion targetQ = Quaternion.LookRotation(_decision.target.position - transform.position);
+        Quaternion targetQ = Quaternion.LookRotation(yLess(_decision.target.position) - yLess(transform.position));
         transform.rotation = Quaternion.Slerp(transform.rotation, targetQ, Time.deltaTime * _rotationSpeed);
+    }
+
+    Vector3 yLess(Vector3 pVector)
+    {
+        return new Vector3(pVector.x, 0, pVector.z);
     }
 }

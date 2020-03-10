@@ -7,10 +7,14 @@ using DG.Tweening;
 public class LoadedLevel : MonoBehaviour
 {
     public RectTransform screenTransition;
+    public AudioClip readyGo;
+    public AudioSource announceSource;
     
     void Start()
     {
         StartCoroutine(screenMove());
+        announceSource.clip = readyGo;
+        announceSource.PlayDelayed(1.2f);
     }
 
     IEnumerator screenMove()

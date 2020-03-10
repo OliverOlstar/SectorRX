@@ -29,6 +29,8 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
     private IState _deadState;
     private IState _stunnedState;
 
+    private Coroutine healthBarRoutine;
+
     public bool IsDead() { return isDead; }
 
     void Start()
@@ -55,8 +57,9 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
     {
         _health -= pAmount;
 
-        StopCoroutine("ShowHealthBar");
-        StartCoroutine("ShowHealthbar");
+        if (healthBarRoutine != null)
+            StopCoroutine(healthBarRoutine);
+        healthBarRoutine = StartCoroutine(ShowHealthbar());
 
         if (sliderControl != null)
             sliderControl.UpdateBars(0, _health);

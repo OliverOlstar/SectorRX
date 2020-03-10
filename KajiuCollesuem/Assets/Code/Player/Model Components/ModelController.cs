@@ -7,6 +7,8 @@ public class ModelController : MonoBehaviour
     private Rigidbody _rb;
     private Animator _anim;
 
+    private PlayerStateController _stateController;
+
     [HideInInspector] public bool onGround = false;
     [HideInInspector] public Vector3 acceleration;
 
@@ -21,7 +23,7 @@ public class ModelController : MonoBehaviour
     private bool _DontUpdateWeights;
 
     public SOAttack[] attacks = new SOAttack[3];
-     public SOAbilities[] abilities = new SOAbilities[2];
+     public SOAbilities abilitySO;
     private float _doneAttackDelay = 0;
     
     void Start()
@@ -32,12 +34,13 @@ public class ModelController : MonoBehaviour
         _modelMovement = GetComponent<ModelMovement>();
 
         // Get Other Components
+        _stateController = GetComponentInParent<PlayerStateController>();
         _rb = GetComponentInParent<Rigidbody>();
         _anim = GetComponent<Animator>();
 
         // Setup Components
         _modelWeights.Init(this, _anim);
-        _modelAnimation.Init(this, _rb, _anim);
+        _modelAnimation.Init(this, _rb, _anim, _stateController._movementComponent);
         _modelMovement.Init(this);
     }
 
@@ -45,15 +48,16 @@ public class ModelController : MonoBehaviour
     {
         horizontalVelocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
 
+        if (_AttackingState == 1)
+        {
+            if (_modelAnimation.AttackingAnim())
+            {
+                StartCoroutine("DoneAttackWithDelay");
+            }
+        }
+
         if (_DontUpdateWeights == false)
         {
-            if (_AttackingState == 1)
-            {
-                if (_modelAnimation.AttackingAnim())
-                {
-                    StartCoroutine("DoneAttackWithDelay");
-                }
-            }
 
             _modelWeights.UpdateWeights();
         }
@@ -70,7 +74,33 @@ public class ModelController : MonoBehaviour
         _modelAnimation.SteppingAnim();
         _modelAnimation.IdleAnim();
         _modelAnimation.JumpingAnim();
+        _modelAnimation.TarJumpAnim();
     }
+
+    #region Abilities
+    public void TransitionToAbility()
+    {
+        //_modelMovement.disableRotation = true;
+
+        _modelWeights.SetWeights(0, 0, 0, 0, 1);
+        _DontUpdateWeights = true;
+    }
+
+    public void PlayAbility()
+    {
+        StartCoroutine("PlayAttackWithDelay", abilitySO.holdStartPosTime);
+
+        _doneAttackDelay = 99999999;
+        _modelAnimation.StartAbility();
+    }
+
+    public void DoneAbility()
+    {
+        _modelMovement.disableRotation = false;
+        _modelWeights.SetWeights(0, 0, 0, 0, 0);
+        _DontUpdateWeights = false;
+    }
+    #endregion
 
     #region Attacking
     public void PlayAttack(int pIndex, bool pChargable)
@@ -98,36 +128,11 @@ public class ModelController : MonoBehaviour
         _modelAnimation.StartAttack(pIndex);
     }
 
-    public void PlayAbility(int pIndex, bool pChargable)
-    {
-        SOAbilities curAbility = abilities[pIndex];
-
-        StopCoroutine("DoneAttackWithDelay");
-        StopCoroutine("PlayAttackWithDelay");
-
-        _modelMovement.disableRotation = true;
-
-        // Chargeable Attack - wait for done charging before starting attack
-        if (pChargable == true)
-        {
-            _AttackingState = 2;
-        }
-        // Non-Chargable Attack
-        else
-        {
-            StartCoroutine("PlayAttackWithDelay", curAbility.holdStartPosTime);
-        }
-
-        _doneAttackDelay = curAbility.holdEndPosTime;
-        _modelWeights.SetUpperbodyWeight(1, curAbility.transitionInDampening);
-        _modelAnimation.StartAbility(pIndex);
-    }
-
     public void DoneAttack()
     {
         _AttackingState = 0;
         _modelMovement.disableRotation = false;
-        _modelWeights.SetUpperbodyWeight(0.0f, 5.0f);
+        _modelWeights.SetUpperbodyWeight(0, 5);
     }
 
     public void DoneChargingAttack()
@@ -137,11 +142,19 @@ public class ModelController : MonoBehaviour
         _modelMovement.disableRotation = true;
     }
 
+    public void OverChargedAttack()
+    {
+        _AttackingState = 0;
+        _modelMovement.disableRotation = false;
+        _modelWeights.SetUpperbodyWeight(0.0f, 3.7f);
+    }
+
     // Coroutines
     private IEnumerator PlayAttackWithDelay(float pDelay)
     {
         _AttackingState = 2;
         yield return new WaitForSeconds(pDelay);
+        _modelMovement.disableRotation = true;
         _AttackingState = 1;
     }
 
@@ -159,7 +172,16 @@ public class ModelController : MonoBehaviour
     }
     #endregion
 
-    #region Dodging
+    #region Locomotion
+    public void TookStep(float pShakeForce)
+    {
+        if (_stateController._movementComponent.disableMovement == false && _stateController.groundMaterial != -1 && pShakeForce > 0.5f)
+        {
+            _stateController._CameraShake.PlayShake(pShakeForce * 1.1f, 4.0f, 0.05f, 0.2f);
+            _stateController._Sound.Walking(_stateController.groundMaterial);
+        }
+    }
+
     public void PlayDodge(Vector2 pDirection, float pSpeed)
     {
         _DontUpdateWeights = true;
@@ -184,8 +206,14 @@ public class ModelController : MonoBehaviour
     #region Stunned
     public void AddStunned(float pValue, float pDirection, float pGoingAwayDelay, float pGoingAwayLength)
     {
-        Debug.Log("ModelController: AddStunned");
         _modelWeights.AddStunned(pValue, pDirection, pGoingAwayDelay, pGoingAwayLength);
+    }
+    #endregion
+
+    #region TarJump
+    public void AddTarJump(float pValue, float pGoingToLength, float pGoingAwayDelay, float pGoingAwayLength)
+    {
+        _modelWeights.AddTarJump(pValue, pGoingToLength, pGoingAwayDelay, pGoingAwayLength);
     }
     #endregion
 

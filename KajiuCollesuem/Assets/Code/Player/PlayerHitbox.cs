@@ -9,13 +9,12 @@ public class PlayerHitbox : MonoBehaviour
     private int _damage;
     private Vector3 _knockback;
 
-    private int _powerRecivedOnHit = 25;
+    private int _powerRecivedOnHit = 15;
 
-    [SerializeField] private GameObject _Attacker;
+    public GameObject attacker;
 
     private PlayerAttributes _playerAttributes;
     private IAttributes _playerIAttributes;
-    private PlayerLockOnScript _lockOnScript;
 
     private List<IAttributes> hitAttributes = new List<IAttributes>();
 
@@ -29,7 +28,6 @@ public class PlayerHitbox : MonoBehaviour
     {
         _playerAttributes = GetComponentInParent<PlayerAttributes>();
         _playerIAttributes = _playerAttributes.GetComponent<IAttributes>();
-        _lockOnScript = _playerAttributes.GetComponent<PlayerLockOnScript>();
     }
 
     private void OnTriggerEnter (Collider other)
@@ -40,11 +38,8 @@ public class PlayerHitbox : MonoBehaviour
             otherAttributes = other.GetComponentInParent<IAttributes>();
 
         // Don't hit the same thing twice
-        foreach (IAttributes previousAttributes in hitAttributes)
-        {
-            if (previousAttributes == otherAttributes)
-                return;
-        }
+        if (hitAttributes.Contains(otherAttributes))
+            return;
 
         // Add to list so we can't hit it twice
         hitAttributes.Add(otherAttributes);
@@ -52,14 +47,10 @@ public class PlayerHitbox : MonoBehaviour
         if (otherAttributes != null && otherAttributes.IsDead() == false && otherAttributes != _playerIAttributes)
         {
             //Damage other
-            /*if (*/otherAttributes.TakeDamage(Mathf.FloorToInt(_damage * attackMult), _knockback, _Attacker);//)
-                //If other died and is lockOn target return camera to default
-                //_lockOnScript.TargetDead(other.transform);
+            otherAttributes.TakeDamage(Mathf.FloorToInt(_damage * attackMult), _knockback, attacker);
 
             //Recieve Power
-            _playerAttributes.RecivePower(_powerRecivedOnHit);
-
-            // TODO Camera Shake
+            _playerAttributes.modifyAbility(_powerRecivedOnHit);
         }
     }
 
@@ -68,6 +59,4 @@ public class PlayerHitbox : MonoBehaviour
         _damage = pDamage;
         _knockback = pKnockback;
     }
-
-    //public void SetDamageMultiplier(float pMult) => damageMultiplier = pMult;
 }
