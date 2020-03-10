@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMultHitbox : MonoBehaviour
 {
+    [SerializeField] private string tag = "Ability";
+
     [HideInInspector] public float attackMult = 1;
     
     [SerializeField] private int _damage = 10;
@@ -56,7 +58,7 @@ public class PlayerMultHitbox : MonoBehaviour
         do
         {
             // Add Damage & Knockup
-            pAttributes.TakeDamage(Mathf.FloorToInt(_damage * attackMult), _knockForwardForce * transform.up + Vector3.up * _knockUpForce, attacker);
+            pAttributes.TakeDamage(Mathf.FloorToInt(_damage * attackMult), _knockForwardForce * transform.up + Vector3.up * _knockUpForce, attacker, tag);
 
             // Reset Falling Force
             if (pOtherOnGround != null)

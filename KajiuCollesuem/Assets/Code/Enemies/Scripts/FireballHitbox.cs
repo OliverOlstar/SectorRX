@@ -30,7 +30,7 @@ public class FireballHitbox : MonoBehaviour
 
             if (otherAttributes != null && otherAttributes.IsDead() == false)
             {
-                otherAttributes.TakeDamage(damageAmount, GetComponent<Rigidbody>().velocity.normalized * knockForce, attacker);
+                otherAttributes.TakeDamage(damageAmount, GetComponent<Rigidbody>().velocity.normalized * knockForce, attacker, "Wolf");
                 DestroyFireball();
             }
         }

@@ -18,6 +18,8 @@ public class OnGroundComponent : MonoBehaviour
     private PlayerStateController _stateController;
     private Rigidbody _rb;
 
+    private float _stuckTimer = 0.0f;
+
     private void Awake()
     {
         _stateController = GetComponent<PlayerStateController>();
@@ -77,21 +79,36 @@ public class OnGroundComponent : MonoBehaviour
 
     public void FallingForce()
     {
-        //Change the amount of influence player input has on the player movement based on wether he is grounded or not
+        // Change the amount of influence player input has on the player movement based on wether he is grounded or not
         if (_stateController.onGround)
         {
             _stateController._movementComponent.inputInfluence = _inputInfluenceGrounded;
             _downForce = 0;
+            _stuckTimer = 0;
         }
         else
         {
             _stateController._movementComponent.inputInfluence = _inputInfluenceInAir;
 
-            //Add force downwards which adds ontop of gravity
+            // Add force downwards which adds ontop of gravity
             if (_downForce < _downForceTerminal)
                 _downForce += _downForceRate * Time.deltaTime;
             else
                 _downForce = _downForceTerminal;
+
+            // Falling but not moving = stuck
+            if (_rb.velocity.magnitude <= 0.001f)
+            {
+                _stuckTimer += Time.deltaTime;
+
+                if (_stuckTimer > 3.5f)
+                {
+                    _rb.AddForce(Vector3.up * 25, ForceMode.Impulse);
+                    _stuckTimer = 0.0f;
+                }
+            }
+
+
         }
 
         _rb.AddForce(Vector3.down * _downForce * Time.deltaTime);

@@ -6305,6 +6305,7 @@ MonoBehaviour:
   - {fileID: 339970908}
   - {fileID: 434560084}
   spawnLavaScript: {fileID: 1364726344}
+  playerPauseScript: {fileID: 682208059}
 --- !u!4 &621314277
 Transform:
   m_ObjectHideFlags: 0
@@ -14593,17 +14594,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knockOuts:
-  - {fileID: 8300000, guid: 254872f696d98e94c95af7a6c39d0a2f, type: 3}
+  - {fileID: 8300000, guid: 26a13e3c5b95f6745af55eac1ddc912d, type: 3}
   - {fileID: 8300000, guid: 83a14b87327fa7b45a361c2dd39a9764, type: 3}
-  - {fileID: 8300000, guid: 410b3f63a1508a642a8eea9971669b92, type: 3}
+  - {fileID: 8300000, guid: 6092dc2815c49264b83278aef292f4f6, type: 3}
   - {fileID: 8300000, guid: 7a988350d357d924db4a54f6db24af68, type: 3}
   - {fileID: 8300000, guid: 83a14b87327fa7b45a361c2dd39a9764, type: 3}
-  - {fileID: 8300000, guid: 26a13e3c5b95f6745af55eac1ddc912d, type: 3}
-  KOstreak:
+  powerKOs:
+  - {fileID: 8300000, guid: 9ca1738c4c75f584ab49c4c6c2c52d5f, type: 3}
+  - {fileID: 8300000, guid: 797089ea012553e45b44bccc767bd7a6, type: 3}
   - {fileID: 8300000, guid: 88d674babb9ee6f4aae3483261aa4d8f, type: 3}
-  - {fileID: 8300000, guid: 6092dc2815c49264b83278aef292f4f6, type: 3}
-  incinerated: {fileID: 8300000, guid: d7ca19b79b1f7e046ad737990830c1db, type: 3}
-  eviscerated: {fileID: 8300000, guid: 2ebac765d37d8024193ae6aeac31221d, type: 3}
+  tar: {fileID: 8300000, guid: d7ca19b79b1f7e046ad737990830c1db, type: 3}
+  wolf: {fileID: 8300000, guid: 2ebac765d37d8024193ae6aeac31221d, type: 3}
+  drilled: {fileID: 8300000, guid: d075c23ffcae9de4cb051fa3c04a49e6, type: 3}
   announceSource: {fileID: 1511693486}
   KOText: {fileID: 0}
 --- !u!1 &1513596418

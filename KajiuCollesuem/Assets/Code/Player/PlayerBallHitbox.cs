@@ -46,7 +46,7 @@ public class PlayerBallHitbox : MonoBehaviour
         {
             if (otherAttributes != null && otherAttributes.IsDead() == false)
             {
-                otherAttributes.TakeDamage(Mathf.FloorToInt(_damage * _AttackMult), transform.forward * _knockForce, _Attacker);
+                otherAttributes.TakeDamage(Mathf.FloorToInt(_damage * _AttackMult), transform.forward * _knockForce, _Attacker, "Ability");
             }
 
             // Explode if the thing I hit wasn't myself
@@ -72,7 +72,7 @@ public class PlayerBallHitbox : MonoBehaviour
             //Damage other
             if (otherAttributes != null && otherAttributes.IsDead() == false)
             {
-                otherAttributes.TakeDamage(Mathf.FloorToInt(_damage * _AttackMult), Vector3.zero, _Attacker);
+                otherAttributes.TakeDamage(Mathf.FloorToInt(_damage * _AttackMult), Vector3.zero, _Attacker, "Ability");
                 hitAttributes.Add(otherAttributes);
             }
         }

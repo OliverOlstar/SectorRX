@@ -58,7 +58,7 @@ public class PlayerStrikeHitbox : MonoBehaviour
         do
         {
             // Add Damage & Knockup
-            pAttributes.TakeDamage(Mathf.FloorToInt(_damage * _AttackMult), _knockForwardForce * transform.up + Vector3.up * _knockUpForce, _Attacker);
+            pAttributes.TakeDamage(Mathf.FloorToInt(_damage * _AttackMult), _knockForwardForce * transform.up + Vector3.up * _knockUpForce, _Attacker, "Ability");
 
             // Reset Falling Force
             if (pOtherOnGround != null)

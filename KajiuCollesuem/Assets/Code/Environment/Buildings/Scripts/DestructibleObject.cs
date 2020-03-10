@@ -27,7 +27,7 @@ public class DestructibleObject : MonoBehaviour, IAttributes
         _Shaker = GetComponent<ObjectShaker>();
     }
 
-    public bool TakeDamage(int pDamage, Vector3 pKnockback, GameObject pAttacker, bool pIgnoreWeight = false)
+    public bool TakeDamage(int pDamage, Vector3 pKnockback, GameObject pAttacker, string pTag, bool pIgnoreWeight = false)
     {
         _Health--;
         _Shaker.AddShake(0.1f, 0.2f, 0.3f);
