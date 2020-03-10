@@ -7,6 +7,7 @@ public class AttackHitbox : MonoBehaviour
     [SerializeField] private int _damage = 40;
     [SerializeField] private int _knockForce = 40;
     [SerializeField] private int _knockupForce = 40;
+    [SerializeField] private GameObject _Attacker;
 
     private List<IAttributes> alreadyHit = new List<IAttributes>();
 
@@ -28,7 +29,7 @@ public class AttackHitbox : MonoBehaviour
         //If collided with the player model, player takes damage
         if (otherAttributes != null)
         {
-            otherAttributes.TakeDamage(_damage, transform.forward * _knockForce + Vector3.up * _knockupForce, this.gameObject);
+            otherAttributes.TakeDamage(_damage, transform.forward * _knockForce + Vector3.up * _knockupForce, _Attacker);
             alreadyHit.Add(otherAttributes);
         }
     }

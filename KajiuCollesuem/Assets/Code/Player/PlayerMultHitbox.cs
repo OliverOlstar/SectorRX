@@ -27,7 +27,8 @@ public class PlayerMultHitbox : MonoBehaviour
     private void Start()
     {
         _playerAttributes = GetComponentInParent<PlayerAttributes>();
-        _playerIAttributes = _playerAttributes.GetComponent<IAttributes>();
+        if (_playerAttributes != null)
+            _playerIAttributes = _playerAttributes.GetComponent<IAttributes>();
     }
 
     private void OnTriggerEnter(Collider other)
