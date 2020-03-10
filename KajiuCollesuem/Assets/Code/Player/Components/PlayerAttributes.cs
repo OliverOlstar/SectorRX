@@ -176,7 +176,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         if (died)
         {
             // Killed
-            Death();
+            Death(pAttacker);
         }
         else if (pAttacker == null)
         {
@@ -185,6 +185,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             _stateController._modelController.AddTarJump(1, 0.2f, 1.1f, 0.65f);
             _stateController._modelController.AddCrouching(0.4f, 0.2f, 0.2f);
             _stateController._CameraShake.PlayShake(6.0f, 8.0f, 0.6f, 0.6f);
+            Debug.Log("hit by tar");
         }
         else
         {
@@ -192,6 +193,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             _stateController._Sound.HitByAttackSound();
             _stateController._modelController.AddStunned(1, (Random.value - 0.5f) * 2, easeOutDelay, easeOut);
             _stateController._CameraShake.PlayShake(pAmount / 4, 6.0f, 0.5f, 0.8f);
+            Debug.Log("hit by something");
         }
 
         // If usingAbility, Cancel it
@@ -221,12 +223,33 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         }
     }
 
-    private void Death()
+    private void Death(GameObject pAttacker)
     {
-        MatchManager.instance.ManagerEnd();
+        bool matchNotOver = MatchManager.instance.ManagerEnd();
         _stateController._Sound.PlayerDeathSound();
         _stateController._lockOnComponent.SwitchToDeadCamera();
-        SpawnStatUps();
+        if (matchNotOver) SpawnStatUps();
+
+        // Announcer
+        if (pAttacker == null)
+        {
+            Announcer._Instance.IncinKO();
+            Debug.Log("Null Killer");
+        }
+        else if (pAttacker.CompareTag("Player"))
+        {
+            Announcer._Instance.NormalKO();
+            Debug.Log("Player Killer");
+        }
+        else if (pAttacker.CompareTag("Enemy"))
+        {
+            Announcer._Instance.EvisKO();
+            Debug.Log("Enemy Killer");
+        }
+        else
+        {
+            Debug.Log("Untagged Killer");
+        }
     }
     #endregion
 

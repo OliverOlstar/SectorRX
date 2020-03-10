@@ -40,9 +40,9 @@ public class MatchManager : MonoBehaviour
         spawnLavaScript.lavaTimer();
     }
 
-    public void ManagerEnd()
+    public bool ManagerEnd()
     {
-        spawnPlayerScript.MatchEnd();
+        return spawnPlayerScript.MatchEnd();
     }
 
     IEnumerator CinemaOff()

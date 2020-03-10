@@ -49,13 +49,19 @@ public class PlayerSpawn : MonoBehaviour
         playersToSpawn = connectedPlayers.playersConnected;
     }
 
-    public void MatchEnd()
+    // Return true if match is still going
+    public bool MatchEnd()
     {
         playersToSpawn--;
 
         // Check if match is over
         if (playersToSpawn <= 1)
+        {
             StartCoroutine("VictoryReset");
+            return false;
+        }
+
+        return true;
     }
 
     public void InputSetup()

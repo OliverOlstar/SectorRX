@@ -8,13 +8,13 @@ using UnityEngine.UI;
 
 public class Announcer : MonoBehaviour
 {
-    private static Announcer _Instance;
-    public AudioClip[] knockOuts = new AudioClip[6];
-    public AudioClip[] KOstreak = new AudioClip[2];
-    public AudioClip incinerated;
-    public AudioClip eviscerated;
-    public AudioSource announceSource;
-    public Text KOText; //Text that appears when a player is killed. Text is set to whatever word the Announcer says.
+    public static Announcer _Instance;
+    [SerializeField] private AudioClip[] knockOuts = new AudioClip[6];
+    [SerializeField] private AudioClip[] KOstreak = new AudioClip[2];
+    [SerializeField] private AudioClip incinerated;
+    [SerializeField] private AudioClip eviscerated;
+    [SerializeField] private AudioSource announceSource;
+    [SerializeField] private Text KOText; //Text that appears when a player is killed. Text is set to whatever word the Announcer says.
 
     void Awake()
     {
