@@ -12,16 +12,16 @@ public struct ColorSet
 
 public class ColorPicker : MonoBehaviour
 {
-    [SerializeField] private Material[] _LizzyMaterials = new Material[8];
-    [SerializeField] private Material[] _FeatherMaterials = new Material[8];
-    [SerializeField] private Color[] _Colors = new Color[8];
+    [SerializeField] private Material[] _LizzyMaterials = new Material[10];
+    [SerializeField] private Material[] _FeatherMaterials = new Material[10];
+    [SerializeField] private Color[] _Colors = new Color[10];
 
-    private ColorSet[] _ColorSets = new ColorSet[8];
-    private List<int> _OpenIndexs = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7 } ;
+    private ColorSet[] _ColorSets = new ColorSet[10];
+    private List<int> _OpenIndexs = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 } ;
 
     private void Awake()
     {
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 10; i++)
         {
             _ColorSets[i].lizzyMat = _LizzyMaterials[i];
             _ColorSets[i].feathersMat = _FeatherMaterials[i];

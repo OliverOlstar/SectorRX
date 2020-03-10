@@ -19,7 +19,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     [Header("Maxes")]
     private int _maxHealth = 100;
     private int _maxShield = 100;
-    private int _maxAbility = 100;
+    [SerializeField] private int _maxAbility = 75;
 
     private int _health;
     private int _shield;

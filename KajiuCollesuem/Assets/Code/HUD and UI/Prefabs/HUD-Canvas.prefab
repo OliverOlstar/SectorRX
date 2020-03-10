@@ -833,7 +833,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -889,7 +889,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &383972716189787740
 RectTransform:
   m_ObjectHideFlags: 0
@@ -955,7 +955,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 90
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -1414,7 +1414,7 @@ MonoBehaviour:
   RegSlider:
   - {fileID: 77542050258562549}
   - {fileID: 383972716998805421}
-  - {fileID: 5707870074333011383}
+  - {fileID: 383972716189787739}
   - {fileID: 1321405413615719778}
   - {fileID: 2956766360173702369}
   - {fileID: 1392654677255635470}
@@ -1425,7 +1425,7 @@ MonoBehaviour:
   MaskSlider:
   - {fileID: 3883840497747739066}
   - {fileID: 5029846690300353888}
-  - {fileID: 383972716189787739}
+  - {fileID: 5707870074333011383}
   - {fileID: 8257466652210732728}
   - {fileID: 7802212200419355265}
   - {fileID: 3758043643602947768}
@@ -6104,7 +6104,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 90
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:

@@ -9,7 +9,7 @@ public class PlayerHitbox : MonoBehaviour
     private int _damage;
     private Vector3 _knockback;
 
-    private int _powerRecivedOnHit = 25;
+    private int _powerRecivedOnHit = 15;
 
     public GameObject attacker;
 
