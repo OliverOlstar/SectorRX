@@ -128,7 +128,6 @@ public class PlayerStateController : MonoBehaviour
             _movementComponent.OnJump();
         }
     }
-    public void OnLockOn() => _lockOnComponent.OnLockOn();
     public void OnAnyInput() => LastInputTime = Time.time;
     #endregion
 
