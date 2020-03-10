@@ -7,6 +7,7 @@ public class FireballHitbox : MonoBehaviour
     [SerializeField] private int damageAmount;
     [SerializeField] private float maxTime;
     [SerializeField] private float knockForce;
+    [HideInInspector] public GameObject attacker;
 
     private void Start()
     {
@@ -29,7 +30,7 @@ public class FireballHitbox : MonoBehaviour
 
             if (otherAttributes != null && otherAttributes.IsDead() == false)
             {
-                otherAttributes.TakeDamage(damageAmount, GetComponent<Rigidbody>().velocity.normalized * knockForce, this.gameObject);
+                otherAttributes.TakeDamage(damageAmount, GetComponent<Rigidbody>().velocity.normalized * knockForce, attacker, "Wolf");
                 DestroyFireball();
             }
         }

@@ -47,7 +47,7 @@ public class PlayerHitbox : MonoBehaviour
         if (otherAttributes != null && otherAttributes.IsDead() == false && otherAttributes != _playerIAttributes)
         {
             //Damage other
-            otherAttributes.TakeDamage(Mathf.FloorToInt(_damage * attackMult), _knockback, attacker);
+            otherAttributes.TakeDamage(Mathf.FloorToInt(_damage * attackMult), _knockback, attacker, "Player");
 
             //Recieve Power
             _playerAttributes.modifyAbility(_powerRecivedOnHit);

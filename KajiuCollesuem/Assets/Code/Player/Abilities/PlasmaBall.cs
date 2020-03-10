@@ -65,6 +65,7 @@ public class PlasmaBall : MonoBehaviour, IAbility
         {
             SpawnBall();
             _stateController._Sound.PlasmaBallSound();
+            _stateController._CameraShake.PlayShake(6.0f, 6.0f, 0.1f, 0.2f);
             _ballSpawned = true;
         }
     }
