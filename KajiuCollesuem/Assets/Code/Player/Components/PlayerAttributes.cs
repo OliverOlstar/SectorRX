@@ -233,7 +233,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         // Announcer
         if (pAttacker == null)
         {
-            Announcer._Instance.IncinKO();
+            Announcer._Instance.TarKO();
             Debug.Log("Null Killer");
         }
         else if (pAttacker.CompareTag("Player"))
@@ -243,7 +243,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         }
         else if (pAttacker.CompareTag("Enemy"))
         {
-            Announcer._Instance.EvisKO();
+            Announcer._Instance.WolfKO();
             Debug.Log("Enemy Killer");
         }
         else
