@@ -67,7 +67,7 @@ public class PlayerMultHitbox : MonoBehaviour
             yield return new WaitForSeconds(_damageRate);
         }
         // Check if still colliding
-        while (collidersInTrigger.Contains(pOther) && pAttributes.IsDead() == false);
+        while (collidersInTrigger.Contains(pOther) && pOther.gameObject.activeSelf && pAttributes.IsDead() == false);
 
         // If in Tar still but is dead
         if (collidersInTrigger.Contains(pOther))
