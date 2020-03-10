@@ -14,7 +14,7 @@ public class LoadedLevel : MonoBehaviour
     {
         StartCoroutine(screenMove());
         announceSource.clip = readyGo;
-        announceSource.PlayDelayed(1.2f);
+        announceSource.PlayDelayed(3.0f);
     }
 
     IEnumerator screenMove()
