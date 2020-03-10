@@ -19,7 +19,7 @@ public class StatPause : MonoBehaviour
         {
             _StatParent.anchorMin = new Vector2(0.5f, 0.5f);
             _StatParent.anchorMax = new Vector2(0.5f, 0.5f);
-            _StatParent.localPosition = new Vector3(-125, 0, -233);
+            _StatParent.localPosition = new Vector2(-125, 0);
         }
     }
 
@@ -34,7 +34,7 @@ public class StatPause : MonoBehaviour
         {
             _StatParent.anchorMin = new Vector2(0.0f, 0.5f);
             _StatParent.anchorMax = new Vector2(0.0f, 0.5f);
-            _StatParent.localPosition = new Vector3(-434.7542f, 0, 0);
+            _StatParent.localPosition = new Vector2(-434.7542f, 0);
         }
     }
 }
