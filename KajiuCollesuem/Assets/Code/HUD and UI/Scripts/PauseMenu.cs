@@ -43,6 +43,7 @@ public class PauseMenu : MonoBehaviour
             Time.timeScale = 0;
             hasPaused = true;
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             targetUI = resumeButton;
             foreach(StatPause stats in _PlayerHUDs)
             {
@@ -54,6 +55,7 @@ public class PauseMenu : MonoBehaviour
             Time.timeScale = 1;
             hasPaused = false;
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             EventSystem.current.SetSelectedGameObject(null);
             controlScreen.SetActive(false);
             foreach (StatPause stats in _PlayerHUDs)
