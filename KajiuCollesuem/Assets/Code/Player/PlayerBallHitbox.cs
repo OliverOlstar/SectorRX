@@ -56,7 +56,10 @@ public class PlayerBallHitbox : MonoBehaviour
 
     private void Explode()
     {
+        // Visual
         transform.GetChild(0).gameObject.SetActive(true);
+        // Sound
+        transform.GetChild(1).gameObject.SetActive(true);
         StartCoroutine("destroyDelay");
 
         foreach (Collider other in Physics.OverlapSphere(transform.position, _explosionRadius))
@@ -80,7 +83,10 @@ public class PlayerBallHitbox : MonoBehaviour
 
     IEnumerator destroyDelay()
     {
-        yield return new WaitForSeconds(0.08f);
+        GetComponent<Collider>().enabled = false;
+        yield return new WaitForSeconds(0.1f);
+        transform.GetChild(0).gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.45f);
         Destroy(gameObject);
     }
 }
