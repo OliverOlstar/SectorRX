@@ -17,6 +17,7 @@ public class MatchManager : MonoBehaviour
     public SpawnRandomEnemies[] spawnEnemyScript;
     public SpawnEditLava spawnLavaScript;
     public static MatchManager instance = null;
+    public PauseMenu playerPauseScript;
 
     private void Awake()
     {
@@ -53,5 +54,16 @@ public class MatchManager : MonoBehaviour
 
         spawnPlayerScript.SpawnAllPlayers();
         splitscreenScript.SetSplitScreen(this);
+        PauseStatus();
+    }
+
+    private void PauseStatus()
+    {
+        StatPause[] temp = new StatPause[spawnPlayerScript.players.Count];
+        for (int i = 0; i < temp.Length; i++)
+        {
+            temp[i] = spawnPlayerScript.players[i].GetComponentInChildren<StatPause>();
+        }
+        playerPauseScript.SetPlayerHUDs(temp);
     }
 }

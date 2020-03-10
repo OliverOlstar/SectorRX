@@ -65,6 +65,7 @@ public class PlasmaStrike : MonoBehaviour, IAbility
         {
             SpawnStrike();
             _stateController._Sound.PlasmaStrikeSound();
+            _stateController._CameraShake.PlayShake(8.0f, 10.0f, 0.2f, 0.4f);
             _strikeSpawned = true;
         }
     }
