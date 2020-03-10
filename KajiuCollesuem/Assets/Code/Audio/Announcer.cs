@@ -41,7 +41,7 @@ public class Announcer : MonoBehaviour
     }
 
     //Plays Announcer Audio Clip(s) for when a single player has killed two or more players.
-    public void PowerKO()
+    public void AbilityKO()
     {
         PlayAnnounce(1.0f, 1.0f, powerKOs[Random.Range(0, 3)], announceSource);
     }

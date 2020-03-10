@@ -139,7 +139,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
     #region General Functions
     //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
-    public bool TakeDamage(int pAmount, Vector3 pKnockback, GameObject pAttacker, bool pIgnoreWeight = false)
+    public bool TakeDamage(int pAmount, Vector3 pKnockback, GameObject pAttacker, string pTag, bool pIgnoreWeight = false)
     {
         // Return if already dead
         if (_health <= 0)
@@ -176,7 +176,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         if (died)
         {
             // Killed
-            Death(pAttacker);
+            Death(pTag);
         }
         else if (pAttacker == null)
         {
@@ -185,7 +185,6 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             _stateController._modelController.AddTarJump(1, 0.2f, 1.1f, 0.65f);
             _stateController._modelController.AddCrouching(0.4f, 0.2f, 0.2f);
             _stateController._CameraShake.PlayShake(6.0f, 8.0f, 0.6f, 0.6f);
-            Debug.Log("hit by tar");
         }
         else
         {
@@ -193,7 +192,6 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             _stateController._Sound.HitByAttackSound();
             _stateController._modelController.AddStunned(1, (Random.value - 0.5f) * 2, easeOutDelay, easeOut);
             _stateController._CameraShake.PlayShake(pAmount / 4, 6.0f, 0.5f, 0.8f);
-            Debug.Log("hit by something");
         }
 
         // If usingAbility, Cancel it
@@ -223,7 +221,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         }
     }
 
-    private void Death(GameObject pAttacker)
+    private void Death(string pAttackerTag)
     {
         bool matchNotOver = MatchManager.instance.ManagerEnd();
         _stateController._Sound.PlayerDeathSound();
@@ -231,24 +229,27 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         if (matchNotOver) SpawnStatUps();
 
         // Announcer
-        if (pAttacker == null)
+        switch (pAttackerTag)
         {
-            Announcer._Instance.TarKO();
-            Debug.Log("Null Killer");
-        }
-        else if (pAttacker.CompareTag("Player"))
-        {
-            Announcer._Instance.NormalKO();
-            Debug.Log("Player Killer");
-        }
-        else if (pAttacker.CompareTag("Enemy"))
-        {
-            Announcer._Instance.WolfKO();
-            Debug.Log("Enemy Killer");
-        }
-        else
-        {
-            Debug.Log("Untagged Killer");
+            case "Tar":
+                Announcer._Instance.TarKO();
+                break;
+
+            case "Player":
+                Announcer._Instance.NormalKO();
+                break;
+
+            case "Ability":
+                Announcer._Instance.AbilityKO();
+                break;
+
+            case "Wolf":
+                Announcer._Instance.WolfKO();
+                break;
+
+            case "Drill":
+                Announcer._Instance.DrillKO();
+                break;
         }
     }
     #endregion

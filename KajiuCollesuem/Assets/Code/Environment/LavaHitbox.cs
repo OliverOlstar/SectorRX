@@ -31,7 +31,7 @@ public class LavaHitbox : MonoBehaviour
         do
         {
             // Add Damage & Knockup
-            attributes.TakeDamage(_Damage, Vector3.up * _KnockupForce, null, true);
+            attributes.TakeDamage(_Damage, Vector3.up * _KnockupForce, null, "Tar", true);
 
             // Reset Falling Force
             if (otherOnGround != null)
