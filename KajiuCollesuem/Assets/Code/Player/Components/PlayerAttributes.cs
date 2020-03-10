@@ -13,6 +13,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 {
     private PlayerStateController _stateController;
     public SliderController sliderControl;
+    public CanvasGroup playerHUD;
 
     public float weight = 1;
 
@@ -225,6 +226,8 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
     private void Death(GameObject pAttacker)
     {
+        StartCoroutine("HUDAlphaDown");
+
         bool matchNotOver = MatchManager.instance.ManagerEnd();
         _stateController._Sound.PlayerDeathSound();
         _stateController._lockOnComponent.SwitchToDeadCamera();
@@ -268,6 +271,15 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         {
             modifyShield(_shieldRegenAmount);
             yield return new WaitForSeconds(_shieldRegenDelaySeconds);
+        }
+    }
+
+    private IEnumerator HUDAlphaDown()
+    {
+        while(playerHUD.alpha > 0)
+        {
+            playerHUD.alpha -= 0.3f * Time.deltaTime;
+            yield return new WaitForSeconds(0.01f);
         }
     }
     #endregion
