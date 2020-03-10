@@ -9,10 +9,11 @@ using UnityEngine.UI;
 public class Announcer : MonoBehaviour
 {
     public static Announcer _Instance;
-    [SerializeField] private AudioClip[] knockOuts = new AudioClip[6];
-    [SerializeField] private AudioClip[] KOstreak = new AudioClip[2];
-    [SerializeField] private AudioClip incinerated;
-    [SerializeField] private AudioClip eviscerated;
+    [SerializeField] private AudioClip[] knockOuts = new AudioClip[5];
+    [SerializeField] private AudioClip[] powerKOs = new AudioClip[3];
+    [SerializeField] private AudioClip tar;
+    [SerializeField] private AudioClip wolf;
+    [SerializeField] private AudioClip drilled;
     [SerializeField] private AudioSource announceSource;
     [SerializeField] private Text KOText; //Text that appears when a player is killed. Text is set to whatever word the Announcer says.
 
@@ -24,25 +25,31 @@ public class Announcer : MonoBehaviour
     //Plays Announcer Audio Clip(s) for when a player is killed by another player's light or heavy attack.
     public void NormalKO()
     {
-        PlayAnnounce(1.0f, 1.0f, knockOuts[Random.Range(0, 6)], announceSource);
+        PlayAnnounce(1.0f, 1.0f, knockOuts[Random.Range(0, 5)], announceSource);
     }
 
-    //Plays Announcer Audio Clip for when a player is killed by a plasma ball, breath, or the tar.
-    public void IncinKO()
+    //Plays Announcer Audio Clip for when a player is killed by the tar.
+    public void TarKO()
     {
-        PlayAnnounce(1.0f, 1.0f, incinerated, announceSource);
+        PlayAnnounce(1.0f, 1.0f, tar, announceSource);
     }
 
-    //Plays Announcer Audio Clip for when a player is killed by a blade beam, or a wolf enemy.
-    public void EvisKO()
+    //Plays Announcer Audio Clip for when a player is killed by a wolf enemy.
+    public void WolfKO()
     {
-        PlayAnnounce(1.0f, 1.0f, eviscerated, announceSource);
+        PlayAnnounce(1.0f, 1.0f, wolf, announceSource);
     }
 
     //Plays Announcer Audio Clip(s) for when a single player has killed two or more players.
-    public void KillStreak()
+    public void PowerKO()
     {
-        PlayAnnounce(1.0f, 1.0f, KOstreak[0], announceSource);
+        PlayAnnounce(1.0f, 1.0f, powerKOs[Random.Range(0, 3)], announceSource);
+    }
+
+    //Plays Announcer Audio Clip for when the player is a moron and gets killed by the drill landmark.
+    public void DrillKO()
+    {
+        PlayAnnounce(1.0f, 1.0f, drilled, announceSource);
     }
 
     //Function which handles setting the Audio Source's personal variables
