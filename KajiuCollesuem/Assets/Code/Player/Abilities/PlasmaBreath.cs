@@ -78,6 +78,11 @@ public class PlasmaBreath : MonoBehaviour, IAbility
             ToggleBreath();
         }
 
+        if (_SpawnedLaser.activeSelf == true)
+        {
+            _stateController._CameraShake.PlayShake(2.0f, 7.0f, 0.05f, 0.1f);
+        }
+
         if (_stateController._playerAttributes.getAbility() < 1 && _SpawnedLaser.activeSelf == true)
         {
             _stateController.usingAbility = false;
@@ -101,8 +106,8 @@ public class PlasmaBreath : MonoBehaviour, IAbility
     {
         while (_stateController._playerAttributes.getAbility() > 0)
         {
-            _stateController._playerAttributes.modifyAbility(-2);
-            yield return new WaitForSeconds(0.12f);
+            _stateController._playerAttributes.modifyAbility(-3);
+            yield return new WaitForSeconds(0.09f);
         }
     }
 

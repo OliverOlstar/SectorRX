@@ -173,7 +173,7 @@ public class @MenuInput : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""93f0e5d1-bebe-4da6-aebb-13bb7b232b6b"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""path"": ""<Gamepad>/dpad/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",

@@ -35,10 +35,13 @@ public class PlayerMultHitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Check if collided with an Attributes Script
+        // Check if collided with an Attributes Script
         IAttributes otherAttributes = other.GetComponent<IAttributes>();
         if (otherAttributes == null) 
             otherAttributes = other.GetComponentInParent<IAttributes>();
+
+        // Don't damage player abilities
+        if (other.CompareTag("Fireball")) return;
 
         if (otherAttributes != null && otherAttributes.IsDead() == false && otherAttributes != _playerIAttributes && !collidersInTrigger.Contains(other))
         {

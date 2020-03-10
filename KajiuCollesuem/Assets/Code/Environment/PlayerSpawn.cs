@@ -80,7 +80,6 @@ public class PlayerSpawn : MonoBehaviour
                     {
                         if (input.GetComponent<PlayerInput>().user.index == connectedPlayers.playerIndex[j].deviceUser)
                         {
-                            Debug.Log("Add activeDevice");
                             _ActiveInputs.Add(input);
                             break;
                         }
