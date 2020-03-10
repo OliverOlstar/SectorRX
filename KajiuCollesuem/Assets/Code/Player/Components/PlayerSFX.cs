@@ -65,7 +65,14 @@ public class PlayerSFX : MonoBehaviour
     public void Walking(int pGroundMaterial)
     {
         Debug.Log(pGroundMaterial);
-        PlaySound(0.0f, 0.1f, Random.Range(0.7f, 0.9f), surfaces[pGroundMaterial], walkingSource);
+        if(pGroundMaterial == 1)
+        {
+            PlaySound(0.0f, 0.25f, Random.Range(0.7f, 0.9f), surfaces[pGroundMaterial], walkingSource);
+        }
+        else
+        {
+            PlaySound(0.0f, 0.075f, Random.Range(0.7f, 0.9f), surfaces[pGroundMaterial], walkingSource);
+        }
     }
     #endregion
 

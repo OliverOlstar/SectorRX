@@ -18,7 +18,7 @@ public class EnemySFX : MonoBehaviour
     public void AEShotSound()
     {
         enemySource.clip = enemySFX[1];
-        enemySource.volume = 0.1f;
+        enemySource.volume = 0.075f;
         enemySource.Play();
     }
 
