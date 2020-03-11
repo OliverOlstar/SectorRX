@@ -8,16 +8,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class MatchManager : MonoBehaviour
 {
-    public Camera cinemaCam;
-    public PlayerSpawn spawnPlayerScript;
-    public SplitscreenManager splitscreenScript;
-    public SpawnRandomEnemies[] spawnEnemyScript;
-    public SpawnEditLava spawnLavaScript;
     public static MatchManager instance = null;
-    public PauseMenu playerPauseScript;
+
+    public PlayerSpawn spawnPlayerScript;
+    [SerializeField] private Camera cinemaCam;
+    [SerializeField] private SplitscreenManager splitscreenScript;
+    [SerializeField] private SpawnRandomEnemies[] spawnEnemyScript;
+    [SerializeField] private SpawnEditLava spawnLavaScript;
+    [SerializeField] private PauseMenu playerPauseScript;
+
+    [SerializeField] private MusicManager musicManager;
+    public RectTransform transitionScreen;
 
     private void Awake()
     {
@@ -41,11 +47,6 @@ public class MatchManager : MonoBehaviour
         spawnLavaScript.lavaTimer();
     }
 
-    public bool ManagerEnd()
-    {
-        return spawnPlayerScript.MatchEnd();
-    }
-
     IEnumerator CinemaOff()
     {
         //Wait for three seconds then turn off camera (simulates cinematic camera).
@@ -66,5 +67,45 @@ public class MatchManager : MonoBehaviour
             temp[i] = spawnPlayerScript.players[i].GetComponentInChildren<StatPause>();
         }
         playerPauseScript.SetPlayerHUDs(temp);
+    }
+
+    public bool ManagerEnd()
+    {
+        int playersAlive = spawnPlayerScript.PlayerDied();
+
+        // Check if match is over
+        if (playersAlive <= 1)
+        {
+            StartCoroutine("VictoryReset");
+            return false;
+        }
+
+        return true;
+    }
+
+    IEnumerator VictoryReset()
+    {
+        yield return new WaitForSeconds(3.5f);
+
+        musicManager.mainAudio.Stop();
+        transitionScreen.DOAnchorPos(new Vector2(0, 0), 0.4f);
+
+        for (int i = 0; i < connectedPlayers.playersConnected; i++)
+        {
+            UsedDevices player = connectedPlayers.playerIndex[i];
+
+            // Save Stats
+            PlayerCollectibles collectables = spawnPlayerScript.players[i].GetComponentInChildren<PlayerCollectibles>();
+            player.victoryScene.Stats = collectables.GetStats();
+
+            // Save if he lived or not
+            PlayerAttributes attributes = collectables.GetComponent<PlayerAttributes>();
+            player.victoryScene.Alive = attributes.IsDead();
+
+            connectedPlayers.playerIndex[i] = player;
+        }
+
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadSceneAsync(2);
     }
 }

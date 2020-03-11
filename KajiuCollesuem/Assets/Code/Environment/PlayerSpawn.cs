@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
-using DG.Tweening;
 
 /*Programmer: Scott Watman
  Additional Programmer(s): Oliver Loescher, Kavian Kermani
@@ -15,22 +13,20 @@ public class PlayerSpawn : MonoBehaviour
 {
     public GameObject playerPrefab;
     [HideInInspector] public List<GameObject> players = new List<GameObject>();
-    public RectTransform transitionScreen;
 
-    public MusicManager musicManager;
     [HideInInspector] public List<Transform> playerSpawns = new List<Transform>();
     private int _SpawnPointIndex;
     [SerializeField] private MatchInputHandler[] _PlayerInputs = new MatchInputHandler[6];
     private List<MatchInputHandler> _ActiveInputs = new List<MatchInputHandler>();
 
-    private float playersToSpawn = 0;
+    private int playersToSpawn = 0;
 
     public void MatchStartup()
     {
         //If no players are entered, automatically set to 2.
         if (connectedPlayers.playersConnected <= 0)
         {
-            connectedPlayers.playersConnected = 2;
+            connectedPlayers.playersConnected = 5;
             
             connectedPlayers.playerIndex.Clear();
             UsedDevices player = new UsedDevices();
@@ -50,18 +46,10 @@ public class PlayerSpawn : MonoBehaviour
     }
 
     // Return true if match is still going
-    public bool MatchEnd()
+    public int PlayerDied()
     {
         playersToSpawn--;
-
-        // Check if match is over
-        if (playersToSpawn <= 1)
-        {
-            StartCoroutine("VictoryReset");
-            return false;
-        }
-
-        return true;
+        return playersToSpawn;
     }
 
     public void InputSetup()
@@ -140,15 +128,5 @@ public class PlayerSpawn : MonoBehaviour
             if (input.playerStateController == null)
                 input.gameObject.SetActive(false);
         }
-    }
-
-    IEnumerator VictoryReset()
-    {
-        yield return new WaitForSeconds(3.5f);
-
-        musicManager.mainAudio.Stop();
-        transitionScreen.DOAnchorPos(new Vector2(0, 0), 0.4f);
-        yield return new WaitForSeconds(0.5f);
-        SceneManager.LoadSceneAsync(2);
     }
 }

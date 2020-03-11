@@ -10,6 +10,7 @@ public class SceneSelect : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex != 1)
         {
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             Debug.Log("Unlock Cursor");
         }
     }

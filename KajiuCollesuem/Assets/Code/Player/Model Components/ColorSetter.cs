@@ -30,7 +30,8 @@ public class ColorSetter : MonoBehaviour
     public void SetAbility(int pAbility)
     {
         // Add Abilities
-        _abilitySelector.SetupAbilities(pAbility, _stateController);
+        if (_abilitySelector != null && _stateController != null)
+            _abilitySelector.SetupAbilities(pAbility, _stateController);
 
         // Set Visuals
         switch (pAbility)

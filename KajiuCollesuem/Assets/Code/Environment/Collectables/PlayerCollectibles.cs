@@ -207,4 +207,9 @@ public class PlayerCollectibles : MonoBehaviour
 
         return true;
     }
+
+    public float[] GetStats()
+    {
+        return upgradeCounts;
+    }
 }

@@ -14,7 +14,14 @@ public struct UsedDevices
     public int playerIndex;
     public ColorSet playerColorSet;
     public int abilitySelected;
-    //Add Ability Presets variable
+
+    public VictoryStats victoryScene;
+}
+
+public struct VictoryStats
+{
+    public float[] Stats;
+    public bool Alive;
 }
 
 public class connectedPlayers : MonoBehaviour
@@ -26,7 +33,6 @@ public class connectedPlayers : MonoBehaviour
     public GameObject startButton;
 
     private DeviceHandler[] _Devices = new DeviceHandler[6]; 
-    [SerializeField] private Text _PlayerCount;
     [SerializeField] private Panels[] playerPanels;
 
     private void Awake()
@@ -60,8 +66,6 @@ public class connectedPlayers : MonoBehaviour
         }
 
         playersConnected = 0;
-        _PlayerCount.text = " ";
-
         playerSlots = new List<int>() { 0, 1, 2, 3, 4, 5 };
     }
 
@@ -92,7 +96,6 @@ public class connectedPlayers : MonoBehaviour
     {
         //Allows players to connect if on join screen
         playersConnected++;
-        _PlayerCount.text = "Number of Players: " + playersConnected.ToString();
 
         //Sets player panel to first open slot and then removes it from list
         int slot = playerSlots[0];
@@ -104,7 +107,6 @@ public class connectedPlayers : MonoBehaviour
     {
         //Disconnects player
         playersConnected--;
-        _PlayerCount.text = "Number of Players: " + playersConnected.ToString();
 
         //Adds new open player slot to list then properly sorts list
         playerSlots.Add(pSlot);

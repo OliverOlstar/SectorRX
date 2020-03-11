@@ -15,7 +15,7 @@ public class StatPause : MonoBehaviour
             stats.SetActive(true);
         }
         
-        if(connectedPlayers.playersConnected > 1)
+        if(connectedPlayers.playersConnected > 1 && connectedPlayers.playersConnected < 5)
         {
             _StatParent.anchorMin = new Vector2(0.5f, 0.5f);
             _StatParent.anchorMax = new Vector2(0.5f, 0.5f);
@@ -30,7 +30,7 @@ public class StatPause : MonoBehaviour
             stats.SetActive(false);
         }
 
-        if(connectedPlayers.playersConnected > 1)
+        if(connectedPlayers.playersConnected > 1 && connectedPlayers.playersConnected < 5)
         {
             _StatParent.anchorMin = new Vector2(0.0f, 0.5f);
             _StatParent.anchorMax = new Vector2(0.0f, 0.5f);
