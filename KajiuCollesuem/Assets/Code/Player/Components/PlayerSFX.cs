@@ -64,7 +64,15 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound the player is walking on a sand or metal surface
     public void Walking(int pGroundMaterial)
     {
-        PlaySound(0.0f, 0.1f, Random.Range(0.4f, 0.6f), surfaces[pGroundMaterial], walkingSource);
+        Debug.Log(pGroundMaterial);
+        if(pGroundMaterial == 1)
+        {
+            PlaySound(0.0f, 0.25f, Random.Range(0.7f, 0.9f), surfaces[pGroundMaterial], walkingSource);
+        }
+        else
+        {
+            PlaySound(0.0f, 0.075f, Random.Range(0.7f, 0.9f), surfaces[pGroundMaterial], walkingSource);
+        }
     }
     #endregion
 
