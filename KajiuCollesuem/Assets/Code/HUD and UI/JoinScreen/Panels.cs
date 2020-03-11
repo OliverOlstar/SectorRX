@@ -12,6 +12,7 @@ public class Panels : MonoBehaviour
     [SerializeField] private connectedPlayers _AddPlayer;
     [SerializeField] private UIManager _CanPlayChecker;
     [SerializeField] private Text playerPanels;
+    [SerializeField] private Text playerReady;
     private int stateValue = 0;
     [SerializeField] private MenuLizzy _myLizzy;
     [HideInInspector] public ColorSet myColorSet;
@@ -20,6 +21,7 @@ public class Panels : MonoBehaviour
 
     [SerializeField] private Sprite[] abilityIcons;
     [SerializeField] private SpriteRenderer ability;
+    [SerializeField] private SpriteRenderer joinButton;
     [SerializeField] private RectTransform abilityOneRect, abilityTwoRect;
     [HideInInspector] public int abilityNumber = 0;
     [SerializeField] private Animator animShield;
@@ -56,11 +58,12 @@ public class Panels : MonoBehaviour
                 if(stateValue == 0)
                 {
                     stateValue = 1;
-
                     sfxSource.clip = lockedIn[Random.Range(0, 3)];
                     sfxSource.volume = Random.Range(0.6f, 0.8f);
                     sfxSource.PlayDelayed(0.25f);
-                    playerPanels.text = "READY!";
+
+                    playerReady.gameObject.SetActive(true);
+
                     StartCoroutine(RemoveAbilitiesUI());
                     _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.LockedIn);
 
@@ -74,7 +77,7 @@ public class Panels : MonoBehaviour
             case 1:
                 // Player Enters to Start Match
                 _AddPlayer.SetPlayerOrder();
-                SceneManager.LoadSceneAsync(1);
+                _CanPlayChecker.LoadLevel(1);
                 break;
         }
     }
@@ -137,8 +140,7 @@ public class Panels : MonoBehaviour
     public void PlayerJoined(DeviceHandler pDevice)
     {
         myDevice = pDevice;
-
-        playerPanels.text = " ";
+        playerPanels.gameObject.SetActive(false);
 
         // Abilities
         ShowAbilitiesUI();
@@ -153,7 +155,8 @@ public class Panels : MonoBehaviour
     {
         myDevice = null;
 
-        playerPanels.text = "Press 'Space'\n or \n'Start' to Join";
+        playerReady.gameObject.SetActive(false);
+        playerPanels.gameObject.SetActive(true);
         stateValue = 0;
 
         _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.NotJoined);
