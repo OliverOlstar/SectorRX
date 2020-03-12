@@ -29,9 +29,11 @@ public class RaiseStat : MonoBehaviour
 
             if (otherCollectibles != null)
             {
-                otherCollectibles.CollectedItem(statType);
-                _CanCollect = false;
-                Destroy(transform.parent.gameObject);
+                if (otherCollectibles.CollectedItem(statType))
+                {
+                    _CanCollect = false;
+                    Destroy(transform.parent.gameObject);
+                }
             }
         }
     }

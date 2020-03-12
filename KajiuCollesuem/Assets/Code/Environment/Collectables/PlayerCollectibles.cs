@@ -7,7 +7,7 @@ using UnityEngine.UI;
  Description: Edits player's stats depending on which collectible they pick up*/
 
 public class PlayerCollectibles : MonoBehaviour
-{ 
+{
     // ENUM
     public enum Upgrades
     {
@@ -135,7 +135,7 @@ public class PlayerCollectibles : MonoBehaviour
         upgradeCounts[index]++;
         
         // Maxed out Upgrade
-        if (upgradeCounts[index] > MAXUPGRADES)
+        if (upgradeCounts[index] > MAXUPGRADES || enabled == false)
             return false;
 
         float value;

@@ -800,6 +800,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: VictoryMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 4259927892879293975, guid: b2c254ad45e5d2d4e9f72d01f14d5350,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4259927893356240543, guid: b2c254ad45e5d2d4e9f72d01f14d5350,
         type: 3}
       propertyPath: m_FontData.m_FontSize
@@ -1259,8 +1264,7 @@ MonoBehaviour:
   - {fileID: 766305472}
   - {fileID: 1687350070}
   - {fileID: 2036786685}
-  displayLizzySpacing: 5
-  playerCountSpacingLizzyMult: 10
+  displayLizzyWidth: 38
   victoryStats:
   - {fileID: 919157471}
   - {fileID: 264190973}
@@ -1268,8 +1272,7 @@ MonoBehaviour:
   - {fileID: 1043872508}
   - {fileID: 533523977}
   - {fileID: 1496641079}
-  displayStatsSpacing: 62
-  playerCountSpacingStatsMult: 124
+  displayStatsWidth: 500
 --- !u!1001 &728794011
 PrefabInstance:
   m_ObjectHideFlags: 0

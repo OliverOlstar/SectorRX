@@ -100,7 +100,7 @@ public class MatchManager : MonoBehaviour
 
             // Save if he lived or not
             PlayerAttributes attributes = collectables.GetComponent<PlayerAttributes>();
-            player.victoryScene.Alive = attributes.IsDead();
+            player.victoryScene.Alive = !attributes.IsDead();
 
             connectedPlayers.playerIndex[i] = player;
         }

@@ -14,16 +14,6 @@ public class MenuLizzy : MonoBehaviour
     private Coroutine _Routine;
     private Coroutine _LockedRoutine;
 
-    [Header("Crouched")]
-    [SerializeField] private AnimationCurve _CrouchGraph;
-    [SerializeField] private float _CrouchMult = 1.0f;
-    private float _CrouchProgress = 0.0f;
-
-    [Header("Idle")]
-    [SerializeField] private AnimationCurve _IdleGraph;
-    [SerializeField] private float _IdleMult = 1.0f;
-    private float _IdleProgress = 0.0f;
-
     [Header("Locked In")]
     [SerializeField] private AnimationCurve _LockedInGraph;
     [SerializeField] private float _LockedInMult = 1.0f;
@@ -108,25 +98,6 @@ public class MenuLizzy : MonoBehaviour
 
         _LockedInProgress = pDirection == 1 ? 1 : 0;
         _Anim.SetFloat("LockedIn Progress", _LockedInProgress);
-    }
-
-    private void Update()
-    {
-        _CrouchProgress = IncreaseProgress(_CrouchProgress, _CrouchMult);
-        _Anim.SetFloat("Crouch Progress", _CrouchGraph.Evaluate(_CrouchProgress));
-
-        _IdleProgress = IncreaseProgress(_IdleProgress, _IdleMult);
-        _Anim.SetFloat("Idle Progress", _IdleGraph.Evaluate(_IdleProgress));
-    }
-
-    private float IncreaseProgress(float pProgress, float pMult)
-    {
-        pProgress += Time.fixedDeltaTime * pMult;
-
-        if (pProgress >= 1)
-            pProgress -= 1;
-
-        return pProgress;
     }
 
     public void SetColors(ColorSet pSet)

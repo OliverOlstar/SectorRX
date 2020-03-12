@@ -205,7 +205,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     private void SpawnStatUps()
     {
         // Can't Collect them myself
-        Destroy(GetComponent<PlayerCollectibles>());
+        GetComponent<PlayerCollectibles>().enabled = false;
 
         StartCoroutine(SpawnStatUpsDelay());
     }
