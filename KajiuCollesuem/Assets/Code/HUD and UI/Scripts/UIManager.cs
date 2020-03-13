@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
         {
             introVideoPlayer.background.gameObject.SetActive(false);
             introVideoPlayer.videoPlayer.gameObject.SetActive(false);
-            playerInputMenu.DOAnchorPos(new Vector2(69, -2), 0.4f);
+            playerInputMenu.DOAnchorPos(new Vector2(0, -2), 0.4f);
             EventSystem.current.SetSelectedGameObject(null);
             _Camera.ToggleCamera(1);
         }

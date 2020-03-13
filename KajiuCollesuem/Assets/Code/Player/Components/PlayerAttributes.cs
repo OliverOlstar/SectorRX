@@ -42,7 +42,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     private float _TimeOfDeath = 0.0f;
 
     public bool IsDead() { return _health == 0; }
-    public float TimeOfDeath() { return _TimeOfDeath; }
+    public float TimeOfDeath() { return IsDead() == false ? Time.time : _TimeOfDeath; }
 
     void Awake()
     {

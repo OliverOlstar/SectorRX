@@ -25,7 +25,10 @@ public class DeviceHandler : MonoBehaviour
 
     private void OnStart()
     {
-        playerPanel.OnStart();
+        if (playerPanel != null)
+        {
+            playerPanel.OnStart();
+        }
     }
 
     // Disconnects the player device from assigned slot if player has left and panel was assigned

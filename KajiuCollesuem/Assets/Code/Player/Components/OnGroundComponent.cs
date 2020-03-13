@@ -101,9 +101,9 @@ public class OnGroundComponent : MonoBehaviour
             {
                 _stuckTimer += Time.deltaTime;
 
-                if (_stuckTimer > 3.5f)
+                if (_stuckTimer > 1.8f)
                 {
-                    _rb.AddForce(Vector3.up * 25, ForceMode.Impulse);
+                    _rb.AddForce(Vector3.up * 22, ForceMode.Impulse);
                     _stuckTimer = 0.0f;
                 }
             }
