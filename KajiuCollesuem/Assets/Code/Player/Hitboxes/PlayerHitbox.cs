@@ -38,7 +38,7 @@ public class PlayerHitbox : MonoBehaviour
             otherAttributes = other.GetComponentInParent<IAttributes>();
 
         // Don't hit the same thing twice
-        if (hitAttributes.Contains(otherAttributes))
+        if (hitAttributes.Contains(otherAttributes) || other.CompareTag("Fireball"))
             return;
 
         // Add to list so we can't hit it twice

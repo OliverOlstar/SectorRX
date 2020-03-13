@@ -184,14 +184,14 @@ public class ModelController : MonoBehaviour
     public void PlayDodge(Vector2 pDirection, float pSpeed)
     {
         _DontUpdateWeights = true;
-        _modelWeights.SetWeights(0, 0, 1, 0);
+        _modelWeights.SetWeights(0, 0, 1);
         _modelMovement.PlayFlipParent(pDirection, pSpeed);
     }
 
     public void DoneDodge()
     {
         _DontUpdateWeights = false;
-        _modelWeights.SetWeights(0, 0, 0, 0);
+        _modelWeights.SetWeights(0, 0, 0);
     }
     #endregion
 
