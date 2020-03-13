@@ -17,7 +17,6 @@ public class AbilityState : BaseState
 
     public override void Enter()
     {
-        Debug.Log("AbilityState: Enter");
         _stateController.usingAbility = true;
         _stateController._movementComponent.undisableJump = true;
 
@@ -29,7 +28,6 @@ public class AbilityState : BaseState
 
     public override void Exit()
     {
-        Debug.Log("AbilityState: Exit");
         _stateController.AttackStateReturnDelay = Time.time + _abilityStateReturnDelayLength;
 
         _stateController._movementComponent.undisableJump = false;

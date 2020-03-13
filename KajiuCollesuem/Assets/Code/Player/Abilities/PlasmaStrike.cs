@@ -75,7 +75,7 @@ public class PlasmaStrike : MonoBehaviour, IAbility
         // Setup Hitbox / Visuals
         GameObject strike = Instantiate(_strikePrefab);
         strike.transform.position = _muzzle.position;
-        strike.transform.rotation = _muzzle.rotation;
+        strike.transform.rotation = _muzzle.rotation * Quaternion.Euler(new Vector3(0, 0, 90));
 
         strike.GetComponentInChildren<PlayerStrikeHitbox>().Init(GetComponent<PlayerAttributes>(), gameObject, _attackMult, _AbilitySO.hitBoxStayTime);
         strike.GetComponent<Rigidbody>().AddForce(_muzzle.forward * _AbilitySO.projectileSpeed, ForceMode.Impulse);
