@@ -9,8 +9,6 @@ public class JumpPad : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //if (other.CompareTag("Player"))
-        //{
         // Add Force
         Rigidbody otherRB = other.GetComponent<Rigidbody>();
 
@@ -25,6 +23,5 @@ public class JumpPad : MonoBehaviour
 
         if (otherOnGround != null)
             otherOnGround.ResetFallingForce();
-        //}
     }
 }

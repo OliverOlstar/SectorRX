@@ -3,7 +3,7 @@
 public class EnemySmoothRotation : MonoBehaviour
 {
     private Decision _decision;
-    [SerializeField] private float _rotationSpeed;
+    [SerializeField] private float _rotationSpeed = 1.0f;
 
     void Awake()
     {
