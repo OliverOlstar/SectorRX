@@ -30,6 +30,7 @@ public class PlayerCamera : MonoBehaviour
 
     [Space]
     [SerializeField] private float _mouseSensitivity = 4f;
+    [SerializeField] private SOCamera _startingPreset;
     [SerializeField] private SOCamera _defaultPreset;
     [SerializeField] private SOCamera _idlePreset;
     [SerializeField] private SOCamera _aimingPreset;
@@ -58,7 +59,8 @@ public class PlayerCamera : MonoBehaviour
             _StateController = targetPlayer.GetComponent<PlayerStateController>();
 
         // Set Camera to default values
-        ResetCameraVars();
+        ResetCameraVars(_startingPreset);
+        ReturnToDefaultPlayerCamera(1.75f);
 
         // Getting Transforms
         _ParentTransform = transform.parent;
@@ -72,14 +74,14 @@ public class PlayerCamera : MonoBehaviour
         transform.localPosition = _TargetLocalPosition;
     }
 
-    public void ResetCameraVars()
+    public void ResetCameraVars(SOCamera pPreset)
     {
-        _mouseSensitivityMult = _defaultPreset.SensitivityMult;
-        _offSetUp = _defaultPreset.UpOffset;
-        _offSetLeft = _defaultPreset.LeftOffset;
-        _cameraDistance = _defaultPreset.Distance;
-        _cameraMinHeight = _defaultPreset.MinY;
-        _cameraMaxHeight = _defaultPreset.MaxY;
+        _mouseSensitivityMult = pPreset.SensitivityMult;
+        _offSetUp = pPreset.UpOffset;
+        _offSetLeft = pPreset.LeftOffset;
+        _cameraDistance = pPreset.Distance;
+        _cameraMinHeight = pPreset.MinY;
+        _cameraMaxHeight = pPreset.MaxY;
     }
 
     public void SetPlayerCameraPresets(SOCamera pDefault, SOCamera pIdle, SOCamera pAiming)
@@ -87,7 +89,7 @@ public class PlayerCamera : MonoBehaviour
         _defaultPreset = pDefault;
         _idlePreset = pIdle;
         _aimingPreset = pAiming;
-        ResetCameraVars();
+        ResetCameraVars(_defaultPreset);
     }
 
     void Update()

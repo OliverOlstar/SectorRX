@@ -79,6 +79,8 @@ public class PlayerStateController : MonoBehaviour
 
         _Rb = GetComponent<Rigidbody>();
         _playerCamera = _Camera.GetComponentInParent<PlayerCamera>();
+
+        LastInputTime = Time.time;
     }
 
     #region Inputs

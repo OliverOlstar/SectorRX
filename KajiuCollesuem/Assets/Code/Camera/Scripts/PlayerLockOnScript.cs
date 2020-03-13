@@ -21,7 +21,6 @@ public class PlayerLockOnScript : MonoBehaviour
     
     [Header("LookAt")]
     [SerializeField] private LookAtIK _lookAt;
-    [SerializeField] private Transform _cameraForward;
 
     public void Start()
     {
