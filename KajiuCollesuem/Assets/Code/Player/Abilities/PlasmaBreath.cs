@@ -107,7 +107,7 @@ public class PlasmaBreath : MonoBehaviour, IAbility
         while (_stateController._playerAttributes.getAbility() > 0)
         {
             _stateController._playerAttributes.modifyAbility(-3);
-            yield return new WaitForSeconds(0.09f);
+            yield return new WaitForSeconds(0.105f);
         }
     }
 

@@ -36,7 +36,7 @@ public class PlayerSpawn : MonoBehaviour
                 player.deviceUser = i;
                 player.playerIndex = i;
                 player.playerColorSet = new ColorSet();
-                player.abilitySelected = Mathf.RoundToInt(Random.value * 2);
+                player.abilitySelected = Mathf.FloorToInt(Random.value * 3);
 
                 connectedPlayers.playerIndex.Add(player);
             }
