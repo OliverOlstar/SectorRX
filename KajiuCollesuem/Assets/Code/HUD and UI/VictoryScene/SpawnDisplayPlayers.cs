@@ -128,7 +128,7 @@ public class SpawnDisplayPlayers : MonoBehaviour
             }
 
             indexOrder.Remove(smallestIndex);
-            victoryLizzysPostioners[smallestIndex].SetPosition(pDelay, (i * 3.4f) + displayLizzyHeight);
+            victoryLizzysPostioners[smallestIndex].SetPosition(pDelay, (i * 3.4f) + displayLizzyHeight, (i == connectedPlayers.playerIndex.Count - 1) ? true : false);
         }
     }
 }
