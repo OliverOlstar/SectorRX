@@ -35,7 +35,7 @@ public class DisplayStats : MonoBehaviour
             _Sliders = GetComponent<SliderController>();
             float[] stats = connectedPlayers.playerIndex[_PlayerIndex].victoryScene.Stats;
 
-            for (int i = 0; i < stats.Length; i++)
+            for (int i = 0; i < 7; i++)
             {
                 float stat = stats[i];
 
