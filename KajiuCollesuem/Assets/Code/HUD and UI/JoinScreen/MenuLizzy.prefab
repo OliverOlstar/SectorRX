@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8677230989263669690}
   - component: {fileID: 3123034097482036547}
   - component: {fileID: 749978177796219008}
+  - component: {fileID: 8384950719986097234}
   m_Layer: 0
   m_Name: MenuLizzy
   m_TagString: Metal
@@ -101,56 +102,6 @@ MonoBehaviour:
   _LizzyArmour:
   - {fileID: 671170150331341787}
   - {fileID: 2699956693806568131}
-  _CrouchGraph:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  _CrouchMult: 1
-  _IdleGraph:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  _IdleMult: 0.3
   _LockedInGraph:
     serializedVersion: 2
     m_Curve:
@@ -176,6 +127,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _LockedInMult: 1.4
+--- !u!114 &8384950719986097234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3705311285933195679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 363daf7d1cc3925468ce06351ee356d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Name: Idle Progress
+  _Graph:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _Speed: 0.3
+  _Looping: 1
 --- !u!1001 &5100220602537340213
 PrefabInstance:
   m_ObjectHideFlags: 0

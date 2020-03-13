@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class DisableDelay : MonoBehaviour
 {
     [SerializeField] private float delay = 1;
-    private float hasTextTime = 1;
 
     private void OnEnable()
     {

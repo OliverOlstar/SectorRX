@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1601903843534470253}
   m_Layer: 2
   m_Name: PlasmaBreath
-  m_TagString: Untagged
+  m_TagString: Fireball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4800,9 +4800,9 @@ GameObject:
   - component: {fileID: 9022820698338005063}
   - component: {fileID: 5267201255860183287}
   - component: {fileID: 8339895785141230879}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Fireball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4896,9 +4896,9 @@ MonoBehaviour:
   tag: Ability
   attackMult: 1
   _damage: 5
-  _damageRate: 0.2
-  _knockForwardForce: 3
-  _knockUpForce: 0.3
+  _damageRate: 0.25
+  _knockForwardForce: 4
+  _knockUpForce: 0.4
   attacker: {fileID: 0}
 --- !u!114 &8339895785141230879
 MonoBehaviour:

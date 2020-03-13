@@ -331,12 +331,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1378083244057460890}
-  m_LocalRotation: {x: 3.67342e-40, y: -1.2325952e-32, z: -0.000000029802312, w: 1}
-  m_LocalPosition: {x: 1.141, y: -0.844, z: -0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.000000029802312, w: 1}
+  m_LocalPosition: {x: 0.22809319, y: -0.22109182, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4835338796829878931}
-  m_RootOrder: 3
+  m_Father: {fileID: 6326866805525055108}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1452271748246171152
 Rigidbody:
@@ -1861,7 +1861,6 @@ Transform:
   - {fileID: 5047290179848065069}
   - {fileID: 3468198759446686858}
   - {fileID: 7349452338070781286}
-  - {fileID: 7872318264683367161}
   m_Father: {fileID: 6326866805525055108}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2502,14 +2501,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransSpeed: 1
-  enemiesLayer:
-    serializedVersion: 2
-    m_Bits: 768
-  lockOnRange: 40
-  lockOnMinDot: 0.4
   TimeUntilIdle: 20
   _lookAt: {fileID: 7228211487614368373}
-  _cameraForward: {fileID: 3756421446152675430}
 --- !u!114 &5193453761140963528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2715,6 +2708,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4835338796829878931}
+  - {fileID: 7872318264683367161}
   m_Father: {fileID: 8680366167564880283}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

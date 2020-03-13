@@ -211,11 +211,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPlayer: {fileID: 0}
-  lockOnTarget: {fileID: 0}
   inverted: 0
   idleSpinSpeed: 1
-  _lockOnXOffset: -22
-  _lockOnInputInfluence: 0.2
   _cameraCollisionLayers:
     serializedVersion: 2
     m_Bits: 1
@@ -223,9 +220,9 @@ MonoBehaviour:
   _cameraCollisionMinDisPercent: 0.1
   _cameraCollisionOffset: 0.14
   _mouseSensitivity: 150
+  _startingPreset: {fileID: 11400000, guid: b8f8cdc13d8833b419e3a6027ac4de9b, type: 2}
   _defaultPreset: {fileID: 11400000, guid: 0fd6f18ae13c5be4dbf3686890111a6d, type: 2}
   _idlePreset: {fileID: 11400000, guid: 67ad0d9b288e04043ae10b57d85fe6c2, type: 2}
-  _lockOnPreset: {fileID: 11400000, guid: 9aed1e3693ccc6149ac1471b451f36be, type: 2}
   _aimingPreset: {fileID: 11400000, guid: c235eb03047f1c94084ef3b9a43570ea, type: 2}
   CameraDisabled: 0
   targetDead: 0

@@ -39,7 +39,10 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     [SerializeField] private GameObject[] _itemPrefabs;
     [SerializeField] private int _cellSpawnCount = 5;
 
+    private float _TimeOfDeath = 0.0f;
+
     public bool IsDead() { return _health == 0; }
+    public float TimeOfDeath() { return _TimeOfDeath; }
 
     void Awake()
     {
@@ -205,7 +208,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     private void SpawnStatUps()
     {
         // Can't Collect them myself
-        Destroy(GetComponent<PlayerCollectibles>());
+        GetComponent<PlayerCollectibles>().enabled = false;
 
         StartCoroutine(SpawnStatUpsDelay());
     }
@@ -254,6 +257,8 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
                 Announcer._Instance.DrillKO();
                 break;
         }
+
+        _TimeOfDeath = Time.time;
     }
     #endregion
 

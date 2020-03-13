@@ -80,8 +80,6 @@ public class ModelController : MonoBehaviour
     #region Abilities
     public void TransitionToAbility()
     {
-        //_modelMovement.disableRotation = true;
-
         _modelWeights.SetWeights(0, 0, 0, 0, 1);
         _DontUpdateWeights = true;
     }
@@ -96,6 +94,7 @@ public class ModelController : MonoBehaviour
 
     public void DoneAbility()
     {
+        StopCoroutine("PlayAttackWithDelay");
         _modelMovement.disableRotation = false;
         _modelWeights.SetWeights(0, 0, 0, 0, 0);
         _DontUpdateWeights = false;

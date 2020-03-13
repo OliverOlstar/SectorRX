@@ -17,20 +17,10 @@ public class PlayerCamera : MonoBehaviour
     private Vector3 _LocalRotation;
     private Vector3 _TargetLocalPosition;
 
-    public Transform lockOnTarget;
-
     public bool inverted = false;
 
     [Header("Idle")]
     [SerializeField] private float idleSpinSpeed = 1;
-
-    [Header("LockOn")]
-    [SerializeField] private float _lockOnXOffset = 0;
-    [SerializeField] private float _lockOnInputInfluence = 0.2f;
-    //private float _timeToChangeTarget = 0.0f;
-    //[SerializeField] private float _lockOnChangeDelay = 1.0f;
-    //[SerializeField] private float _lockOnChangeAmount_KB = 10.0f;
-    //[SerializeField] private float _lockOnChangeAmount_GP = 1.5f;
 
     [Header("Camera Collision")]
     [SerializeField] private LayerMask _cameraCollisionLayers = new LayerMask();
@@ -40,9 +30,9 @@ public class PlayerCamera : MonoBehaviour
 
     [Space]
     [SerializeField] private float _mouseSensitivity = 4f;
+    [SerializeField] private SOCamera _startingPreset;
     [SerializeField] private SOCamera _defaultPreset;
     [SerializeField] private SOCamera _idlePreset;
-    [SerializeField] private SOCamera _lockOnPreset;
     [SerializeField] private SOCamera _aimingPreset;
 
     private float _mouseSensitivityMult = 1f;
@@ -69,7 +59,8 @@ public class PlayerCamera : MonoBehaviour
             _StateController = targetPlayer.GetComponent<PlayerStateController>();
 
         // Set Camera to default values
-        ResetCameraVars();
+        ResetCameraVars(_startingPreset);
+        ReturnToDefaultPlayerCamera(1.75f);
 
         // Getting Transforms
         _ParentTransform = transform.parent;
@@ -83,23 +74,22 @@ public class PlayerCamera : MonoBehaviour
         transform.localPosition = _TargetLocalPosition;
     }
 
-    public void ResetCameraVars()
+    public void ResetCameraVars(SOCamera pPreset)
     {
-        _mouseSensitivityMult = _defaultPreset.SensitivityMult;
-        _offSetUp = _defaultPreset.UpOffset;
-        _offSetLeft = _defaultPreset.LeftOffset;
-        _cameraDistance = _defaultPreset.Distance;
-        _cameraMinHeight = _defaultPreset.MinY;
-        _cameraMaxHeight = _defaultPreset.MaxY;
+        _mouseSensitivityMult = pPreset.SensitivityMult;
+        _offSetUp = pPreset.UpOffset;
+        _offSetLeft = pPreset.LeftOffset;
+        _cameraDistance = pPreset.Distance;
+        _cameraMinHeight = pPreset.MinY;
+        _cameraMaxHeight = pPreset.MaxY;
     }
 
-    public void SetPlayerCameraPresets(SOCamera pDefault, SOCamera pIdle, SOCamera pLockOn, SOCamera pAiming)
+    public void SetPlayerCameraPresets(SOCamera pDefault, SOCamera pIdle, SOCamera pAiming)
     {
         _defaultPreset = pDefault;
         _idlePreset = pIdle;
-        _lockOnPreset = pLockOn;
         _aimingPreset = pAiming;
-        ResetCameraVars();
+        ResetCameraVars(_defaultPreset);
     }
 
     void Update()
@@ -114,10 +104,6 @@ public class PlayerCamera : MonoBehaviour
             {
                 DeadCameraMovement();
                 return;
-            }
-            else if (lockOnTarget != null)
-            {
-                LockOnCameraMovement();
             }
             else if (targetIdle == true)
             {
@@ -158,27 +144,6 @@ public class PlayerCamera : MonoBehaviour
                 _LocalRotation.y = _cameraMaxHeight;
             }
         }
-    }
-
-    void LockOnCameraMovement()
-    {
-        //Locked onto Target
-        Vector2 direction = new Vector2(lockOnTarget.position.z, lockOnTarget.position.x) - new Vector2(_ParentTransform.position.z, _ParentTransform.position.x) ;
-        _LocalRotation.x = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + _lockOnXOffset); // Add distance into this line potentially
-        _LocalRotation.y = (_ParentTransform.position.y - lockOnTarget.position.y);
-
-        DefaultCameraMovement(_lockOnInputInfluence);
-
-        //Vector3 _RotTarget = _LocalRotation;
-
-        //Change Target
-        //float RequiredPushAmount = ((Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0) ? lockOnChangeAmount_KB : lockOnChangeAmount_GP);
-        //if ((_LocalRotation - _RotTarget).magnitude >= RequiredPushAmount * MouseSensitivity && timeToChangeTarget <= Time.time)
-        //{
-        //    timeToChangeTarget = Time.time + lockOnChangeDelay;
-        //    Vector2 inputVector = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-        //    lockOnTarget = lockOnScript.changeTarget(inputVector); //Vector tagent to camera forward but facing mouse input direction
-        //}
     }
 
     void IdleCameraMovement()
@@ -231,7 +196,6 @@ public class PlayerCamera : MonoBehaviour
 
     public void ReturnToDefaultPlayerCamera(float pTransitionSpeed) => ChangePlayerCamera(_defaultPreset, pTransitionSpeed);
     public void SwitchToIdleCamera(float pTransitionSpeed) => ChangePlayerCamera(_idlePreset, pTransitionSpeed);
-    public void SwitchToLockOnCamera(float pTransitionSpeed) => ChangePlayerCamera(_lockOnPreset, pTransitionSpeed);
     public void SwitchToAimingCamera(float pTransitionSpeed) => ChangePlayerCamera(_aimingPreset, pTransitionSpeed);
 
     public IEnumerator CameraVarsTransition(float pOffSetUp, float pOffSetLeft, float pTurnDampening, float pCameraDistance, float pCameraMinHeight, float pCameraMaxHeight, float pSensitivityMult, float pFOV, float pTransitionSpeed)

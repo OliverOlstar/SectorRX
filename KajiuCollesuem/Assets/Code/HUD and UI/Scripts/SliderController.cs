@@ -22,12 +22,8 @@ public class SliderController : MonoBehaviour
 
     private Coroutine[] _lerpCoroutineArray = new Coroutine[10];
 
-    public float lerpTimer = 1;
-
-    public bool isLerping;
-
-    public int lerpSpeed = 1;
-    private int sliderIndex;
+    public float lerpStartDelay = 1;
+    public float lerpSpeed = 1.0f;
 
     public void SetBar(int pIndex, float pValue)
     {
@@ -57,7 +53,7 @@ public class SliderController : MonoBehaviour
 
     IEnumerator LerpMaskSlider(Slider pBar, float pValue)
     {
-        yield return new WaitForSeconds(lerpTimer);
+        yield return new WaitForSeconds(lerpStartDelay);
 
         float curValue = pBar.value;
 
