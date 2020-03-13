@@ -109,8 +109,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2adf8733daf78e542bacf65e8dbf2e71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _halfPlayerHeight: 0.75
+  halfObjHeight: 0.3
   _plasmaBallField: {fileID: 6609804801146246298}
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  _radius: 20
+  _maxTime: 5
+  _damage: 4
 --- !u!198 &421306319248709642
 ParticleSystem:
   m_ObjectHideFlags: 0

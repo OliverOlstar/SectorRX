@@ -113,7 +113,6 @@ public class PlayerCamera : MonoBehaviour
             if (targetDead == true)
             {
                 DeadCameraMovement();
-                return;
             }
             else if (lockOnTarget != null)
             {
@@ -191,11 +190,11 @@ public class PlayerCamera : MonoBehaviour
     void DeadCameraMovement()
     {
         //Slowly Rotate
-        Vector3 direction = (targetPlayer.position - transform.position).normalized;
+        /*Vector3 direction = (targetPlayer.position - transform.position).normalized;
         if (direction.x == 0 && direction.z == 0) return;
 
         Quaternion TargetQ = Quaternion.LookRotation(direction, Vector3.up);
-        _ParentTransform.rotation = Quaternion.Lerp(_ParentTransform.rotation, TargetQ, Time.deltaTime * _turnDampening);
+        _ParentTransform.rotation = Quaternion.Lerp(_ParentTransform.rotation, TargetQ, Time.deltaTime * _turnDampening);*/
     }
 
     #region Collision

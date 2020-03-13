@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class PlasmaBallHitbox : MonoBehaviour
 {
-    [SerializeField] private float _halfPlayerHeight;
+    public float halfObjHeight;
     [SerializeField] private GameObject _plasmaBallField;
-
-    /* I was thinking we could have a class variable for damage, and if the plasma ball hits the enemy directly, we multiply the
-     * damage variable for twice the damage, and pass that into the TakeDamage method. If not we just pass in the damage value as
-     * it is.
-     * */
-    public static float damage;
+    [SerializeField] private LayerMask _enemyLayer;
+    [SerializeField] private float _radius, _maxTime;
+    [SerializeField] private int _damage;
     private Rigidbody _rb;
+    private bool _enableTimer = false, _enablePBField = false;
+    private float _timer = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -23,10 +22,34 @@ public class PlasmaBallHitbox : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (IsOnGround())
+        if (IsOnGround() && !_enableTimer)
         {
-            _plasmaBallField.SetActive(true);
-            Debug.Log("Burn everything within collision sphere");
+            _rb.isKinematic = true;
+            //_plasmaBallField.SetActive(true);
+            _enableTimer = true;
+            _enablePBField = true;
+        }
+
+        else if (_enableTimer)
+        {
+            _timer += Time.deltaTime;
+
+            if (_timer > _maxTime)
+                Destroy(this.gameObject);
+        }
+
+        if (_enablePBField)
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, _radius, _enemyLayer);
+
+            if (colliders.Length > 0)
+            {
+                foreach (Collider col in colliders)
+                {
+                    col.gameObject.GetComponent<EnemyAttributes>().TakeDamage(_damage, Vector3.zero, this.gameObject);
+                }
+            }
+            _enablePBField = false;
         }
     }
 
@@ -34,7 +57,7 @@ public class PlasmaBallHitbox : MonoBehaviour
     {
         // Linecast get two points
         Vector3 lineStart = transform.position;
-        Vector3 vectorToSearch = new Vector3(lineStart.x, lineStart.y - _halfPlayerHeight, lineStart.z);
+        Vector3 vectorToSearch = new Vector3(lineStart.x, lineStart.y - halfObjHeight, lineStart.z);
 
         // Debug Line
         Color color = new Color(0.0f, 0.0f, 1.0f);
@@ -55,6 +78,6 @@ public class PlasmaBallHitbox : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag.Equals("Enemy"))
-            Destroy(this.gameObject);
+            other.gameObject.GetComponent<EnemyAttributes>().TakeDamage(_damage * 2, Vector3.zero, this.gameObject);
     }
 }
