@@ -131,6 +131,11 @@ public class Panels : MonoBehaviour
         return playerNumber - 1;
     }
 
+    public int GetPlayerIndex()
+    {
+        return playerNumber - 1;
+    }
+
     #region Enter & Exit States
     private void EnterJoinable()
     {

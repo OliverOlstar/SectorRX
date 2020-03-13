@@ -95,7 +95,7 @@ public class DeviceHandler : MonoBehaviour
         }
         else
         {
-            return playerPanel.PlayerLeft();
+            return playerPanel.GetPlayerIndex();
         }
     }
 
