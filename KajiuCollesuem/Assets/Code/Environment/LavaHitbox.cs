@@ -37,7 +37,7 @@ public class LavaHitbox : MonoBehaviour
             if (otherOnGround != null)
                 otherOnGround.ResetFallingForce();
 
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1.0f);
         }
         // Check if still colliding
         while (collidersInTar.Contains(other) && attributes.IsDead() == false);

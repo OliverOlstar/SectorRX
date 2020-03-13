@@ -25,6 +25,8 @@ public class MatchManager : MonoBehaviour
     [SerializeField] private MusicManager musicManager;
     public RectTransform transitionScreen;
 
+    private float _MatchStartTime;
+
     private void Awake()
     {
         instance = this;
@@ -57,6 +59,8 @@ public class MatchManager : MonoBehaviour
         spawnPlayerScript.SpawnAllPlayers();
         splitscreenScript.SetSplitScreen(this);
         PauseStatus();
+
+        _MatchStartTime = Time.time;
     }
 
     private void PauseStatus()
@@ -101,6 +105,7 @@ public class MatchManager : MonoBehaviour
             // Save if he lived or not
             PlayerAttributes attributes = collectables.GetComponent<PlayerAttributes>();
             player.victoryScene.Alive = !attributes.IsDead();
+            player.victoryScene.TimeOfDeath = _MatchStartTime - attributes.TimeOfDeath();
 
             connectedPlayers.playerIndex[i] = player;
         }

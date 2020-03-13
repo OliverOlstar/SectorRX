@@ -7,8 +7,9 @@ using UnityEngine;
 
 public class DeviceHandler : MonoBehaviour
 {
-    [SerializeField] public connectedPlayers _AddPlayer;
-    [SerializeField] private Panels playerPanel;
+    [HideInInspector] public connectedPlayers addPlayer;
+    [HideInInspector] public UIManager manager;
+    private Panels playerPanel;
 
 
     // If device gets disconnected
@@ -17,8 +18,14 @@ public class DeviceHandler : MonoBehaviour
         if (playerPanel != null)
         {
             int playerSlot = playerPanel.PlayerLeft();
-            _AddPlayer.OnDeviceLeaves(playerSlot);
+            addPlayer.OnDeviceLeaves(playerSlot);
+            playerPanel = null;
         }
+    }
+
+    private void OnStart()
+    {
+        playerPanel.OnStart();
     }
 
     // Disconnects the player device from assigned slot if player has left and panel was assigned
@@ -26,9 +33,19 @@ public class DeviceHandler : MonoBehaviour
     {
         if(playerPanel != null)
         {
-            int playerSlot = playerPanel.PlayerLeft();
-            _AddPlayer.OnDeviceLeaves(playerSlot);
-            playerPanel = null;
+            // If returns that entered to leave
+            if (playerPanel.OnBackward())
+            {
+                // Disconnect
+                int playerSlot = playerPanel.PlayerLeft();
+                addPlayer.OnDeviceLeaves(playerSlot);
+                playerPanel = null;
+            }
+        }
+        else
+        {
+            addPlayer.ResetPlayers();
+            manager.BackToMainMenu();
         }
     }
 
@@ -37,12 +54,12 @@ public class DeviceHandler : MonoBehaviour
     {
         if (playerPanel == null)
         {
-            playerPanel = _AddPlayer.OnDeviceJoined();
+            playerPanel = addPlayer.OnDeviceJoined();
             playerPanel.PlayerJoined(this);
         }
         else
         {
-            playerPanel.OnJoining();
+            playerPanel.OnForward();
         }
     }
 
@@ -90,6 +107,6 @@ public class DeviceHandler : MonoBehaviour
             playerPanel = null;
         }
 
-        _AddPlayer = null;
+        addPlayer = null;
     }
 }

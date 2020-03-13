@@ -84,6 +84,7 @@ public class PlayerBallHitbox : MonoBehaviour
     IEnumerator destroyDelay()
     {
         GetComponent<Collider>().enabled = false;
+        GetComponent<Renderer>().enabled = false;
         yield return new WaitForSeconds(0.1f);
         transform.GetChild(0).gameObject.SetActive(false);
         yield return new WaitForSeconds(0.45f);

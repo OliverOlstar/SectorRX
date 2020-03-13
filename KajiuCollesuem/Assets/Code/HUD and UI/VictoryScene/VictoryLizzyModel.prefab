@@ -15,8 +15,10 @@ GameObject:
   - component: {fileID: 792327145723076295}
   - component: {fileID: 1110234338274139934}
   - component: {fileID: 5955202524570477082}
+  - component: {fileID: 6713020529355643226}
+  - component: {fileID: 4655705217663595033}
   m_Layer: 0
-  m_Name: MenuLizzy P1
+  m_Name: VictoryLizzyModel
   m_TagString: Metal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -138,25 +140,34 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0.11098779
-      outSlope: 0.11098779
+      inSlope: 4.15684
+      outSlope: 4.15684
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.085
+      outWeight: 0.09646347
+    - serializedVersion: 3
+      time: 0.3281094
+      value: 0.5004319
+      inSlope: 0.055644058
+      outSlope: 0.055644058
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.10626693
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2.979143
-      outSlope: 2.979143
+      inSlope: 2.3995059
+      outSlope: 2.3995059
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.031666696
+      inWeight: 0.052979052
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _Speed: 0.3
+  _Speed: 0.75
   _Looping: 0
 --- !u!114 &5955202524570477082
 MonoBehaviour:
@@ -197,6 +208,33 @@ MonoBehaviour:
     m_RotationOrder: 4
   _Speed: 0.4
   _Looping: 1
+--- !u!114 &6713020529355643226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792327145723076289}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2230ec401613bb249831baad6d688487, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Axis: {x: 0, y: 0, z: 1}
+  _Speed: 25
+--- !u!114 &4655705217663595033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792327145723076289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9f1f220fcc164749bcd894da6568d48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Speed: 3.6
 --- !u!1001 &4892198959015353740
 PrefabInstance:
   m_ObjectHideFlags: 0

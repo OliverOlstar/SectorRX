@@ -22,6 +22,7 @@ public struct VictoryStats
 {
     public float[] Stats;
     public bool Alive;
+    public float TimeOfDeath;
 }
 
 public class connectedPlayers : MonoBehaviour
@@ -30,10 +31,11 @@ public class connectedPlayers : MonoBehaviour
     private List<int> playerSlots = new List<int>() { 0, 1, 2, 3, 4, 5 };
     public static List<UsedDevices> playerIndex = new List<UsedDevices>();
     public GameObject devicePrefab;
-    public GameObject startButton;
 
     private DeviceHandler[] _Devices = new DeviceHandler[6]; 
     [SerializeField] private Panels[] playerPanels;
+
+    [SerializeField] private UIManager _Manager;
 
     private void Awake()
     {
@@ -50,7 +52,8 @@ public class connectedPlayers : MonoBehaviour
         for (int i = 0; i < _Devices.Length; i++)
         {
             _Devices[i] = Instantiate(devicePrefab).GetComponent<DeviceHandler>();
-            _Devices[i]._AddPlayer = this;
+            _Devices[i].addPlayer = this;
+            _Devices[i].manager = _Manager;
         }
     }
 
@@ -96,6 +99,7 @@ public class connectedPlayers : MonoBehaviour
     {
         //Allows players to connect if on join screen
         playersConnected++;
+        _Manager.PlayerReadyUpdateUI();
 
         //Sets player panel to first open slot and then removes it from list
         int slot = playerSlots[0];
@@ -107,6 +111,7 @@ public class connectedPlayers : MonoBehaviour
     {
         //Disconnects player
         playersConnected--;
+        _Manager.PlayerReadyUpdateUI();
 
         //Adds new open player slot to list then properly sorts list
         playerSlots.Add(pSlot);

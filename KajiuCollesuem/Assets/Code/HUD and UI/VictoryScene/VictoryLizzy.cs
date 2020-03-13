@@ -5,14 +5,16 @@ using UnityEngine;
 public class VictoryLizzy : MonoBehaviour
 {
     private Animator _Anim;
-    [SerializeField] private PlayAnimation _DeadAnimation;
-
     private ColorSetter _ColorSetter;
+    private Spin _Spin;
+
+    [SerializeField] private PlayAnimation _DeadAnimation;
 
     private void Awake()
     {
         _Anim = GetComponentInChildren<Animator>();
         _ColorSetter = GetComponent<ColorSetter>();
+        _Spin = GetComponent<Spin>();
     }
 
     public void SetLizzy(UsedDevices pPlayer)
@@ -28,6 +30,7 @@ public class VictoryLizzy : MonoBehaviour
         if (pAlive)
         {
             _Anim.SetFloat("Pose", Mathf.Round(Random.value * 4) + 1);
+            _Spin.enabled = true;
         }
         // If Loser
         else
@@ -36,7 +39,7 @@ public class VictoryLizzy : MonoBehaviour
             _Anim.SetFloat("Pose", 0);
         }
 
-        StartCoroutine("TransitionToPoseRoutine", pAlive);
+        StartCoroutine(TransitionToPoseRoutine(pAlive));
     }
 
     private IEnumerator TransitionToPoseRoutine(bool pAlive)
@@ -44,17 +47,22 @@ public class VictoryLizzy : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
 
         float state = 0;
+        float randomizedStart = 0;
+        float defaultStart = 0.925f;
 
-        while (state < 1)
+        if (pAlive == false)
+            randomizedStart = (Random.value - 0.5f) / 10;
+        else
+            defaultStart = 0.999f;
+
+        while (state < defaultStart - randomizedStart)
         {
-            state += Mathf.Lerp(state, 1, Time.deltaTime * 0.01f);
+            state = Mathf.Lerp(state, 1, Time.deltaTime * 2f);
             _Anim.SetFloat("State", state);
             yield return null;
         }
 
         _Anim.SetFloat("State", 1);
-
-        yield return new WaitForSeconds(0.5f);
 
         if (pAlive == false)
             _DeadAnimation.enabled = true;

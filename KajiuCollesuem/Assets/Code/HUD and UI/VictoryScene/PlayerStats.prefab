@@ -3065,8 +3065,8 @@ MonoBehaviour:
   - {fileID: 360655778580462775}
   - {fileID: 360655779990319677}
   - {fileID: 360655779918690813}
-  lerpStartDelay: 2
-  lerpSpeed: 1
+  lerpStartDelay: 1
+  lerpSpeed: 2
 --- !u!114 &360655780026383295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3080,6 +3080,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _PlayerIndex: 0
+  _OffScreenY: 500
+  _FallDampening: 4
 --- !u!1 &360655780078498620
 GameObject:
   m_ObjectHideFlags: 0
@@ -3948,8 +3950,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -136.15, y: 1.47}
-  m_SizeDelta: {x: 87.705, y: 382.35}
+  m_AnchoredPosition: {x: -8.26, y: 1.47}
+  m_SizeDelta: {x: 366.32, y: 382.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5647374381023728190
 CanvasRenderer:
@@ -3972,7 +3974,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0.20189762, a: 0.08235294}
+  m_Color: {r: 1, g: 0, b: 0.20189762, a: 0.20784314}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -3986,4 +3988,4 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 0.6
