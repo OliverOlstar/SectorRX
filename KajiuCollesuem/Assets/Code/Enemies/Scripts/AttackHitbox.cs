@@ -29,7 +29,7 @@ public class AttackHitbox : MonoBehaviour
         //If collided with the player model, player takes damage
         if (otherAttributes != null)
         {
-            otherAttributes.TakeDamage(_damage, transform.forward * _knockForce + Vector3.up * _knockupForce, _Attacker);
+            otherAttributes.TakeDamage(_damage, transform.forward * _knockForce + Vector3.up * _knockupForce, _Attacker, "Wolf");
             alreadyHit.Add(otherAttributes);
         }
     }

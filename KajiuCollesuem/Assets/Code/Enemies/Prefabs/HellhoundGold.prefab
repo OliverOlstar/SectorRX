@@ -737,8 +737,7 @@ MonoBehaviour:
   - {fileID: 7406897706359115183}
   MaskSlider:
   - {fileID: 7639154377838468808}
-  lerpTimer: 0.5
-  isLerping: 0
+  lerpStartDelay: 1
   lerpSpeed: 8
 --- !u!1 &8002257301608304828
 GameObject:
@@ -1143,10 +1142,11 @@ MonoBehaviour:
   - {fileID: 7865935160635239468, guid: 8991995bcdcc5f9448ce755d60709332, type: 3}
   - {fileID: 7865935160635239468, guid: fc6c0dce4ee316d4a89e2bdac520d070, type: 3}
   - {fileID: 7865935160635239468, guid: 6a2b3132088280e4da87ec7c6f94ee7d, type: 3}
+  - {fileID: 7865935160635239468, guid: 7ed72cef78bbfce4c9db2d98e60e7c80, type: 3}
   - {fileID: 7865935160635239468, guid: 45518b7b8b4c1a44aa0b634050b17ec9, type: 3}
   - {fileID: 7865935160635239468, guid: b041b96a0e0af1b48bcc93de588421bd, type: 3}
   - {fileID: 7865935160635239468, guid: ce4b818389d341a4c9e0de4399b38e40, type: 3}
-  _cellSpawnCount: 20
+  _cellSpawnCount: 24
   _enabled: 0
 --- !u!114 &3771036346408154702
 MonoBehaviour:
@@ -1196,7 +1196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 643df3d2147bc4a46b41176fdfc5f1af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 6.5
+  _rotationSpeed: 7
 --- !u!195 &1969429415045013407
 NavMeshAgent:
   m_ObjectHideFlags: 0

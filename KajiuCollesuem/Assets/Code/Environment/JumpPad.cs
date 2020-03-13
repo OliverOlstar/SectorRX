@@ -5,22 +5,23 @@ using UnityEngine;
 public class JumpPad : MonoBehaviour
 {
     [SerializeField] private Vector3 _force;
-    
+    [SerializeField] private AudioSource _PadSource;
+
     private void OnTriggerEnter(Collider other)
     {
-        //if (other.CompareTag("Player"))
-        //{
-            // Add Force
-            Rigidbody otherRB = other.GetComponent<Rigidbody>();
+        // Add Force
+        Rigidbody otherRB = other.GetComponent<Rigidbody>();
 
-            if (otherRB != null)
-                otherRB.AddForce(_force, ForceMode.Impulse);
+        if (otherRB != null)
+        {
+            otherRB.AddForce(_force, ForceMode.Impulse);
+            _PadSource.Play();
+        }
 
-            // Reset Falling force
-            OnGroundComponent otherOnGround = other.GetComponent<OnGroundComponent>();
+        // Reset Falling force
+        OnGroundComponent otherOnGround = other.GetComponent<OnGroundComponent>();
 
-            if (otherOnGround != null)
-                otherOnGround.ResetFallingForce();
-        //}
+        if (otherOnGround != null)
+            otherOnGround.ResetFallingForce();
     }
 }

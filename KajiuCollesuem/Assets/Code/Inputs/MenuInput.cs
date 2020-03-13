@@ -51,6 +51,14 @@ public class @MenuInput : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""Start"",
+                    ""type"": ""Button"",
+                    ""id"": ""5fa1b085-41a2-47ee-a2fe-b7b2a2f43a78"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""ColorPicking"",
                     ""type"": ""Button"",
                     ""id"": ""861cc70c-4fea-440c-b305-8509a100074e"",
@@ -117,17 +125,6 @@ public class @MenuInput : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a662ab0b-bb6e-44a7-bb3c-346e77b122cd"",
-                    ""path"": ""<Gamepad>/start"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Forward"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""3e3aa30e-824d-48f0-84a9-d3268ce443d7"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
@@ -173,6 +170,17 @@ public class @MenuInput : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""93f0e5d1-bebe-4da6-aebb-13bb7b232b6b"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ColorPicking"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e987f7c1-0158-47eb-968d-5bb1be039da3"",
                     ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -211,6 +219,28 @@ public class @MenuInput : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ea6e6f6-4250-4fec-8b79-8509d000ca4a"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Start"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c6b71bfa-cd8f-4c22-b656-a82ef5a56863"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Start"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -253,6 +283,7 @@ public class @MenuInput : IInputActionCollection, IDisposable
         m_Menu_Right = m_Menu.FindAction("Right", throwIfNotFound: true);
         m_Menu_Forward = m_Menu.FindAction("Forward", throwIfNotFound: true);
         m_Menu_Backward = m_Menu.FindAction("Backward", throwIfNotFound: true);
+        m_Menu_Start = m_Menu.FindAction("Start", throwIfNotFound: true);
         m_Menu_ColorPicking = m_Menu.FindAction("ColorPicking", throwIfNotFound: true);
     }
 
@@ -307,6 +338,7 @@ public class @MenuInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Menu_Right;
     private readonly InputAction m_Menu_Forward;
     private readonly InputAction m_Menu_Backward;
+    private readonly InputAction m_Menu_Start;
     private readonly InputAction m_Menu_ColorPicking;
     public struct MenuActions
     {
@@ -316,6 +348,7 @@ public class @MenuInput : IInputActionCollection, IDisposable
         public InputAction @Right => m_Wrapper.m_Menu_Right;
         public InputAction @Forward => m_Wrapper.m_Menu_Forward;
         public InputAction @Backward => m_Wrapper.m_Menu_Backward;
+        public InputAction @Start => m_Wrapper.m_Menu_Start;
         public InputAction @ColorPicking => m_Wrapper.m_Menu_ColorPicking;
         public InputActionMap Get() { return m_Wrapper.m_Menu; }
         public void Enable() { Get().Enable(); }
@@ -338,6 +371,9 @@ public class @MenuInput : IInputActionCollection, IDisposable
                 @Backward.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnBackward;
                 @Backward.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnBackward;
                 @Backward.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnBackward;
+                @Start.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnStart;
+                @Start.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnStart;
+                @Start.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnStart;
                 @ColorPicking.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnColorPicking;
                 @ColorPicking.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnColorPicking;
                 @ColorPicking.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnColorPicking;
@@ -357,6 +393,9 @@ public class @MenuInput : IInputActionCollection, IDisposable
                 @Backward.started += instance.OnBackward;
                 @Backward.performed += instance.OnBackward;
                 @Backward.canceled += instance.OnBackward;
+                @Start.started += instance.OnStart;
+                @Start.performed += instance.OnStart;
+                @Start.canceled += instance.OnStart;
                 @ColorPicking.started += instance.OnColorPicking;
                 @ColorPicking.performed += instance.OnColorPicking;
                 @ColorPicking.canceled += instance.OnColorPicking;
@@ -388,6 +427,7 @@ public class @MenuInput : IInputActionCollection, IDisposable
         void OnRight(InputAction.CallbackContext context);
         void OnForward(InputAction.CallbackContext context);
         void OnBackward(InputAction.CallbackContext context);
+        void OnStart(InputAction.CallbackContext context);
         void OnColorPicking(InputAction.CallbackContext context);
     }
 }

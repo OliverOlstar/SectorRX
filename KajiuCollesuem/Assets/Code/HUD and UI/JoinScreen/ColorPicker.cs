@@ -32,7 +32,7 @@ public class ColorPicker : MonoBehaviour
 
     public ColorSet StartingColor()
     {
-        int index = _OpenIndexs[0];
+        int index = _OpenIndexs[Mathf.RoundToInt(Random.value)];
         _OpenIndexs.Remove(index);
         return _ColorSets[index];
     }

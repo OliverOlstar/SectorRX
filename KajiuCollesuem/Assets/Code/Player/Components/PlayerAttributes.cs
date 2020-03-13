@@ -13,6 +13,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 {
     private PlayerStateController _stateController;
     public SliderController sliderControl;
+    public CanvasGroup playerHUD;
 
     public float weight = 1;
 
@@ -38,7 +39,10 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     [SerializeField] private GameObject[] _itemPrefabs;
     [SerializeField] private int _cellSpawnCount = 5;
 
+    private float _TimeOfDeath = 0.0f;
+
     public bool IsDead() { return _health == 0; }
+    public float TimeOfDeath() { return _TimeOfDeath; }
 
     void Awake()
     {
@@ -139,7 +143,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
     #region General Functions
     //GENERAL FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////
-    public bool TakeDamage(int pAmount, Vector3 pKnockback, GameObject pAttacker, bool pIgnoreWeight = false)
+    public bool TakeDamage(int pAmount, Vector3 pKnockback, GameObject pAttacker, string pTag, bool pIgnoreWeight = false)
     {
         // Return if already dead
         if (_health <= 0)
@@ -176,7 +180,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         if (died)
         {
             // Killed
-            Death(pAttacker);
+            Death(pTag);
         }
         else if (pAttacker == null)
         {
@@ -185,7 +189,6 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             _stateController._modelController.AddTarJump(1, 0.2f, 1.1f, 0.65f);
             _stateController._modelController.AddCrouching(0.4f, 0.2f, 0.2f);
             _stateController._CameraShake.PlayShake(6.0f, 8.0f, 0.6f, 0.6f);
-            Debug.Log("hit by tar");
         }
         else
         {
@@ -193,7 +196,6 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             _stateController._Sound.HitByAttackSound();
             _stateController._modelController.AddStunned(1, (Random.value - 0.5f) * 2, easeOutDelay, easeOut);
             _stateController._CameraShake.PlayShake(pAmount / 4, 6.0f, 0.5f, 0.8f);
-            Debug.Log("hit by something");
         }
 
         // If usingAbility, Cancel it
@@ -206,7 +208,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     private void SpawnStatUps()
     {
         // Can't Collect them myself
-        Destroy(GetComponent<PlayerCollectibles>());
+        GetComponent<PlayerCollectibles>().enabled = false;
 
         StartCoroutine(SpawnStatUpsDelay());
     }
@@ -223,33 +225,40 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         }
     }
 
-    private void Death(GameObject pAttacker)
+    private void Death(string pAttackerTag)
     {
+        StartCoroutine("HUDAlphaDown");
+
         bool matchNotOver = MatchManager.instance.ManagerEnd();
         _stateController._Sound.PlayerDeathSound();
         _stateController._lockOnComponent.SwitchToDeadCamera();
         if (matchNotOver) SpawnStatUps();
 
         // Announcer
-        if (pAttacker == null)
+        switch (pAttackerTag)
         {
-            Announcer._Instance.IncinKO();
-            Debug.Log("Null Killer");
+            case "Tar":
+                Announcer._Instance.TarKO();
+                break;
+
+            case "Player":
+                Announcer._Instance.NormalKO();
+                break;
+
+            case "Ability":
+                Announcer._Instance.AbilityKO();
+                break;
+
+            case "Wolf":
+                Announcer._Instance.WolfKO();
+                break;
+
+            case "Drill":
+                Announcer._Instance.DrillKO();
+                break;
         }
-        else if (pAttacker.CompareTag("Player"))
-        {
-            Announcer._Instance.NormalKO();
-            Debug.Log("Player Killer");
-        }
-        else if (pAttacker.CompareTag("Enemy"))
-        {
-            Announcer._Instance.EvisKO();
-            Debug.Log("Enemy Killer");
-        }
-        else
-        {
-            Debug.Log("Untagged Killer");
-        }
+
+        _TimeOfDeath = Time.time;
     }
     #endregion
 
@@ -268,6 +277,15 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         {
             modifyShield(_shieldRegenAmount);
             yield return new WaitForSeconds(_shieldRegenDelaySeconds);
+        }
+    }
+
+    private IEnumerator HUDAlphaDown()
+    {
+        while(playerHUD.alpha > 0)
+        {
+            playerHUD.alpha -= 0.3f * Time.deltaTime;
+            yield return new WaitForSeconds(0.01f);
         }
     }
     #endregion

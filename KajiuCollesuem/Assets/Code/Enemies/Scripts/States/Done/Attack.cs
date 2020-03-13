@@ -42,7 +42,6 @@ public class Attack : MonoBehaviour, IState
     {
         //Debug.Log("Fireball: Enter");
         _enabled = true;
-        //transform.LookAt(_target.position);
         _anim.SetBool("Attacking", true);
         _agent.enabled = false;
     }

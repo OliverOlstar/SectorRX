@@ -13,6 +13,7 @@ public class MenuCamera : MonoBehaviour
     [Space]
     [SerializeField] private float _ScaleMult = 0.1f;
     [SerializeField] private float _ScaleOffset = 1.0f;
+    public float scaleOffset = 1.0f;
     private Camera _Camera;
 
     private int curIndex;
@@ -35,7 +36,7 @@ public class MenuCamera : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, _postions[curIndex], Time.deltaTime * _positionDampening);
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(_rotationEulers[curIndex]), Time.deltaTime * _rotationDampening);
          
-        _Camera.orthographicSize =  Mathf.Abs(Screen.width - Screen.height) * _ScaleMult + _ScaleOffset;
+        _Camera.orthographicSize =  Mathf.Abs(Screen.width - Screen.height) * _ScaleMult + _ScaleOffset + scaleOffset;
     }
 
     public void ToggleCamera(int pIndex) => curIndex = pIndex;

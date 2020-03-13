@@ -10,37 +10,43 @@ public class Panels : MonoBehaviour
 {
     [SerializeField] int playerNumber;
     [SerializeField] private connectedPlayers _AddPlayer;
-    [SerializeField] private UIManager _CanPlayChecker;
-    [SerializeField] private Text playerPanels;
-    private int stateValue = 0;
-    [SerializeField] private MenuLizzy _myLizzy;
-    [HideInInspector] public ColorSet myColorSet;
+    [SerializeField] private UIManager _Manager;
 
+    // 0 - Joinable, 1 - Select Abilities, 2 - Locked In
+    private int stateValue = 0;
     [HideInInspector] public DeviceHandler myDevice = null;
 
+    [Header("Abilities")]
     [SerializeField] private Sprite[] abilityIcons;
     [SerializeField] private SpriteRenderer ability;
-    [SerializeField] private RectTransform abilityOneRect, abilityTwoRect;
-    [SerializeField] private RectTransform dPadLeftRect, dPadRightRect;
+    private RectTransform _abilityTransform;
     [HideInInspector] public int abilityNumber = 0;
+
+    [Header("Visuals")]
+    [SerializeField] private GameObject joinText;
+    [SerializeField] private GameObject readyText;
+
+    [Space]
     [SerializeField] private Animator animShield;
     [SerializeField] private Animator animMask;
     private SpriteRenderer _animMaskRenderer;
 
-    [SerializeField] private AudioClip[] lockedIn = new AudioClip[4];
-    [SerializeField] private AudioClip combatantHere;
-    [SerializeField] private AudioSource sfxSource;
-
-
+    [Header("Model")]
+    [SerializeField] private MenuLizzy _myLizzy;
     [SerializeField] private ColorPicker _ColorPicker;
     private int _CurrentColorIndex = 0;
+    [HideInInspector] public ColorSet myColorSet;
+
+    [Header("Sound")]
+    [SerializeField] private AudioClip[] lockedIn = new AudioClip[4];
+    [SerializeField] private AudioSource sfxSource;
 
     private void Start()
     {
+        _abilityTransform = ability.GetComponent<RectTransform>();
         _animMaskRenderer = animMask.GetComponent<SpriteRenderer>();
         
         UpdateIcons();
-
         RemoveAbilitiesUI();
 
         ColorSet set = _ColorPicker.StartingColor();
@@ -48,38 +54,138 @@ public class Panels : MonoBehaviour
         _myLizzy.SetAbilities(0);
     }
 
-    public void OnJoining()
+    public void OnStart()
+    {
+        // Player Enters to Start Match
+        _AddPlayer.SetPlayerOrder();
+        _Manager.LoadLevel(1);
+    }
+
+    public void OnForward()
     {
         switch (stateValue)
         {
             case 0:
-                // Player Locked In
-                if(stateValue == 0)
-                {
-                    stateValue = 1;
-
-                    sfxSource.clip = lockedIn[Random.Range(0, 3)];
-                    sfxSource.volume = Random.Range(0.6f, 0.8f);
-                    sfxSource.PlayDelayed(0.25f);
-                    playerPanels.text = "READY!";
-                    StartCoroutine(RemoveAbilitiesUI());
-                    _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.LockedIn);
-
-                    animShield.SetBool("hasJoined", true);
-                    animMask.SetBool("maskJoined", true);
-
-                    _CanPlayChecker.PlayerReadyToggle(true);
-                }
+                // Player Connected
+                stateValue = 1;
+                ExitJoinable();
+                EnterSelectAbilities();
                 break;
-            
+
             case 1:
-                // Player Enters to Start Match
-                _AddPlayer.SetPlayerOrder();
-                SceneManager.LoadSceneAsync(1);
+                // Player Locked In
+                stateValue = 2;
+                ExitSelectAbilities();
+                EnterReady();
                 break;
         }
     }
 
+    public bool OnBackward()
+    {
+        switch (stateValue)
+        {
+            case 1:
+                // Player Disconnected
+                stateValue = 0;
+                ExitSelectAbilities();
+                EnterJoinable();
+                return true;
+
+            case 2:
+                // Player Left Locked In
+                stateValue = 1;
+                ExitReady();
+                EnterSelectAbilities();
+                break;
+        }
+
+        return false;
+    }
+
+    // Player Enters To Join
+    public void PlayerJoined(DeviceHandler pDevice)
+    {
+        myDevice = pDevice;
+        OnForward();
+    }
+
+    // Player Enters to Leave Match
+    public int PlayerLeft()
+    {
+        myDevice = null;
+
+        if (stateValue == 2)
+        {
+            ExitReady();
+        }
+        else if (stateValue == 1)
+        {
+            ExitSelectAbilities();
+            _Manager.PlayerReadyUpdateUI();
+        }
+
+        EnterJoinable();
+        stateValue = 0;
+
+        return playerNumber - 1;
+    }
+
+    public int GetPlayerIndex()
+    {
+        return playerNumber - 1;
+    }
+
+    #region Enter & Exit States
+    private void EnterJoinable()
+    {
+        joinText.SetActive(true);
+        _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.NotJoined);
+    }
+
+    private void ExitJoinable()
+    {
+        joinText.SetActive(false);
+    }
+
+    private void EnterSelectAbilities()
+    {
+        ShowAbilitiesUI();
+        _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.Joined);
+    }
+
+    private void ExitSelectAbilities()
+    {
+        StartCoroutine(RemoveAbilitiesUI());
+    }
+
+    private void EnterReady()
+    {
+        // Visuals
+        _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.LockedIn);
+        animShield.SetBool("hasJoined", true);
+        animMask.SetBool("maskJoined", true);
+        readyText.SetActive(true);
+
+        // Sound
+        sfxSource.clip = lockedIn[Random.Range(0, 3)];
+        sfxSource.volume = Random.Range(0.6f, 0.8f);
+        sfxSource.PlayDelayed(0.25f);
+
+        _Manager.PlayerReadyToggle(true);
+    }
+    private void ExitReady()
+    {
+        // Visuals
+        animShield.SetBool("hasJoined", false);
+        animMask.SetBool("maskJoined", false);
+        readyText.SetActive(false);
+
+        _Manager.PlayerReadyToggle(false);
+    }
+#endregion
+
+    #region Colors
     public void OnColorPicking()
     {
         ColorSet set = _ColorPicker.SwitchColor(_CurrentColorIndex);
@@ -93,10 +199,12 @@ public class Panels : MonoBehaviour
         _myLizzy.SetColors(pSet);
         _animMaskRenderer.color = pSet.color;
     }
+    #endregion
 
+    #region Abilities
     public void OnLeft()
     {
-        if(stateValue == 0)
+        if (stateValue == 1)
         {
             ChangeIcons(-1);
             _myLizzy.SetAbilities(abilityNumber);
@@ -105,7 +213,7 @@ public class Panels : MonoBehaviour
 
     public void OnRight()
     {
-        if (stateValue == 0)
+        if (stateValue == 1)
         {
             ChangeIcons(1);
             _myLizzy.SetAbilities(abilityNumber);
@@ -117,11 +225,11 @@ public class Panels : MonoBehaviour
         abilityNumber += pDirection;
 
         // Check if outside bounds
-        if(abilityNumber < 0)
+        if (abilityNumber < 0)
         {
             abilityNumber = abilityIcons.Length - 1;
         }
-        else if(abilityNumber >= abilityIcons.Length)
+        else if (abilityNumber >= abilityIcons.Length)
         {
             abilityNumber = 0;
         }
@@ -134,75 +242,22 @@ public class Panels : MonoBehaviour
         ability.sprite = abilityIcons[abilityNumber];
     }
 
-    // Player Enters To Join
-    public void PlayerJoined(DeviceHandler pDevice)
-    {
-        myDevice = pDevice;
-
-        playerPanels.text = " ";
-
-        // Abilities
-        ShowAbilitiesUI();
-
-        _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.Joined);
-
-        _CanPlayChecker.PlayerReadyUpdateUI();
-    }
-
-    // Player Enters to Leave Match
-    public int PlayerLeft()
-    {
-        myDevice = null;
-
-        playerPanels.text = "Press 'Space'\n or \n'Start' to Join";
-        stateValue = 0;
-
-        _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.NotJoined);
-
-        StartCoroutine(RemoveAbilitiesUI());
-
-        animShield.SetBool("hasJoined", false);
-        animMask.SetBool("maskJoined", false);
-
-        if (stateValue == 0)
-            _CanPlayChecker.PlayerReadyToggle(false);
-
-        return playerNumber - 1;
-    }
-
     private void ShowAbilitiesUI()
     {
         StopAllCoroutines();
-        abilityOneRect.gameObject.SetActive(true);
-        dPadLeftRect.gameObject.SetActive(true);
-        //abilityTwoRect.gameObject.SetActive(true);
-        dPadRightRect.gameObject.SetActive(true);
-        CancelPreviousAbilitiesTweens();
-        abilityOneRect.DOAnchorPos(new Vector2(0, -30), 0.4f);
-        dPadLeftRect.DOAnchorPos(new Vector2(-157, -201), 0.4f);
-        //abilityTwoRect.DOAnchorPos(new Vector2(0, -145), 0.4f);
-        dPadRightRect.DOAnchorPos(new Vector2(157, -201), 0.4f);
+        _abilityTransform.DOKill();
+
+        _abilityTransform.DOAnchorPos(new Vector2(0, -30), 0.4f);
+        _abilityTransform.gameObject.SetActive(true);
     }
 
     IEnumerator RemoveAbilitiesUI()
     {
-        CancelPreviousAbilitiesTweens();
-        abilityOneRect.DOAnchorPos(new Vector2(0, -1930), 1.6f);
-        dPadLeftRect.DOAnchorPos(new Vector2(-157, -2131), 1.6f);
-        //abilityTwoRect.DOAnchorPos(new Vector2(0, -2110), 1.6f);
-        dPadRightRect.DOAnchorPos(new Vector2(157, -2131), 1.6f);
-        yield return new WaitForSeconds(1.6f);
-        abilityOneRect.gameObject.SetActive(false);
-        dPadLeftRect.gameObject.SetActive(false);
-        //abilityTwoRect.gameObject.SetActive(false);
-        dPadRightRect.gameObject.SetActive(false);
-    }
+        _abilityTransform.DOKill();
+        _abilityTransform.DOAnchorPos(new Vector2(0, -1930), 1.6f);
 
-    private void CancelPreviousAbilitiesTweens()
-    {
-        abilityOneRect.DOKill();
-        dPadLeftRect.DOKill();
-        //abilityTwoRect.DOKill();
-        dPadRightRect.DOKill();
+        yield return new WaitForSeconds(0.25f);
+        _abilityTransform.gameObject.SetActive(false);
     }
+    #endregion
 }

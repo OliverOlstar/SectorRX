@@ -62,14 +62,6 @@
                     "interactions": ""
                 },
                 {
-                    "name": "LockOn",
-                    "type": "Button",
-                    "id": "c7d9a5e6-df6b-4763-b4d2-b812c2450b22",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "AnyInput",
                     "type": "PassThrough",
                     "id": "427686e6-923e-49fb-b4e6-aa461cf2d70f",
@@ -430,23 +422,12 @@
                 },
                 {
                     "name": "",
-                    "id": "d3646187-b25e-4773-9baf-b3ca52ca297a",
-                    "path": "<Keyboard>/q",
+                    "id": "88871c72-92ab-4949-8e3f-2f34c0763e46",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "LockOn",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b02f9d9e-fa8a-49b4-b740-0d203e848886",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "LockOn",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -594,6 +575,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bac21d76-b061-4c02-b1bd-b2fdeeccb659",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false

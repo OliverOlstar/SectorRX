@@ -56,11 +56,17 @@ public class Dead : MonoBehaviour, IState
 
     public void AEDeadDone()
     {
+        int[] spawnIndex = new int[3];
+        spawnIndex[0] = Random.Range(0, _itemPrefabs.Length);
+        spawnIndex[1] = Random.Range(0, _itemPrefabs.Length);
+        spawnIndex[2] = Random.Range(0, _itemPrefabs.Length);
+
         // Coins disperse
         for (int i = 0; i < _cellSpawnCount; ++i)
         {
-            GameObject tmp = Instantiate(_itemPrefabs[Random.Range(0, _itemPrefabs.Length)]);
-            tmp.transform.position = transform.position + Vector3.up * 0.6f;
+            int randomIndex = spawnIndex[Random.Range(0, spawnIndex.Length)];
+            GameObject tmp = Instantiate(_itemPrefabs[randomIndex]);
+            tmp.transform.position = transform.position + Vector3.up * 0.65f;
         }
         Destroy(this.gameObject);
     }

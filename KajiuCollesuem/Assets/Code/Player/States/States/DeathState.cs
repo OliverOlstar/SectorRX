@@ -14,10 +14,6 @@ public class DeathState : BaseState
 
     public override void Enter()
     {
-        Debug.Log("DeathState: Enter");
-        //stateController._respawnComponent.Dead();
-        //stateController._modelController.Dead();
-        //_stateController._ragdollManager.SwitchToRagdoll();
         _stateController._modelController.PlayDead();
         _stateController._movementComponent.disableMovement = true;
         _stateController.GetComponent<Collider>().material.bounciness = 1.0f;
@@ -26,8 +22,7 @@ public class DeathState : BaseState
 
     public override void Exit()
     {
-        Debug.Log("DeathState: Exit");
-        //stateController._modelController.Respawn();
+
     }
 
     public override Type Tick()

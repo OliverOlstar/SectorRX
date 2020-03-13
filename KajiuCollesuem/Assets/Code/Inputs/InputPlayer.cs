@@ -75,14 +75,6 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""LockOn"",
-                    ""type"": ""Button"",
-                    ""id"": ""c7d9a5e6-df6b-4763-b4d2-b812c2450b22"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""AnyInput"",
                     ""type"": ""PassThrough"",
                     ""id"": ""427686e6-923e-49fb-b4e6-aa461cf2d70f"",
@@ -443,23 +435,12 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""d3646187-b25e-4773-9baf-b3ca52ca297a"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""id"": ""88871c72-92ab-4949-8e3f-2f34c0763e46"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""LockOn"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b02f9d9e-fa8a-49b4-b740-0d203e848886"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""LockOn"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -607,6 +588,17 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bac21d76-b061-4c02-b1bd-b2fdeeccb659"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -1005,7 +997,6 @@ public class @InputPlayer : IInputActionCollection, IDisposable
         m_Player_HeavyAttack = m_Player.FindAction("HeavyAttack", throwIfNotFound: true);
         m_Player_Dodge = m_Player.FindAction("Dodge", throwIfNotFound: true);
         m_Player_Ability = m_Player.FindAction("Ability", throwIfNotFound: true);
-        m_Player_LockOn = m_Player.FindAction("LockOn", throwIfNotFound: true);
         m_Player_AnyInput = m_Player.FindAction("AnyInput", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         // PauseScreen
@@ -1078,7 +1069,6 @@ public class @InputPlayer : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_HeavyAttack;
     private readonly InputAction m_Player_Dodge;
     private readonly InputAction m_Player_Ability;
-    private readonly InputAction m_Player_LockOn;
     private readonly InputAction m_Player_AnyInput;
     private readonly InputAction m_Player_Pause;
     public struct PlayerActions
@@ -1092,7 +1082,6 @@ public class @InputPlayer : IInputActionCollection, IDisposable
         public InputAction @HeavyAttack => m_Wrapper.m_Player_HeavyAttack;
         public InputAction @Dodge => m_Wrapper.m_Player_Dodge;
         public InputAction @Ability => m_Wrapper.m_Player_Ability;
-        public InputAction @LockOn => m_Wrapper.m_Player_LockOn;
         public InputAction @AnyInput => m_Wrapper.m_Player_AnyInput;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -1125,9 +1114,6 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 @Ability.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility;
                 @Ability.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility;
                 @Ability.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility;
-                @LockOn.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockOn;
-                @LockOn.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockOn;
-                @LockOn.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockOn;
                 @AnyInput.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAnyInput;
                 @AnyInput.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAnyInput;
                 @AnyInput.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAnyInput;
@@ -1159,9 +1145,6 @@ public class @InputPlayer : IInputActionCollection, IDisposable
                 @Ability.started += instance.OnAbility;
                 @Ability.performed += instance.OnAbility;
                 @Ability.canceled += instance.OnAbility;
-                @LockOn.started += instance.OnLockOn;
-                @LockOn.performed += instance.OnLockOn;
-                @LockOn.canceled += instance.OnLockOn;
                 @AnyInput.started += instance.OnAnyInput;
                 @AnyInput.performed += instance.OnAnyInput;
                 @AnyInput.canceled += instance.OnAnyInput;
@@ -1320,7 +1303,6 @@ public class @InputPlayer : IInputActionCollection, IDisposable
         void OnHeavyAttack(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
         void OnAbility(InputAction.CallbackContext context);
-        void OnLockOn(InputAction.CallbackContext context);
         void OnAnyInput(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
     }

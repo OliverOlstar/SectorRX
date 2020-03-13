@@ -11,6 +11,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseScreen, controlScreen;
     public GameObject resumeButton, targetUI;
     [SerializeField] private PlayerCamera mainCam;
+    
     private StatPause[] _PlayerHUDs = new StatPause[6];
 
     public void SetPlayerHUDs(StatPause[] pHUDs) => _PlayerHUDs = pHUDs;
@@ -42,15 +43,25 @@ public class PauseMenu : MonoBehaviour
             Time.timeScale = 0;
             hasPaused = true;
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             targetUI = resumeButton;
+            foreach(StatPause stats in _PlayerHUDs)
+            {
+                stats.ShowStatsOn();
+            }
         }
         else
         {
             Time.timeScale = 1;
             hasPaused = false;
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             EventSystem.current.SetSelectedGameObject(null);
             controlScreen.SetActive(false);
+            foreach (StatPause stats in _PlayerHUDs)
+            {
+                stats.ShowStatsOff();
+            }
         }
 
         pauseScreen.SetActive(pause);

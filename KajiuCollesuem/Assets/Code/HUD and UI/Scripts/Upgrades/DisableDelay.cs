@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class DisableDelay : MonoBehaviour
 {
     [SerializeField] private float delay = 1;
-    private float hasTextTime = 1;
 
     private void OnEnable()
     {
@@ -16,7 +15,7 @@ public class DisableDelay : MonoBehaviour
 
     IEnumerator TurnOffRoutine()
     {
-        yield return new WaitForSecondsRealtime(delay);
+        yield return new WaitForSeconds(delay);
         gameObject.SetActive(false);
     }
 }

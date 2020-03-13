@@ -26,25 +26,25 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when player takes damage.
     public void HitByAttackSound()
     {
-        PlaySound(0.0f, 0.6f, Random.Range(0.8f, 1.0f), playerHit[0], sfxSource);
+        PlaySound(0.0f, 0.4f, Random.Range(0.8f, 1.0f), playerHit[0], sfxSource);
     }
 
     //Plays sound when player touches the tar.
     public void HitTarSound()
     {
-        PlaySound(0.0f, 0.7f, 1.0f, playerHit[1], voiceSource);
+        PlaySound(0.0f, 0.45f, 1.0f, playerHit[1], voiceSource);
     }
 
     //Plays sound when the player dies.
     public void PlayerDeathSound()
     {
-        PlaySound(0.5f, 0.8f, Random.Range(0.6f, 1.2f), playerHit[2], voiceSource);
+        PlaySound(0.5f, 0.5f, Random.Range(0.6f, 1.2f), playerHit[2], voiceSource);
     }
 
     //Plays sound when the player has collected a stat increasing item
     public void StatUpSound(PlayerCollectibles.Upgrades pStat)
     {
-        PlaySound(0.0f, 0.7f, 1.0f, collectStat[(int)pStat], sfxSource);
+        PlaySound(0.0f, 0.3f, 1.0f, collectStat[(int)pStat], sfxSource);
     }
     #endregion
 
@@ -52,7 +52,7 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when the player performs a dodge
     public void DodgeSound()
     {
-        PlaySound(0.1f, 1.0f, Random.Range(0.7f, 1.0f), movement[0], voiceSource);
+        PlaySound(0.1f, 0.7f, Random.Range(0.7f, 1.0f), movement[0], voiceSource);
     }
 
     //Plays sound the player lands after a jump or falling
@@ -64,7 +64,14 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound the player is walking on a sand or metal surface
     public void Walking(int pGroundMaterial)
     {
-        PlaySound(0.0f, 1.0f, Random.Range(0.4f, 0.6f), surfaces[pGroundMaterial], walkingSource);
+        if(pGroundMaterial == 1)
+        {
+            PlaySound(0.0f, 0.25f, Random.Range(0.7f, 0.9f), surfaces[pGroundMaterial], walkingSource);
+        }
+        else
+        {
+            PlaySound(0.0f, 0.075f, Random.Range(0.7f, 0.9f), surfaces[pGroundMaterial], walkingSource);
+        }
     }
     #endregion
 
@@ -72,21 +79,21 @@ public class PlayerSFX : MonoBehaviour
     //Plays sound when the player jumps.
     public void JumpSound()
     {
-        PlaySound(0.0f, 0.7f, Random.Range(0.7f, 1.0f), movement[1], sfxSource);
+        PlaySound(0.0f, 0.4f, Random.Range(0.7f, 1.0f), movement[1], sfxSource);
     }
 
     //Randomly plays one of two sounds when the player performs a light attack.
     public void LightAttackSound(float pDelay)
     {
         //PlaySound(pDelay, 0.7f, 1.0f, lightAttack[Random.Range(0, 1)], sfxSource);
-        PlaySound(pDelay, 0.7f, Random.Range(0.6f, 0.8f), lightAttackVA, voiceSource);
+        PlaySound(pDelay, 0.35f, Random.Range(0.6f, 0.8f), lightAttackVA, voiceSource);
     }
 
     //Randomly plays one of two sounds when the player performs a heavy attack.
     public void HeavyAttackSound(float pDelay)
     {
         //PlaySound(pDelay, 0.7f, 0.5f, heavyAttack[Random.Range(0, 1)], sfxSource);
-        PlaySound(pDelay, 0.7f, Random.Range(0.6f, 0.75f), heavyAttackVA, voiceSource);
+        PlaySound(pDelay, 0.35f, Random.Range(0.6f, 0.75f), heavyAttackVA, voiceSource);
     }
     #endregion
 
@@ -100,13 +107,13 @@ public class PlayerSFX : MonoBehaviour
     //Plays one of two sounds when playeer uses Plasma Ball ability.
     public void PlasmaBallSound()
     {
-        PlaySound(0.0f, 0.8f, Random.Range(0.75f, 1.0f), abilitySounds[Random.Range(2, 3)], sfxSource);
+        PlaySound(0.0f, 0.5f, Random.Range(0.75f, 1.0f), abilitySounds[Random.Range(2, 3)], sfxSource);
     }
 
     //Plays sound when playeer uses Plasma Strike ability.
     public void PlasmaStrikeSound()
     {
-        PlaySound(0.0f, 0.4f, 1.0f, abilitySounds[1], sfxSource);
+        PlaySound(0.0f, 0.3f, 1.0f, abilitySounds[1], sfxSource);
     }
     #endregion
 
