@@ -16,14 +16,20 @@ Description: Managing UI, loading, starting level, etc.
 public class UIManager : MonoBehaviour
 {
     public static bool menuProperties;
-    public RectTransform mainMenu, playerInputMenu, loadingScreen, logo;
+    bool creditsRunning = false;
+    bool onMainMenu = true;
+    public RectTransform mainMenu, playerInputMenu, loadingScreen, logo, credits;
     public Animator logoAnim;
     //private Animator buttonAnim;
     public GameObject menuStartButton;
     public Button startButton;
     public VideoPlayer loadVideoPlayer;
     public VideoManager introVideoPlayer;
+    private IEnumerator creditsCoroutine;
     [SerializeField] private MenuCamera _Camera;
+
+    private Sequence logoSequence = DOTween.Sequence();
+    private Sequence credSequence = DOTween.Sequence();
 
     private bool _LoadingScene = false;
 
@@ -36,6 +42,7 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 1;
         logoAnim = logoAnim.GetComponent<Animator>();
+        creditsCoroutine = RollCredits();
 
         if (menuProperties == true)
         {
@@ -51,10 +58,53 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void CancelCredits()
+    {
+        if (onMainMenu == false)
+        {
+            StopCoroutine(creditsCoroutine);
+            logoSequence.Kill();
+            credSequence.Kill();
+            logo.DOKill();
+            credits.DOKill();
+            logo.DOAnchorPos(new Vector2(401, -2057), 0.01f);
+            credits.DOAnchorPos(new Vector2(359, -1469), 0.01f);
+            creditsRunning = false;
+        }
+    }
+
+    public void RollTheCredits()
+    {
+        if (creditsRunning == false)
+            StartCoroutine(RollCredits());
+    }
+
+    IEnumerator RollCredits()
+    {
+        if (onMainMenu == true)
+        {
+            logoSequence = DOTween.Sequence();
+            credSequence = DOTween.Sequence();
+            creditsRunning = true;
+            logoSequence.Append(logo.DOAnchorPos(new Vector2(401, 2857), 5.0f));
+            credSequence.Append(credits.DOAnchorPos(new Vector2(359, 1469), 32.5f, false));
+            logoSequence.Append(logo.DOAnchorPos(new Vector2(3119, 2857), 2.5f));
+            logoSequence.Append(logo.DOAnchorPos(new Vector2(3119, -1943), 2.5f));
+            logoSequence.Append(logo.DOAnchorPos(new Vector2(401, -1943), 12.5f));
+            logoSequence.Append(logo.DOAnchorPos(new Vector2(401, 6), 0.4f));
+            credSequence.Append(credits.DOAnchorPos(new Vector2(2059, 1469), 0.01f));
+            credSequence.Append(credits.DOAnchorPos(new Vector2(2059, -1469), 0.01f));
+            credSequence.Append(credits.DOAnchorPos(new Vector2(359, -1469), 0.01f));
+            yield return new WaitForSeconds(28.0f);
+            creditsRunning = false;
+        }
+    }
+
     public void BackToMainMenu()
     {
         logo.DOAnchorPos(new Vector2(401, 6), 0.4f);
         mainMenu.DOAnchorPos(new Vector2(0, 21), 0.4f);
+        onMainMenu = true;
         playerInputMenu.DOAnchorPos(new Vector2(0, 4120), 0.4f);
         EventSystem.current.SetSelectedGameObject(menuStartButton);
         _Camera.ToggleCamera(0);
@@ -63,6 +113,8 @@ public class UIManager : MonoBehaviour
     public void GoToPlayer()
     {
         logo.DOAnchorPos(new Vector2(401, -2057), 0.4f);
+        onMainMenu = false;
+        CancelCredits();
         playerInputMenu.DOAnchorPos(new Vector2(0, -2), 0.4f);
         mainMenu.DOAnchorPos(new Vector2(0, -2060), 0.4f);
         menuProperties = true;
@@ -89,8 +141,6 @@ public class UIManager : MonoBehaviour
         loadVideoPlayer.Play();
         while (!operation.isDone)
         {
-            float progress = Mathf.Clamp01(operation.progress / 0.9f);
-
             if (loadVideoPlayer.isPlaying)
             {
                 loadVideoPlayer.loopPointReached += EndReached;
