@@ -55,7 +55,6 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
 
         sliderControl.SetBars(0, _maxHealth);
         sliderControl.SetBars(1, _maxShield);
-        sliderControl.SetBars(2, _maxAbility);
     }
 
     #region Get & Sets
@@ -135,9 +134,6 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     {
         //Change Value
         _maxAbility = pMaxAbilityGuage;
-
-        //Change respective bar length
-        sliderControl.SetBars(2, pMaxAbilityGuage);
     }
     #endregion
 
