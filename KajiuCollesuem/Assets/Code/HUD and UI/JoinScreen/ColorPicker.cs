@@ -17,11 +17,11 @@ public class ColorPicker : MonoBehaviour
     [SerializeField] private Color[] _Colors = new Color[10];
 
     private ColorSet[] _ColorSets = new ColorSet[10];
-    private List<int> _OpenIndexs = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 } ;
+    private List<int> _OpenIndexs = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 } ;
 
     private void Awake()
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 9; i++)
         {
             _ColorSets[i].lizzyMat = _LizzyMaterials[i];
             _ColorSets[i].feathersMat = _FeatherMaterials[i];

@@ -38,8 +38,9 @@ public class VideoManager : MonoBehaviour
 
     IEnumerator IntroTransition()
     {
-        yield return new WaitForSeconds(6.5f);
+        yield return new WaitForSeconds(4.5f);
         logoVisual.SetActive(true);
+        yield return new WaitForSeconds(2.0f);
         mainMenu.SetActive(true);
         videoPlayer.SetDirectAudioVolume(0, 0);
         yield return new WaitForSeconds(0.5f);
