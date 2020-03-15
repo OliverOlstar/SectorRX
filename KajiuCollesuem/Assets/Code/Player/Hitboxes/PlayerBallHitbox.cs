@@ -33,7 +33,7 @@ public class PlayerBallHitbox : MonoBehaviour
 
     private void OnTriggerEnter (Collider other)
     {
-        if (other.CompareTag("Collectable"))
+        if (other.CompareTag("Collectable") || other.CompareTag("Fireball"))
             return;
 
         //Check if collided with an Attributes Script
@@ -69,8 +69,8 @@ public class PlayerBallHitbox : MonoBehaviour
                 otherAttributes = other.GetComponentInParent<IAttributes>();
 
             // Don't hit the same thing twice
-            if (hitAttributes.Contains(otherAttributes))
-                return;
+            if (hitAttributes.Contains(otherAttributes) || other.CompareTag("Fireball"))
+                continue;
 
             //Damage other
             if (otherAttributes != null && otherAttributes.IsDead() == false)

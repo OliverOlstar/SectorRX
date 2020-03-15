@@ -102,7 +102,7 @@ public class PlayerCamera : MonoBehaviour
         {
             if (targetDead == true)
             {
-                DeadCameraMovement();
+                //DeadCameraMovement();
                 return;
             }
             else if (targetIdle == true)
@@ -153,15 +153,16 @@ public class PlayerCamera : MonoBehaviour
         _LocalRotation.y = Mathf.Lerp(_LocalRotation.y, (_cameraMaxHeight + _cameraMinHeight) / 2, Time.deltaTime);
     }
 
-    void DeadCameraMovement()
-    {
-        //Slowly Rotate
-        Vector3 direction = (targetPlayer.position - transform.position).normalized;
-        if (direction.x == 0 && direction.z == 0) return;
+    //void DeadCameraMovement()
+    //{
+    //    //Slowly Rotate
+    //    Vector3 direction = (targetPlayer.position - transform.position).normalized;
+    //    Quaternion TargetQ = Quaternion.LookRotation(direction, Vector3.up);
 
-        Quaternion TargetQ = Quaternion.LookRotation(direction, Vector3.up);
-        _ParentTransform.rotation = Quaternion.Lerp(_ParentTransform.rotation, TargetQ, Time.deltaTime * _turnDampening);
-    }
+    //    if (Quaternion.Dot(TargetQ, transform.rotation) <= 0.2f) return;
+
+    //    _ParentTransform.rotation = Quaternion.Lerp(_ParentTransform.rotation, TargetQ, Time.deltaTime * _turnDampening);
+    //}
 
     #region Collision
     // Camera Collision //////////////

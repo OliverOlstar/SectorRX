@@ -94,7 +94,7 @@ public class ModelWeights : MonoBehaviour
         _anim.SetFloat(pWeight, currentValue);
     }
 
-    public void SetWeights(float pStepWeight, float pJumpWeight, float pDodgeWeight, float pDeadWeight, float pAbilityWeight = 0)
+    public void SetWeights(float pStepWeight, float pJumpWeight, float pDodgeWeight, float pDeadWeight = 0, float pAbilityWeight = 0)
     {
         stepWeight = pStepWeight;
         jumpWeight = pJumpWeight;
@@ -102,7 +102,6 @@ public class ModelWeights : MonoBehaviour
         deadWeight = pDeadWeight;
         if (deadWeight > 0)
             stunnedWeight = 0;
-
         abilityWeight = pAbilityWeight;
     }
 
