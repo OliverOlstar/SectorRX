@@ -38,13 +38,13 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 652859018}
-  m_IndirectSpecularColor: {r: 0.07052541, g: 0.3537395, b: 0.97080094, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -1037,13 +1037,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 652859017}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.24165958, y: 0.38478592, z: 0.34670854, w: 0.82056904}
   m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 7.4570003, y: 53.695004, z: 49.589}
 --- !u!114 &686702615 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6370898393494026075, guid: 4b07021bc038f364f908054525b52c6d,
@@ -3010,32 +3010,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1332466467}
     m_Modifications:
-    - target: {fileID: 1391842115641214387, guid: 4b07021bc038f364f908054525b52c6d,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 6652fefbddc222a48a9e218a4b4d07fd,
-        type: 3}
-    - target: {fileID: 1391842115641214387, guid: 4b07021bc038f364f908054525b52c6d,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 68.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 1391842115641214387, guid: 4b07021bc038f364f908054525b52c6d,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 32.9375
-      objectReference: {fileID: 0}
-    - target: {fileID: 1391842115641214387, guid: 4b07021bc038f364f908054525b52c6d,
-        type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2228956835274263276, guid: 4b07021bc038f364f908054525b52c6d,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 292
-      objectReference: {fileID: 0}
     - target: {fileID: 2443368183929404669, guid: 4b07021bc038f364f908054525b52c6d,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -3046,40 +3020,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2105171865}
-    - target: {fileID: 2443368183929404669, guid: 4b07021bc038f364f908054525b52c6d,
-        type: 3}
-      propertyPath: m_Transition
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2443368183929404669, guid: 4b07021bc038f364f908054525b52c6d,
-        type: 3}
-      propertyPath: m_SpriteState.m_HighlightedSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 09084bb21cdaea449a6555f5b6ea97c4,
-        type: 3}
-    - target: {fileID: 2443368183929404669, guid: 4b07021bc038f364f908054525b52c6d,
-        type: 3}
-      propertyPath: m_SpriteState.m_PressedSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 37ccdc9cec8cfb242883e5ee3511c191,
-        type: 3}
-    - target: {fileID: 2443368183929404669, guid: 4b07021bc038f364f908054525b52c6d,
-        type: 3}
-      propertyPath: m_SpriteState.m_DisabledSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 7c64f5e20447a634eac047ccd228694a,
-        type: 3}
-    - target: {fileID: 2443368183929404669, guid: 4b07021bc038f364f908054525b52c6d,
-        type: 3}
-      propertyPath: m_SpriteState.m_SelectedSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 04103b9b48c4dc046b972fce6b351cf5,
-        type: 3}
-    - target: {fileID: 2443368183929404669, guid: 4b07021bc038f364f908054525b52c6d,
-        type: 3}
-      propertyPath: m_Interactable
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2867551790685534835, guid: 4b07021bc038f364f908054525b52c6d,
         type: 3}
       propertyPath: _AddPlayer
@@ -3250,8 +3190,7 @@ PrefabInstance:
       propertyPath: _myLizzy
       value: 
       objectReference: {fileID: 928055078}
-    m_RemovedComponents:
-    - {fileID: 3216562079619316799, guid: 4b07021bc038f364f908054525b52c6d, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b07021bc038f364f908054525b52c6d, type: 3}
 --- !u!114 &8639562114429663085 stripped
 MonoBehaviour:

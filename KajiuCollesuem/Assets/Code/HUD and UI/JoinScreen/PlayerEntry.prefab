@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8431942811814619109}
   - component: {fileID: 5214014091571589437}
   - component: {fileID: 2443368183929404669}
-  - component: {fileID: 3216562079619316799}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -36,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 279}
+  m_AnchoredPosition: {x: 0, y: 292}
   m_SizeDelta: {x: 344.8, y: 294}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8431942811814619109
@@ -93,7 +92,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 3
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -103,10 +102,11 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300000, guid: 09084bb21cdaea449a6555f5b6ea97c4,
+      type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 37ccdc9cec8cfb242883e5ee3511c191, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 04103b9b48c4dc046b972fce6b351cf5, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: 7c64f5e20447a634eac047ccd228694a, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -140,25 +140,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!95 &3216562079619316799
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 174128848898904420}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &849878439861191150
 GameObject:
   m_ObjectHideFlags: 0
@@ -1110,21 +1091,23 @@ MonoBehaviour:
   - {fileID: 2100000, guid: b8e0d7bf4ac98924cbff3516df9fbb52, type: 2}
   - {fileID: 2100000, guid: 07e7b3369a45f14418f158dab91af1d9, type: 2}
   - {fileID: 2100000, guid: 09bb273bbd471d5408b70719f5b1f6fe, type: 2}
-  - {fileID: 2100000, guid: ff442f035374b0b45916e57f30ce9e75, type: 2}
+  - {fileID: 2100000, guid: 58016089e37908745b00daff91a3782d, type: 2}
   - {fileID: 2100000, guid: bb7b8e0106e79154bb7c46c9b8a54707, type: 2}
   - {fileID: 2100000, guid: 248ad3f9ca83a07419d7d5a7dcebef39, type: 2}
   - {fileID: 2100000, guid: 3322c83f3b4120343abf97a66450b8e8, type: 2}
-  - {fileID: 2100000, guid: 58016089e37908745b00daff91a3782d, type: 2}
+  - {fileID: 2100000, guid: ff442f035374b0b45916e57f30ce9e75, type: 2}
+  - {fileID: 2100000, guid: 56000a1667cb65b4483ca7a0fcae8646, type: 2}
   _FeatherMaterials:
-  - {fileID: 2100000, guid: 385be8923b9e1de478919dee81c87c15, type: 2}
-  - {fileID: 2100000, guid: ba881d8961c1d3649b50212aad08314b, type: 2}
-  - {fileID: 2100000, guid: fb4108670e7a03f4b97616628ce4eb7d, type: 2}
   - {fileID: 2100000, guid: 9eb19bf7c4ad0604d8a63e424f33bfa0, type: 2}
+  - {fileID: 2100000, guid: ba881d8961c1d3649b50212aad08314b, type: 2}
+  - {fileID: 2100000, guid: 4ea46495652d6cb4ab0ed3a3bfd89a18, type: 2}
+  - {fileID: 2100000, guid: fb4108670e7a03f4b97616628ce4eb7d, type: 2}
   - {fileID: 2100000, guid: c1bf5bf252d2f3c4f98108baea335da7, type: 2}
   - {fileID: 2100000, guid: eb1c080b3b554604f82fd48bb7e78703, type: 2}
   - {fileID: 2100000, guid: a4f9805574bbb814ebacebb337b5d272, type: 2}
   - {fileID: 2100000, guid: 8b2214d5473d136419399dcd59e052f8, type: 2}
-  - {fileID: 2100000, guid: 698136eeb934f3946a77aae371413fd1, type: 2}
+  - {fileID: 2100000, guid: f4099a1cc1768c349b95d7245aca6ebc, type: 2}
+  - {fileID: 2100000, guid: 9a571bce2a720104ba56a27a927b3bd9, type: 2}
   _Colors:
   - {r: 1, g: 0, b: 0.5031934, a: 1}
   - {r: 0, g: 0.5660378, b: 0.10650726, a: 1}
@@ -1134,7 +1117,8 @@ MonoBehaviour:
   - {r: 0.66421795, g: 0, b: 1, a: 1}
   - {r: 0, g: 0.55511737, b: 1, a: 1}
   - {r: 0.9528302, g: 0.9528302, b: 0.9528302, a: 1}
-  - {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 1}
+  - {r: 1, g: 0.13757895, b: 0, a: 1}
+  - {r: 0.3422947, g: 0, b: 1, a: 1}
 --- !u!1 &5938422723068349202
 GameObject:
   m_ObjectHideFlags: 0
