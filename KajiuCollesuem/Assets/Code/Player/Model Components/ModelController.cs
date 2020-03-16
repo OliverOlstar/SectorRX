@@ -23,7 +23,7 @@ public class ModelController : MonoBehaviour
     private bool _DontUpdateWeights;
 
     public SOAttack[] attacks = new SOAttack[3];
-     public SOAbilities abilitySO;
+    public SOAbilities abilitySO;
     private float _doneAttackDelay = 0;
     
     void Start()

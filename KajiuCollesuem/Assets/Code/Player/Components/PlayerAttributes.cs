@@ -14,6 +14,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     private PlayerStateController _stateController;
     public SliderController sliderControl;
     public CanvasGroup playerHUD;
+    [SerializeField] private AbilityText _AbilityText;
 
     public float weight = 1;
 
@@ -44,7 +45,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
     public bool IsDead() { return _health == 0; }
     public float TimeOfDeath() { return IsDead() == false ? Time.time : _TimeOfDeath; }
 
-    void Awake()
+    void Start()
     {
         _stateController = GetComponent<PlayerStateController>();
 
@@ -103,6 +104,9 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
         _ability = Mathf.Clamp(_ability, 0, _maxAbility);
 
         sliderControl.UpdateBars(2, _ability);
+
+        if (_AbilityText.gameObject.activeSelf)
+            _AbilityText.SetText(_ability, _stateController._modelController.abilitySO.abilityRequired);
     }
 
     //MODIFY MAXES
