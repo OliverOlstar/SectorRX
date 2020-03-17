@@ -12,15 +12,27 @@ public struct ColorSet
 
 public class ColorPicker : MonoBehaviour
 {
+    [SerializeField] private Material _DefaultLizzyMaterial;
+    [SerializeField] private Material _DefaultFeatherMaterial;
+    [SerializeField] private Color _DefaultColor;
+
+    [Space]
     [SerializeField] private Material[] _LizzyMaterials = new Material[10];
     [SerializeField] private Material[] _FeatherMaterials = new Material[10];
     [SerializeField] private Color[] _Colors = new Color[10];
 
     private ColorSet[] _ColorSets = new ColorSet[10];
+    private ColorSet _DefaultColorSet = new ColorSet();
+
     private List<int> _OpenIndexs = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 } ;
 
     private void Awake()
     {
+        _DefaultColorSet.lizzyMat = _DefaultLizzyMaterial;
+        _DefaultColorSet.feathersMat = _DefaultFeatherMaterial;
+        _DefaultColorSet.color = _DefaultColor;
+        _DefaultColorSet.index = -1;
+
         for (int i = 0; i < 10; i++)
         {
             _ColorSets[i].lizzyMat = _LizzyMaterials[i];
@@ -32,9 +44,21 @@ public class ColorPicker : MonoBehaviour
 
     public ColorSet StartingColor()
     {
-        int index = _OpenIndexs[Mathf.RoundToInt(Random.value)];
+        int index = _OpenIndexs[0];
         _OpenIndexs.Remove(index);
         return _ColorSets[index];
+    }
+
+    public ColorSet ReturnColor(int pCurrentIndex)
+    {
+        _OpenIndexs.Add(pCurrentIndex);
+        _OpenIndexs.Sort();
+        return _DefaultColorSet;
+    }
+
+    public ColorSet GetDefaultColor()
+    {
+        return _DefaultColorSet;
     }
 
     public ColorSet SwitchColor(int pCurrentIndex)

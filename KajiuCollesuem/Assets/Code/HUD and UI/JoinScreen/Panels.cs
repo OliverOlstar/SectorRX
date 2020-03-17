@@ -49,7 +49,7 @@ public class Panels : MonoBehaviour
         UpdateIcons();
         RemoveAbilitiesUI();
 
-        ColorSet set = _ColorPicker.StartingColor();
+        ColorSet set = _ColorPicker.GetDefaultColor();
         SetColors(set);
         _myLizzy.SetAbilities(0);
     }
@@ -89,7 +89,7 @@ public class Panels : MonoBehaviour
                 // Player Disconnected
                 stateValue = 0;
                 ExitSelectAbilities();
-                EnterJoinable();
+                //EnterJoinable(); // Get called on disconnect (Calling it here calls it twice)
                 return true;
 
             case 2:
@@ -141,11 +141,17 @@ public class Panels : MonoBehaviour
     {
         joinText.SetActive(true);
         _myLizzy.ChangeWeights(MenuLizzy.menuLizzyStates.NotJoined);
+
+        ColorSet set = _ColorPicker.ReturnColor(_CurrentColorIndex);
+        SetColors(set);
     }
 
     private void ExitJoinable()
     {
         joinText.SetActive(false);
+
+        ColorSet set = _ColorPicker.StartingColor();
+        SetColors(set);
     }
 
     private void EnterSelectAbilities()

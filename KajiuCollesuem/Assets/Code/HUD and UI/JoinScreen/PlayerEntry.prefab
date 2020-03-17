@@ -1086,6 +1086,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28bc8f2cd3eef264ca474e3c78b0ae5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _DefaultLizzyMaterial: {fileID: 6373305451171964123, guid: e7cb9f708bff2e146b790c3223247466,
+    type: 3}
+  _DefaultFeatherMaterial: {fileID: 6373305451171964123, guid: e295073015b9675438711db3e3ffd678,
+    type: 3}
+  _DefaultColor: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 1}
   _LizzyMaterials:
   - {fileID: 2100000, guid: a8b25298fb89a754cb4de6dcf48ba987, type: 2}
   - {fileID: 2100000, guid: b8e0d7bf4ac98924cbff3516df9fbb52, type: 2}
@@ -1703,26 +1708,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: P1Panel
       objectReference: {fileID: 0}
-    - target: {fileID: 4720776103929581042, guid: e2178e1dee420ac4191c9653ce439daa,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4720776103929581042, guid: e2178e1dee420ac4191c9653ce439daa,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4720776103929581042, guid: e2178e1dee420ac4191c9653ce439daa,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4720776103929581042, guid: e2178e1dee420ac4191c9653ce439daa,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5701965147456874074, guid: e2178e1dee420ac4191c9653ce439daa,
         type: 3}
       propertyPath: _ColorPicker
@@ -1838,8 +1823,7 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4720776103929581042, guid: e2178e1dee420ac4191c9653ce439daa, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2178e1dee420ac4191c9653ce439daa, type: 3}
 --- !u!224 &4746077075839890775 stripped
 RectTransform:
@@ -1854,11 +1838,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6200741581219627681}
     m_Modifications:
-    - target: {fileID: 1100757351161285693, guid: e2178e1dee420ac4191c9653ce439daa,
-        type: 3}
-      propertyPath: m_Text
-      value: P4
-      objectReference: {fileID: 0}
     - target: {fileID: 2288195894815094307, guid: e2178e1dee420ac4191c9653ce439daa,
         type: 3}
       propertyPath: m_Name
@@ -2014,11 +1993,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6200741581219627681}
     m_Modifications:
-    - target: {fileID: 1100757351161285693, guid: e2178e1dee420ac4191c9653ce439daa,
-        type: 3}
-      propertyPath: m_Text
-      value: P4
-      objectReference: {fileID: 0}
     - target: {fileID: 2288195894815094307, guid: e2178e1dee420ac4191c9653ce439daa,
         type: 3}
       propertyPath: m_Name
@@ -2026,18 +2000,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2365286788442443443, guid: e2178e1dee420ac4191c9653ce439daa,
         type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2365286788442443443, guid: e2178e1dee420ac4191c9653ce439daa,
-        type: 3}
       propertyPath: m_Color.g
       value: 0.6754863
-      objectReference: {fileID: 0}
-    - target: {fileID: 2365286788442443443, guid: e2178e1dee420ac4191c9653ce439daa,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5000724206881845145, guid: e2178e1dee420ac4191c9653ce439daa,
         type: 3}
@@ -2179,11 +2143,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6200741581219627681}
     m_Modifications:
-    - target: {fileID: 1100757351161285693, guid: e2178e1dee420ac4191c9653ce439daa,
-        type: 3}
-      propertyPath: m_Text
-      value: P4
-      objectReference: {fileID: 0}
     - target: {fileID: 2288195894815094307, guid: e2178e1dee420ac4191c9653ce439daa,
         type: 3}
       propertyPath: m_Name
@@ -2344,11 +2303,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6200741581219627681}
     m_Modifications:
-    - target: {fileID: 1100757351161285693, guid: e2178e1dee420ac4191c9653ce439daa,
-        type: 3}
-      propertyPath: m_Text
-      value: P3
-      objectReference: {fileID: 0}
     - target: {fileID: 2288195894815094307, guid: e2178e1dee420ac4191c9653ce439daa,
         type: 3}
       propertyPath: m_Name
@@ -2504,11 +2458,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6200741581219627681}
     m_Modifications:
-    - target: {fileID: 1100757351161285693, guid: e2178e1dee420ac4191c9653ce439daa,
-        type: 3}
-      propertyPath: m_Text
-      value: P2
-      objectReference: {fileID: 0}
     - target: {fileID: 2288195894815094307, guid: e2178e1dee420ac4191c9653ce439daa,
         type: 3}
       propertyPath: m_Name
