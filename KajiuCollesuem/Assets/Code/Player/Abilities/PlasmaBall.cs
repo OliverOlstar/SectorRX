@@ -46,7 +46,7 @@ public class PlasmaBall : MonoBehaviour, IAbility
         _spawnBallTime = Time.time + _AbilitySO.hitBoxAppearTime;
         _ballSpawned = false;
 
-        _stateController._playerAttributes.modifyAbility(-_stateController._modelController.abilitySO.powerRequired);
+        _stateController._playerAttributes.modifyAbility(-_stateController._modelController.abilitySO.abilityRequired);
     }
 
     public void Exit()

@@ -247,7 +247,7 @@ public class Panels : MonoBehaviour
         StopAllCoroutines();
         _abilityTransform.DOKill();
 
-        _abilityTransform.DOAnchorPos(new Vector2(0, -30), 0.4f);
+        _abilityTransform.DOAnchorPos(new Vector2(0, -36), 0.4f);
         _abilityTransform.gameObject.SetActive(true);
     }
 

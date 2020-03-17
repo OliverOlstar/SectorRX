@@ -12,7 +12,7 @@ public class SOAbilities : ScriptableObject
     public AnimationCurve abilitiesGraph;
 
     [Space]
-    public int powerRequired = 0;
+    public int abilityRequired = 0;
 
     [Header("Post Attack")]
     [Min(0)] public float holdEndPosTime = 0.1f;

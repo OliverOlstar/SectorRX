@@ -12,6 +12,7 @@ public class ColorSetter : MonoBehaviour
     [Space]
     [SerializeField] private PlayerStateController _stateController;
     [SerializeField] private PlayerAbilitySelector _abilitySelector;
+    [SerializeField] private AbilityText _abilityText;
 
     public void SetColor(ColorSet pSet)
     {
@@ -40,6 +41,7 @@ public class ColorSetter : MonoBehaviour
                 _feathersRenderer.enabled = false;
                 _armour[0].SetActive(false);
                 _armour[1].SetActive(false);
+                _abilityText.gameObject.SetActive(false);
                 break;
 
             case 1:
