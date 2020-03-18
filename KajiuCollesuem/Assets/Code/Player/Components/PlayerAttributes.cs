@@ -189,6 +189,7 @@ public class PlayerAttributes : MonoBehaviour, IAttributes
             _stateController._modelController.AddTarJump(1, 0.2f, 1.1f, 0.65f);
             _stateController._modelController.AddCrouching(0.4f, 0.2f, 0.2f);
             _stateController._CameraShake.PlayShake(6.0f, 8.0f, 0.6f, 0.6f);
+            _stateController._Particles.TarJump();
         }
         else
         {

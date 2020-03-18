@@ -24,7 +24,6 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
     private bool isDead;
 
     private Decision _decision;
-    private HUDManager _playerHUD;
     public SliderController sliderControl;
     private IState _deadState;
     private IState _stunnedState;
@@ -50,7 +49,6 @@ public class EnemyAttributes : MonoBehaviour, IAttributes
         _stunnedState = GetComponent<Stunned>();
         _rb = GetComponent<Rigidbody>();
         _tm = GetComponent<TargetManagement>();
-        //_playerHUD = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>();
     }
 
     public bool TakeDamage(int pAmount, Vector3 pKnockback, GameObject pAttacker, string pTag, bool pIgnoreWeight = false)

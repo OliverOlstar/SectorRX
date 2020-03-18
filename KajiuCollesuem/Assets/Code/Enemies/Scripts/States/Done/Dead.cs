@@ -14,6 +14,8 @@ public class Dead : MonoBehaviour, IState
 
     [SerializeField] private bool _enabled = false;
 
+    [SerializeField] private ParticleSystem _DeadParticle;
+
     public void Setup(Transform pTarget, Animator pAnim, NavMeshAgent pAgent, EnemySmoothRotation pRotation)
     {
         _anim = pAnim;
@@ -68,6 +70,11 @@ public class Dead : MonoBehaviour, IState
             GameObject tmp = Instantiate(_itemPrefabs[randomIndex]);
             tmp.transform.position = transform.position + Vector3.up * 0.65f;
         }
+
+        _DeadParticle.Play();
+        _DeadParticle.transform.parent = null;
+        Destroy(_DeadParticle, 10.0f);
+
         Destroy(this.gameObject);
     }
 

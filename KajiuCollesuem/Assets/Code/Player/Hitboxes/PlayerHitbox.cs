@@ -17,6 +17,7 @@ public class PlayerHitbox : MonoBehaviour
     private IAttributes _playerIAttributes;
 
     private List<IAttributes> hitAttributes = new List<IAttributes>();
+    [SerializeField] private ParticleSystem _HitParticle;
 
     private void OnEnable()
     {
@@ -46,11 +47,15 @@ public class PlayerHitbox : MonoBehaviour
 
         if (otherAttributes != null && otherAttributes.IsDead() == false && otherAttributes != _playerIAttributes)
         {
-            //Damage other
+            // Damage other
             otherAttributes.TakeDamage(Mathf.FloorToInt(_damage * attackMult), _knockback, attacker, "Player");
 
-            //Recieve Power
+            // Recieve Power
             _playerAttributes.modifyAbility(_powerRecivedOnHit);
+
+            // Hit Effect
+            if (_HitParticle != null)
+                _HitParticle.Play();
         }
     }
 

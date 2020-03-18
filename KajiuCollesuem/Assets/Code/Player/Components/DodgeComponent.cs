@@ -92,6 +92,7 @@ public class DodgeComponent : MonoBehaviour
             if (shakeDone == false && Time.time >= dodgeShakeDelay)
             {
                 _stateController._CameraShake.PlayShake(5.0f, 1.6f, 0.2f, 0.4f, 0.03f);
+                _stateController._Particles.Landed();
                 shakeDone = true;
             }
 

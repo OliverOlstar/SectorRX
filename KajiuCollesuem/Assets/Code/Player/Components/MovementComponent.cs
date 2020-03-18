@@ -68,6 +68,9 @@ public class MovementComponent : MonoBehaviour
             // Sound
             _stateController._Sound.JumpSound();
 
+            // Particle
+            _stateController._Particles.Jumped();
+
             // If using ability, stop
             _stateController.usingAbility = false;
         }

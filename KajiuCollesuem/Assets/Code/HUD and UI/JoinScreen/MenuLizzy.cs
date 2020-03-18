@@ -45,7 +45,7 @@ public class MenuLizzy : MonoBehaviour
                 {
                     if (_LockedRoutine != null)
                         StopCoroutine(_LockedRoutine);
-                    _LockedRoutine = StartCoroutine(LockInAnimRoutine(-1, 8));
+                    _LockedRoutine = StartCoroutine(LockInAnimRoutine(-1));
                 }
                 break;
 
@@ -58,7 +58,7 @@ public class MenuLizzy : MonoBehaviour
                 {
                     if (_LockedRoutine != null)
                         StopCoroutine(_LockedRoutine);
-                    _LockedRoutine = StartCoroutine(LockInAnimRoutine(-1, 8));
+                    _LockedRoutine = StartCoroutine(LockInAnimRoutine(-1));
                 }
                 break;
 
@@ -69,7 +69,7 @@ public class MenuLizzy : MonoBehaviour
 
                 if (_LockedRoutine != null)
                     StopCoroutine(_LockedRoutine);
-                _LockedRoutine = StartCoroutine(LockInAnimRoutine(1, 3));
+                _LockedRoutine = StartCoroutine(LockInAnimRoutine(1));
                 break;
         }
     }
@@ -87,7 +87,7 @@ public class MenuLizzy : MonoBehaviour
         _Anim.SetFloat("State", _State);
     }
 
-    private IEnumerator LockInAnimRoutine(float pDirection, float pDampening)
+    private IEnumerator LockInAnimRoutine(float pDirection)
     {
         while ((_LockedInProgress < 0.999f && pDirection == 1) || (_LockedInProgress > 0.001f && pDirection == -1))
         {

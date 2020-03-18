@@ -359,7 +359,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8619c6deed4abf42a55b87835c1125d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
+  _damage: 40
+  _knockForce: 40
+  _knockupForce: 40
+  _Attacker: {fileID: 0}
 --- !u!114 &2481610429520255997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -751,7 +754,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7706da75738bcd47974c0182c534b33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  homeReachedDistance: 2
   _enabled: 0
 --- !u!114 &7300871244928447588
 MonoBehaviour:
@@ -765,6 +767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99a4d45b359b1fa4aba984ae0f0a0aab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stunnedStateMinTime: 0.2
   _enabled: 0
 --- !u!114 &5248919107259542012
 MonoBehaviour:
@@ -778,8 +781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c94cf9f1451994a4a815672d89d7e8b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cellPrefab: {fileID: 7865935160635239468, guid: 8991995bcdcc5f9448ce755d60709332,
-    type: 3}
+  _itemPrefabs: []
   _cellSpawnCount: 5
   _enabled: 0
 --- !u!114 &4378965535642576207
@@ -796,6 +798,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startHealth: 25
   healthDisplayLength: 2
+  _weight: 0
   enemyHealthBar: {fileID: 7022872832895218625}
   sliderControl: {fileID: 0}
 --- !u!114 &2771734278874371972

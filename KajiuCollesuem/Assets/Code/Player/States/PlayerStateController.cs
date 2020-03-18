@@ -52,6 +52,8 @@ public class PlayerStateController : MonoBehaviour
     public Transform _Camera;
     public PlayerHitbox[] hitboxes = new PlayerHitbox[0];
 
+    [HideInInspector] public LocomotionParticles _Particles;
+
     // Abilities
     [HideInInspector] public IAbility _AbilityScript;
 
@@ -79,6 +81,8 @@ public class PlayerStateController : MonoBehaviour
 
         _Rb = GetComponent<Rigidbody>();
         _playerCamera = _Camera.GetComponentInParent<PlayerCamera>();
+
+        _Particles = GetComponentInChildren<LocomotionParticles>();
 
         LastInputTime = Time.time;
     }

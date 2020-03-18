@@ -172,12 +172,13 @@ public class ModelController : MonoBehaviour
     #endregion
 
     #region Locomotion
-    public void TookStep(float pShakeForce)
+    public void TookStep(float pShakeForce, bool pLeft)
     {
         if (_stateController._movementComponent.disableMovement == false && _stateController.groundMaterial != -1 && pShakeForce > 0.5f)
         {
             _stateController._CameraShake.PlayShake(pShakeForce * 1.1f, 4.0f, 0.05f, 0.2f);
             _stateController._Sound.Walking(_stateController.groundMaterial);
+            _stateController._Particles.TookStep(pLeft);
         }
     }
 

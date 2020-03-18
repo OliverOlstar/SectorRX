@@ -22,6 +22,10 @@ public class DestructibleObject : MonoBehaviour, IAttributes
     [SerializeField] private int _collectablesSpawnCount = 5;
     [SerializeField] private float _collectableUpOffset = 0.3f;
 
+    [Space]
+    [SerializeField] private ParticleSystem _DamageParticle;
+    [SerializeField] private ParticleSystem _DestroyParticle;
+
     private void Start()
     {
         _Shaker = GetComponent<ObjectShaker>();
@@ -34,11 +38,17 @@ public class DestructibleObject : MonoBehaviour, IAttributes
 
         if (_Health <= 0)
         {
+            _DestroyParticle.Play();
+            _DestroyParticle.transform.parent = null;
+            Destroy(_DestroyParticle, 10.0f);
+
             StartCoroutine("dropDelay");
             StartCoroutine("fallRoutine");
             _Health = 99999;
+            return false;
         }
 
+        _DamageParticle.Play();
         return false;
     }
 

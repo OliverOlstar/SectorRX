@@ -166,7 +166,7 @@ public class ModelAnimations : MonoBehaviour
             _SecondStep = (_SecondStep == 0.0f) ? 0.5f : 0.0f;
 
             // Shake & Sound
-            _modelController.TookStep(steppingSpeed);
+            _modelController.TookStep(steppingSpeed, _SecondStep == 0.0f);
         }
 
         // Set Anim Stepping values

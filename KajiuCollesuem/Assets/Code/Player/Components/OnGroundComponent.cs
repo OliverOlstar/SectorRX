@@ -55,6 +55,9 @@ public class OnGroundComponent : MonoBehaviour
 
                 // Sound
                 _stateController._Sound.LandingSound();
+
+                // Particle
+                _stateController._Particles.Landed();
             }
 
             if (hit.collider.tag == "Sand")
@@ -101,9 +104,9 @@ public class OnGroundComponent : MonoBehaviour
             {
                 _stuckTimer += Time.deltaTime;
 
-                if (_stuckTimer > 1.8f)
+                if (_stuckTimer > 0.75f)
                 {
-                    _rb.AddForce(Vector3.up * 22, ForceMode.Impulse);
+                    _rb.AddForce(Vector3.up * 18, ForceMode.Impulse);
                     _stuckTimer = 0.0f;
                 }
             }
