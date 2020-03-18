@@ -41,7 +41,9 @@ public class ColorSetter : MonoBehaviour
                 _feathersRenderer.enabled = false;
                 _armour[0].SetActive(false);
                 _armour[1].SetActive(false);
-                _abilityText.gameObject.SetActive(false);
+
+                if (_abilityText != null)
+                    _abilityText.gameObject.SetActive(false);
                 break;
 
             case 1:
